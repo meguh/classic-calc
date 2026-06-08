@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WoW Crafting Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #0c0c13;
+      --surface:      #13131e;
+      --surface-2:    #1a1a28;
+      --surface-3:    #20202f;
+      --border:       rgba(255,255,255,0.07);
+      --border-md:    rgba(255,255,255,0.11);
+      --border-focus: rgba(200,151,58,0.55);
+      --gold:         #c8973a;
+      --gold-bright:  #e8b84b;
+      --gold-glow:    rgba(200,151,58,0.12);
+      --gold-dim:     #7a5c20;
+      --blue:         #6ab0f5;
+      --blue-dim:     rgba(106,176,245,0.12);
+      --text:         #ddd6cc;
+      --text-muted:   #7a7268;
+      --text-dim:     #3e3a36;
+      --shadow-sm:    0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md:    0 4px 16px rgba(0,0,0,0.5);
+      --shadow-lg:    0 8px 32px rgba(0,0,0,0.6);
+      --radius:       10px;
+      --radius-sm:    6px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 32px 20px 60px;
+    }
+
+    /* ── Header ─────────────────────────────────────────────────────────── */
+    header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #e8b84b 0%, #c8973a 50%, #e8c870 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 0 20px rgba(200,151,58,0.25));
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* ── App container ───────────────────────────────────────────────────── */
+    #app {
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+
+    /* ── Expansion selector ──────────────────────────────────────────────── */
+    .expansion-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 4px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      gap: 2px;
+    }
+
+    .exp-btn {
+      padding: 7px 22px;
+      border-radius: 50px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .exp-btn:hover:not(.disabled) { color: var(--text); }
+
+    .exp-btn.active {
+      background: var(--gold-glow);
+      color: var(--gold-bright);
+      box-shadow: inset 0 0 0 1px rgba(200,151,58,0.3);
+    }
+
+    .exp-btn.disabled { opacity: 0.35; cursor: default; }
+
+    .exp-notice {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      margin-top: -16px;
+      margin-bottom: 20px;
+    }
+
+    /* ── Search ──────────────────────────────────────────────────────────── */
+    .search-wrap {
+      position: relative;
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+      display: flex;
+    }
+
+    #search {
+      width: 100%;
+      padding: 11px 14px 11px 38px;
+      background: var(--surface);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    #search:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px var(--gold-glow);
+    }
+
+    #search::placeholder { color: var(--text-muted); }
+
+    #prof-filter {
+      padding: 11px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      appearance: none;
+      padding-right: 28px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237a7268' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    #prof-filter:focus { border-color: var(--border-focus); }
+
+    /* ── Dropdown ────────────────────────────────────────────────────────── */
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: var(--surface-2);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
+      max-height: 340px;
+      overflow-y: auto;
+      z-index: 200;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .dropdown::-webkit-scrollbar { width: 4px; }
+    .dropdown::-webkit-scrollbar-track { background: transparent; }
+    .dropdown::-webkit-scrollbar-thumb { background: var(--border-md); border-radius: 4px; }
+
+    .dropdown.hidden { display: none; }
+
+    .dd-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      cursor: pointer;
+      gap: 12px;
+      transition: background 0.1s;
+    }
+
+    .dd-item + .dd-item { border-top: 1px solid var(--border); }
+    .dd-item:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+    .dd-item:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
+    .dd-item:hover { background: var(--surface-3); }
+
+    .dd-item-name { color: var(--text); font-size: 0.88rem; }
+
+    .dd-meta { flex-shrink: 0; }
+
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 50px;
+      background: var(--surface-3);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .dd-empty {
+      padding: 18px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    /* ── Result layout ───────────────────────────────────────────────────── */
+    #result { display: none; flex-direction: column; gap: 14px; }
+    #result.visible { display: flex; }
+
+    /* ── Recipe header ───────────────────────────────────────────────────── */
+    .recipe-header-panel {
+      background: var(--surface);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .recipe-header-left { flex: 1; min-width: 0; }
+
+    .recipe-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--gold-bright);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+
+    .recipe-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .qty-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .qty-row label {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .qty-row input {
+      width: 70px;
+      padding: 7px 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .qty-row input:focus { border-color: var(--border-focus); }
+
+    .creates-note {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* ── Two-col panels ──────────────────────────────────────────────────── */
+    .panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 640px) { .panels { grid-template-columns: 1fr; } }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      min-height: 120px;
+    }
+
+    .panel-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-hint {
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--text-dim);
+      font-size: 0.7rem;
+    }
+
+    /* ── Craft tree ──────────────────────────────────────────────────────── */
+    .tree-root {}
+
+    .tree-node {
+      padding-left: 16px;
+      border-left: 1px solid var(--border-md);
+      margin-left: 7px;
+    }
+
+    .tree-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      border-radius: var(--radius-sm);
+      cursor: default;
+      user-select: none;
+      transition: background 0.1s;
+    }
+
+    .tree-row.has-recipe { cursor: pointer; }
+    .tree-row.has-recipe:hover { background: var(--surface-2); }
+
+    .tree-caret {
+      width: 14px;
+      font-size: 9px;
+      color: var(--text-dim);
+      flex-shrink: 0;
+      text-align: center;
+      transition: color 0.15s;
+    }
+
+    .tree-row.has-recipe .tree-caret { color: var(--gold-dim); }
+    .tree-row.has-recipe:hover .tree-caret { color: var(--gold); }
+
+    .tree-qty {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      min-width: 30px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .tree-name {
+      font-size: 0.86rem;
+      color: var(--text);
+    }
+
+    .tree-name.craftable { color: var(--blue); }
+
+    .craft-badge {
+      font-size: 0.65rem;
+      font-weight: 500;
+      padding: 1px 7px;
+      border-radius: 50px;
+      background: var(--blue-dim);
+      color: var(--blue);
+      border: 1px solid rgba(106,176,245,0.2);
+      flex-shrink: 0;
+    }
+
+    .tree-children { display: none; }
+    .tree-children.open { display: block; }
+
+    /* ── Raw materials ───────────────────────────────────────────────────── */
+    .mat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+
+    .mat-row:last-child { border-bottom: none; }
+
+    .mat-name {
+      font-size: 0.86rem;
+      color: var(--text);
+    }
+
+    .mat-qty {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 50px;
+      background: var(--gold-glow);
+      color: var(--gold-bright);
+      border: 1px solid rgba(200,151,58,0.2);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── Status / loading ────────────────────────────────────────────────── */
+    #status {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 40px;
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>WoW Crafting Calculator</h1>
+  <p>Search a recipe to see its full material breakdown</p>
+</header>
+
+<div id="app">
+  <div id="status">Loading data...</div>
+
+  <div class="expansion-bar" id="expansion-bar" style="display:none">
+    <button class="exp-btn" data-exp="classic">Classic</button>
+    <button class="exp-btn active" data-exp="tbc">The Burning Crusade</button>
+    <button class="exp-btn" data-exp="wotlk">Wrath of the Lich King</button>
+  </div>
+
+  <div class="search-wrap" id="search-wrap" style="display:none">
+    <div class="search-row">
+      <div class="search-input-wrap">
+        <span class="search-icon">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+            <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <input id="search" type="text" placeholder="Search recipes..." autocomplete="off" spellcheck="false">
+      </div>
+      <select id="prof-filter">
+        <option value="">All Professions</option>
+      </select>
+    </div>
+    <div id="dropdown" class="dropdown hidden"></div>
+  </div>
+
+  <div id="result">
+    <div class="recipe-header-panel">
+      <div class="recipe-header-left">
+        <div id="recipe-title" class="recipe-title"></div>
+        <div id="recipe-subtitle" class="recipe-subtitle"></div>
+      </div>
+      <div class="qty-row">
+        <label>Crafts</label>
+        <input type="number" id="qty" value="1" min="1" max="9999">
+        <span id="creates-note" class="creates-note"></span>
+      </div>
+    </div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-title">Craft Tree <span class="panel-hint">— click to expand sub-crafts</span></div>
+        <div id="craft-tree" class="tree-root"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Raw Materials</div>
+        <div id="raw-mats"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PROFESSIONS = {
+  129: 'First Aid',
+  164: 'Blacksmithing',
+  165: 'Leatherworking',
+  171: 'Alchemy',
+  182: 'Herbalism',
+  185: 'Cooking',
+  186: 'First Aid',
+  197: 'Tailoring',
+  202: 'Engineering',
+  333: 'Enchanting',
+  356: 'Fishing',
+  393: 'Skinning',
+  755: 'Jewelcrafting',
+};
+
+const CRAFT_TYPES = new Set([164,165,171,185,186,197,202,333,755,129]);
+
+const EXPANSIONS = {
+  classic: { label: 'Classic',               maxSkill: 300 },
+  tbc:     { label: 'The Burning Crusade',    maxSkill: 375 },
+  wotlk:   { label: 'Wrath of the Lich King', maxSkill: 450 },
+};
+
+let itemsById = {};
+let recipesByOutputId = {};
+let allRecipes = [];
+let currentRecipe = null;
+let currentExpansion = 'tbc';
+
+function getMaxSkill() { return EXPANSIONS[currentExpansion].maxSkill; }
+
+function isRecipeInExpansion(recipe) {
+  return (recipe.learned_at_rank ?? 0) <= getMaxSkill();
+}
+
+function isCraftableInExpansion(itemId) {
+  const recipe = recipesByOutputId[itemId];
+  return !!recipe && CRAFT_TYPES.has(recipe.type) && isRecipeInExpansion(recipe);
+}
+
+async function tryFetch(url) {
+  try {
+    const r = await fetch(url);
+    return r.ok ? r.json() : [];
+  } catch { return []; }
+}
+
+async function init() {
+  try {
+    const [classicProfs, classicMats,
+           tbcProfs,     tbcMats,
+           wotlkProfs,   wotlkMats] = await Promise.all([
+      tryFetch('classic-professions.json'),
+      tryFetch('classic-mats.json'),
+      tryFetch('tbc-professions.json'),
+      tryFetch('tbc-mats.json'),
+      tryFetch('wotlk-professions.json'),
+      tryFetch('wotlk-mats.json'),
+    ]);
+
+    [...classicMats, ...tbcMats, ...wotlkMats]
+      .forEach(item => { itemsById[item.id] = item; });
+
+    allRecipes = [...classicProfs, ...tbcProfs, ...wotlkProfs];
+    allRecipes.forEach(recipe => {
+      if (recipe.creates?.item_id && !recipesByOutputId[recipe.creates.item_id]) {
+        recipesByOutputId[recipe.creates.item_id] = recipe;
+      }
+    });
+
+    document.getElementById('status').style.display = 'none';
+    document.getElementById('expansion-bar').style.display = 'flex';
+    document.getElementById('search-wrap').style.display = 'block';
+    populateProfFilter();
+    setupExpansion();
+    setupSearch();
+  } catch (e) {
+    document.getElementById('status').textContent =
+      'Failed to load data. Open this file through a local server (see start.bat).';
+    console.error(e);
+  }
+}
+
+function populateProfFilter() {
+  const sel = document.getElementById('prof-filter');
+  const prev = sel.value;
+  sel.innerHTML = '<option value="">All Professions</option>';
+
+  const types = [...new Set(
+    allRecipes.filter(r => isRecipeInExpansion(r)).map(r => r.type)
+  )]
+    .filter(t => PROFESSIONS[t])
+    .sort((a, b) => PROFESSIONS[a].localeCompare(PROFESSIONS[b]));
+
+  types.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t;
+    opt.textContent = PROFESSIONS[t];
+    sel.appendChild(opt);
+  });
+
+  if (prev && types.includes(parseInt(prev))) {
+    sel.value = prev;
+  } else if (types.includes(202)) {
+    sel.value = 202;
+  }
+}
+
+function getItemName(id) {
+  return itemsById[id]?.name || `Item #${id}`;
+}
+
+function getProfName(type) {
+  return PROFESSIONS[type] || `Profession ${type}`;
+}
+
+function setupExpansion() {
+  const buttons = document.querySelectorAll('.exp-btn');
+  const hasWotlk = allRecipes.some(r => r.learned_at_rank > 375);
+  if (!hasWotlk) {
+    document.querySelector('[data-exp="wotlk"]').classList.add('disabled');
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const exp = btn.dataset.exp;
+      if (exp === 'wotlk' && !hasWotlk) {
+        showExpNotice('WotLK data not loaded — add wotlk-professions.json to enable.');
+        return;
+      }
+      currentExpansion = exp;
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      clearExpNotice();
+      currentRecipe = null;
+      document.getElementById('result').classList.remove('visible');
+      document.getElementById('search').value = '';
+      document.getElementById('dropdown').classList.add('hidden');
+      populateProfFilter();
+    });
+  });
+}
+
+function showExpNotice(msg) {
+  let el = document.getElementById('exp-notice');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'exp-notice';
+    el.className = 'exp-notice';
+    document.getElementById('expansion-bar').after(el);
+  }
+  el.textContent = msg;
+}
+
+function clearExpNotice() {
+  const el = document.getElementById('exp-notice');
+  if (el) el.remove();
+}
+
+function setupSearch() {
+  const input = document.getElementById('search');
+  const dropdown = document.getElementById('dropdown');
+  const profSel = document.getElementById('prof-filter');
+
+  function runSearch() {
+    const q = input.value.trim().toLowerCase();
+    const typeFilter = profSel.value ? parseInt(profSel.value) : null;
+
+    if (q.length < 3) { dropdown.classList.add('hidden'); return; }
+
+    let matches = allRecipes.filter(r =>
+      r.name.toLowerCase().includes(q) &&
+      isRecipeInExpansion(r) &&
+      (!typeFilter || r.type === typeFilter)
+    );
+
+    if (matches.length === 0 && typeFilter) {
+      matches = allRecipes.filter(r =>
+        r.name.toLowerCase().includes(q) && isRecipeInExpansion(r)
+      );
+    }
+
+    matches = matches.slice(0, 60);
+
+    if (matches.length === 0) {
+      dropdown.innerHTML = '<div class="dd-empty">No recipes found</div>';
+    } else {
+      dropdown.innerHTML = matches.map(r => `
+        <div class="dd-item" data-id="${r.id}">
+          <span class="dd-item-name">${highlight(r.name, q)}</span>
+          <div class="dd-meta">
+            <span class="tag">${getProfName(r.type)}</span>
+          </div>
+        </div>
+      `).join('');
+
+      dropdown.querySelectorAll('.dd-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const recipe = allRecipes.find(r => r.id == el.dataset.id);
+          if (recipe) {
+            input.value = recipe.name;
+            dropdown.classList.add('hidden');
+            selectRecipe(recipe);
+          }
+        });
+      });
+    }
+
+    dropdown.classList.remove('hidden');
+  }
+
+  input.addEventListener('input', runSearch);
+  profSel.addEventListener('change', runSearch);
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.search-wrap')) dropdown.classList.add('hidden');
+  });
+}
+
+function highlight(text, q) {
+  const idx = text.toLowerCase().indexOf(q);
+  if (idx === -1) return text;
+  return text.slice(0, idx) +
+    `<strong style="color:var(--gold-bright)">${text.slice(idx, idx + q.length)}</strong>` +
+    text.slice(idx + q.length);
+}
+
+function selectRecipe(recipe) {
+  currentRecipe = recipe;
+  document.getElementById('qty').value = 1;
+  render();
+  document.getElementById('qty').oninput = () => render();
+}
+
+function render() {
+  if (!currentRecipe) return;
+  const qty = Math.max(1, parseInt(document.getElementById('qty').value) || 1);
+  const creates = currentRecipe.creates?.item_count || 1;
+
+  document.getElementById('result').classList.add('visible');
+  document.getElementById('recipe-title').textContent = currentRecipe.name;
+  document.getElementById('recipe-subtitle').textContent = getProfName(currentRecipe.type);
+  document.getElementById('creates-note').textContent =
+    creates > 1 ? `→ ${qty * creates} total` : '';
+
+  renderTree(currentRecipe, qty);
+  renderRawMats(currentRecipe, qty);
+}
+
+function renderTree(recipe, crafts) {
+  const container = document.getElementById('craft-tree');
+  container.innerHTML = '';
+  const reagents = recipe.reagents ?? [];
+  reagents.forEach(r => {
+    container.appendChild(buildTreeNode(r.item_id, r.item_count * crafts, new Set([recipe.creates?.item_id])));
+  });
+}
+
+function buildTreeNode(itemId, qty, visited) {
+  const recipe = recipesByOutputId[itemId];
+  const isCraftable = isCraftableInExpansion(itemId);
+  const wrapper = document.createElement('div');
+
+  const row = document.createElement('div');
+  row.className = 'tree-row' + (isCraftable ? ' has-recipe' : '');
+
+  const caret = document.createElement('span');
+  caret.className = 'tree-caret';
+  caret.textContent = isCraftable ? '▶' : '·';
+
+  const qtyEl = document.createElement('span');
+  qtyEl.className = 'tree-qty';
+  qtyEl.textContent = `×${qty}`;
+
+  const nameEl = document.createElement('span');
+  nameEl.className = 'tree-name' + (isCraftable ? ' craftable' : '');
+  nameEl.textContent = getItemName(itemId);
+
+  row.appendChild(caret);
+  row.appendChild(qtyEl);
+  row.appendChild(nameEl);
+
+  if (isCraftable) {
+    const badge = document.createElement('span');
+    badge.className = 'craft-badge';
+    badge.textContent = getProfName(recipe.type);
+    row.appendChild(badge);
+
+    const children = document.createElement('div');
+    children.className = 'tree-children';
+    let built = false;
+
+    row.addEventListener('click', () => {
+      const open = children.classList.toggle('open');
+      caret.textContent = open ? '▼' : '▶';
+
+      if (open && !built) {
+        built = true;
+        const creates = recipe.creates?.item_count || 1;
+        const batches = Math.ceil(qty / creates);
+        const newVisited = new Set(visited);
+        newVisited.add(itemId);
+
+        (recipe.reagents ?? []).forEach(r => {
+          const target = newVisited.has(r.item_id)
+            ? new Set([...newVisited, r.item_id])
+            : newVisited;
+          children.appendChild(buildTreeNode(r.item_id, r.item_count * batches, target));
+        });
+      }
+    });
+
+    wrapper.appendChild(row);
+    const nodeWrap = document.createElement('div');
+    nodeWrap.className = 'tree-node';
+    nodeWrap.appendChild(children);
+    wrapper.appendChild(nodeWrap);
+  } else {
+    wrapper.appendChild(row);
+  }
+
+  return wrapper;
+}
+
+function flattenMats(itemId, qty, visited, totals) {
+  if (visited.has(itemId)) { totals[itemId] = (totals[itemId] || 0) + qty; return; }
+  if (!isCraftableInExpansion(itemId)) { totals[itemId] = (totals[itemId] || 0) + qty; return; }
+
+  const recipe = recipesByOutputId[itemId];
+  const creates = recipe.creates?.item_count || 1;
+  const batches = Math.ceil(qty / creates);
+  const newVisited = new Set(visited);
+  newVisited.add(itemId);
+
+  (recipe.reagents ?? []).forEach(r => {
+    flattenMats(r.item_id, r.item_count * batches, newVisited, totals);
+  });
+}
+
+function renderRawMats(recipe, crafts) {
+  const totals = {};
+  const visited = new Set([recipe.creates?.item_id]);
+
+  (recipe.reagents ?? []).forEach(r => {
+    flattenMats(r.item_id, r.item_count * crafts, new Set(visited), totals);
+  });
+
+  const sorted = Object.entries(totals).sort(([, a], [, b]) => b - a);
+
+  document.getElementById('raw-mats').innerHTML = sorted.map(([id, count]) => `
+    <div class="mat-row">
+      <span class="mat-name">${getItemName(parseInt(id))}</span>
+      <span class="mat-qty">×${count}</span>
+    </div>
+  `).join('') || `<div style="color:var(--text-muted);font-size:.85rem">No materials found</div>`;
+}
+
+init();
+</script>
+</body>
+</html>
