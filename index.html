@@ -41,7 +41,23 @@
       line-height: 1.5;
       min-height: 100vh;
       padding: 32px 20px 60px;
+      transition: background-image 0.4s ease;
     }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: var(--exp-bg, none);
+      background-size: cover;
+      background-position: center top;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.4s ease, background-image 0.4s ease;
+    }
+
+    body > * { position: relative; z-index: 1; }
 
     /* ── Header ─────────────────────────────────────────────────────────── */
     header {
@@ -627,12 +643,18 @@ function getProfName(type) {
   return PROFESSIONS[type] || `Profession ${type}`;
 }
 
+function setExpansionBg(exp) {
+  document.body.style.setProperty('--exp-bg', `url('bg/${exp}.jpg')`);
+}
+
 function setupExpansion() {
   const buttons = document.querySelectorAll('.exp-btn');
   const hasWotlk = allRecipes.some(r => r.learned_at_rank > 375);
   if (!hasWotlk) {
     document.querySelector('[data-exp="wotlk"]').classList.add('disabled');
   }
+
+  setExpansionBg(currentExpansion);
 
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -645,6 +667,7 @@ function setupExpansion() {
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       clearExpNotice();
+      setExpansionBg(exp);
       currentRecipe = null;
       document.getElementById('result').classList.remove('visible');
       document.getElementById('search').value = '';
