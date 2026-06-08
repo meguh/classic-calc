@@ -216,7 +216,8 @@
     .dd-item + .dd-item { border-top: 1px solid var(--border); }
     .dd-item:first-child { border-radius: var(--radius) var(--radius) 0 0; }
     .dd-item:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
-    .dd-item:hover { background: var(--surface-3); }
+    .dd-item:hover,
+    .dd-item.active { background: var(--surface-3); }
 
     .dd-item-name { color: var(--text); font-size: 0.88rem; }
 
@@ -670,9 +671,31 @@ function clearExpNotice() {
 function setupSearch() {
   const input = document.getElementById('search');
   const dropdown = document.getElementById('dropdown');
+  let activeIdx = -1;
+
+  function setActive(idx) {
+    const items = dropdown.querySelectorAll('.dd-item');
+    items.forEach(el => el.classList.remove('active'));
+    activeIdx = Math.max(-1, Math.min(idx, items.length - 1));
+    if (activeIdx >= 0) {
+      items[activeIdx].classList.add('active');
+      items[activeIdx].scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  function pickItem(el) {
+    const recipe = allRecipes.find(r => r.id == el.dataset.id);
+    if (recipe) {
+      input.value = recipe.name;
+      dropdown.classList.add('hidden');
+      activeIdx = -1;
+      selectRecipe(recipe);
+    }
+  }
 
   function runSearch() {
     const q = input.value.trim().toLowerCase();
+    activeIdx = -1;
 
     if (q.length < 3) { dropdown.classList.add('hidden'); return; }
 
@@ -693,14 +716,7 @@ function setupSearch() {
       `).join('');
 
       dropdown.querySelectorAll('.dd-item').forEach(el => {
-        el.addEventListener('click', () => {
-          const recipe = allRecipes.find(r => r.id == el.dataset.id);
-          if (recipe) {
-            input.value = recipe.name;
-            dropdown.classList.add('hidden');
-            selectRecipe(recipe);
-          }
-        });
+        el.addEventListener('click', () => pickItem(el));
       });
     }
 
@@ -708,7 +724,26 @@ function setupSearch() {
   }
 
   input.addEventListener('input', runSearch);
-  profSel.addEventListener('change', runSearch);
+  input.addEventListener('keydown', e => {
+    if (dropdown.classList.contains('hidden')) return;
+    const items = dropdown.querySelectorAll('.dd-item');
+    if (!items.length) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActive(activeIdx + 1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActive(activeIdx <= 0 ? -1 : activeIdx - 1);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const target = activeIdx >= 0 ? items[activeIdx] : items[0];
+      if (target) pickItem(target);
+    } else if (e.key === 'Escape') {
+      dropdown.classList.add('hidden');
+      activeIdx = -1;
+    }
+  });
   document.addEventListener('click', e => {
     if (!e.target.closest('.search-wrap')) dropdown.classList.add('hidden');
   });
