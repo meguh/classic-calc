@@ -313,7 +313,26 @@
       gap: 14px;
     }
 
-    @media (max-width: 640px) { .panels { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) {
+      body { padding: 20px 14px 48px; }
+
+      header { margin-bottom: 20px; }
+      header h1 { font-size: 1.5rem; }
+
+      .expansion-bar { width: 100%; }
+      .exp-btn { flex: 1; padding: 7px 10px; }
+
+      .search-wrap { margin-bottom: 20px; }
+      #search { font-size: 1rem; }
+
+      .dropdown { max-height: 220px; }
+      .dd-item { padding: 12px 14px; }
+
+      .recipe-header-panel { flex-direction: column; align-items: flex-start; }
+      .qty-row { width: 100%; }
+
+      .panels { grid-template-columns: 1fr; }
+    }
 
     .panel {
       background: var(--surface);
@@ -457,8 +476,8 @@
 
   <div class="expansion-bar" id="expansion-bar" style="display:none">
     <button class="exp-btn" data-exp="classic">Classic</button>
-    <button class="exp-btn active" data-exp="tbc">The Burning Crusade</button>
-    <button class="exp-btn" data-exp="wotlk">Wrath of the Lich King</button>
+    <button class="exp-btn active" data-exp="tbc">TBC</button>
+    <button class="exp-btn" data-exp="wotlk">WotLK</button>
   </div>
 
   <div class="search-wrap" id="search-wrap" style="display:none">
