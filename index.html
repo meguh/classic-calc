@@ -510,7 +510,7 @@ const PROFESSIONS = {
   171: 'Alchemy',
   182: 'Herbalism',
   185: 'Cooking',
-  186: 'First Aid',
+  186: 'Mining',
   197: 'Tailoring',
   202: 'Engineering',
   333: 'Enchanting',
@@ -541,7 +541,10 @@ function isRecipeInExpansion(recipe) {
 
 function isCraftableInExpansion(itemId) {
   const recipe = recipesByOutputId[itemId];
-  return !!recipe && CRAFT_TYPES.has(recipe.type) && isRecipeInExpansion(recipe);
+  if (!recipe || !CRAFT_TYPES.has(recipe.type) || !isRecipeInExpansion(recipe)) return false;
+  const item = itemsById[itemId];
+  if (item?.sources?.some(s => s.type === 1 || s.type === 8)) return false;
+  return true;
 }
 
 async function tryFetch(url) {
