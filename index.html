@@ -562,8 +562,9 @@ function isRecipeInExpansion(recipe) {
 function isCraftableInExpansion(itemId) {
   const recipe = recipesByOutputId[itemId];
   if (!recipe || !CRAFT_TYPES.has(recipe.type) || !isRecipeInExpansion(recipe)) return false;
-  if (recipe.name.startsWith('Transmute') || recipe.name.endsWith('Shatter')) return false;
+  if (recipe.name.startsWith('Transmute')) return false;
   const item = itemsById[itemId];
+  if (item?.name?.startsWith('Mote of')) return false;
   if (item?.sources?.some(s => s.type === 1 || s.type === 8)) return false;
   return true;
 }
