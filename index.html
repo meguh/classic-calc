@@ -182,26 +182,6 @@
 
     #search::placeholder { color: var(--text-muted); }
 
-    #prof-filter {
-      padding: 11px 12px;
-      background: var(--surface);
-      border: 1px solid var(--border-md);
-      border-radius: var(--radius);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.85rem;
-      outline: none;
-      cursor: pointer;
-      transition: border-color 0.2s;
-      appearance: none;
-      padding-right: 28px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237a7268' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-    }
-
-    #prof-filter:focus { border-color: var(--border-focus); }
-
     /* ── Dropdown ────────────────────────────────────────────────────────── */
     .dropdown {
       position: absolute;
@@ -492,9 +472,6 @@
         </span>
         <input id="search" type="text" placeholder="Search recipes..." autocomplete="off" spellcheck="false">
       </div>
-      <select id="prof-filter">
-        <option value="">All Professions</option>
-      </select>
     </div>
     <div id="dropdown" class="dropdown hidden"></div>
   </div>
@@ -600,7 +577,6 @@ async function init() {
     document.getElementById('status').style.display = 'none';
     document.getElementById('expansion-bar').style.display = 'flex';
     document.getElementById('search-wrap').style.display = 'block';
-    populateProfFilter();
     setupExpansion();
     setupSearch();
   } catch (e) {
@@ -610,30 +586,6 @@ async function init() {
   }
 }
 
-function populateProfFilter() {
-  const sel = document.getElementById('prof-filter');
-  const prev = sel.value;
-  sel.innerHTML = '<option value="">All Professions</option>';
-
-  const types = [...new Set(
-    allRecipes.filter(r => isRecipeInExpansion(r)).map(r => r.type)
-  )]
-    .filter(t => PROFESSIONS[t])
-    .sort((a, b) => PROFESSIONS[a].localeCompare(PROFESSIONS[b]));
-
-  types.forEach(t => {
-    const opt = document.createElement('option');
-    opt.value = t;
-    opt.textContent = PROFESSIONS[t];
-    sel.appendChild(opt);
-  });
-
-  if (prev && types.includes(parseInt(prev))) {
-    sel.value = prev;
-  } else if (types.includes(202)) {
-    sel.value = 202;
-  }
-}
 
 function getItemName(id) {
   return itemsById[id]?.name || `Item #${id}`;
@@ -672,7 +624,6 @@ function setupExpansion() {
       document.getElementById('result').classList.remove('visible');
       document.getElementById('search').value = '';
       document.getElementById('dropdown').classList.add('hidden');
-      populateProfFilter();
     });
   });
 }
@@ -696,27 +647,15 @@ function clearExpNotice() {
 function setupSearch() {
   const input = document.getElementById('search');
   const dropdown = document.getElementById('dropdown');
-  const profSel = document.getElementById('prof-filter');
 
   function runSearch() {
     const q = input.value.trim().toLowerCase();
-    const typeFilter = profSel.value ? parseInt(profSel.value) : null;
 
     if (q.length < 3) { dropdown.classList.add('hidden'); return; }
 
-    let matches = allRecipes.filter(r =>
-      r.name.toLowerCase().includes(q) &&
-      isRecipeInExpansion(r) &&
-      (!typeFilter || r.type === typeFilter)
-    );
-
-    if (matches.length === 0 && typeFilter) {
-      matches = allRecipes.filter(r =>
-        r.name.toLowerCase().includes(q) && isRecipeInExpansion(r)
-      );
-    }
-
-    matches = matches.slice(0, 60);
+    const matches = allRecipes
+      .filter(r => r.name.toLowerCase().includes(q) && isRecipeInExpansion(r))
+      .slice(0, 60);
 
     if (matches.length === 0) {
       dropdown.innerHTML = '<div class="dd-empty">No recipes found</div>';
