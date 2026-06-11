@@ -823,7 +823,7 @@ function isCraftableInExpansion(itemId) {
   if (recipe.name.startsWith('Transmute')) return false;
   const item = itemsById[itemId];
   if (item?.name?.startsWith('Mote of')) return false;
-  if (item?.sources?.some(s => s.type === 1 || s.type === 8)) return false;
+  if (item?.sources?.some(s => s.type === 1 || s.type === 8 || s.type === 11)) return false;
   return true;
 }
 
