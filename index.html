@@ -482,17 +482,6 @@
       font-size: 11px;
     }
 
-    .recipe-row .rnew {
-      flex-shrink: 0;
-      font-size: 9.5px;
-      font-weight: bold;
-      color: #1a1405;
-      background: var(--gold-soft);
-      border-radius: 2px;
-      padding: 0 3px;
-      text-transform: uppercase;
-    }
-
     .list-empty {
       padding: 18px 8px;
       color: var(--text-muted);
@@ -957,9 +946,7 @@
             <button class="filter-btn" id="filter-btn">Filter <span class="caret">▼</span></button>
             <div class="filter-menu hidden" id="filter-menu">
               <label><input type="checkbox" data-filter="hideTrivial"> Hide trivial (grey)</label>
-              <label><input type="checkbox" data-filter="hideUnlearned"> Hide above my skill</label>
-              <label id="filter-new-label"><input type="checkbox" data-filter="newOnly"> New in Forever only</label>
-            </div>
+              <label><input type="checkbox" data-filter="hideUnlearned"> Hide above my skill</label>            </div>
           </div>
         </div>
         <div class="recipe-list" id="recipe-list"></div>
@@ -1254,9 +1241,7 @@ function showView() {
     btn.addEventListener('click', () => selectProfession(Number(btn.dataset.type)));
   });
 
-  document.getElementById('window-title').textContent = currentProf ? getProfName(currentProf) : 'Professions';
-  document.getElementById('filter-new-label').style.display = currentDataset === 'forever' ? '' : 'none';
-  renderSkillBar();
+  document.getElementById('window-title').textContent = currentProf ? getProfName(currentProf) : 'Professions';  renderSkillBar();
   renderList();
   if (!currentRecipe) currentRecipe = firstVisibleRecipe();
   renderDetail();
@@ -1280,9 +1265,7 @@ function visibleRecipes() {
   const f = prefs.filters;
   return allRecipes.filter(r => {
     if (r.type !== currentProf || !r.reagents?.length || !isRecipeInExpansion(r)) return false;
-    if (q && !r.name.toLowerCase().includes(q)) return false;
-    if (f.newOnly && currentDataset === 'forever' && !r.is_new) return false;
-    const d = difficulty(r, skill);
+    if (q && !r.name.toLowerCase().includes(q)) return false;    const d = difficulty(r, skill);
     if (f.hideTrivial && d === 'grey') return false;
     if (f.hideUnlearned && d === 'unlearned') return false;
     return true;
@@ -1349,7 +1332,6 @@ function renderList() {
     return;
   }
 
-  const showNew = currentDataset === 'forever';
   listEl.innerHTML = groupRecipes(list).map(([name, g]) => {
     const isCollapsed = collapsed.has(name);
     const rows = isCollapsed ? '' : g.recipes.map(r => {
@@ -1358,9 +1340,7 @@ function renderList() {
       const makes = r.creates?.item_count > 1 ? `<span class="rmeta">[${r.creates.item_count}]</span>` : '';
       return `<button class="recipe-row${r === currentRecipe ? ' selected' : ''}${d === 'unlearned' ? ' unlearned' : ''}" data-idx="${allRecipes.indexOf(r)}">
         <span class="chev ${d}">${chev}</span>
-        <span class="rname">${esc(r.name)}</span>
-        ${showNew && r.is_new ? '<span class="rnew">New</span>' : ''}
-        ${makes}
+        <span class="rname">${esc(r.name)}</span>        ${makes}
       </button>`;
     }).join('');
     return `<button class="cat-header" data-cat="${esc(name)}"><span>${esc(name)}</span><span class="cat-toggle">${isCollapsed ? '+' : '−'}</span></button>${rows}`;
