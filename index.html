@@ -8,8 +8,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Palette and type follow worldofwarcraft.blizzard.com/forever (its "wow-color" and Forever
-       theme tokens). Headings there use Friz Quadrata, a licensed font we can't redistribute:
+    /* Forever palette and type follow worldofwarcraft.blizzard.com/forever (its "wow-color" and
+       Forever theme tokens); each other expansion overrides the colour tokens below via
+       <html data-theme>. Headings there use Friz Quadrata, a licensed font we can't redistribute:
        it's used when installed locally, otherwise Marcellus stands in. */
     :root {
       --bg:          #011c2b;   /* Forever teal-800, page background */
@@ -25,10 +26,15 @@
       --accent-hi:   #00afd7;   /* teal-200 */
       --accent-tint: rgba(0, 147, 178, 0.14);
       --accent-line: rgba(0, 175, 215, 0.45);
-      --green:       #116569;   /* Forever green-300, primary action */
-      --green-hi:    #146f73;
-      --green-lo:    #0f6064;
-      --navy-btn:    #114f72;   /* teal-600, secondary action */
+      --btn-hi:      #146f73;   /* Forever green-200/400, primary action */
+      --btn-lo:      #0f6064;
+      --btn2:        #114f72;   /* teal-600, secondary action */
+      --btn2-hi:     #145a80;
+      --nav-bg:      rgba(10, 38, 44, 0.88);
+      --nav-btn-a:   #4b9a8a;
+      --nav-btn-b:   #3a8475;
+      --veil:        1, 28, 43;  /* page colour as r,g,b for the art overlay */
+      --glow:        0, 175, 215;
       --gold:        #ffd254;   /* wow gold-400, links */
       --camel:       #c6af8d;   /* camel-400 */
       --heading:     #f3eee2;   /* beige-200 */
@@ -44,6 +50,82 @@
       --shadow:      0 24px 60px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);
       --font-heading: 'Friz Quadrata TT', 'Friz Quadrata', 'Marcellus', Georgia, serif;
       --font-body:    'Open Sans', Arial, Helvetica, sans-serif;
+    }
+
+    /* Classic: oxblood + ember from the Classic key art, Blizzard's old Classic-site gold and
+       leather-red call to action */
+    :root[data-theme="classic"] {
+      --bg:          #1a0b08;
+      --bg-2:        #341512;
+      --card:        rgba(22, 11, 8, 0.86);
+      --card-solid:  #1c0e0a;
+      --accent:      #f79d1c;
+      --accent-hi:   #f8b700;
+      --accent-tint: rgba(247, 157, 28, 0.13);
+      --accent-line: rgba(248, 183, 0, 0.45);
+      --btn-hi:      #b8321a;
+      --btn-lo:      #8a1a07;
+      --btn2:        #4a2a1a;
+      --btn2-hi:     #5e3826;
+      --nav-bg:      rgba(53, 32, 17, 0.9);
+      --nav-btn-a:   #a52a12;
+      --nav-btn-b:   #7d1a08;
+      --veil:        26, 11, 8;
+      --glow:        248, 183, 0;
+      --gold:        #f8b700;
+      --camel:       #e08a36;
+      --heading:     #ebdec2;
+      --blue:        #f7d66c;
+    }
+
+    /* The Burning Crusade: fel green on Outland's olive-black */
+    :root[data-theme="tbc"] {
+      --bg:          #0b0e08;
+      --bg-2:        #1e2218;
+      --card:        rgba(12, 15, 9, 0.86);
+      --card-solid:  #0f130b;
+      --accent:      #a6d824;
+      --accent-hi:   #dfe639;
+      --accent-tint: rgba(166, 216, 36, 0.13);
+      --accent-line: rgba(197, 207, 74, 0.45);
+      --btn-hi:      #5e8f1d;
+      --btn-lo:      #3d6411;
+      --btn2:        #3a4426;
+      --btn2-hi:     #4a5631;
+      --nav-bg:      rgba(30, 34, 24, 0.9);
+      --nav-btn-a:   #6d9e24;
+      --nav-btn-b:   #4c7616;
+      --veil:        11, 14, 8;
+      --glow:        166, 216, 36;
+      --gold:        #f8b700;
+      --camel:       #9fb36a;
+      --heading:     #eef2d6;
+      --blue:        #c5e86a;
+    }
+
+    /* Wrath of the Lich King: frozen navy and ice blue */
+    :root[data-theme="wotlk"] {
+      --bg:          #08121b;
+      --bg-2:        #1d445d;
+      --card:        rgba(8, 18, 27, 0.86);
+      --card-solid:  #0b1824;
+      --accent:      #2e95cf;
+      --accent-hi:   #88bcd3;
+      --accent-tint: rgba(46, 149, 207, 0.15);
+      --accent-line: rgba(136, 188, 211, 0.5);
+      --btn-hi:      #2f7fae;
+      --btn-lo:      #1d5a80;
+      --btn2:        #26445a;
+      --btn2-hi:     #31566f;
+      --nav-bg:      rgba(15, 33, 47, 0.9);
+      --nav-btn-a:   #3d8db8;
+      --nav-btn-b:   #296b92;
+      --veil:        8, 18, 27;
+      --glow:        136, 188, 211;
+      --gold:        #bde4f3;
+      --camel:       #88bcd3;
+      --heading:     #eaf7fc;
+      --blue:        #bde4f3;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -69,7 +151,7 @@
       position: fixed;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(1, 28, 43, 0.2) 0%, rgba(1, 28, 43, 0.92) 70%),
+        linear-gradient(180deg, rgba(var(--veil), 0.2) 0%, rgba(var(--veil), 0.92) 70%),
         var(--exp-bg, none) center top / cover no-repeat;
       opacity: 0.7;
       pointer-events: none;
@@ -88,7 +170,7 @@
       align-items: center;
       gap: 20px;
       padding: 8px 10px 8px 14px;
-      background: rgba(10, 38, 44, 0.88);
+      background: var(--nav-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -106,7 +188,7 @@
       width: 30px;
       height: 30px;
       border-radius: 9px;
-      background: radial-gradient(circle at 35% 30%, var(--accent-hi), var(--navy-btn) 70%);
+      background: radial-gradient(circle at 35% 30%, var(--accent-hi), var(--btn2) 70%);
       border: 2px solid var(--camel);
       display: grid;
       place-items: center;
@@ -147,7 +229,7 @@
     }
 
     .exp-btn:hover:not(.disabled) { color: var(--text); }
-    .exp-btn.active { color: var(--heading); border-bottom-color: var(--accent); text-shadow: 0 0 12px rgba(0, 175, 215, 0.35); }
+    .exp-btn.active { color: var(--heading); border-bottom-color: var(--accent); text-shadow: 0 0 12px rgba(var(--glow), 0.35); }
     .exp-btn.disabled { opacity: 0.35; cursor: default; }
 
     .cart-btn {
@@ -157,7 +239,7 @@
       gap: 8px;
       height: 38px;
       padding: 0 16px;
-      background: linear-gradient(180deg, #4b9a8a, #3a8475);
+      background: linear-gradient(180deg, var(--nav-btn-a), var(--nav-btn-b));
       border: none;
       border-radius: var(--radius);
       color: var(--text);
@@ -595,7 +677,7 @@
       font-size: 0.72rem;
       font-weight: 500;
       color: var(--blue);
-      background: rgba(0, 147, 178, 0.14);
+      background: var(--accent-tint);
       border-radius: var(--radius-sm);
       padding: 2px 9px;
     }
@@ -702,11 +784,11 @@
     .btn-primary {
       height: 38px;
       padding: 0 22px;
-      border: 1px solid var(--green-hi);
+      border: 1px solid var(--btn-hi);
       border-radius: var(--radius);
       background:
         radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%),
-        linear-gradient(180deg, var(--green-hi), var(--green-lo));
+        linear-gradient(180deg, var(--btn-hi), var(--btn-lo));
       color: var(--text);
       font-family: var(--font-heading);
       font-size: 1rem;
@@ -724,8 +806,8 @@
     .btn-ghost {
       height: 34px;
       padding: 0 16px;
-      background: linear-gradient(180deg, #145a80, var(--navy-btn));
-      border: 1px solid rgba(0, 175, 215, 0.3);
+      background: linear-gradient(180deg, var(--btn2-hi), var(--btn2));
+      border: 1px solid rgba(var(--glow), 0.3);
       border-radius: var(--radius);
       color: var(--text);
       font-size: 0.84rem;
@@ -759,6 +841,7 @@
       flex-direction: column;
       background: var(--card-solid);
       border-left: 1px solid var(--border);
+      transition: transform 0.25s ease, background 0.3s;
       box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
       transform: translateX(100%);
       transition: transform 0.25s ease;
@@ -1462,6 +1545,7 @@ function setupWindow() {
 function setExpansionBg(exp) {
   const bg = EXPANSIONS[exp].bg || exp;
   document.body.style.setProperty('--exp-bg', `url('bg/${bg}-light.jpg')`);
+  document.documentElement.dataset.theme = exp;
 }
 
 function setupExpansion() {
