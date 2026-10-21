@@ -104,7 +104,8 @@
     .doll { background: radial-gradient(ellipse at 50% 45%, color-mix(in srgb, var(--accent) 16%, var(--panel)) 0%, var(--panel) 62%); border: 1px solid var(--line); border-radius: 4px; padding: 14px; }
     .doll-grid { display: grid; grid-template-columns: minmax(0, 1fr) 200px minmax(0, 1fr); gap: 8px; }
     .doll-col { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; }
-    .doll-col.r .item { flex-direction: row-reverse; text-align: right; }
+    .doll-col .item { align-self: flex-start; }
+    .doll-col.r .item { flex-direction: row-reverse; text-align: right; align-self: flex-end; }
     .figure { display: flex; align-items: center; justify-content: center; }
     .figure img { width: 100%; height: auto; mix-blend-mode: lighten; opacity: .9;
       -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%); }
@@ -171,6 +172,28 @@
     .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .78rem; margin-top: 10px; }
     .foot { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); padding-top: 14px; }
 
+    /* hover tooltip, styled like the in-game item box */
+    [data-tip] { cursor: help; }
+    .tipped { border-bottom: 1px dotted color-mix(in srgb, var(--c) 50%, transparent); }
+    #tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); padding: 10px 14px 9px; text-align: center; pointer-events: none;
+      background: rgba(3, 3, 5, .96); border: 1px solid #3d3527; box-shadow: 0 0 0 1px #000, 0 10px 30px rgba(0, 0, 0, .7); font-size: .8rem; line-height: 1.45; }
+    #tip[hidden] { display: none; }
+    .tt-n { font-weight: 600; font-size: .95rem; color: var(--c); }
+    .tt-runes { color: var(--unique); letter-spacing: .02em; }
+    .tt-base { color: #a8a8ad; }
+    .tt-req { color: #e3e3e3; margin-top: 2px; }
+    .tt-mods { color: #7b8cff; margin-top: 6px; }
+    .tt-sub { color: #e3e3e3; font-weight: 600; margin-top: 4px; font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; }
+    .tt-want { text-align: left; margin: 6px 0 0; padding-left: 1.4em; color: #7b8cff; min-width: min(260px, calc(100vw - 48px)); }
+    .tt-want li { margin: 2px 0; }
+    .tt-want li span:first-child { color: #c9cdf9; }
+    .tt-v { float: right; margin-left: 12px; color: var(--muted); white-space: nowrap; }
+    .tt-v b, .tt-key b { color: #e8b34b; font-weight: 600; }
+    .tt-key { color: var(--muted); font-size: .7rem; text-align: right; margin-top: 2px; }
+    .tt-hint { color: #a8a8ad; font-size: .74rem; margin-top: 6px; }
+    .tt-note { color: #e8c37a; font-style: italic; margin-top: 8px; padding-top: 6px; border-top: 1px solid #24262c; }
+    .tt-foot { color: #6b6c72; font-size: .68rem; margin-top: 6px; }
+
     @media (max-width: 1000px) {
       .eq { grid-template-columns: minmax(0, 1fr); }
     }
@@ -184,7 +207,7 @@
     @media (max-width: 600px) {
       .doll-grid { grid-template-columns: minmax(0, 1fr); }
       .figure { display: none; }
-      .doll-col.r .item { flex-direction: row; text-align: left; }
+      .doll-col.r .item { flex-direction: row; text-align: left; align-self: flex-start; }
       .title h1 { font-size: 1.35rem; }
       .banner { height: 84px; }
       .banner-title { font-size: 1.15rem; }
@@ -207,6 +230,7 @@
     </div>
   </div>
 
+  <div id="tip" role="tooltip" hidden></div>
   <script>
   /* Gear per phase comes from the build brief's three videos (V1 = Poison AFK mapper, V2 = S14 Shockwave guide,
      V3 = S12 Poison summoner) plus the S14 beta patch notes. Edit the BUILDS data below to change any phase.
@@ -339,7 +363,7 @@
           ['Gloves', '+Shapeshifting FCR gloves', 'rare'],
           ['Belt', '~20 FCR belt', 'rare'],
           ['Boots', 'Tri-res boots', 'magic'],
-          ['Ring 1', 'FCR ring', 'rare'], ['Ring 2', 'Constricting Ring', 'unique'],
+          ['Ring 1', 'FCR ring', 'rare'], ['Ring 2', 'Constricting Loop', 'unique'],
         ],
         charms: [['Grand', '~9 Shapeshifting skillers', 'magic', 'With FRW or FHR if possible'], ['Unique', 'Hellfire Torch', 'unique'], ['Unique', 'Annihilus', 'unique']],
         swap: [['Swap', 'Call to Arms', 'runeword'], ['Swap offhand', 'Lidless Wall', 'unique']],
@@ -381,7 +405,7 @@
     'Arachnid Mesh': 'arachnid_mesh.png', 'Max-res belt': 'heavy_belt.png',
     'Marrowwalk': 'chain_boots.png', 'Tri-res boots': 'boots.png',
     'Stone of Jordan': 'ring_3.png', "Bul-Kathos' Wedding Band": 'ring_1.png', 'Raven Frost': 'ring_2.png', 'Res ring': 'ring_4.png', 'Half Freeze Duration ring': 'ring_4.png',
-    'FCR / res ring': 'ring_5.png', 'FCR ring': 'ring_2.png', 'Constricting Ring': 'ring_5.png',
+    'FCR / res ring': 'ring_5.png', 'FCR ring': 'ring_2.png', 'Constricting Loop': 'ring_5.png',
     'Summoning grand charms': 'grand_charm_1.png', 'Shapeshifting skillers as you find them': 'grand_charm_2.png', '~9 Shapeshifting skillers': 'grand_charm_2.png',
     'Hellfire Torch': 'hellfire_torch.png', 'Hellfire Torch — self-farmed': 'hellfire_torch.png', 'Annihilus': 'annihilus.png', 'Annihilus — self-farmed': 'annihilus.png',
     'Call to Arms': 'crystal_sword.png', 'Lidless Wall': 'lidless_wall.png', 'Teleport-charge staff': 'gnarled_staff.png', 'Witchwild String': 'witchwild_string.png', 'Cheap leech / survival pieces': null,
@@ -394,17 +418,152 @@
   const imgTag = (file, cls) => file ? `<img src="img/${file}" alt="" loading="lazy" class="${cls || ''}${file.endsWith('.gif') ? ' gif' : ''}">` : '';
   const skillImg = (n) => SKILL_IMG[n] ? `<img class="sk-img" src="img/${SKILL_IMG[n] === 1 ? n.toLowerCase().replace(/ /g, '_') : SKILL_IMG[n]}.png" alt="" loading="lazy">` : '';
 
-  function item(row, k) {
-    const [slot, name, rar] = row;
+  /* Item stats from the PD2 wiki (wiki.projectdiablo2.com), pulled 2026-10-21: [base, runes, required level, mods].
+     The wiki can lag behind Season 14 changes, so the tooltip says so. */
+  const STATS = {
+    "Spirit Keeper": ["Earth Spirit","","67",["+2 to Druid Skills","+20% Faster Hit Recovery","+2 to [Random Druid Skill] (Druid Only)","+[170-190]% Enhanced Defense","You May Now Summon 1 Additional Spirit","+[5-8]% to Maximum Poison Resist","Fire Resist +[20-30]%","+[4-6] Lightning Absorb"]],
+    "Aldur's set helm": ["Hunter's Guise (exceptional)","","36",["+[1-2] to Summoning Skills (Druid Only)","+[1-2] to Druid Skills","+25% Faster Hit Recovery","+90 Defense","Regenerate Mana 17%","Cold Resist +[40-50]%","+5 to Light Radius","+15 to Energy (2 Items)","+15 to Energy (3 Items)","+15 to Energy (Complete Set)"]],
+    "Mara's Kaleidoscope": ["Amulet","","67",["+2 to All Skills","+[4-6] to All Attributes","All Resistances +[20-30]"]],
+    "Plague": ["3-Socket Weapons","Cham • Fal • Um","67",["25% Chance to Cast Level 35 Poison Nova on Striking","30% Chance to Cast Level 35 Lower Resist when Struck","Level [15-17] Cleansing Aura when Equipped","+[1-2] to All Skills","+10 to Strength","+20% Faster Cast Rate","+[340-380]% Damage to Demons","-20% to Enemy Poison Resistance","[0-37]% Deadly Strike (0.375% per Character Level)","+10% Chance of Open Wounds","+120 Open Wounds Damage per Second","Freezes Target +3"]],
+    "Heart of the Oak": ["4-Socket Staves/Tipped Maces","Ko • Vex • Pul • Thul","55",["+3 to All Skills","+30% Faster Cast Rate","+75% Damage to Demons","+100 to Attack Rating against Demons","Adds 3-14 Cold Damage","7% Mana Stolen per Hit","+10 to Dexterity","Replenish Life +20","Increase Maximum Mana 15%","All Resistances +[20-30]","Level 4 Oak Sage (25 Charges)","Level 14 Raven (60 Charges)"]],
+    "Spirit Ward": ["Ward","","68",["35% Chance to Cast Level 10 Lesser Fade when Struck","+2 to [Random Class] Skills","+25% Faster Block Rate","[20-30]% Increased Chance of Blocking","+[130-180]% Enhanced Defense","All Resistances +[20-30]","+[6-11] Cold Absorb"]],
+    "Steel Carapace": ["Shadow Plate","","66",["4% Chance to Cast Level 26 Iron Maiden when Struck","+[1-2] to All Skills","+40% Faster Hit Recovery","+[250-280]% Enhanced Defense","Cold Resist +[40-60]%","Physical Damage Taken Reduced by [19-24]","Attacker Takes Damage of [1400-1600]","Repairs 1 Durability in 10 Seconds"]],
+    "Arkaine's Valor": ["Balrog Skin","","85",["+[1-2] to All Skills","+40% Faster Hit Recovery","+[150-180]% Enhanced Defense","+[1-99] to Vitality (+1 per Character Level)","Physical Damage Taken Reduced by [10-15]"]],
+    "Occultist": ["Crusader Gauntlets","","70",["+20% Faster Cast Rate","[25-35]% Reduced Curse Duration","Hit Blinds Target","[80-100]% Enhanced Defense","Increase Maximum Mana [25-35]%"]],
+    "Arachnid Mesh": ["Spiderweb Sash","","80",["+1 to All Skills","+10% Faster Cast Rate","Slows Target by 20%","+[90-120]% Enhanced Defense","Increase Maximum Mana [5-10]%","Level 3 Venom (31 Charges)"]],
+    "Marrowwalk": ["Boneweave Boots","","66",["+20% Faster Run/Walk","+[1-2] to Skeleton Mastery","+[170-200]% Enhanced Defense","+[10-20] to Strength","+17 to Dexterity","Regenerate Mana [10-20]%","Heal Stamina Plus 10%","Cannot Be Frozen"]],
+    "Stone of Jordan": ["Ring","","29",["+1 to All Skills","Adds 1-120 Lightning Damage","+[20-40] to Mana","Increase Maximum Mana [15-20]%"]],
+    "Bul-Kathos' Wedding Band": ["Ring","","58",["+1 to All Skills","[4-6]% Life Stolen per Hit","+[0-49] to Life (+0.5 per Character Level)","+50 Maximum Stamina"]],
+    "Raven Frost": ["Ring","","45",["+[150-250] to Attack Rating","Adds 15-45 Cold Damage","+[15-20] to Dexterity","+40 to Mana","Cold Absorb +5%","Cannot Be Frozen"]],
+    "Call to Arms": ["5-Socket Melee Weapons (Removed from Bows/Crossbows)","Amn • Ral • Mal • Ist • Ohm","57",["+1 to All Skills","+40% Increased Attack Speed","+[245-285]% Enhanced Damage","Adds 5-30 Fire Damage","7% Life Stolen per Hit","Prevent Monster Heal","+[2-6] to Battle Command","+[2-6] to Battle Orders","+[1-3] to Battle Cry","Replenish Life +12","30% Better Chance of Getting Magic Items"]],
+    "Lidless Wall": ["Grim Shield","","41",["+1 to All Skills","+40% Faster Cast Rate","+[80-130]% Enhanced Defense","+10 to Energy","Increase Maximum Mana 10%","+[4-6] to Mana after each Kill","+1 to Light Radius"]],
+    "Innocence": ["4-Socket Chests","Gul • Lem • Zod • Hel","69",["Indestructible","Level [8-12] Blade Shield When Equipped","+2 to All Skills","+20% Chance of Crushing Blow","+[200-275]% Enhanced Defense","+4% to Maximum Poison Resist","Poison Length Reduced by 50%","Attacker Takes Damage of [600-800]","50% Extra Gold from Monsters","Requirements -25%"]],
+    "Memory": ["4-Socket Staves","Lum • Io • Sol • Eth","37",["+4 to All Skills","+33% Faster Cast Rate","+9 to Minimum Damage","-25% Target Defense","+2 to Energy Shield (Sorceress Only)","+2 to Static Field (Sorceress Only)","+50% Enhanced Defense","+10 to Vitality","+10 to Energy","Increase Maximum Mana [25-40]%","Magic Damage Taken Reduced by 7"]],
+    "Insight staff": ["4-Socket Staves/Polearms/Spears","Ral • Tir • Tal • Sol","27",["Level [12-17] Meditation Aura when Equipped","+35% Faster Cast Rate","+[180-240]% Enhanced Damage","+9 to Minimum Damage","[180-250]% Bonus to Attack Rating","Adds 5-30 Fire Damage","+75 Poison Damage over 5 Seconds","+[15-25]% Chance of Critical Strike","+[10-20] to All Attributes","+2 to Mana after each Kill","23% Better Chance of Getting Magic Items"]],
+    "Insight": ["4-Socket Staves/Polearms/Spears","Ral • Tir • Tal • Sol","27",["Level [12-17] Meditation Aura when Equipped","+35% Faster Cast Rate","+[180-240]% Enhanced Damage","+9 to Minimum Damage","[180-250]% Bonus to Attack Rating","Adds 5-30 Fire Damage","+75 Poison Damage over 5 Seconds","+[15-25]% Chance of Critical Strike","+[10-20] to All Attributes","+2 to Mana after each Kill","23% Better Chance of Getting Magic Items"]],
+    "Smoke": ["2-Socket Chests","Nef • Lum","37",["+20% Faster Hit Recovery","+75% Enhanced Defense","+280 Defense vs. Missile","+10 to Energy","All Resistances +[30-50]","-1 to Light Radius","Level 6 Weaken (18 Charges)"]],
+    "Witchwild String": ["Short Siege Bow","","39",["14% Chance to Cast Level 31 Amplify Damage on Striking","Fires Magic Arrows (Level 20)","+[150-190]% Enhanced Damage","+[0-49]% Deadly Strike (0.5% per Character Level)","All Resistances +[20-40]","Socketed [2-4]"]],
+    "Cerebus' Bite": ["Blood Spirit","","63",["+[3-4] to Shape Shifting Skills (Druid Only)","[80-120]% Bonus to Attack Rating","+33% Deadly Strike","+33% Chance of Open Wounds","+360 Open Wounds Damage per Second","+[1-2] to Feral Rage (Druid Only)","+[1-2] to Hunger (Druid Only)","+[130-140]% Enhanced Defense"]],
+    "Fenris": ["Alpha Helm (exceptional)","","40",["-[5-10]% to Enemy Physical Resistance","You May Summon 2 Additional Spirit Wolves","+[1-2] to Druid Skill Levels","-25% Target Defense","+2 to Heart of Wolverine (Druid Only)","+2 to Summon Spirit Wolf (Druid Only)","+[160-220] Defense","+[20-30] to Dexterity"]],
+    "Denmother (FCR)": ["Sun Spirit","","58",["+2 to Druid Skill Levels","You May Summon 2 Additional Grizzlies","You May No Longer Summon Wolves","+20% Faster Cast Rate","+[2-3] to Summon Grizzly (Druid Only)","+[2-3] to Maul (Druid Only)","+125% Enhanced Defense","Replenish Life +[25-35]","[50-80]% Extra Gold from Monsters","Socketed ([2-3])"]],
+    "Death Cleaver": ["Berserker Axe","","70",["+40% Increased Attack Speed","+[300-350]% Enhanced Damage","+[20-30] to Minimum Damage","-33% Target Defense","+40% Deadly Strike","+50% Deadly Strike Multiplier","+[6-9] Life after each Kill"]],
+    "Headstriker": ["Battle Sword","","39",["+20% Increased Attack Speed","+[150-200]% Enhanced Damage","+[1-99] to Maximum Damage (+1 per Character Level)","+[10-15]% Maximum Deadly Strike","+[0-74]% Deadly Strike (0.75% per Character Level)","Prevent Monster Heal","+15 to Strength"]],
+    "Lance Guard": ["Barbed Shield","","35",["+30% Faster Hit Recovery","+25% Deadly Strike Multiplier","+[25-35]% Deadly Strike","+[70-120]% Enhanced Defense","+[12-16] to Dexterity","+[2-247] to Life (+2.5 per Character Level)","Attacker Takes Damage of [165-265]"]],
+    "Wraithskin": ["Diamond Mail","","54",["20% Increased Attack Speed","+[60-100]% Enhanced Damage","Maximum Deadly Strike +10%","+25% Deadly Strike Multiplier","+130% Enhanced Defense","Curse Resistance +[30-40]%","+[4-6] Life after each Kill"]],
+    "Constricting Loop": ["Ring","","65",["+20% Faster Cast Rate","Hit Causes Monsters to Flee 12%","+[12-18] to Strength","Drain Life -20","+[4-6] Life after each Kill"]],
+    "Hellfire Torch": ["Large Charm","","75",["+2 to [Random Class] Skills","+[30-60] to Vitality","+[10-20] to Energy","All Resistances +[10-20]","+[4-8] to Light Radius"]],
+    "Hellfire Torch — self-farmed": ["Large Charm","","75",["+2 to [Random Class] Skills","+[30-60] to Vitality","+[10-20] to Energy","All Resistances +[10-20]","+[4-8] to Light Radius"]],
+    "Annihilus": ["Small Charm","","70",["+1 to All Skills","+[30-60] to Vitality","+[10-20] to Energy","All Resistances +[10-20]","+[5-10]% to Experience Gained"]],
+    "Annihilus — self-farmed": ["Small Charm","","70",["+1 to All Skills","+[30-60] to Vitality","+[10-20] to Energy","All Resistances +[10-20]","+[5-10]% to Experience Gained"]],
+    "Jalal's Mane": ["Totemic Mask (exceptional)","","42",["+[1-2] to Shape Shifting Skills (Druid Only)","+2 to Druid Skills","+30% Faster Hit Recovery","20% Bonus to Attack Rating","+[150-200]% Enhanced Defense","+[15-20] to Strength","+[15-20] to Energy","All Resistances +25","+5 to Mana after each Kill"]],
+    "Spirit sword": ["4-Socket Swords/Staves","Tal • Thul • Ort • Amn","25",["+1 to All Skills (Non-Staves Only)","+2 to All Skills (Staves Only)","+[25-35]% Faster Cast Rate","+25% Faster Hit Recovery (Non-Staves Only)","+55% Faster Hit Recovery (Staves Only)","Adds 1-50 Lightning Damage","Adds 3-14 Cold Damage","+75 Poison Damage over 5 Seconds","7% Life Stolen per Hit","+[11-22] to Vitality","+[59-82] to Mana","+[3-8] Magic Absorb","Requirements -15%"]],
+    "Spirit shield": ["4-Socket Shields","Tal • Thul • Ort • Amn","25",["+1 to All Skills","+[25-35]% Faster Cast Rate","+25% Faster Hit Recovery","+[11-22] to Vitality","+[59-82] to Mana","Cold Resist +35%","Lightning Resist +35%","Poison Resist +35%","+[3-8] Magic Absorb","Attacker Takes Damage of 24","Requirements -15%"]],
+    "Skin of the Vipermagi": ["Serpentskin Armor","","29",["+1 to All Skills","+30% Faster Cast Rate","+120% Enhanced Defense","All Resistances +[20-30]","Magic Damaged Taken Reduced by [5-8]"]],
+    "Magefist": ["Light Gauntlets","","23",["+1 to Fire Skills","+20% Faster Cast Rate","Adds 6-36 Fire Damage","+[20-30]% Enhanced Defense","+10 Defense","Regenerate Mana [15-25]%"]],
+    "Frostburn": ["Gauntlets","","29",["Adds 14-28 Fire Damage","Adds 6-22 Cold Damage","-[5-10]% to Enemy Fire Resistance","-[5-10]% to Enemy Cold Resistance","+[20-40]% Enhanced Defense","+[20-40] Defense","Increase Maximum Mana [15-25]%"]],
+  };
+
+  /* What to look for on rares, magic, crafted and stat-priority rows, most important first: [stat, good, GG].
+     Breakpoints follow the loot filter's star ratings (S14 FCR parity: 20 on gloves/belt/amulet, 30 on chest/shield;
+     "near-top" resists = 90 total). {main} / {tree} become the build's main skill and skill tree. */
+  const RES = ['Resists (total of all four)', '40', '90'], LIFE = ['Life', '20', '40'], STRDEX = ['Strength or Dexterity', '10', '20'];
+  const WANT = {
+    helm: [['+{main}', '+2', '+3'], ['+{tree} or +Druid skills', '+1', '+2'], ['Faster Cast Rate', '10%', '20%'], RES, LIFE, ['Sockets', '2', '3']],
+    circlet: [['+{tree} skills', '+2', '+3'], ['Faster Cast Rate', '10%', '20%'], ['Sockets', '2', '3'], RES, LIFE, STRDEX],
+    amulet: [['+{tree} or +Druid skills', '+2 Druid', '+3 {tree}'], ['Faster Cast Rate', '10%', '20%'], RES, LIFE, STRDEX, ['Mana or Mana after Kill', '30 / 1', '60 / 3']],
+    weapon: [['+{main}', '+3', '+5–6'], ['+{tree} skills', '+2', '+3 (S14)'], ['Faster Cast Rate', '10%', '20%'], RES, LIFE],
+    shield: [['Faster Cast Rate', '20%', '30%'], RES, ['Faster Block Rate / block', '10%', '20%'], ['Physical Damage Reduction', '3%', '5%'], ['Sockets', '2', '3']],
+    chest: [['Faster Cast Rate', '20%', '30% (S14)'], ['Physical Damage Reduction', '5%', '10%'], RES, LIFE, ['+Druid skills', '+1', '+2'], ['Sockets', '2', '3']],
+    gloves: [['Faster Cast Rate', '10%', '20%'], ['+{tree} skills', '+2', '+3'], RES, STRDEX, LIFE],
+    glovesShock: [['Faster Cast Rate', '10%', '20%'], ['+{tree} skills', '+2', '+3'], ['Deadly Strike (S14)', '10%', '20%'], RES, STRDEX],
+    belt: [['Faster Cast Rate', '10%', '20%'], ['Physical Damage Reduction', '5%', '10%'], ['Two resists', '15+ each', '30+ each'], LIFE, ['Strength', '10', '20'], ['Max resist (S14)', '+2%', '+3%']],
+    boots: [['Faster Run/Walk', '30%', '40%'], ['Faster Hit Recovery', '—', '10%'], RES, STRDEX, ['Magic Find', '—', '25%+']],
+    triRes: [['Fire, Cold and Lightning resist', '10+ each', '20+ each'], ['Faster Run/Walk', '20%', '40%'], ['Faster Hit Recovery', '—', '10%']],
+    ring: [['Faster Cast Rate', '10%', '10% (max)'], ['Resists (total)', '15', '40'], LIFE, ['Mana or Mana after Kill', '30 / 1', '60 / 3'], STRDEX],
+    hfdRing: [['Half Freeze Duration', 'must have', 'must have'], ['Faster Cast Rate', '10%', '10%'], ['Resists (total)', '15', '40'], LIFE],
+    grand: [['+1 {tree} skills', 'must have', 'must have'], ['Life', '30', '45'], ['Faster Hit Recovery or Run/Walk', 'any', 'max roll']],
+    small: [['Life', '15', '20'], ['Resist', '5+ one', '11 one / 5 all'], ['Faster Hit Recovery', '—', '5% + life']],
+    swap: [['Teleport charges', 'must have', 'must have'], ['+skills', '+1', '+2']],
+    merc: [RES, LIFE, ['Life leech', '3%', '6%'], ['Faster Hit Recovery', '10%', '20%']],
+  };
+  const HINT = { rare: 'Rare: up to 6 mods, so look for the top lines first.', magic: 'Magic: one prefix + one suffix, so you only get two of these.',
+    crafted: 'Crafted: the recipe gives fixed mods, plus up to 4 random ones.', any: 'Any rarity: wear the best thing that drops.' };
+  let curFam = 'poison';
+
+  function wantList(o) {
+    const n = o.name;
+    if (/^None/.test(n)) return null;
+    if (o.merc) return WANT.merc;
+    if (/Half Freeze/.test(n)) return WANT.hfdRing;
+    if (/Tri-res/.test(n)) return WANT.triRes;
+    if (/Teleport/.test(n)) return WANT.swap;
+    if (/circlet/i.test(n)) return WANT.circlet;
+    if (/club/i.test(n)) return WANT.weapon;
+    if (/grand|skillers/i.test(n) || o.slot === 'Grand') return WANT.grand;
+    if (/small charm/i.test(n) || o.slot === 'Small' || o.slot === 'Charms') return WANT.small;
+    const bySlot = { Helm: 'helm', Amulet: 'amulet', Weapon: 'weapon', Offhand: 'shield', Armor: 'chest', Belt: 'belt', Boots: 'boots', 'Ring 1': 'ring', 'Ring 2': 'ring', Swap: 'swap',
+      Gloves: curFam === 'shock' ? 'glovesShock' : 'gloves' };
+    return WANT[bySlot[o.slot]] || null;
+  }
+
+  function tipHTML(o) {
+    const s = STATS[o.name];
+    const fill = (t) => esc(t).replace('{main}', curFam === 'shock' ? 'Shockwave' : 'Poison Creeper').replace('{tree}', curFam === 'shock' ? 'Shape Shifting' : 'Summoning');
+    let body = '';
+    if (s) {
+      const [base, runes, req, mods] = s;
+      body = `${runes ? `<div class="tt-runes">'${esc(runes.replace(/ • /g, ''))}'</div>` : ''}<div class="tt-base">${esc(base)}</div>
+        ${req ? `<div class="tt-req">Required Level: ${esc(req)}</div>` : ''}<div class="tt-mods">${mods.map((m) => `<div>${esc(m)}</div>`).join('')}</div>`;
+    } else {
+      const w = wantList(o);
+      if (!w) return '';
+      body = `<div class="tt-sub">Stats to look for</div><ol class="tt-want">${w.map(([st, g, gg]) => `<li><span>${fill(st)}</span><span class="tt-v">${fill(g)} · <b>${fill(gg)}</b></span></li>`).join('')}</ol>
+        <div class="tt-key">good · <b>GG</b></div>${HINT[o.rar] ? `<div class="tt-hint">${HINT[o.rar]}</div>` : ''}`;
+    }
+    return `<div class="tt-n r-${o.rar}">${esc(o.name)}</div>${body}${o.note ? `<div class="tt-note">${esc(o.note)}</div>` : ''}
+      <div class="tt-foot">${s ? 'Stats from the PD2 wiki; Season 14 may change some values' : 'Rough targets, in order of importance'}</div>`;
+  }
+
+  let TIPS = [];
+  const tipAttr = (o) => ` data-tip="${TIPS.push(o) - 1}"`;
+  const tipEl = document.getElementById('tip');
+  let tipFor = null;
+  function showTip(el) {
+    if (tipFor === el) return;
+    const html = tipHTML(TIPS[el.dataset.tip]);
+    if (!html) return hideTip();
+    tipFor = el;
+    tipEl.innerHTML = html;
+    tipEl.hidden = false;
+    const r = el.getBoundingClientRect(), t = tipEl.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight;
+    // Beside the item on the side facing away from the page centre when there's room, otherwise below (or above) it.
+    const right = r.right + 12, left = r.left - t.width - 12, fitsR = right + t.width <= vw - 8, fitsL = left >= 8;
+    const outward = r.left + r.width / 2 > vw / 2 ? (fitsL ? left : fitsR ? right : null) : (fitsR ? right : fitsL ? left : null);
+    let x = outward == null ? -1 : outward, y;
+    if (x >= 8) y = Math.min(Math.max(8, r.top + r.height / 2 - t.height / 2), vh - t.height - 8);
+    else {
+      x = Math.max(8, Math.min(vw - t.width - 8, r.left));
+      y = r.bottom + 8 + t.height > vh - 8 ? r.top - t.height - 8 : r.bottom + 8;
+    }
+    tipEl.style.left = Math.round(x) + 'px';
+    tipEl.style.top = Math.round(Math.max(8, y)) + 'px';
+  }
+  function hideTip() { tipFor = null; tipEl.hidden = true; }
+  document.addEventListener('mouseover', (e) => { const el = e.target.closest('[data-tip]'); if (el) showTip(el); else if (tipFor) hideTip(); });
+  document.addEventListener('focusin', (e) => { const el = e.target.closest('[data-tip]'); if (el) showTip(el); else hideTip(); });
+  window.addEventListener('scroll', hideTip, { passive: true });
+
+  function item(row, k, merc) {
+    const [slot, name, rar, note] = row;
     const can = rar !== 'any';
     const where = KIND[slot] || slot.replace(/ \d$/, '');
     const kind = rar === 'any' ? 'Stat priority · ' + where : RAR[rar] + ' ' + where;
     const file = pic(slot, name);
-    return `<div class="item r-${rar} ${can && got[k] ? 'have' : ''}">
+    return `<div class="item r-${rar} ${can && got[k] ? 'have' : ''}"${tipAttr({ slot, name, rar, note, merc })}>
       <div class="icon">${file ? imgTag(file) : esc(ABBR[slot] || slot.slice(0, 3))}${can ? `<input type="checkbox" data-k="${esc(k)}" ${got[k] ? 'checked' : ''} aria-label="Got ${esc(name)}" title="Tick when you've got it"><span class="tick">✓</span>` : ''}</div>
       <div class="t"><div class="n">${esc(name)}</div><div class="k">${esc(kind)}</div></div></div>`;
   }
-  const list = (rows, prefix) => rows.length ? rows.map((r, i) => item(r, prefix + ':' + i + ':' + r[1])).join('') : '<div class="empty">Nothing set yet.</div>';
+  const list = (rows, prefix, merc) => rows.length ? rows.map((r, i) => item(r, prefix + ':' + i + ':' + r[1], merc)).join('') : '<div class="empty">Nothing set yet.</div>';
 
   function doll(ph, prefix) {
     const col = (slots) => slots.map((s) => { const i = ph.gear.findIndex((r) => r[0] === s); return i < 0 ? '' : item(ph.gear[i], prefix + ':' + i + ':' + ph.gear[i][1]); }).join('');
@@ -418,7 +577,7 @@
     const rows = ph.gear.filter((r) => r[3] || (r[4] && r[4].length));
     const extra = ph.charms.concat(ph.swap).filter((r) => r[3]);
     if (!rows.length && !extra.length) return '';
-    const li = (r) => `<li><span class="r-${r[2]}">${esc(r[1])}</span>${r[3] ? ' — ' + esc(r[3]) : ''}${r[4] && r[4].length ? `<ul><li>Alternatives: ${r[4].map(([n, rr]) => `<span class="r-${rr}">${imgTag(pic(r[0], n), 'alt-ico')}${esc(n)}</span>`).join(', ')}</li></ul>` : ''}</li>`;
+    const li = (r) => `<li><span class="r-${r[2]} tipped"${tipAttr({ slot: r[0], name: r[1], rar: r[2] })}>${esc(r[1])}</span>${r[3] ? ' — ' + esc(r[3]) : ''}${r[4] && r[4].length ? `<ul><li>Alternatives: ${r[4].map(([n, rr]) => `<span class="r-${rr} tipped"${tipAttr({ slot: r[0], name: n, rar: rr })}>${imgTag(pic(r[0], n), 'alt-ico')}${esc(n)}</span>`).join(', ')}</li></ul>` : ''}</li>`;
     return `<div class="tips">${rows.length ? `<h3>Gear notes</h3><ul>${rows.map(li).join('')}</ul>` : ''}${extra.length ? `<h3>Charms &amp; swap</h3><ul>${extra.map(li).join('')}</ul>` : ''}</div>`;
   }
 
@@ -429,6 +588,9 @@
     const build = BUILDS.find((b) => b.id === bid) || BUILDS[0];
     const ph = build.phases.find((p) => p.id === pid) || build.phases[0];
     const pre = build.id + '/' + ph.id;
+    TIPS = [];
+    curFam = build.fam;
+    hideTip();
     document.body.dataset.fam = build.fam;
     document.title = build.name + ' — ' + ph.name + ' | PD2 S14 Druid';
     const crest = `<img src="img/${build.fam === 'poison' ? 'poison_creeper' : 'shock_wave'}.png" alt="">`;
@@ -452,7 +614,7 @@
     const skills = `<div class="sk">${ph.skills.map(([n, p, note]) => `<div class="sk-row">${skillImg(n) || `<div class="sk-ico" aria-hidden="true">${esc(n.split(' ').filter((w) => w !== 'of').map((w) => w[0]).join('').slice(0, 2))}</div>`}
       <div><span class="sk-n">${esc(n)}</span>${note ? `<span class="sk-note">${esc(note)}</span>` : ''}</div><span class="pts">${esc(p)}</span></div>`).join('')}</div>`;
 
-    const merc = `<div class="merc-type">${esc(ph.merc.type)}</div>${ph.merc.gear.length ? `<div class="merc">${list(ph.merc.gear, pre + ':m')}</div>` : ''}${ph.merc.alt ? `<p class="note-p">${esc(ph.merc.alt)}</p>` : ''}`;
+    const merc = `<div class="merc-type">${esc(ph.merc.type)}</div>${ph.merc.gear.length ? `<div class="merc">${list(ph.merc.gear, pre + ':m', true)}</div>` : ''}${ph.merc.alt ? `<p class="note-p">${esc(ph.merc.alt)}</p>` : ''}`;
 
     const key = `<div class="legend"><span class="r-unique">Unique</span><span class="r-set">Set</span><span class="r-runeword">Runeword</span><span class="r-rare">Rare</span><span class="r-crafted">Crafted</span><span class="r-magic">Magic</span><span class="r-any"><i>Any / stat priority</i></span></div>
       <p class="note-p">V1 / V2 / V3 = the three build videos. S14 notes = Season 14 open beta patch notes. Your ticks are saved in this browser only. Item, skill and Druid art © Blizzard Entertainment (Diablo II), via the PD2 wiki and classic.battle.net.</p>`;
