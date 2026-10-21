@@ -220,7 +220,22 @@
     .dd-item:hover,
     .dd-item.active { background: var(--surface-3); }
 
+    .dd-item-main { display: flex; align-items: center; gap: 9px; min-width: 0; }
     .dd-item-name { color: var(--text); font-size: 0.88rem; }
+
+    /* ── Item icons ──────────────────────────────────────────────────────── */
+    .icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      object-fit: cover;
+      box-shadow: 0 0 0 1px var(--border);
+      background: var(--surface-3);
+    }
+
+    .icon-md { width: 26px; height: 26px; border-radius: 4px; }
+    .icon-lg { width: 40px; height: 40px; border-radius: 6px; }
 
     .dd-meta { flex-shrink: 0; }
 
@@ -266,7 +281,8 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.45), inset 0 1px 0 rgba(200,151,58,0.1);
     }
 
-    .recipe-header-left { flex: 1; min-width: 0; }
+    .recipe-header-left { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; }
+    .recipe-header-text { min-width: 0; }
 
     .recipe-title {
       font-size: 1.2rem;
@@ -452,6 +468,10 @@
     .mat-name {
       font-size: 0.86rem;
       color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
     }
 
     .mat-qty {
@@ -746,8 +766,11 @@
   <div id="result">
     <div class="recipe-header-panel">
       <div class="recipe-header-left">
-        <div id="recipe-title" class="recipe-title"></div>
-        <div id="recipe-subtitle" class="recipe-subtitle"></div>
+        <img id="recipe-icon" class="icon icon-lg" alt="">
+        <div class="recipe-header-text">
+          <div id="recipe-title" class="recipe-title"></div>
+          <div id="recipe-subtitle" class="recipe-subtitle"></div>
+        </div>
       </div>
       <div class="qty-row">
         <label>Crafts</label>
@@ -905,6 +928,28 @@ function getItemName(id) {
   return itemsById[id]?.name || `Item #${id}`;
 }
 
+// Icons are hotlinked from Wowhead's CDN by slug; unknown or broken ones fall back to "?"
+const ICON_CDN      = 'https://wow.zamimg.com/images/wow/icons/medium/';
+const ICON_FALLBACK = 'inv_misc_questionmark';
+
+function makeIcon(slug, size = '') {
+  const img = document.createElement('img');
+  img.className = 'icon' + (size ? ` icon-${size}` : '');
+  img.alt = '';
+  img.loading = 'lazy';
+  img.src = ICON_CDN + (slug || ICON_FALLBACK) + '.jpg';
+  img.setAttribute('onerror', `this.onerror=null;this.src='${ICON_CDN}${ICON_FALLBACK}.jpg'`);
+  return img;
+}
+
+function iconHtml(slug, size) {
+  return makeIcon(slug, size).outerHTML;
+}
+
+function getItemIcon(id) {
+  return itemsById[id]?.icon || '';
+}
+
 function getProfName(type) {
   return PROFESSIONS[type] || `Profession ${type}`;
 }
@@ -1010,7 +1055,10 @@ function setupSearch() {
     } else {
       dropdown.innerHTML = matches.map(r => `
         <div class="dd-item" data-id="${r.id}">
-          <span class="dd-item-name">${highlight(r.name, q)}</span>
+          <span class="dd-item-main">
+            ${iconHtml(r.icon)}
+            <span class="dd-item-name">${highlight(r.name, q)}</span>
+          </span>
           <div class="dd-meta">
             ${r.is_new ? '<span class="tag tag-new">New</span>' : ''}
             <span class="tag">${getProfName(r.type)}</span>
@@ -1073,6 +1121,8 @@ function render() {
   const creates = currentRecipe.creates?.item_count || 1;
 
   document.getElementById('result').classList.add('visible');
+  const recipeIcon = document.getElementById('recipe-icon');
+  recipeIcon.replaceWith(Object.assign(makeIcon(currentRecipe.icon, 'lg'), { id: 'recipe-icon' }));
   document.getElementById('recipe-title').textContent = currentRecipe.name;
   document.getElementById('recipe-subtitle').textContent = getProfName(currentRecipe.type);
   document.getElementById('creates-note').textContent =
@@ -1113,6 +1163,7 @@ function buildTreeNode(itemId, qty, visited) {
 
   row.appendChild(caret);
   row.appendChild(qtyEl);
+  row.appendChild(makeIcon(getItemIcon(itemId)));
   row.appendChild(nameEl);
 
   if (isCraftable) {
@@ -1184,7 +1235,7 @@ function renderRawMats(recipe, crafts) {
 
   document.getElementById('raw-mats').innerHTML = sorted.map(([id, count]) => `
     <div class="mat-row">
-      <span class="mat-name">${getItemName(parseInt(id))}</span>
+      <span class="mat-name">${iconHtml(getItemIcon(parseInt(id)))}${getItemName(parseInt(id))}</span>
       <span class="mat-qty">×${count}</span>
     </div>
   `).join('') || `<div style="color:var(--text-muted);font-size:.85rem">No materials found</div>`;
@@ -1287,6 +1338,7 @@ function renderCartDrawer() {
 
   itemsEl.innerHTML = cart.map((item, i) => `
     <div class="cart-item-row">
+      ${iconHtml(allRecipes.find(r => r.id === item.recipeId)?.icon, 'md')}
       <div class="cart-item-info">
         <div class="cart-item-name" title="${item.name}">${item.name}</div>
         <div class="cart-item-prof">${item.profName}</div>
@@ -1304,7 +1356,7 @@ function renderCartDrawer() {
   const sorted = Object.entries(totals).sort(([, a], [, b]) => b - a);
   matsEl.innerHTML = sorted.map(([id, count]) => `
     <div class="mat-row">
-      <span class="mat-name">${getItemName(parseInt(id))}</span>
+      <span class="mat-name">${iconHtml(getItemIcon(parseInt(id)))}${getItemName(parseInt(id))}</span>
       <span class="mat-qty">×${count}</span>
     </div>
   `).join('') || `<div style="color:var(--text-muted);font-size:.85rem">No materials found</div>`;

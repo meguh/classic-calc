@@ -2,7 +2,7 @@
   {
     "id": 23775,
     "name": "Titanium Toolbox",
-    "icon": "",
+    "icon": "inv_misc_enggizmos_19",
     "quality": 3,
     "item_level": 31,
     "requires_level": 0
@@ -10,7 +10,7 @@
   {
     "id": 36913,
     "name": "Saronite Bar",
-    "icon": "",
+    "icon": "inv_ingot_yoggthorite",
     "quality": 1,
     "item_level": 15,
     "requires_level": 0
@@ -18,7 +18,7 @@
   {
     "id": 41163,
     "name": "Titanium Bar",
-    "icon": "",
+    "icon": "inv_ingot_platinum",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -26,7 +26,7 @@
   {
     "id": 39681,
     "name": "Handful of Cobalt Bolts",
-    "icon": "",
+    "icon": "inv_misc_enggizmos_29",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -34,7 +34,7 @@
   {
     "id": 40769,
     "name": "Scrapbot Construction Kit",
-    "icon": "",
+    "icon": "inv_misc_enggizmos_14",
     "quality": 1,
     "item_level": 30,
     "requires_level": 0
@@ -42,7 +42,7 @@
   {
     "id": 40892,
     "name": "Hammer Pick",
-    "icon": "",
+    "icon": "inv_pick_05",
     "quality": 1,
     "item_level": 5,
     "requires_level": 0
@@ -50,7 +50,7 @@
   {
     "id": 36916,
     "name": "Cobalt Bar",
-    "icon": "",
+    "icon": "inv_ingot_cobalt",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -58,7 +58,7 @@
   {
     "id": 40893,
     "name": "Bladed Pickaxe",
-    "icon": "",
+    "icon": "inv_pick_03",
     "quality": 1,
     "item_level": 1,
     "requires_level": 0
@@ -66,7 +66,7 @@
   {
     "id": 40767,
     "name": "Sonic Booster",
-    "icon": "",
+    "icon": "inv_gizmo_goblinboombox_01",
     "quality": 3,
     "item_level": 34,
     "requires_level": 24
@@ -74,7 +74,7 @@
   {
     "id": 39683,
     "name": "Froststeel Tube",
-    "icon": "",
+    "icon": "inv_misc_enggizmos_28",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -82,7 +82,7 @@
   {
     "id": 39682,
     "name": "Overcharged Capacitor",
-    "icon": "",
+    "icon": "inv_misc_enggizmos_27",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -90,7 +90,7 @@
   {
     "id": 40865,
     "name": "Noise Machine",
-    "icon": "",
+    "icon": "inv_gizmo_goblinboombox_01",
     "quality": 3,
     "item_level": 34,
     "requires_level": 24
@@ -98,7 +98,7 @@
   {
     "id": 40768,
     "name": "MOLL-E",
-    "icon": "",
+    "icon": "inv_misc_molle",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -106,7 +106,7 @@
   {
     "id": 35623,
     "name": "Eternal Air",
-    "icon": "",
+    "icon": "inv_elemental_eternal_air",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -114,7 +114,7 @@
   {
     "id": 40772,
     "name": "Gnomish Army Knife",
-    "icon": "",
+    "icon": "inv_misc_enggizmos_swissarmy",
     "quality": 1,
     "item_level": 27,
     "requires_level": 0
@@ -122,7 +122,7 @@
   {
     "id": 7005,
     "name": "Skinning Knife",
-    "icon": "",
+    "icon": "inv_weapon_shortblade_01",
     "quality": 1,
     "item_level": 2,
     "requires_level": 1
@@ -130,7 +130,7 @@
   {
     "id": 2901,
     "name": "Mining Pick",
-    "icon": "",
+    "icon": "inv_pick_02",
     "quality": 1,
     "item_level": 1,
     "requires_level": 1
@@ -138,7 +138,7 @@
   {
     "id": 5956,
     "name": "Blacksmith Hammer",
-    "icon": "",
+    "icon": "inv_hammer_20",
     "quality": 1,
     "item_level": 1,
     "requires_level": 1
@@ -146,7 +146,7 @@
   {
     "id": 37567,
     "name": "Healing Injector Kit",
-    "icon": "",
+    "icon": "inv_gizmo_05",
     "quality": 1,
     "item_level": 30,
     "requires_level": 0
@@ -154,7 +154,7 @@
   {
     "id": 42546,
     "name": "Mana Injector Kit",
-    "icon": "",
+    "icon": "inv_gizmo_04",
     "quality": 1,
     "item_level": 30,
     "requires_level": 0
@@ -162,7 +162,7 @@
   {
     "id": 37705,
     "name": "Crystallized Water",
-    "icon": "",
+    "icon": "inv_elemental_crystal_water",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -170,7 +170,7 @@
   {
     "id": 41121,
     "name": "Gnomish Lightning Generator",
-    "icon": "",
+    "icon": "spell_nature_lightningoverload",
     "quality": 3,
     "item_level": 35,
     "requires_level": 24
@@ -178,7 +178,7 @@
   {
     "id": 35622,
     "name": "Eternal Water",
-    "icon": "",
+    "icon": "inv_elemental_eternal_water",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -186,7 +186,7 @@
   {
     "id": 47828,
     "name": "Goblin Beam Welder",
-    "icon": "",
+    "icon": "spell_nature_elementalprecision_1",
     "quality": 1,
     "item_level": 30,
     "requires_level": 0
@@ -194,7 +194,7 @@
   {
     "id": 37702,
     "name": "Crystallized Fire",
-    "icon": "",
+    "icon": "inv_elemental_crystal_fire",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -202,7 +202,7 @@
   {
     "id": 48933,
     "name": "Wormhole Generator: Northrend",
-    "icon": "",
+    "icon": "spell_fire_bluefirenova",
     "quality": 3,
     "item_level": 30,
     "requires_level": 24
@@ -210,7 +210,7 @@
   {
     "id": 35627,
     "name": "Eternal Shadow",
-    "icon": "",
+    "icon": "inv_elemental_eternal_shadow",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -218,7 +218,7 @@
   {
     "id": 36860,
     "name": "Eternal Fire",
-    "icon": "",
+    "icon": "inv_elemental_eternal_fire",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -226,7 +226,7 @@
   {
     "id": 49040,
     "name": "Jeeves",
-    "icon": "",
+    "icon": "achievement_boss_mimiron_01",
     "quality": 4,
     "item_level": 1,
     "requires_level": 0
@@ -234,7 +234,7 @@
   {
     "id": 18232,
     "name": "Field Repair Bot 74A",
-    "icon": "",
+    "icon": "inv_egg_05",
     "quality": 1,
     "item_level": 25,
     "requires_level": 0
@@ -242,7 +242,7 @@
   {
     "id": 34113,
     "name": "Field Repair Bot 110G",
-    "icon": "",
+    "icon": "inv_misc_enggizmos_01",
     "quality": 1,
     "item_level": 27,
     "requires_level": 0
@@ -250,7 +250,7 @@
   {
     "id": 37663,
     "name": "Titansteel Bar",
-    "icon": "",
+    "icon": "inv_ingot_titansteel_blue",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -258,7 +258,7 @@
   {
     "id": 36922,
     "name": "King's Amber",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_36",
     "quality": 4,
     "item_level": 20,
     "requires_level": 0
@@ -266,7 +266,7 @@
   {
     "id": 39690,
     "name": "Volatile Blasting Trigger",
-    "icon": "",
+    "icon": "inv_misc_enggizmos_04",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -274,7 +274,7 @@
   {
     "id": 37701,
     "name": "Crystallized Earth",
-    "icon": "",
+    "icon": "inv_elemental_crystal_earth",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -282,7 +282,7 @@
   {
     "id": 39688,
     "name": "Mark \"S\" Boomstick",
-    "icon": "",
+    "icon": "inv_weapon_rifle_08",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -290,7 +290,7 @@
   {
     "id": 39684,
     "name": "Hair Trigger",
-    "icon": "",
+    "icon": "inv_misc_enggizmos_25",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -298,7 +298,7 @@
   {
     "id": 40533,
     "name": "Walnut Stock",
-    "icon": "",
+    "icon": "inv_mace_11",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -306,7 +306,7 @@
   {
     "id": 41168,
     "name": "Armor Plated Combat Shotgun",
-    "icon": "",
+    "icon": "inv_weapon_rifle_19",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -314,7 +314,7 @@
   {
     "id": 43102,
     "name": "Frozen Orb",
-    "icon": "",
+    "icon": "spell_frost_frozencore",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -322,7 +322,7 @@
   {
     "id": 44504,
     "name": "Nesingwary 4000",
-    "icon": "",
+    "icon": "inv_weapon_rifle_06",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -330,7 +330,7 @@
   {
     "id": 41146,
     "name": "Sun Scope",
-    "icon": "",
+    "icon": "inv_misc_spyglass_03",
     "quality": 3,
     "item_level": 28,
     "requires_level": 27
@@ -338,7 +338,7 @@
   {
     "id": 40771,
     "name": "Cobalt Frag Bomb",
-    "icon": "",
+    "icon": "inv_misc_enggizmos_31",
     "quality": 1,
     "item_level": 27,
     "requires_level": 10
@@ -346,7 +346,7 @@
   {
     "id": 40536,
     "name": "Explosive Decoy",
-    "icon": "",
+    "icon": "ability_seal",
     "quality": 1,
     "item_level": 30,
     "requires_level": 24
@@ -354,7 +354,7 @@
   {
     "id": 33470,
     "name": "Frostweave Cloth",
-    "icon": "",
+    "icon": "inv_fabric_soulcloth",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -362,7 +362,7 @@
   {
     "id": 44951,
     "name": "Box of Bombs",
-    "icon": "",
+    "icon": "inv_crate_01",
     "quality": 1,
     "item_level": 28,
     "requires_level": 0
@@ -370,7 +370,7 @@
   {
     "id": 42641,
     "name": "Global Thermal Sapper Charge",
-    "icon": "",
+    "icon": "inv_gizmo_supersappercharge",
     "quality": 1,
     "item_level": 28,
     "requires_level": 24
@@ -378,7 +378,7 @@
   {
     "id": 41112,
     "name": "Mechanized Snow Goggles",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 3,
     "item_level": 35,
     "requires_level": 24
@@ -386,7 +386,7 @@
   {
     "id": 33568,
     "name": "Borean Leather",
-    "icon": "",
+    "icon": "inv_misc_leatherscrap_15",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -394,7 +394,7 @@
   {
     "id": 40895,
     "name": "Gnomish X-Ray Specs",
-    "icon": "",
+    "icon": "inv_gnomish_xray_specs",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -402,7 +402,7 @@
   {
     "id": 34052,
     "name": "Dream Shard",
-    "icon": "",
+    "icon": "inv_enchant_dreamshard_02",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -410,7 +410,7 @@
   {
     "id": 42549,
     "name": "Armored Titanium Goggles",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 4,
     "item_level": 35,
     "requires_level": 28
@@ -418,7 +418,7 @@
   {
     "id": 38425,
     "name": "Heavy Borean Leather",
-    "icon": "",
+    "icon": "inv_misc_leatherscrap_19",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -426,7 +426,7 @@
   {
     "id": 36924,
     "name": "Sky Sapphire",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_05",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -434,7 +434,7 @@
   {
     "id": 35624,
     "name": "Eternal Earth",
-    "icon": "",
+    "icon": "inv_elemental_eternal_earth",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -442,7 +442,7 @@
   {
     "id": 42550,
     "name": "Weakness Spectralizers",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 4,
     "item_level": 35,
     "requires_level": 28
@@ -450,7 +450,7 @@
   {
     "id": 36918,
     "name": "Scarlet Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_04",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -458,7 +458,7 @@
   {
     "id": 42551,
     "name": "Truesight Ice Blinders",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 4,
     "item_level": 35,
     "requires_level": 28
@@ -466,7 +466,7 @@
   {
     "id": 36927,
     "name": "Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_06",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -474,7 +474,7 @@
   {
     "id": 42552,
     "name": "Charged Titanium Specs",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 4,
     "item_level": 35,
     "requires_level": 28
@@ -482,7 +482,7 @@
   {
     "id": 36930,
     "name": "Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_02",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -490,7 +490,7 @@
   {
     "id": 42553,
     "name": "Visage Liquification Goggles",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 4,
     "item_level": 35,
     "requires_level": 28
@@ -498,7 +498,7 @@
   {
     "id": 42554,
     "name": "Greensight Gogs",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 4,
     "item_level": 35,
     "requires_level": 28
@@ -506,7 +506,7 @@
   {
     "id": 36933,
     "name": "Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_01",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -514,7 +514,7 @@
   {
     "id": 35625,
     "name": "Eternal Life",
-    "icon": "",
+    "icon": "inv_elemental_eternal_life",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -522,7 +522,7 @@
   {
     "id": 42555,
     "name": "Electroflux Sight Enhancers",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 4,
     "item_level": 35,
     "requires_level": 28
@@ -530,7 +530,7 @@
   {
     "id": 36921,
     "name": "Autumn's Glow",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_03",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -538,7 +538,7 @@
   {
     "id": 44740,
     "name": "Mechanized Snow Goggles",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 3,
     "item_level": 35,
     "requires_level": 24
@@ -546,7 +546,7 @@
   {
     "id": 44741,
     "name": "Mechanized Snow Goggles",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 3,
     "item_level": 35,
     "requires_level": 24
@@ -554,7 +554,7 @@
   {
     "id": 44742,
     "name": "Mechanized Snow Goggles",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 3,
     "item_level": 35,
     "requires_level": 24
@@ -562,7 +562,7 @@
   {
     "id": 44949,
     "name": "Unbreakable Healing Amplifiers",
-    "icon": "",
+    "icon": "inv_gizmo_newgoggles",
     "quality": 4,
     "item_level": 35,
     "requires_level": 28
@@ -570,7 +570,7 @@
   {
     "id": 36920,
     "name": "Sun Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_08",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -578,7 +578,7 @@
   {
     "id": 41167,
     "name": "Heartseeker Scope",
-    "icon": "",
+    "icon": "inv_misc_spyglass_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 27
@@ -586,7 +586,7 @@
   {
     "id": 44739,
     "name": "Diamond-Cut Refractor Scope",
-    "icon": "",
+    "icon": "ability_hunter_rapidregeneration",
     "quality": 1,
     "item_level": 28,
     "requires_level": 27
@@ -594,7 +594,7 @@
   {
     "id": 39087,
     "name": "Cobalt Belt",
-    "icon": "",
+    "icon": "inv_belt_31",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -602,7 +602,7 @@
   {
     "id": 39088,
     "name": "Cobalt Boots",
-    "icon": "",
+    "icon": "inv_boots_plate_05",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -610,7 +610,7 @@
   {
     "id": 39085,
     "name": "Cobalt Chestpiece",
-    "icon": "",
+    "icon": "inv_chest_plate09",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -618,7 +618,7 @@
   {
     "id": 39086,
     "name": "Cobalt Legplates",
-    "icon": "",
+    "icon": "inv_pants_plate_03",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -626,7 +626,7 @@
   {
     "id": 39084,
     "name": "Cobalt Helm",
-    "icon": "",
+    "icon": "inv_helmet_06",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -634,7 +634,7 @@
   {
     "id": 39083,
     "name": "Cobalt Shoulders",
-    "icon": "",
+    "icon": "inv_shoulder_31",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -642,7 +642,7 @@
   {
     "id": 40669,
     "name": "Tempered Saronite Belt",
-    "icon": "",
+    "icon": "inv_belt_22",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -650,7 +650,7 @@
   {
     "id": 40671,
     "name": "Tempered Saronite Boots",
-    "icon": "",
+    "icon": "inv_boots_plate_01",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -658,7 +658,7 @@
   {
     "id": 40672,
     "name": "Tempered Saronite Breastplate",
-    "icon": "",
+    "icon": "inv_chest_plate06",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -666,7 +666,7 @@
   {
     "id": 40674,
     "name": "Tempered Saronite Legplates",
-    "icon": "",
+    "icon": "inv_pants_plate_20",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -674,7 +674,7 @@
   {
     "id": 40673,
     "name": "Tempered Saronite Helm",
-    "icon": "",
+    "icon": "inv_helmet_123",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -682,7 +682,7 @@
   {
     "id": 40675,
     "name": "Tempered Saronite Shoulders",
-    "icon": "",
+    "icon": "inv_shoulder_70",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -690,7 +690,7 @@
   {
     "id": 40942,
     "name": "Spiked Cobalt Helm",
-    "icon": "",
+    "icon": "inv_helmet_06",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -698,7 +698,7 @@
   {
     "id": 40949,
     "name": "Spiked Cobalt Boots",
-    "icon": "",
+    "icon": "inv_boots_plate_05",
     "quality": 2,
     "item_level": 33,
     "requires_level": 27
@@ -706,7 +706,7 @@
   {
     "id": 40950,
     "name": "Spiked Cobalt Shoulders",
-    "icon": "",
+    "icon": "inv_shoulder_31",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -714,7 +714,7 @@
   {
     "id": 40951,
     "name": "Spiked Cobalt Chestpiece",
-    "icon": "",
+    "icon": "inv_chest_plate09",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -722,7 +722,7 @@
   {
     "id": 40952,
     "name": "Spiked Cobalt Gauntlets",
-    "icon": "",
+    "icon": "inv_gauntlets_26",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -730,7 +730,7 @@
   {
     "id": 40953,
     "name": "Spiked Cobalt Belt",
-    "icon": "",
+    "icon": "inv_belt_31",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -738,7 +738,7 @@
   {
     "id": 40943,
     "name": "Spiked Cobalt Legplates",
-    "icon": "",
+    "icon": "inv_pants_plate_03",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -746,7 +746,7 @@
   {
     "id": 40954,
     "name": "Spiked Cobalt Bracers",
-    "icon": "",
+    "icon": "inv_bracer_03",
     "quality": 2,
     "item_level": 34,
     "requires_level": 28
@@ -754,7 +754,7 @@
   {
     "id": 40955,
     "name": "Horned Cobalt Helm",
-    "icon": "",
+    "icon": "inv_helmet_06",
     "quality": 2,
     "item_level": 34,
     "requires_level": 28
@@ -762,7 +762,7 @@
   {
     "id": 40956,
     "name": "Reinforced Cobalt Shoulders",
-    "icon": "",
+    "icon": "inv_shoulder_31",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -770,7 +770,7 @@
   {
     "id": 40957,
     "name": "Reinforced Cobalt Helm",
-    "icon": "",
+    "icon": "inv_helmet_06",
     "quality": 2,
     "item_level": 34,
     "requires_level": 28
@@ -778,7 +778,7 @@
   {
     "id": 40958,
     "name": "Reinforced Cobalt Legplates",
-    "icon": "",
+    "icon": "inv_pants_plate_03",
     "quality": 2,
     "item_level": 34,
     "requires_level": 29
@@ -786,7 +786,7 @@
   {
     "id": 40959,
     "name": "Reinforced Cobalt Chestpiece",
-    "icon": "",
+    "icon": "inv_chest_plate09",
     "quality": 2,
     "item_level": 34,
     "requires_level": 29
@@ -794,7 +794,7 @@
   {
     "id": 41116,
     "name": "Tempered Saronite Bracers",
-    "icon": "",
+    "icon": "inv_bracer_18",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -802,7 +802,7 @@
   {
     "id": 41114,
     "name": "Tempered Saronite Gauntlets",
-    "icon": "",
+    "icon": "inv_gauntlets_28",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -810,7 +810,7 @@
   {
     "id": 41126,
     "name": "Brilliant Saronite Legplates",
-    "icon": "",
+    "icon": "inv_pants_plate_12",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -818,7 +818,7 @@
   {
     "id": 41127,
     "name": "Brilliant Saronite Gauntlets",
-    "icon": "",
+    "icon": "inv_gauntlets_28",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -826,7 +826,7 @@
   {
     "id": 41128,
     "name": "Brilliant Saronite Boots",
-    "icon": "",
+    "icon": "inv_boots_plate_05",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -834,7 +834,7 @@
   {
     "id": 41129,
     "name": "Brilliant Saronite Breastplate",
-    "icon": "",
+    "icon": "inv_chest_plate11",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -842,7 +842,7 @@
   {
     "id": 41189,
     "name": "Chestplate of Conquest",
-    "icon": "",
+    "icon": "inv_chest_plate13",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -850,7 +850,7 @@
   {
     "id": 41190,
     "name": "Legplates of Conquest",
-    "icon": "",
+    "icon": "inv_pants_plate_02",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -858,7 +858,7 @@
   {
     "id": 41355,
     "name": "Vengeance Bindings",
-    "icon": "",
+    "icon": "inv_bracer_09",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -866,7 +866,7 @@
   {
     "id": 41356,
     "name": "Righteous Gauntlets",
-    "icon": "",
+    "icon": "inv_gauntlets_26",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -874,7 +874,7 @@
   {
     "id": 41357,
     "name": "Daunting Handguards",
-    "icon": "",
+    "icon": "inv_gauntlets_26",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -882,7 +882,7 @@
   {
     "id": 41344,
     "name": "Helm of Command",
-    "icon": "",
+    "icon": "inv_helmet_130",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -890,7 +890,7 @@
   {
     "id": 41345,
     "name": "Daunting Legplates",
-    "icon": "",
+    "icon": "inv_pants_plate_16",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -898,7 +898,7 @@
   {
     "id": 41346,
     "name": "Righteous Greaves",
-    "icon": "",
+    "icon": "inv_pants_plate_16",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -906,7 +906,7 @@
   {
     "id": 41354,
     "name": "Savage Saronite Bracers",
-    "icon": "",
+    "icon": "inv_bracer_09",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -914,7 +914,7 @@
   {
     "id": 41351,
     "name": "Savage Saronite Pauldrons",
-    "icon": "",
+    "icon": "inv_shoulder_92",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -922,7 +922,7 @@
   {
     "id": 41352,
     "name": "Savage Saronite Waistguard",
-    "icon": "",
+    "icon": "inv_belt_23",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -930,7 +930,7 @@
   {
     "id": 41348,
     "name": "Savage Saronite Walkers",
-    "icon": "",
+    "icon": "inv_boots_chain_08",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -938,7 +938,7 @@
   {
     "id": 41349,
     "name": "Savage Saronite Gauntlets",
-    "icon": "",
+    "icon": "inv_gauntlets_26",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -946,7 +946,7 @@
   {
     "id": 41353,
     "name": "Savage Saronite Hauberk",
-    "icon": "",
+    "icon": "inv_chest_chain_15",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -954,7 +954,7 @@
   {
     "id": 41347,
     "name": "Savage Saronite Legplates",
-    "icon": "",
+    "icon": "inv_pants_plate_20",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -962,7 +962,7 @@
   {
     "id": 41350,
     "name": "Savage Saronite Skullshield",
-    "icon": "",
+    "icon": "inv_helmet_130",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -970,7 +970,7 @@
   {
     "id": 41386,
     "name": "Spiked Titansteel Helm",
-    "icon": "",
+    "icon": "inv_helmet_134",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -978,7 +978,7 @@
   {
     "id": 41387,
     "name": "Tempered Titansteel Helm",
-    "icon": "",
+    "icon": "inv_helmet_134",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -986,7 +986,7 @@
   {
     "id": 41388,
     "name": "Brilliant Titansteel Helm",
-    "icon": "",
+    "icon": "inv_helmet_134",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -994,7 +994,7 @@
   {
     "id": 41391,
     "name": "Spiked Titansteel Treads",
-    "icon": "",
+    "icon": "inv_boots_plate_08",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1002,7 +1002,7 @@
   {
     "id": 41392,
     "name": "Tempered Titansteel Treads",
-    "icon": "",
+    "icon": "inv_boots_plate_08",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1010,7 +1010,7 @@
   {
     "id": 41394,
     "name": "Brilliant Titansteel Treads",
-    "icon": "",
+    "icon": "inv_boots_plate_08",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1018,7 +1018,7 @@
   {
     "id": 41974,
     "name": "Cobalt Bracers",
-    "icon": "",
+    "icon": "inv_bracer_07",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -1026,7 +1026,7 @@
   {
     "id": 41975,
     "name": "Cobalt Gauntlets",
-    "icon": "",
+    "icon": "inv_gauntlets_09",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -1034,7 +1034,7 @@
   {
     "id": 42723,
     "name": "Ornate Saronite Bracers",
-    "icon": "",
+    "icon": "inv_bracer_09",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1042,7 +1042,7 @@
   {
     "id": 42727,
     "name": "Ornate Saronite Pauldrons",
-    "icon": "",
+    "icon": "inv_shoulder_92",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1050,7 +1050,7 @@
   {
     "id": 42729,
     "name": "Ornate Saronite Waistguard",
-    "icon": "",
+    "icon": "inv_belt_23",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1058,7 +1058,7 @@
   {
     "id": 42730,
     "name": "Ornate Saronite Walkers",
-    "icon": "",
+    "icon": "inv_boots_chain_08",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1066,7 +1066,7 @@
   {
     "id": 42724,
     "name": "Ornate Saronite Gauntlets",
-    "icon": "",
+    "icon": "inv_gauntlets_26",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1074,7 +1074,7 @@
   {
     "id": 42726,
     "name": "Ornate Saronite Legplates",
-    "icon": "",
+    "icon": "inv_pants_plate_20",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1082,7 +1082,7 @@
   {
     "id": 42725,
     "name": "Ornate Saronite Hauberk",
-    "icon": "",
+    "icon": "inv_chest_chain_15",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1090,7 +1090,7 @@
   {
     "id": 42728,
     "name": "Ornate Saronite Skullshield",
-    "icon": "",
+    "icon": "inv_helmet_130",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1098,7 +1098,7 @@
   {
     "id": 43860,
     "name": "Brilliant Saronite Belt",
-    "icon": "",
+    "icon": "inv_belt_20",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -1106,7 +1106,7 @@
   {
     "id": 43864,
     "name": "Brilliant Saronite Bracers",
-    "icon": "",
+    "icon": "inv_bracer_17",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -1114,7 +1114,7 @@
   {
     "id": 43865,
     "name": "Brilliant Saronite Pauldrons",
-    "icon": "",
+    "icon": "inv_shoulder_71",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -1122,7 +1122,7 @@
   {
     "id": 43870,
     "name": "Brilliant Saronite Helm",
-    "icon": "",
+    "icon": "inv_helmet_105",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1130,7 +1130,7 @@
   {
     "id": 43586,
     "name": "Icebane Chestguard",
-    "icon": "",
+    "icon": "inv_chest_chain_11",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1138,7 +1138,7 @@
   {
     "id": 43587,
     "name": "Icebane Girdle",
-    "icon": "",
+    "icon": "inv_belt_33",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1146,7 +1146,7 @@
   {
     "id": 43588,
     "name": "Icebane Treads",
-    "icon": "",
+    "icon": "inv_boots_plate_08",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1154,7 +1154,7 @@
   {
     "id": 45561,
     "name": "Treads of Destiny",
-    "icon": "",
+    "icon": "inv_boots_plate_01",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1162,7 +1162,7 @@
   {
     "id": 45551,
     "name": "Indestructible Plate Girdle",
-    "icon": "",
+    "icon": "inv_belt_45a",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1170,7 +1170,7 @@
   {
     "id": 45552,
     "name": "Plate Girdle of Righteousness",
-    "icon": "",
+    "icon": "inv_belt_28",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1178,7 +1178,7 @@
   {
     "id": 45550,
     "name": "Belt of the Titans",
-    "icon": "",
+    "icon": "inv_belt_34",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1186,7 +1186,7 @@
   {
     "id": 45559,
     "name": "Battlelord's Plate Boots",
-    "icon": "",
+    "icon": "inv_boots_plate_06",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1194,7 +1194,7 @@
   {
     "id": 45560,
     "name": "Spiked Deathdealers",
-    "icon": "",
+    "icon": "inv_boots_plate_06",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1202,7 +1202,7 @@
   {
     "id": 49902,
     "name": "Puresteel Legplates",
-    "icon": "",
+    "icon": "inv_pants_plate_33",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1210,7 +1210,7 @@
   {
     "id": 49905,
     "name": "Protectors of Life",
-    "icon": "",
+    "icon": "inv_boots_plate_14",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1218,7 +1218,7 @@
   {
     "id": 49903,
     "name": "Legplates of Painful Death",
-    "icon": "",
+    "icon": "inv_pants_plate_32",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1226,7 +1226,7 @@
   {
     "id": 49904,
     "name": "Pillars of Might",
-    "icon": "",
+    "icon": "inv_pants_plate_32",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1234,7 +1234,7 @@
   {
     "id": 49907,
     "name": "Boots of Kingly Upheaval",
-    "icon": "",
+    "icon": "inv_boots_plate_12",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1242,7 +1242,7 @@
   {
     "id": 49906,
     "name": "Hellfrozen Bonegrinders",
-    "icon": "",
+    "icon": "inv_boots_plate_12",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1250,7 +1250,7 @@
   {
     "id": 49908,
     "name": "Primordial Saronite",
-    "icon": "",
+    "icon": "spell_fire_felflamebreath",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -1258,7 +1258,7 @@
   {
     "id": 40668,
     "name": "Cobalt Triangle Shield",
-    "icon": "",
+    "icon": "inv_shield_46",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -1266,7 +1266,7 @@
   {
     "id": 40670,
     "name": "Saronite Defender",
-    "icon": "",
+    "icon": "inv_shield_45",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -1274,7 +1274,7 @@
   {
     "id": 41117,
     "name": "Saronite Protector",
-    "icon": "",
+    "icon": "inv_shield_45",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -1282,7 +1282,7 @@
   {
     "id": 41113,
     "name": "Saronite Bulwark",
-    "icon": "",
+    "icon": "inv_shield_46",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1290,7 +1290,7 @@
   {
     "id": 42508,
     "name": "Titansteel Shield Wall",
-    "icon": "",
+    "icon": "inv_shield_60",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1298,7 +1298,7 @@
   {
     "id": 41181,
     "name": "Honed Cobalt Cleaver",
-    "icon": "",
+    "icon": "inv_axe_87",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -1306,7 +1306,7 @@
   {
     "id": 41182,
     "name": "Savage Cobalt Slicer",
-    "icon": "",
+    "icon": "inv_sword_111",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -1314,7 +1314,7 @@
   {
     "id": 41183,
     "name": "Saronite Ambusher",
-    "icon": "",
+    "icon": "inv_weapon_shortblade_68",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -1322,7 +1322,7 @@
   {
     "id": 37703,
     "name": "Crystallized Shadow",
-    "icon": "",
+    "icon": "inv_elemental_crystal_shadow",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -1330,7 +1330,7 @@
   {
     "id": 41184,
     "name": "Saronite Shiv",
-    "icon": "",
+    "icon": "inv_weapon_shortblade_68",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -1338,7 +1338,7 @@
   {
     "id": 41185,
     "name": "Furious Saronite Beatstick",
-    "icon": "",
+    "icon": "inv_mace_69",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1346,7 +1346,7 @@
   {
     "id": 41186,
     "name": "Corroded Saronite Edge",
-    "icon": "",
+    "icon": "inv_sword_97",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1354,7 +1354,7 @@
   {
     "id": 41187,
     "name": "Corroded Saronite Woundbringer",
-    "icon": "",
+    "icon": "inv_sword_97",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1362,7 +1362,7 @@
   {
     "id": 41188,
     "name": "Saronite Mindcrusher",
-    "icon": "",
+    "icon": "inv_mace_63",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1370,7 +1370,7 @@
   {
     "id": 41239,
     "name": "Sturdy Cobalt Quickblade",
-    "icon": "",
+    "icon": "inv_sword_94",
     "quality": 2,
     "item_level": 33,
     "requires_level": 27
@@ -1378,7 +1378,7 @@
   {
     "id": 41240,
     "name": "Cobalt Tenderizer",
-    "icon": "",
+    "icon": "inv_mace_69",
     "quality": 2,
     "item_level": 33,
     "requires_level": 27
@@ -1386,7 +1386,7 @@
   {
     "id": 41242,
     "name": "Forged Cobalt Claymore",
-    "icon": "",
+    "icon": "inv_sword_96",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -1394,7 +1394,7 @@
   {
     "id": 41243,
     "name": "Notched Cobalt War Axe",
-    "icon": "",
+    "icon": "inv_axe_88",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -1402,7 +1402,7 @@
   {
     "id": 41245,
     "name": "Deadly Saronite Dirk",
-    "icon": "",
+    "icon": "inv_weapon_shortblade_06",
     "quality": 0,
     "item_level": 34,
     "requires_level": 29
@@ -1410,7 +1410,7 @@
   {
     "id": 37700,
     "name": "Crystallized Air",
-    "icon": "",
+    "icon": "inv_elemental_crystal_air",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -1418,7 +1418,7 @@
   {
     "id": 41384,
     "name": "Titansteel Guardian",
-    "icon": "",
+    "icon": "inv_mace_87",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1426,7 +1426,7 @@
   {
     "id": 41257,
     "name": "Titansteel Destroyer",
-    "icon": "",
+    "icon": "inv_mace_84",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1434,7 +1434,7 @@
   {
     "id": 41383,
     "name": "Titansteel Bonecrusher",
-    "icon": "",
+    "icon": "inv_mace_87",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1442,7 +1442,7 @@
   {
     "id": 42435,
     "name": "Titansteel Shanker",
-    "icon": "",
+    "icon": "inv_weapon_shortblade_76",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1450,7 +1450,7 @@
   {
     "id": 42443,
     "name": "Cudgel of Saronite Justice",
-    "icon": "",
+    "icon": "inv_mace_67",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1458,7 +1458,7 @@
   {
     "id": 43871,
     "name": "Saronite Spellblade",
-    "icon": "",
+    "icon": "inv_sword_94",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1466,7 +1466,7 @@
   {
     "id": 41611,
     "name": "Eternal Belt Buckle",
-    "icon": "",
+    "icon": "inv_belt_36",
     "quality": 3,
     "item_level": 30,
     "requires_level": 27
@@ -1474,7 +1474,7 @@
   {
     "id": 41976,
     "name": "Titanium Weapon Chain",
-    "icon": "",
+    "icon": "inv_belt_18",
     "quality": 2,
     "item_level": 30,
     "requires_level": 27
@@ -1482,7 +1482,7 @@
   {
     "id": 42500,
     "name": "Titanium Shield Spike",
-    "icon": "",
+    "icon": "inv_titanium_shield_spike",
     "quality": 2,
     "item_level": 30,
     "requires_level": 27
@@ -1490,7 +1490,7 @@
   {
     "id": 44936,
     "name": "Titanium Plating",
-    "icon": "",
+    "icon": "inv_shield_19",
     "quality": 3,
     "item_level": 30,
     "requires_level": 27
@@ -1498,7 +1498,7 @@
   {
     "id": 43854,
     "name": "Cobalt Skeleton Key",
-    "icon": "",
+    "icon": "inv_misc_key_07",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -1506,7 +1506,7 @@
   {
     "id": 43853,
     "name": "Titanium Skeleton Key",
-    "icon": "",
+    "icon": "inv_misc_key_11",
     "quality": 2,
     "item_level": 30,
     "requires_level": 0
@@ -1522,7 +1522,7 @@
   {
     "id": 36909,
     "name": "Cobalt Ore",
-    "icon": "",
+    "icon": "inv_ore_cobalt",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -1562,7 +1562,7 @@
   {
     "id": 36912,
     "name": "Saronite Ore",
-    "icon": "",
+    "icon": "inv_ore_saronite_01",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -1578,7 +1578,7 @@
   {
     "id": 89738,
     "name": "Essence or Dust",
-    "icon": "",
+    "icon": "spell_shaman_spectraltransformation",
     "quality": 2,
     "item_level": 30,
     "requires_level": 0
@@ -1586,7 +1586,7 @@
   {
     "id": 34057,
     "name": "Abyss Crystal",
-    "icon": "",
+    "icon": "inv_enchant_abysscrystal",
     "quality": 4,
     "item_level": 20,
     "requires_level": 0
@@ -1602,7 +1602,7 @@
   {
     "id": 34055,
     "name": "Greater Cosmic Essence",
-    "icon": "",
+    "icon": "inv_enchant_essencecosmicgreater",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -1610,7 +1610,7 @@
   {
     "id": 39354,
     "name": "Light Parchment",
-    "icon": "",
+    "icon": "inv_inscription_papyrus",
     "quality": 1,
     "item_level": 10,
     "requires_level": 0
@@ -1618,7 +1618,7 @@
   {
     "id": 41509,
     "name": "Frostweave Net",
-    "icon": "",
+    "icon": "inv_misc_net_01",
     "quality": 1,
     "item_level": 28,
     "requires_level": 0
@@ -1626,7 +1626,7 @@
   {
     "id": 41510,
     "name": "Bolt of Frostweave",
-    "icon": "",
+    "icon": "inv_fabric_frostweave_bolt",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -1634,7 +1634,7 @@
   {
     "id": 41511,
     "name": "Bolt of Imbued Frostweave",
-    "icon": "",
+    "icon": "inv_fabric_frostweave_imbuedbolt",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -1642,7 +1642,7 @@
   {
     "id": 34054,
     "name": "Infinite Dust",
-    "icon": "",
+    "icon": "inv_misc_dust_infinite",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -1650,7 +1650,7 @@
   {
     "id": 41593,
     "name": "Ebonweave",
-    "icon": "",
+    "icon": "inv_fabric_ebonweave",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -1658,7 +1658,7 @@
   {
     "id": 41594,
     "name": "Moonshroud",
-    "icon": "",
+    "icon": "inv_fabric_moonshroud",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -1666,7 +1666,7 @@
   {
     "id": 41595,
     "name": "Spellweave",
-    "icon": "",
+    "icon": "inv_fabric_spellweave",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -1674,7 +1674,7 @@
   {
     "id": 41513,
     "name": "Frostwoven Shoulders",
-    "icon": "",
+    "icon": "inv_shoulder_72",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -1682,7 +1682,7 @@
   {
     "id": 38426,
     "name": "Eternium Thread",
-    "icon": "",
+    "icon": "inv_misc_thread_01",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -1690,7 +1690,7 @@
   {
     "id": 41523,
     "name": "Mystic Frostwoven Shoulders",
-    "icon": "",
+    "icon": "inv_shoulder_02",
     "quality": 3,
     "item_level": 33,
     "requires_level": 28
@@ -1698,7 +1698,7 @@
   {
     "id": 36783,
     "name": "Northsea Pearl",
-    "icon": "",
+    "icon": "inv_misc_gem_pearl_09",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -1706,7 +1706,7 @@
   {
     "id": 41550,
     "name": "Duskweave Shoulders",
-    "icon": "",
+    "icon": "inv_shoulder_72",
     "quality": 2,
     "item_level": 34,
     "requires_level": 29
@@ -1714,7 +1714,7 @@
   {
     "id": 43973,
     "name": "Frostsavage Shoulders",
-    "icon": "",
+    "icon": "inv_shoulder_72",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1722,7 +1722,7 @@
   {
     "id": 41515,
     "name": "Frostwoven Robe",
-    "icon": "",
+    "icon": "inv_chest_cloth_19",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -1730,7 +1730,7 @@
   {
     "id": 41525,
     "name": "Mystic Frostwoven Robe",
-    "icon": "",
+    "icon": "inv_chest_cloth_19",
     "quality": 3,
     "item_level": 33,
     "requires_level": 28
@@ -1738,7 +1738,7 @@
   {
     "id": 41549,
     "name": "Duskweave Robe",
-    "icon": "",
+    "icon": "inv_chest_cloth_19",
     "quality": 2,
     "item_level": 33,
     "requires_level": 29
@@ -1746,7 +1746,7 @@
   {
     "id": 41554,
     "name": "Black Duskweave Robe",
-    "icon": "",
+    "icon": "inv_chest_cloth_19",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1754,7 +1754,7 @@
   {
     "id": 42253,
     "name": "Iceweb Spider Silk",
-    "icon": "",
+    "icon": "inv_misc_web_01",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -1762,7 +1762,7 @@
   {
     "id": 42100,
     "name": "Moonshroud Robe",
-    "icon": "",
+    "icon": "inv_chest_cloth_04",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1770,7 +1770,7 @@
   {
     "id": 42101,
     "name": "Ebonweave Robe",
-    "icon": "",
+    "icon": "inv_chest_cloth_48",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1778,7 +1778,7 @@
   {
     "id": 42102,
     "name": "Spellweave Robe",
-    "icon": "",
+    "icon": "inv_chest_cloth_41",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1786,7 +1786,7 @@
   {
     "id": 43972,
     "name": "Frostsavage Robe",
-    "icon": "",
+    "icon": "inv_chest_cloth_51",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1794,7 +1794,7 @@
   {
     "id": 43583,
     "name": "Glacial Robe",
-    "icon": "",
+    "icon": "inv_chest_cloth_08",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1802,7 +1802,7 @@
   {
     "id": 44211,
     "name": "Frostwoven Gloves",
-    "icon": "",
+    "icon": "inv_gauntlets_06",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -1810,7 +1810,7 @@
   {
     "id": 41545,
     "name": "Duskweave Gloves",
-    "icon": "",
+    "icon": "inv_gauntlets_06",
     "quality": 2,
     "item_level": 33,
     "requires_level": 29
@@ -1818,7 +1818,7 @@
   {
     "id": 42095,
     "name": "Light Blessed Mittens",
-    "icon": "",
+    "icon": "inv_gauntlets_06",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -1826,7 +1826,7 @@
   {
     "id": 42103,
     "name": "Moonshroud Gloves",
-    "icon": "",
+    "icon": "inv_gauntlets_06",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1834,7 +1834,7 @@
   {
     "id": 42111,
     "name": "Ebonweave Gloves",
-    "icon": "",
+    "icon": "inv_gauntlets_06",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1842,7 +1842,7 @@
   {
     "id": 42113,
     "name": "Spellweave Gloves",
-    "icon": "",
+    "icon": "inv_gauntlets_06",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1850,7 +1850,7 @@
   {
     "id": 41516,
     "name": "Frostsavage Gloves",
-    "icon": "",
+    "icon": "inv_gauntlets_06",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1858,7 +1858,7 @@
   {
     "id": 41519,
     "name": "Frostwoven Leggings",
-    "icon": "",
+    "icon": "inv_pants_cloth_11",
     "quality": 2,
     "item_level": 32,
     "requires_level": 28
@@ -1866,7 +1866,7 @@
   {
     "id": 41548,
     "name": "Duskweave Leggings",
-    "icon": "",
+    "icon": "inv_pants_cloth_11",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -1874,7 +1874,7 @@
   {
     "id": 41553,
     "name": "Black Duskweave Leggings",
-    "icon": "",
+    "icon": "inv_pants_cloth_11",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1882,7 +1882,7 @@
   {
     "id": 42093,
     "name": "Frostmoon Pants",
-    "icon": "",
+    "icon": "inv_pants_cloth_11",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -1890,7 +1890,7 @@
   {
     "id": 43975,
     "name": "Frostsavage Leggings",
-    "icon": "",
+    "icon": "inv_pants_cloth_24",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1898,7 +1898,7 @@
   {
     "id": 49891,
     "name": "Leggings of Woven Death",
-    "icon": "",
+    "icon": "inv_pants_cloth_34",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1906,7 +1906,7 @@
   {
     "id": 49892,
     "name": "Lightweave Leggings",
-    "icon": "",
+    "icon": "inv_pants_cloth_12",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1914,7 +1914,7 @@
   {
     "id": 41520,
     "name": "Frostwoven Boots",
-    "icon": "",
+    "icon": "inv_boots_09",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -1922,7 +1922,7 @@
   {
     "id": 41544,
     "name": "Duskweave Boots",
-    "icon": "",
+    "icon": "inv_boots_09",
     "quality": 2,
     "item_level": 34,
     "requires_level": 29
@@ -1930,7 +1930,7 @@
   {
     "id": 41985,
     "name": "Silky Iceshard Boots",
-    "icon": "",
+    "icon": "inv_boots_cloth_19",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -1938,7 +1938,7 @@
   {
     "id": 42096,
     "name": "Aurora Slippers",
-    "icon": "",
+    "icon": "inv_boots_cloth_01",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -1946,7 +1946,7 @@
   {
     "id": 43970,
     "name": "Frostsavage Boots",
-    "icon": "",
+    "icon": "inv_boots_09",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -1954,7 +1954,7 @@
   {
     "id": 43585,
     "name": "Glacial Slippers",
-    "icon": "",
+    "icon": "inv_boots_cloth_05",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1962,7 +1962,7 @@
   {
     "id": 45567,
     "name": "Savior's Slippers",
-    "icon": "",
+    "icon": "inv_boots_cloth_21",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1970,7 +1970,7 @@
   {
     "id": 45566,
     "name": "Spellslinger's Slippers",
-    "icon": "",
+    "icon": "inv_boots_cloth_03",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1978,7 +1978,7 @@
   {
     "id": 45087,
     "name": "Runed Orb",
-    "icon": "",
+    "icon": "inv_misc_runedorb_01",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -1986,7 +1986,7 @@
   {
     "id": 49890,
     "name": "Deathfrost Boots",
-    "icon": "",
+    "icon": "inv_boots_cloth_25",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -1994,7 +1994,7 @@
   {
     "id": 49893,
     "name": "Sandals of Consecration",
-    "icon": "",
+    "icon": "inv_boots_cloth_26",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -2002,7 +2002,7 @@
   {
     "id": 41521,
     "name": "Frostwoven Cowl",
-    "icon": "",
+    "icon": "inv_helmet_125",
     "quality": 2,
     "item_level": 32,
     "requires_level": 28
@@ -2010,7 +2010,7 @@
   {
     "id": 41546,
     "name": "Duskweave Cowl",
-    "icon": "",
+    "icon": "inv_helmet_125",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -2018,7 +2018,7 @@
   {
     "id": 41984,
     "name": "Hat of Wintry Doom",
-    "icon": "",
+    "icon": "inv_helmet_120",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -2026,7 +2026,7 @@
   {
     "id": 43971,
     "name": "Frostsavage Cowl",
-    "icon": "",
+    "icon": "inv_helmet_125",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -2034,7 +2034,7 @@
   {
     "id": 41522,
     "name": "Frostwoven Belt",
-    "icon": "",
+    "icon": "inv_belt_29",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -2042,7 +2042,7 @@
   {
     "id": 41543,
     "name": "Duskweave Belt",
-    "icon": "",
+    "icon": "inv_belt_29",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -2050,7 +2050,7 @@
   {
     "id": 41986,
     "name": "Deep Frozen Cord",
-    "icon": "",
+    "icon": "inv_belt_31",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -2058,7 +2058,7 @@
   {
     "id": 43969,
     "name": "Frostsavage Belt",
-    "icon": "",
+    "icon": "inv_belt_16",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -2066,7 +2066,7 @@
   {
     "id": 43584,
     "name": "Glacial Waistband",
-    "icon": "",
+    "icon": "inv_belt_31",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -2074,7 +2074,7 @@
   {
     "id": 45558,
     "name": "Cord of the White Dawn",
-    "icon": "",
+    "icon": "inv_belt_40b",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -2082,7 +2082,7 @@
   {
     "id": 45557,
     "name": "Sash of Ancient Power",
-    "icon": "",
+    "icon": "inv_belt_10",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -2090,7 +2090,7 @@
   {
     "id": 41528,
     "name": "Mystic Frostwoven Wristwraps",
-    "icon": "",
+    "icon": "inv_bracer_11",
     "quality": 3,
     "item_level": 33,
     "requires_level": 28
@@ -2098,7 +2098,7 @@
   {
     "id": 41551,
     "name": "Duskweave Wristwraps",
-    "icon": "",
+    "icon": "inv_bracer_11",
     "quality": 2,
     "item_level": 33,
     "requires_level": 29
@@ -2106,7 +2106,7 @@
   {
     "id": 41555,
     "name": "Black Duskweave Wristwraps",
-    "icon": "",
+    "icon": "inv_bracer_11",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -2114,7 +2114,7 @@
   {
     "id": 41512,
     "name": "Frostwoven Wristwraps",
-    "icon": "",
+    "icon": "inv_bracer_11",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -2122,7 +2122,7 @@
   {
     "id": 43974,
     "name": "Frostsavage Bracers",
-    "icon": "",
+    "icon": "inv_bracer_07",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -2130,7 +2130,7 @@
   {
     "id": 41248,
     "name": "Red Lumberjack Shirt",
-    "icon": "",
+    "icon": "inv_shirt_red_01",
     "quality": 2,
     "item_level": 1,
     "requires_level": 0
@@ -2138,7 +2138,7 @@
   {
     "id": 2604,
     "name": "Red Dye",
-    "icon": "",
+    "icon": "inv_potion_11",
     "quality": 1,
     "item_level": 10,
     "requires_level": 0
@@ -2146,7 +2146,7 @@
   {
     "id": 41249,
     "name": "Blue Lumberjack Shirt",
-    "icon": "",
+    "icon": "inv_shirt_blue_01",
     "quality": 2,
     "item_level": 1,
     "requires_level": 0
@@ -2154,7 +2154,7 @@
   {
     "id": 6260,
     "name": "Blue Dye",
-    "icon": "",
+    "icon": "inv_potion_15",
     "quality": 1,
     "item_level": 10,
     "requires_level": 0
@@ -2162,7 +2162,7 @@
   {
     "id": 41251,
     "name": "Yellow Lumberjack Shirt",
-    "icon": "",
+    "icon": "inv_shirt_yellow_01",
     "quality": 2,
     "item_level": 1,
     "requires_level": 0
@@ -2170,7 +2170,7 @@
   {
     "id": 4341,
     "name": "Yellow Dye",
-    "icon": "",
+    "icon": "inv_potion_12",
     "quality": 1,
     "item_level": 10,
     "requires_level": 0
@@ -2178,7 +2178,7 @@
   {
     "id": 41250,
     "name": "Green Lumberjack Shirt",
-    "icon": "",
+    "icon": "inv_shirt_green_01",
     "quality": 2,
     "item_level": 1,
     "requires_level": 0
@@ -2186,7 +2186,7 @@
   {
     "id": 2605,
     "name": "Green Dye",
-    "icon": "",
+    "icon": "inv_potion_12",
     "quality": 1,
     "item_level": 10,
     "requires_level": 0
@@ -2194,7 +2194,7 @@
   {
     "id": 41252,
     "name": "Red Workman's Shirt",
-    "icon": "",
+    "icon": "inv_shirt_red_01",
     "quality": 2,
     "item_level": 1,
     "requires_level": 0
@@ -2202,7 +2202,7 @@
   {
     "id": 41253,
     "name": "Blue Workman's Shirt",
-    "icon": "",
+    "icon": "inv_shirt_13",
     "quality": 2,
     "item_level": 1,
     "requires_level": 0
@@ -2210,7 +2210,7 @@
   {
     "id": 41254,
     "name": "Rustic Workman's Shirt",
-    "icon": "",
+    "icon": "inv_shirt_14",
     "quality": 2,
     "item_level": 1,
     "requires_level": 0
@@ -2218,7 +2218,7 @@
   {
     "id": 41255,
     "name": "Green Workman's Shirt",
-    "icon": "",
+    "icon": "inv_shirt_green_01",
     "quality": 2,
     "item_level": 1,
     "requires_level": 0
@@ -2226,7 +2226,7 @@
   {
     "id": 41597,
     "name": "Abyssal Bag",
-    "icon": "",
+    "icon": "inv_misc_bag_corefelclothbag",
     "quality": 3,
     "item_level": 32,
     "requires_level": 0
@@ -2234,7 +2234,7 @@
   {
     "id": 41600,
     "name": "Glacial Bag",
-    "icon": "",
+    "icon": "inv_misc_bag_enchantedrunecloth",
     "quality": 3,
     "item_level": 32,
     "requires_level": 0
@@ -2242,7 +2242,7 @@
   {
     "id": 41598,
     "name": "Mysterious Bag",
-    "icon": "",
+    "icon": "inv_misc_bag_17",
     "quality": 3,
     "item_level": 32,
     "requires_level": 0
@@ -2250,7 +2250,7 @@
   {
     "id": 41599,
     "name": "Frostweave Bag",
-    "icon": "",
+    "icon": "inv_misc_bag_enchantedmageweave",
     "quality": 2,
     "item_level": 32,
     "requires_level": 0
@@ -2258,7 +2258,7 @@
   {
     "id": 45773,
     "name": "Emerald Bag",
-    "icon": "",
+    "icon": "inv_misc_bag_18",
     "quality": 3,
     "item_level": 32,
     "requires_level": 0
@@ -2266,7 +2266,7 @@
   {
     "id": 36908,
     "name": "Frost Lotus",
-    "icon": "",
+    "icon": "inv_misc_herb_frostlotus",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -2274,7 +2274,7 @@
   {
     "id": 41601,
     "name": "Shining Spellthread",
-    "icon": "",
+    "icon": "spell_nature_astralrecal",
     "quality": 3,
     "item_level": 30,
     "requires_level": 27
@@ -2282,7 +2282,7 @@
   {
     "id": 37704,
     "name": "Crystallized Life",
-    "icon": "",
+    "icon": "inv_elemental_crystal_life",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2290,7 +2290,7 @@
   {
     "id": 41602,
     "name": "Brilliant Spellthread",
-    "icon": "",
+    "icon": "spell_nature_astralrecalgroup",
     "quality": 4,
     "item_level": 30,
     "requires_level": 27
@@ -2298,7 +2298,7 @@
   {
     "id": 41603,
     "name": "Azure Spellthread",
-    "icon": "",
+    "icon": "spell_nature_astralrecal",
     "quality": 3,
     "item_level": 30,
     "requires_level": 27
@@ -2306,7 +2306,7 @@
   {
     "id": 41604,
     "name": "Sapphire Spellthread",
-    "icon": "",
+    "icon": "spell_nature_astralrecalgroup",
     "quality": 4,
     "item_level": 30,
     "requires_level": 27
@@ -2314,7 +2314,7 @@
   {
     "id": 41607,
     "name": "Cloak of the Moon",
-    "icon": "",
+    "icon": "inv_misc_cape_16",
     "quality": 3,
     "item_level": 33,
     "requires_level": 28
@@ -2322,7 +2322,7 @@
   {
     "id": 41608,
     "name": "Cloak of Frozen Spirits",
-    "icon": "",
+    "icon": "inv_misc_cape_16",
     "quality": 3,
     "item_level": 33,
     "requires_level": 28
@@ -2330,7 +2330,7 @@
   {
     "id": 41610,
     "name": "Deathchill Cloak",
-    "icon": "",
+    "icon": "inv_misc_cape_02",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -2338,7 +2338,7 @@
   {
     "id": 36784,
     "name": "Siren's Tear",
-    "icon": "",
+    "icon": "inv_misc_gem_pearl_11",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -2346,7 +2346,7 @@
   {
     "id": 41609,
     "name": "Wispcloak",
-    "icon": "",
+    "icon": "inv_misc_cape_02",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -2354,7 +2354,7 @@
   {
     "id": 45811,
     "name": "Frostguard Drape",
-    "icon": "",
+    "icon": "inv_misc_cape_19",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -2362,7 +2362,7 @@
   {
     "id": 45810,
     "name": "Cloak of Crimson Snow",
-    "icon": "",
+    "icon": "inv_misc_cape_19",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -2370,7 +2370,7 @@
   {
     "id": 44554,
     "name": "Flying Carpet",
-    "icon": "",
+    "icon": "ability_mount_flyingcarpet",
     "quality": 3,
     "item_level": 30,
     "requires_level": 10
@@ -2378,7 +2378,7 @@
   {
     "id": 8343,
     "name": "Heavy Silken Thread",
-    "icon": "",
+    "icon": "inv_fabric_silk_02",
     "quality": 1,
     "item_level": 10,
     "requires_level": 0
@@ -2386,7 +2386,7 @@
   {
     "id": 44558,
     "name": "Magnificent Flying Carpet",
-    "icon": "",
+    "icon": "ability_mount_magnificentflyingcarpet",
     "quality": 4,
     "item_level": 30,
     "requires_level": 10
@@ -2394,7 +2394,7 @@
   {
     "id": 54797,
     "name": "Frosty Flying Carpet",
-    "icon": "",
+    "icon": "ability_mount_frostyflyingcarpet",
     "quality": 4,
     "item_level": 30,
     "requires_level": 10
@@ -2402,7 +2402,7 @@
   {
     "id": 34721,
     "name": "Frostweave Bandage",
-    "icon": "",
+    "icon": "inv_misc_bandage_frostweave",
     "quality": 1,
     "item_level": 27,
     "requires_level": 21
@@ -2410,7 +2410,7 @@
   {
     "id": 34722,
     "name": "Heavy Frostweave Bandage",
-    "icon": "",
+    "icon": "inv_misc_bandage_frostweave_heavy",
     "quality": 1,
     "item_level": 30,
     "requires_level": 26
@@ -2426,7 +2426,7 @@
   {
     "id": 39520,
     "name": "Kungaloosh",
-    "icon": "",
+    "icon": "inv_drink_21",
     "quality": 1,
     "item_level": 28,
     "requires_level": 26
@@ -2434,7 +2434,7 @@
   {
     "id": 35949,
     "name": "Tundra Berries",
-    "icon": "",
+    "icon": "inv_misc_food_104_tundraberries",
     "quality": 1,
     "item_level": 26,
     "requires_level": 23
@@ -2442,7 +2442,7 @@
   {
     "id": 35948,
     "name": "Savory Snowplum",
-    "icon": "",
+    "icon": "inv_misc_food_105_snowplum",
     "quality": 1,
     "item_level": 28,
     "requires_level": 27
@@ -2450,7 +2450,7 @@
   {
     "id": 34759,
     "name": "Smoked Rockfin",
-    "icon": "",
+    "icon": "inv_misc_food_131_fish",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2458,7 +2458,7 @@
   {
     "id": 41803,
     "name": "Rockfin Grouper",
-    "icon": "",
+    "icon": "inv_misc_fish_46",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2466,7 +2466,7 @@
   {
     "id": 34760,
     "name": "Grilled Bonescale",
-    "icon": "",
+    "icon": "inv_misc_food_143_fish",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2474,7 +2474,7 @@
   {
     "id": 41808,
     "name": "Bonescale Snapper",
-    "icon": "",
+    "icon": "inv_misc_fish_48",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2482,7 +2482,7 @@
   {
     "id": 34761,
     "name": "Sauteed Goby",
-    "icon": "",
+    "icon": "inv_misc_food_125_fishchunk",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2490,7 +2490,7 @@
   {
     "id": 41812,
     "name": "Barrelhead Goby",
-    "icon": "",
+    "icon": "inv_misc_fish_57",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2498,7 +2498,7 @@
   {
     "id": 34762,
     "name": "Grilled Sculpin",
-    "icon": "",
+    "icon": "inv_misc_food_79",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2506,7 +2506,7 @@
   {
     "id": 41806,
     "name": "Musselback Sculpin",
-    "icon": "",
+    "icon": "inv_misc_fish_62",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2514,7 +2514,7 @@
   {
     "id": 34763,
     "name": "Smoked Salmon",
-    "icon": "",
+    "icon": "inv_misc_food_130_fish",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2522,7 +2522,7 @@
   {
     "id": 41809,
     "name": "Glacial Salmon",
-    "icon": "",
+    "icon": "inv_misc_fish_51",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2530,7 +2530,7 @@
   {
     "id": 34764,
     "name": "Poached Nettlefish",
-    "icon": "",
+    "icon": "inv_misc_food_138_fish",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2538,7 +2538,7 @@
   {
     "id": 41813,
     "name": "Nettlefish",
-    "icon": "",
+    "icon": "inv_misc_fish_72",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2546,7 +2546,7 @@
   {
     "id": 42942,
     "name": "Baked Manta Ray",
-    "icon": "",
+    "icon": "inv_misc_food_140_fish",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2554,7 +2554,7 @@
   {
     "id": 41802,
     "name": "Imperial Manta Ray",
-    "icon": "",
+    "icon": "inv_misc_fish_59",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2562,7 +2562,7 @@
   {
     "id": 34765,
     "name": "Pickled Fangtooth",
-    "icon": "",
+    "icon": "inv_misc_food_76",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2570,7 +2570,7 @@
   {
     "id": 41810,
     "name": "Fangtooth Herring",
-    "icon": "",
+    "icon": "inv_misc_fish_67",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2578,7 +2578,7 @@
   {
     "id": 34747,
     "name": "Northern Stew",
-    "icon": "",
+    "icon": "inv_misc_food_117_heartysoup",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2586,7 +2586,7 @@
   {
     "id": 43013,
     "name": "Chilled Meat",
-    "icon": "",
+    "icon": "inv_misc_food_120_sharkmeat",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2594,7 +2594,7 @@
   {
     "id": 34748,
     "name": "Mammoth Meal",
-    "icon": "",
+    "icon": "inv_misc_food_116_condorleg",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2602,7 +2602,7 @@
   {
     "id": 34736,
     "name": "Chunk o' Mammoth",
-    "icon": "",
+    "icon": "inv_misc_food_107_venison",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2610,7 +2610,7 @@
   {
     "id": 34749,
     "name": "Shoveltusk Steak",
-    "icon": "",
+    "icon": "inv_misc_food_89",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2618,7 +2618,7 @@
   {
     "id": 43009,
     "name": "Shoveltusk Flank",
-    "icon": "",
+    "icon": "inv_misc_food_135_meat",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2626,7 +2626,7 @@
   {
     "id": 34750,
     "name": "Worm Delight",
-    "icon": "",
+    "icon": "inv_misc_food_124_skewer",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2634,7 +2634,7 @@
   {
     "id": 43010,
     "name": "Worm Meat",
-    "icon": "",
+    "icon": "inv_misc_food_137_meat",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2642,7 +2642,7 @@
   {
     "id": 34751,
     "name": "Roasted Worg",
-    "icon": "",
+    "icon": "inv_misc_food_86_basilisk",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2650,7 +2650,7 @@
   {
     "id": 43011,
     "name": "Worg Haunch",
-    "icon": "",
+    "icon": "inv_misc_organ_06",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2658,7 +2658,7 @@
   {
     "id": 34752,
     "name": "Rhino Dogs",
-    "icon": "",
+    "icon": "inv_misc_food_53",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2666,7 +2666,7 @@
   {
     "id": 43012,
     "name": "Rhino Meat",
-    "icon": "",
+    "icon": "inv_misc_food_119_rhinomeat",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2674,7 +2674,7 @@
   {
     "id": 34753,
     "name": "Great Feast",
-    "icon": "",
+    "icon": "ability_hunter_pet_boar",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2682,7 +2682,7 @@
   {
     "id": 43015,
     "name": "Fish Feast",
-    "icon": "",
+    "icon": "inv_misc_fish_52",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2690,7 +2690,7 @@
   {
     "id": 43007,
     "name": "Northern Spices",
-    "icon": "",
+    "icon": "inv_misc_ammo_gunpowder_05",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2698,7 +2698,7 @@
   {
     "id": 34754,
     "name": "Mega Mammoth Meal",
-    "icon": "",
+    "icon": "inv_misc_food_108_meadcaribou",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2706,7 +2706,7 @@
   {
     "id": 34755,
     "name": "Tender Shoveltusk Steak",
-    "icon": "",
+    "icon": "inv_misc_food_122_steak",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2714,7 +2714,7 @@
   {
     "id": 34756,
     "name": "Spiced Worm Burger",
-    "icon": "",
+    "icon": "inv_misc_food_65",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2722,7 +2722,7 @@
   {
     "id": 34757,
     "name": "Very Burnt Worg",
-    "icon": "",
+    "icon": "inv_misc_food_60",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2730,7 +2730,7 @@
   {
     "id": 34758,
     "name": "Mighty Rhino Dogs",
-    "icon": "",
+    "icon": "inv_misc_food_66",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2738,7 +2738,7 @@
   {
     "id": 34766,
     "name": "Poached Northern Sculpin",
-    "icon": "",
+    "icon": "inv_misc_food_77",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2746,7 +2746,7 @@
   {
     "id": 34767,
     "name": "Firecracker Salmon",
-    "icon": "",
+    "icon": "inv_misc_food_141_fish",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2754,7 +2754,7 @@
   {
     "id": 34768,
     "name": "Spicy Blue Nettlefish",
-    "icon": "",
+    "icon": "inv_misc_food_139_fish",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2762,7 +2762,7 @@
   {
     "id": 34769,
     "name": "Imperial Manta Steak",
-    "icon": "",
+    "icon": "inv_misc_food_121_buttermeat",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2770,7 +2770,7 @@
   {
     "id": 42993,
     "name": "Spicy Fried Herring",
-    "icon": "",
+    "icon": "inv_misc_food_78",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2778,7 +2778,7 @@
   {
     "id": 42994,
     "name": "Rhinolicious Wormsteak",
-    "icon": "",
+    "icon": "inv_misc_food_47",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2786,7 +2786,7 @@
   {
     "id": 43004,
     "name": "Critter Bites",
-    "icon": "",
+    "icon": "inv_misc_food_88_ravagernuggets",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2794,7 +2794,7 @@
   {
     "id": 42995,
     "name": "Hearty Rhino",
-    "icon": "",
+    "icon": "inv_misc_food_115_condorsoup",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2802,7 +2802,7 @@
   {
     "id": 42996,
     "name": "Snapper Extreme",
-    "icon": "",
+    "icon": "inv_misc_food_129_fish",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2810,7 +2810,7 @@
   {
     "id": 42997,
     "name": "Blackened Worg Steak",
-    "icon": "",
+    "icon": "inv_misc_food_84_roastclefthoof",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2818,7 +2818,7 @@
   {
     "id": 42998,
     "name": "Cuttlesteak",
-    "icon": "",
+    "icon": "inv_misc_food_133_meat",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2826,7 +2826,7 @@
   {
     "id": 41801,
     "name": "Moonglow Cuttlefish",
-    "icon": "",
+    "icon": "inv_misc_fish_70",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2834,7 +2834,7 @@
   {
     "id": 43005,
     "name": "Spiced Mammoth Treats",
-    "icon": "",
+    "icon": "inv_misc_food_123_roast",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2842,7 +2842,7 @@
   {
     "id": 42999,
     "name": "Blackened Dragonfin",
-    "icon": "",
+    "icon": "inv_misc_food_142_fish",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2850,7 +2850,7 @@
   {
     "id": 41807,
     "name": "Dragonfin Angelfish",
-    "icon": "",
+    "icon": "inv_misc_fish_54",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2858,7 +2858,7 @@
   {
     "id": 43000,
     "name": "Dragonfin Filet",
-    "icon": "",
+    "icon": "inv_misc_food_75",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2866,7 +2866,7 @@
   {
     "id": 43001,
     "name": "Tracker Snacks",
-    "icon": "",
+    "icon": "inv_misc_food_85_stegadonbite",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2874,7 +2874,7 @@
   {
     "id": 43268,
     "name": "Dalaran Clam Chowder",
-    "icon": "",
+    "icon": "inv_misc_cauldron_frost",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2882,7 +2882,7 @@
   {
     "id": 36782,
     "name": "Succulent Clam Meat",
-    "icon": "",
+    "icon": "inv_misc_food_126_clammeat",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2890,7 +2890,7 @@
   {
     "id": 43490,
     "name": "Tasty Cupcake",
-    "icon": "",
+    "icon": "inv_valentineschocolate01",
     "quality": 1,
     "item_level": 30,
     "requires_level": 0
@@ -2898,7 +2898,7 @@
   {
     "id": 30817,
     "name": "Simple Flour",
-    "icon": "",
+    "icon": "inv_misc_food_wheat_01",
     "quality": 1,
     "item_level": 10,
     "requires_level": 0
@@ -2906,7 +2906,7 @@
   {
     "id": 43501,
     "name": "Northern Egg",
-    "icon": "",
+    "icon": "inv_egg_01",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2914,7 +2914,7 @@
   {
     "id": 43488,
     "name": "Last Week's Mammoth",
-    "icon": "",
+    "icon": "inv_misc_food_114_orcablubber",
     "quality": 1,
     "item_level": 30,
     "requires_level": 0
@@ -2922,7 +2922,7 @@
   {
     "id": 43491,
     "name": "Bad Clams",
-    "icon": "",
+    "icon": "inv_misc_shell_01",
     "quality": 1,
     "item_level": 30,
     "requires_level": 0
@@ -2930,7 +2930,7 @@
   {
     "id": 22577,
     "name": "Mote of Shadow",
-    "icon": "",
+    "icon": "inv_elemental_mote_shadow01",
     "quality": 1,
     "item_level": 15,
     "requires_level": 0
@@ -2938,7 +2938,7 @@
   {
     "id": 43492,
     "name": "Haunted Herring",
-    "icon": "",
+    "icon": "inv_misc_fish_66",
     "quality": 1,
     "item_level": 30,
     "requires_level": 0
@@ -2946,7 +2946,7 @@
   {
     "id": 12808,
     "name": "Essence of Undeath",
-    "icon": "",
+    "icon": "spell_shadow_shadetruesight",
     "quality": 2,
     "item_level": 10,
     "requires_level": 0
@@ -2954,7 +2954,7 @@
   {
     "id": 43478,
     "name": "Gigantic Feast",
-    "icon": "",
+    "icon": "ability_hunter_pet_boar",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2962,7 +2962,7 @@
   {
     "id": 41800,
     "name": "Deep Sea Monsterbelly",
-    "icon": "",
+    "icon": "inv_misc_fish_60",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -2970,7 +2970,7 @@
   {
     "id": 43480,
     "name": "Small Feast",
-    "icon": "",
+    "icon": "ability_hunter_pet_boar",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2978,7 +2978,7 @@
   {
     "id": 44953,
     "name": "Worg Tartare",
-    "icon": "",
+    "icon": "inv_misc_food_71",
     "quality": 1,
     "item_level": 27,
     "requires_level": 27
@@ -2986,7 +2986,7 @@
   {
     "id": 45932,
     "name": "Black Jelly",
-    "icon": "",
+    "icon": "inv_misc_slime_02",
     "quality": 1,
     "item_level": 28,
     "requires_level": 28
@@ -2994,7 +2994,7 @@
   {
     "id": 41805,
     "name": "Borean Man O' War",
-    "icon": "",
+    "icon": "inv_misc_fish_49",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -3002,7 +3002,7 @@
   {
     "id": 33567,
     "name": "Borean Leather Scraps",
-    "icon": "",
+    "icon": "inv_misc_leatherscrap_16",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -3010,7 +3010,7 @@
   {
     "id": 38557,
     "name": "Icy Dragonscale",
-    "icon": "",
+    "icon": "inv_misc_monsterscales_19",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -3026,7 +3026,7 @@
   {
     "id": 38558,
     "name": "Nerubian Chitin",
-    "icon": "",
+    "icon": "inv_misc_nerubianchitin_01",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -3042,7 +3042,7 @@
   {
     "id": 38561,
     "name": "Jormungar Scale",
-    "icon": "",
+    "icon": "inv_misc_monsterscales_18",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -3058,7 +3058,7 @@
   {
     "id": 38375,
     "name": "Borean Armor Kit",
-    "icon": "",
+    "icon": "inv_misc_armorkit_28",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -3066,7 +3066,7 @@
   {
     "id": 38376,
     "name": "Heavy Borean Armor Kit",
-    "icon": "",
+    "icon": "inv_misc_armorkit_30",
     "quality": 2,
     "item_level": 30,
     "requires_level": 27
@@ -3074,7 +3074,7 @@
   {
     "id": 38374,
     "name": "Icescale Leg Armor",
-    "icon": "",
+    "icon": "inv_misc_armorkit_33",
     "quality": 4,
     "item_level": 30,
     "requires_level": 30
@@ -3082,7 +3082,7 @@
   {
     "id": 44128,
     "name": "Arctic Fur",
-    "icon": "",
+    "icon": "inv_misc_pelt_14",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -3090,7 +3090,7 @@
   {
     "id": 38373,
     "name": "Frosthide Leg Armor",
-    "icon": "",
+    "icon": "inv_misc_armorkit_32",
     "quality": 4,
     "item_level": 30,
     "requires_level": 30
@@ -3098,7 +3098,7 @@
   {
     "id": 38372,
     "name": "Nerubian Leg Armor",
-    "icon": "",
+    "icon": "inv_misc_armorkit_29",
     "quality": 3,
     "item_level": 29,
     "requires_level": 27
@@ -3106,7 +3106,7 @@
   {
     "id": 38371,
     "name": "Jormungar Leg Armor",
-    "icon": "",
+    "icon": "inv_misc_armorkit_31",
     "quality": 3,
     "item_level": 29,
     "requires_level": 27
@@ -3114,7 +3114,7 @@
   {
     "id": 44963,
     "name": "Earthen Leg Armor",
-    "icon": "",
+    "icon": "inv_misc_armorkit_18",
     "quality": 4,
     "item_level": 30,
     "requires_level": 30
@@ -3122,7 +3122,7 @@
   {
     "id": 38405,
     "name": "Arctic Belt",
-    "icon": "",
+    "icon": "inv_belt_02",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3130,7 +3130,7 @@
   {
     "id": 38412,
     "name": "Frostscale Belt",
-    "icon": "",
+    "icon": "inv_belt_02",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3138,7 +3138,7 @@
   {
     "id": 38406,
     "name": "Iceborne Belt",
-    "icon": "",
+    "icon": "inv_belt_02",
     "quality": 2,
     "item_level": 32,
     "requires_level": 28
@@ -3146,7 +3146,7 @@
   {
     "id": 38418,
     "name": "Nerubian Belt",
-    "icon": "",
+    "icon": "inv_belt_02",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3154,7 +3154,7 @@
   {
     "id": 43133,
     "name": "Nightshock Girdle",
-    "icon": "",
+    "icon": "inv_belt_22",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3162,7 +3162,7 @@
   {
     "id": 43437,
     "name": "Eviscerator's Waistguard",
-    "icon": "",
+    "icon": "inv_belt_04",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3170,7 +3170,7 @@
   {
     "id": 43266,
     "name": "Overcast Belt",
-    "icon": "",
+    "icon": "inv_belt_14",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3178,7 +3178,7 @@
   {
     "id": 43442,
     "name": "Swiftarrow Belt",
-    "icon": "",
+    "icon": "inv_belt_19",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3186,7 +3186,7 @@
   {
     "id": 43450,
     "name": "Stormhide Belt",
-    "icon": "",
+    "icon": "inv_belt_23",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3194,7 +3194,7 @@
   {
     "id": 43484,
     "name": "Trollwoven Girdle",
-    "icon": "",
+    "icon": "inv_belt_23",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3202,7 +3202,7 @@
   {
     "id": 43591,
     "name": "Polar Cord",
-    "icon": "",
+    "icon": "inv_belt_22",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3210,7 +3210,7 @@
   {
     "id": 43594,
     "name": "Icy Scale Belt",
-    "icon": "",
+    "icon": "inv_belt_13",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3218,7 +3218,7 @@
   {
     "id": 45556,
     "name": "Belt of Arctic Life",
-    "icon": "",
+    "icon": "inv_belt_37c",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3226,7 +3226,7 @@
   {
     "id": 38404,
     "name": "Arctic Boots",
-    "icon": "",
+    "icon": "inv_boots_04",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3234,7 +3234,7 @@
   {
     "id": 38590,
     "name": "Black Chitinguard Boots",
-    "icon": "",
+    "icon": "inv_boots_07",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3242,7 +3242,7 @@
   {
     "id": 38413,
     "name": "Frostscale Boots",
-    "icon": "",
+    "icon": "inv_boots_chain_06",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3250,7 +3250,7 @@
   {
     "id": 44438,
     "name": "Dragonstompers",
-    "icon": "",
+    "icon": "inv_boots_chain_06",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3258,7 +3258,7 @@
   {
     "id": 38407,
     "name": "Iceborne Boots",
-    "icon": "",
+    "icon": "inv_boots_04",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3266,7 +3266,7 @@
   {
     "id": 44442,
     "name": "Bugsquashers",
-    "icon": "",
+    "icon": "inv_boots_04",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3274,7 +3274,7 @@
   {
     "id": 38419,
     "name": "Nerubian Boots",
-    "icon": "",
+    "icon": "inv_boots_chain_07",
     "quality": 2,
     "item_level": 32,
     "requires_level": 28
@@ -3282,7 +3282,7 @@
   {
     "id": 44445,
     "name": "Scaled Icewalkers",
-    "icon": "",
+    "icon": "inv_boots_chain_07",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3290,7 +3290,7 @@
   {
     "id": 43439,
     "name": "Eviscerator's Treads",
-    "icon": "",
+    "icon": "inv_boots_08",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3298,7 +3298,7 @@
   {
     "id": 43273,
     "name": "Overcast Boots",
-    "icon": "",
+    "icon": "inv_boots_cloth_07",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3306,7 +3306,7 @@
   {
     "id": 43443,
     "name": "Swiftarrow Boots",
-    "icon": "",
+    "icon": "inv_boots_chain_10",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3314,7 +3314,7 @@
   {
     "id": 43451,
     "name": "Stormhide Stompers",
-    "icon": "",
+    "icon": "inv_boots_chain_07",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3322,7 +3322,7 @@
   {
     "id": 43469,
     "name": "Revenant's Treads",
-    "icon": "",
+    "icon": "inv_boots_chain_06",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3330,7 +3330,7 @@
   {
     "id": 43502,
     "name": "Earthgiving Boots",
-    "icon": "",
+    "icon": "inv_boots_cloth_07",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3338,7 +3338,7 @@
   {
     "id": 43592,
     "name": "Polar Boots",
-    "icon": "",
+    "icon": "inv_boots_cloth_01",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3346,7 +3346,7 @@
   {
     "id": 43595,
     "name": "Icy Scale Boots",
-    "icon": "",
+    "icon": "inv_boots_chain_11",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3354,7 +3354,7 @@
   {
     "id": 44930,
     "name": "Windripper Boots",
-    "icon": "",
+    "icon": "inv_boots_cloth_05",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3362,7 +3362,7 @@
   {
     "id": 49894,
     "name": "Blessed Cenarion Boots",
-    "icon": "",
+    "icon": "inv_boots_leather_8",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3370,7 +3370,7 @@
   {
     "id": 49895,
     "name": "Footpads of Impending Death",
-    "icon": "",
+    "icon": "inv_boots_leather_07",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3378,7 +3378,7 @@
   {
     "id": 49896,
     "name": "Earthsoul Boots",
-    "icon": "",
+    "icon": "inv_boots_mail_10",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3386,7 +3386,7 @@
   {
     "id": 49897,
     "name": "Rock-Steady Treads",
-    "icon": "",
+    "icon": "inv_boots_mail_06",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3394,7 +3394,7 @@
   {
     "id": 38400,
     "name": "Arctic Chestpiece",
-    "icon": "",
+    "icon": "inv_chest_fur",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3402,7 +3402,7 @@
   {
     "id": 38592,
     "name": "Dark Arctic Chestpiece",
-    "icon": "",
+    "icon": "inv_chest_leather_01",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3410,7 +3410,7 @@
   {
     "id": 38414,
     "name": "Frostscale Chestguard",
-    "icon": "",
+    "icon": "inv_chest_chain_13",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3418,7 +3418,7 @@
   {
     "id": 44437,
     "name": "Dark Frostscale Breastplate",
-    "icon": "",
+    "icon": "inv_chest_chain_13",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -3426,7 +3426,7 @@
   {
     "id": 38408,
     "name": "Iceborne Chestguard",
-    "icon": "",
+    "icon": "inv_chest_fur",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3434,7 +3434,7 @@
   {
     "id": 44441,
     "name": "Dark Iceborne Chestguard",
-    "icon": "",
+    "icon": "inv_chest_fur",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -3442,7 +3442,7 @@
   {
     "id": 38420,
     "name": "Nerubian Chestguard",
-    "icon": "",
+    "icon": "inv_chest_chain_13",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3450,7 +3450,7 @@
   {
     "id": 44444,
     "name": "Dark Nerubian Chestpiece",
-    "icon": "",
+    "icon": "inv_chest_chain_13",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -3458,7 +3458,7 @@
   {
     "id": 43129,
     "name": "Razorstrike Breastplate",
-    "icon": "",
+    "icon": "inv_chest_chain_15",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3466,7 +3466,7 @@
   {
     "id": 43257,
     "name": "Wildscale Breastplate",
-    "icon": "",
+    "icon": "inv_chest_leather_14",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3474,7 +3474,7 @@
   {
     "id": 43434,
     "name": "Eviscerator's Chestguard",
-    "icon": "",
+    "icon": "inv_chest_leather_10",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3482,7 +3482,7 @@
   {
     "id": 43263,
     "name": "Overcast Chestguard",
-    "icon": "",
+    "icon": "inv_chest_leather_14",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3490,7 +3490,7 @@
   {
     "id": 43445,
     "name": "Swiftarrow Hauberk",
-    "icon": "",
+    "icon": "inv_chest_chain_06",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3498,7 +3498,7 @@
   {
     "id": 43453,
     "name": "Stormhide Hauberk",
-    "icon": "",
+    "icon": "inv_chest_chain_13",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3506,7 +3506,7 @@
   {
     "id": 43461,
     "name": "Revenant's Breastplate",
-    "icon": "",
+    "icon": "inv_chest_chain_13",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3514,7 +3514,7 @@
   {
     "id": 43590,
     "name": "Polar Vest",
-    "icon": "",
+    "icon": "inv_chest_cloth_08",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3522,7 +3522,7 @@
   {
     "id": 43593,
     "name": "Icy Scale Chestguard",
-    "icon": "",
+    "icon": "inv_chest_plate09",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3530,7 +3530,7 @@
   {
     "id": 38401,
     "name": "Arctic Leggings",
-    "icon": "",
+    "icon": "inv_pants_06",
     "quality": 2,
     "item_level": 33,
     "requires_level": 27
@@ -3538,7 +3538,7 @@
   {
     "id": 38591,
     "name": "Dark Arctic Leggings",
-    "icon": "",
+    "icon": "inv_pants_leather_09",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -3546,7 +3546,7 @@
   {
     "id": 38416,
     "name": "Frostscale Leggings",
-    "icon": "",
+    "icon": "inv_pants_mail_15",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3554,7 +3554,7 @@
   {
     "id": 44436,
     "name": "Dark Frostscale Leggings",
-    "icon": "",
+    "icon": "inv_pants_mail_15",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -3562,7 +3562,7 @@
   {
     "id": 38410,
     "name": "Iceborne Leggings",
-    "icon": "",
+    "icon": "inv_pants_06",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3570,7 +3570,7 @@
   {
     "id": 44440,
     "name": "Dark Iceborne Leggings",
-    "icon": "",
+    "icon": "inv_pants_06",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -3578,7 +3578,7 @@
   {
     "id": 38422,
     "name": "Nerubian Legguards",
-    "icon": "",
+    "icon": "inv_pants_leather_09",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3586,7 +3586,7 @@
   {
     "id": 44443,
     "name": "Dark Nerubian Leggings",
-    "icon": "",
+    "icon": "inv_pants_mail_14",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -3594,7 +3594,7 @@
   {
     "id": 42731,
     "name": "Leggings of Visceral Strikes",
-    "icon": "",
+    "icon": "inv_pants_leather_09",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3602,7 +3602,7 @@
   {
     "id": 43438,
     "name": "Eviscerator's Legguards",
-    "icon": "",
+    "icon": "inv_pants_leather_25",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3610,7 +3610,7 @@
   {
     "id": 43271,
     "name": "Overcast Leggings",
-    "icon": "",
+    "icon": "inv_pants_leather_09",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3618,7 +3618,7 @@
   {
     "id": 43448,
     "name": "Swiftarrow Leggings",
-    "icon": "",
+    "icon": "inv_pants_mail_17",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3626,7 +3626,7 @@
   {
     "id": 43456,
     "name": "Stormhide Legguards",
-    "icon": "",
+    "icon": "inv_pants_mail_18",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3634,7 +3634,7 @@
   {
     "id": 43458,
     "name": "Giantmaim Legguards",
-    "icon": "",
+    "icon": "inv_pants_mail_15",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3642,7 +3642,7 @@
   {
     "id": 43495,
     "name": "Earthgiving Legguards",
-    "icon": "",
+    "icon": "inv_pants_leather_04",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3650,7 +3650,7 @@
   {
     "id": 44931,
     "name": "Windripper Leggings",
-    "icon": "",
+    "icon": "inv_pants_leather_03",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3658,7 +3658,7 @@
   {
     "id": 49898,
     "name": "Legwraps of Unleashed Nature",
-    "icon": "",
+    "icon": "inv_pants_leather_35",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3666,7 +3666,7 @@
   {
     "id": 49899,
     "name": "Bladeborn Leggings",
-    "icon": "",
+    "icon": "inv_pants_leather_34",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3674,7 +3674,7 @@
   {
     "id": 49900,
     "name": "Lightning-Infused Leggings",
-    "icon": "",
+    "icon": "inv_kilt_mail_01",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3682,7 +3682,7 @@
   {
     "id": 49901,
     "name": "Draconic Bonesplinter Legguards",
-    "icon": "",
+    "icon": "inv_pants_mail_32",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3690,7 +3690,7 @@
   {
     "id": 38403,
     "name": "Arctic Gloves",
-    "icon": "",
+    "icon": "inv_gauntlets_05",
     "quality": 2,
     "item_level": 33,
     "requires_level": 27
@@ -3698,7 +3698,7 @@
   {
     "id": 38415,
     "name": "Frostscale Gloves",
-    "icon": "",
+    "icon": "inv_gauntlets_30",
     "quality": 2,
     "item_level": 32,
     "requires_level": 28
@@ -3706,7 +3706,7 @@
   {
     "id": 38409,
     "name": "Iceborne Gloves",
-    "icon": "",
+    "icon": "inv_gauntlets_05",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3714,7 +3714,7 @@
   {
     "id": 38421,
     "name": "Nerubian Gloves",
-    "icon": "",
+    "icon": "inv_gauntlets_05",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3722,7 +3722,7 @@
   {
     "id": 43255,
     "name": "Seafoam Gauntlets",
-    "icon": "",
+    "icon": "inv_gauntlets_30",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3730,7 +3730,7 @@
   {
     "id": 43436,
     "name": "Eviscerator's Gauntlets",
-    "icon": "",
+    "icon": "inv_gauntlets_05",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3738,7 +3738,7 @@
   {
     "id": 43265,
     "name": "Overcast Handwraps",
-    "icon": "",
+    "icon": "inv_gauntlets_02",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3746,7 +3746,7 @@
   {
     "id": 43446,
     "name": "Swiftarrow Gauntlets",
-    "icon": "",
+    "icon": "inv_gauntlets_30",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3754,7 +3754,7 @@
   {
     "id": 43454,
     "name": "Stormhide Grips",
-    "icon": "",
+    "icon": "inv_gauntlets_30",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3762,7 +3762,7 @@
   {
     "id": 38402,
     "name": "Arctic Shoulderpads",
-    "icon": "",
+    "icon": "inv_shoulder_73",
     "quality": 2,
     "item_level": 32,
     "requires_level": 28
@@ -3770,7 +3770,7 @@
   {
     "id": 38424,
     "name": "Frostscale Shoulders",
-    "icon": "",
+    "icon": "inv_shoulder_76",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -3778,7 +3778,7 @@
   {
     "id": 38411,
     "name": "Iceborne Shoulderpads",
-    "icon": "",
+    "icon": "inv_shoulder_74",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3786,7 +3786,7 @@
   {
     "id": 38417,
     "name": "Nerubian Shoulders",
-    "icon": "",
+    "icon": "inv_shoulder_16",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3794,7 +3794,7 @@
   {
     "id": 43130,
     "name": "Virulent Spaulders",
-    "icon": "",
+    "icon": "inv_shoulder_69",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3802,7 +3802,7 @@
   {
     "id": 43258,
     "name": "Purehorn Spaulders",
-    "icon": "",
+    "icon": "inv_shoulder_75",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3810,7 +3810,7 @@
   {
     "id": 43433,
     "name": "Eviscerator's Shoulderpads",
-    "icon": "",
+    "icon": "inv_shoulder_87",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3818,7 +3818,7 @@
   {
     "id": 43262,
     "name": "Overcast Spaulders",
-    "icon": "",
+    "icon": "inv_shoulder_75",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3826,7 +3826,7 @@
   {
     "id": 43449,
     "name": "Swiftarrow Shoulderguards",
-    "icon": "",
+    "icon": "inv_shoulder_77",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3834,7 +3834,7 @@
   {
     "id": 43457,
     "name": "Stormhide Shoulders",
-    "icon": "",
+    "icon": "inv_shoulder_77",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3842,7 +3842,7 @@
   {
     "id": 43481,
     "name": "Trollwoven Spaulders",
-    "icon": "",
+    "icon": "inv_shoulder_87",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3850,7 +3850,7 @@
   {
     "id": 38433,
     "name": "Arctic Wristguards",
-    "icon": "",
+    "icon": "inv_bracer_08",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3858,7 +3858,7 @@
   {
     "id": 38436,
     "name": "Frostscale Bracers",
-    "icon": "",
+    "icon": "inv_bracer_15",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3866,7 +3866,7 @@
   {
     "id": 38434,
     "name": "Iceborne Wristguards",
-    "icon": "",
+    "icon": "inv_bracer_10",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3874,7 +3874,7 @@
   {
     "id": 38435,
     "name": "Nerubian Bracers",
-    "icon": "",
+    "icon": "inv_bracer_10",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3882,7 +3882,7 @@
   {
     "id": 43131,
     "name": "Eaglebane Bracers",
-    "icon": "",
+    "icon": "inv_bracer_06",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3890,7 +3890,7 @@
   {
     "id": 43435,
     "name": "Eviscerator's Bindings",
-    "icon": "",
+    "icon": "inv_bracer_09",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3898,7 +3898,7 @@
   {
     "id": 43264,
     "name": "Overcast Bracers",
-    "icon": "",
+    "icon": "inv_bracer_07",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3906,7 +3906,7 @@
   {
     "id": 43444,
     "name": "Swiftarrow Bracers",
-    "icon": "",
+    "icon": "inv_bracer_17",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3914,7 +3914,7 @@
   {
     "id": 43452,
     "name": "Stormhide Wristguards",
-    "icon": "",
+    "icon": "inv_bracer_15",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -3922,7 +3922,7 @@
   {
     "id": 43459,
     "name": "Giantmaim Bracers",
-    "icon": "",
+    "icon": "inv_bracer_15",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3930,7 +3930,7 @@
   {
     "id": 41238,
     "name": "Cloak of Tormented Skies",
-    "icon": "",
+    "icon": "inv_misc_cape_14",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -3938,7 +3938,7 @@
   {
     "id": 38441,
     "name": "Cloak of Harsh Winds",
-    "icon": "",
+    "icon": "inv_misc_cape_14",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -3946,7 +3946,7 @@
   {
     "id": 43566,
     "name": "Ice Striker's Cloak",
-    "icon": "",
+    "icon": "inv_misc_cape_13",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3954,7 +3954,7 @@
   {
     "id": 43565,
     "name": "Durable Nerubhide Cape",
-    "icon": "",
+    "icon": "inv_misc_cape_14",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -3962,7 +3962,7 @@
   {
     "id": 38437,
     "name": "Arctic Helm",
-    "icon": "",
+    "icon": "inv_helmet_110",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3970,7 +3970,7 @@
   {
     "id": 38440,
     "name": "Frostscale Helm",
-    "icon": "",
+    "icon": "inv_helmet_11",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3978,7 +3978,7 @@
   {
     "id": 38438,
     "name": "Iceborne Helm",
-    "icon": "",
+    "icon": "inv_helmet_109",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3986,7 +3986,7 @@
   {
     "id": 38439,
     "name": "Nerubian Helm",
-    "icon": "",
+    "icon": "inv_helmet_110",
     "quality": 2,
     "item_level": 33,
     "requires_level": 28
@@ -3994,7 +3994,7 @@
   {
     "id": 43132,
     "name": "Nightshock Hood",
-    "icon": "",
+    "icon": "inv_helmet_121",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -4002,7 +4002,7 @@
   {
     "id": 43260,
     "name": "Eviscerator's Facemask",
-    "icon": "",
+    "icon": "inv_helmet_04",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -4010,7 +4010,7 @@
   {
     "id": 43261,
     "name": "Overcast Headguard",
-    "icon": "",
+    "icon": "inv_helmet_09",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -4018,7 +4018,7 @@
   {
     "id": 43447,
     "name": "Swiftarrow Helm",
-    "icon": "",
+    "icon": "inv_helmet_110",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -4026,7 +4026,7 @@
   {
     "id": 43455,
     "name": "Stormhide Crown",
-    "icon": "",
+    "icon": "inv_helmet_104",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -4034,7 +4034,7 @@
   {
     "id": 38399,
     "name": "Trapper's Traveling Pack",
-    "icon": "",
+    "icon": "inv_misc_bag_21",
     "quality": 3,
     "item_level": 32,
     "requires_level": 0
@@ -4042,7 +4042,7 @@
   {
     "id": 38347,
     "name": "Mammoth Mining Bag",
-    "icon": "",
+    "icon": "inv_misc_bag_16",
     "quality": 3,
     "item_level": 31,
     "requires_level": 0
@@ -4050,7 +4050,7 @@
   {
     "id": 44446,
     "name": "Pack of Endless Pockets",
-    "icon": "",
+    "icon": "inv_misc_bag_13",
     "quality": 3,
     "item_level": 31,
     "requires_level": 0
@@ -4058,7 +4058,7 @@
   {
     "id": 49633,
     "name": "Drums of Forgotten Kings",
-    "icon": "",
+    "icon": "inv_misc_drum_03",
     "quality": 0,
     "item_level": 28,
     "requires_level": 30
@@ -4066,7 +4066,7 @@
   {
     "id": 49634,
     "name": "Drums of the Wild",
-    "icon": "",
+    "icon": "inv_misc_drum_07",
     "quality": 0,
     "item_level": 30,
     "requires_level": 27
@@ -4082,7 +4082,7 @@
   {
     "id": 40195,
     "name": "Pygmy Oil",
-    "icon": "",
+    "icon": "inv_potion_07",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -4090,7 +4090,7 @@
   {
     "id": 40199,
     "name": "Pygmy Suckerfish",
-    "icon": "",
+    "icon": "inv_misc_fish_55",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -4098,7 +4098,7 @@
   {
     "id": 44958,
     "name": "Ethereal Oil",
-    "icon": "",
+    "icon": "inv_drink_11",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -4106,7 +4106,7 @@
   {
     "id": 41814,
     "name": "Glassfin Minnow",
-    "icon": "",
+    "icon": "inv_misc_fish_69",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -4114,7 +4114,7 @@
   {
     "id": 33447,
     "name": "Runic Healing Potion",
-    "icon": "",
+    "icon": "inv_alchemy_elixir_05",
     "quality": 1,
     "item_level": 55,
     "requires_level": 27
@@ -4122,7 +4122,7 @@
   {
     "id": 36901,
     "name": "Goldclover",
-    "icon": "",
+    "icon": "inv_misc_herb_goldclover",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -4130,7 +4130,7 @@
   {
     "id": 36906,
     "name": "Icethorn",
-    "icon": "",
+    "icon": "inv_misc_herb_icethorn",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -4138,7 +4138,7 @@
   {
     "id": 3371,
     "name": "Crystal Vial",
-    "icon": "",
+    "icon": "inv_alchemy_leadedvial",
     "quality": 1,
     "item_level": 10,
     "requires_level": 0
@@ -4146,7 +4146,7 @@
   {
     "id": 33448,
     "name": "Runic Mana Potion",
-    "icon": "",
+    "icon": "inv_alchemy_elixir_02",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4154,7 +4154,7 @@
   {
     "id": 36905,
     "name": "Lichbloom",
-    "icon": "",
+    "icon": "inv_misc_herb_whispervine",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -4162,7 +4162,7 @@
   {
     "id": 39671,
     "name": "Resurgent Healing Potion",
-    "icon": "",
+    "icon": "inv_potion_120",
     "quality": 1,
     "item_level": 28,
     "requires_level": 26
@@ -4170,7 +4170,7 @@
   {
     "id": 40077,
     "name": "Crazy Alchemist's Potion",
-    "icon": "",
+    "icon": "inv_potion_27",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4178,7 +4178,7 @@
   {
     "id": 40081,
     "name": "Potion of Nightmares",
-    "icon": "",
+    "icon": "inv_alchemy_elixir_03",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4186,7 +4186,7 @@
   {
     "id": 36907,
     "name": "Talandra's Rose",
-    "icon": "",
+    "icon": "inv_misc_herb_talandrasrose",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -4194,7 +4194,7 @@
   {
     "id": 40093,
     "name": "Indestructible Potion",
-    "icon": "",
+    "icon": "inv_alchemy_elixir_empty",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4202,7 +4202,7 @@
   {
     "id": 40087,
     "name": "Powerful Rejuvenation Potion",
-    "icon": "",
+    "icon": "inv_alchemy_elixir_06",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4210,7 +4210,7 @@
   {
     "id": 40216,
     "name": "Mighty Nature Protection Potion",
-    "icon": "",
+    "icon": "inv_potion_155",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4218,7 +4218,7 @@
   {
     "id": 40213,
     "name": "Mighty Arcane Protection Potion",
-    "icon": "",
+    "icon": "inv_potion_159",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4226,7 +4226,7 @@
   {
     "id": 40215,
     "name": "Mighty Frost Protection Potion",
-    "icon": "",
+    "icon": "inv_potion_156",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4234,7 +4234,7 @@
   {
     "id": 40217,
     "name": "Mighty Shadow Protection Potion",
-    "icon": "",
+    "icon": "inv_potion_158",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4242,7 +4242,7 @@
   {
     "id": 40214,
     "name": "Mighty Fire Protection Potion",
-    "icon": "",
+    "icon": "inv_potion_146",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4250,7 +4250,7 @@
   {
     "id": 40211,
     "name": "Potion of Speed",
-    "icon": "",
+    "icon": "inv_alchemy_elixir_04",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4258,7 +4258,7 @@
   {
     "id": 36903,
     "name": "Adder's Tongue",
-    "icon": "",
+    "icon": "inv_misc_herb_evergreenmoss",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -4266,7 +4266,7 @@
   {
     "id": 40212,
     "name": "Potion of Wild Magic",
-    "icon": "",
+    "icon": "inv_alchemy_elixir_01",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4274,7 +4274,7 @@
   {
     "id": 43570,
     "name": "Endless Mana Potion",
-    "icon": "",
+    "icon": "inv_alchemy_endlessflask_04",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4282,7 +4282,7 @@
   {
     "id": 43569,
     "name": "Endless Healing Potion",
-    "icon": "",
+    "icon": "inv_alchemy_endlessflask_06",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4290,7 +4290,7 @@
   {
     "id": 39666,
     "name": "Elixir of Mighty Agility",
-    "icon": "",
+    "icon": "inv_potion_162",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4298,7 +4298,7 @@
   {
     "id": 40070,
     "name": "Spellpower Elixir",
-    "icon": "",
+    "icon": "inv_alchemy_potion_05",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4306,7 +4306,7 @@
   {
     "id": 36904,
     "name": "Tiger Lily",
-    "icon": "",
+    "icon": "inv_misc_herb_tigerlily",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -4314,7 +4314,7 @@
   {
     "id": 40072,
     "name": "Elixir of Versatility",
-    "icon": "",
+    "icon": "inv_potion_02",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4322,7 +4322,7 @@
   {
     "id": 40078,
     "name": "Elixir of Mighty Fortitude",
-    "icon": "",
+    "icon": "inv_potion_164",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4330,7 +4330,7 @@
   {
     "id": 40076,
     "name": "Guru's Elixir",
-    "icon": "",
+    "icon": "inv_potion_112",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4338,7 +4338,7 @@
   {
     "id": 40068,
     "name": "Wrath Elixir",
-    "icon": "",
+    "icon": "inv_potion_114",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4346,7 +4346,7 @@
   {
     "id": 37921,
     "name": "Deadnettle",
-    "icon": "",
+    "icon": "inv_misc_herb_constrictorgrass",
     "quality": 1,
     "item_level": 20,
     "requires_level": 0
@@ -4354,7 +4354,7 @@
   {
     "id": 40073,
     "name": "Elixir of Mighty Strength",
-    "icon": "",
+    "icon": "inv_potion_165",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4362,7 +4362,7 @@
   {
     "id": 40097,
     "name": "Elixir of Protection",
-    "icon": "",
+    "icon": "inv_alchemy_potion_empty",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4370,7 +4370,7 @@
   {
     "id": 40109,
     "name": "Elixir of Mighty Mageblood",
-    "icon": "",
+    "icon": "inv_potion_129",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4378,7 +4378,7 @@
   {
     "id": 44325,
     "name": "Elixir of Accuracy",
-    "icon": "",
+    "icon": "inv_potion_61",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4386,7 +4386,7 @@
   {
     "id": 44327,
     "name": "Elixir of Deadly Strikes",
-    "icon": "",
+    "icon": "inv_alchemy_potion_02",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4394,7 +4394,7 @@
   {
     "id": 44328,
     "name": "Elixir of Mighty Defense",
-    "icon": "",
+    "icon": "inv_alchemy_potion_03",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4402,7 +4402,7 @@
   {
     "id": 44329,
     "name": "Elixir of Mighty Intellect",
-    "icon": "",
+    "icon": "inv_alchemy_potion_01",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4410,7 +4410,7 @@
   {
     "id": 44330,
     "name": "Elixir of Armor Piercing",
-    "icon": "",
+    "icon": "inv_alchemy_potion_06",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4418,7 +4418,7 @@
   {
     "id": 44331,
     "name": "Elixir of Lightning Speed",
-    "icon": "",
+    "icon": "inv_alchemy_potion_04",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4426,7 +4426,7 @@
   {
     "id": 44332,
     "name": "Elixir of Mighty Thoughts",
-    "icon": "",
+    "icon": "inv_potion_161",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4434,7 +4434,7 @@
   {
     "id": 8827,
     "name": "Elixir of Water Walking",
-    "icon": "",
+    "icon": "inv_potion_166",
     "quality": 1,
     "item_level": 21,
     "requires_level": 15
@@ -4442,7 +4442,7 @@
   {
     "id": 46377,
     "name": "Flask of Endless Rage",
-    "icon": "",
+    "icon": "inv_alchemy_endlessflask_06",
     "quality": 1,
     "item_level": 30,
     "requires_level": 28
@@ -4450,7 +4450,7 @@
   {
     "id": 46379,
     "name": "Flask of Stoneblood",
-    "icon": "",
+    "icon": "inv_alchemy_endlessflask_05",
     "quality": 1,
     "item_level": 30,
     "requires_level": 28
@@ -4458,7 +4458,7 @@
   {
     "id": 46376,
     "name": "Flask of the Frost Wyrm",
-    "icon": "",
+    "icon": "inv_alchemy_endlessflask_04",
     "quality": 1,
     "item_level": 30,
     "requires_level": 28
@@ -4466,7 +4466,7 @@
   {
     "id": 40079,
     "name": "Lesser Flask of Toughness",
-    "icon": "",
+    "icon": "inv_alchemy_endlessflask_02",
     "quality": 1,
     "item_level": 30,
     "requires_level": 27
@@ -4474,7 +4474,7 @@
   {
     "id": 46378,
     "name": "Flask of Pure Mojo",
-    "icon": "",
+    "icon": "inv_alchemy_endlessflask_03",
     "quality": 1,
     "item_level": 30,
     "requires_level": 28
@@ -4482,7 +4482,7 @@
   {
     "id": 40248,
     "name": "Eternal Might",
-    "icon": "",
+    "icon": "spell_shadow_manaburn",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -4490,7 +4490,7 @@
   {
     "id": 41266,
     "name": "Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_01",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -4498,7 +4498,7 @@
   {
     "id": 36917,
     "name": "Bloodstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_12",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -4506,7 +4506,7 @@
   {
     "id": 36923,
     "name": "Chalcedony",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_10",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -4514,7 +4514,7 @@
   {
     "id": 41334,
     "name": "Earthsiege Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_shadowspirit_01",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -4522,7 +4522,7 @@
   {
     "id": 36932,
     "name": "Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_07",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -4530,7 +4530,7 @@
   {
     "id": 36929,
     "name": "Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_09",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -4538,7 +4538,7 @@
   {
     "id": 36934,
     "name": "Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_34",
     "quality": 4,
     "item_level": 20,
     "requires_level": 0
@@ -4546,7 +4546,7 @@
   {
     "id": 36931,
     "name": "Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_33",
     "quality": 4,
     "item_level": 20,
     "requires_level": 0
@@ -4554,7 +4554,7 @@
   {
     "id": 36919,
     "name": "Cardinal Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_32",
     "quality": 4,
     "item_level": 20,
     "requires_level": 0
@@ -4562,7 +4562,7 @@
   {
     "id": 36928,
     "name": "Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_31",
     "quality": 4,
     "item_level": 20,
     "requires_level": 0
@@ -4570,7 +4570,7 @@
   {
     "id": 36925,
     "name": "Majestic Zircon",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_35",
     "quality": 4,
     "item_level": 20,
     "requires_level": 0
@@ -4578,7 +4578,7 @@
   {
     "id": 44323,
     "name": "Indestructible Alchemist Stone",
-    "icon": "",
+    "icon": "spell_holy_aspiration",
     "quality": 3,
     "item_level": 35,
     "requires_level": 28
@@ -4586,7 +4586,7 @@
   {
     "id": 44322,
     "name": "Mercurial Alchemist Stone",
-    "icon": "",
+    "icon": "spell_holy_aspiration",
     "quality": 3,
     "item_level": 35,
     "requires_level": 28
@@ -4594,7 +4594,7 @@
   {
     "id": 44324,
     "name": "Mighty Alchemist Stone",
-    "icon": "",
+    "icon": "spell_holy_aspiration",
     "quality": 3,
     "item_level": 35,
     "requires_level": 28
@@ -4610,7 +4610,7 @@
   {
     "id": 39900,
     "name": "Bold Bloodstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_22",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4618,7 +4618,7 @@
   {
     "id": 39905,
     "name": "Delicate Bloodstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_22",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4626,7 +4626,7 @@
   {
     "id": 39908,
     "name": "Flashing Bloodstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_22",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4634,7 +4634,7 @@
   {
     "id": 39910,
     "name": "Precise Bloodstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_22",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4642,7 +4642,7 @@
   {
     "id": 39912,
     "name": "Brilliant Bloodstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_22",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4650,7 +4650,7 @@
   {
     "id": 39996,
     "name": "Bold Scarlet Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_28",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4658,7 +4658,7 @@
   {
     "id": 39997,
     "name": "Delicate Scarlet Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_28",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4666,7 +4666,7 @@
   {
     "id": 39998,
     "name": "Brilliant Scarlet Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_28",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4674,7 +4674,7 @@
   {
     "id": 40001,
     "name": "Flashing Scarlet Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_28",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4682,7 +4682,7 @@
   {
     "id": 40003,
     "name": "Precise Scarlet Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_28",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4690,7 +4690,7 @@
   {
     "id": 42142,
     "name": "Bold Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye05",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4698,7 +4698,7 @@
   {
     "id": 42225,
     "name": "Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye01",
     "quality": 3,
     "item_level": 20,
     "requires_level": 0
@@ -4706,7 +4706,7 @@
   {
     "id": 42143,
     "name": "Delicate Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye05",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4714,7 +4714,7 @@
   {
     "id": 42144,
     "name": "Brilliant Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye05",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4722,7 +4722,7 @@
   {
     "id": 42152,
     "name": "Flashing Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye05",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4730,7 +4730,7 @@
   {
     "id": 42154,
     "name": "Precise Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye05",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4738,7 +4738,7 @@
   {
     "id": 40113,
     "name": "Brilliant Cardinal Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_37",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4746,7 +4746,7 @@
   {
     "id": 40111,
     "name": "Bold Cardinal Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_37",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4754,7 +4754,7 @@
   {
     "id": 40112,
     "name": "Delicate Cardinal Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_37",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4762,7 +4762,7 @@
   {
     "id": 40118,
     "name": "Precise Cardinal Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_37",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4770,7 +4770,7 @@
   {
     "id": 40116,
     "name": "Flashing Cardinal Ruby",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_37",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4778,7 +4778,7 @@
   {
     "id": 39907,
     "name": "Subtle Sun Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_21",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4786,7 +4786,7 @@
   {
     "id": 39909,
     "name": "Smooth Sun Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_21",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4794,7 +4794,7 @@
   {
     "id": 39917,
     "name": "Mystic Sun Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_21",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4802,7 +4802,7 @@
   {
     "id": 39918,
     "name": "Quick Sun Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_21",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4810,7 +4810,7 @@
   {
     "id": 40000,
     "name": "Subtle Autumn's Glow",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_26",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4818,7 +4818,7 @@
   {
     "id": 40013,
     "name": "Smooth Autumn's Glow",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_26",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4826,7 +4826,7 @@
   {
     "id": 40016,
     "name": "Mystic Autumn's Glow",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_26",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4834,7 +4834,7 @@
   {
     "id": 40017,
     "name": "Quick Autumn's Glow",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_26",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4842,7 +4842,7 @@
   {
     "id": 42151,
     "name": "Subtle Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye03",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4850,7 +4850,7 @@
   {
     "id": 42158,
     "name": "Mystic Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye03",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4858,7 +4858,7 @@
   {
     "id": 42150,
     "name": "Quick Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye03",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4866,7 +4866,7 @@
   {
     "id": 42149,
     "name": "Smooth Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye03",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4874,7 +4874,7 @@
   {
     "id": 40115,
     "name": "Subtle King's Amber",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_38",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4882,7 +4882,7 @@
   {
     "id": 40124,
     "name": "Smooth King's Amber",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_38",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4890,7 +4890,7 @@
   {
     "id": 40127,
     "name": "Mystic King's Amber",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_38",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4898,7 +4898,7 @@
   {
     "id": 40128,
     "name": "Quick King's Amber",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_38",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4906,7 +4906,7 @@
   {
     "id": 39919,
     "name": "Solid Chalcedony",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_24",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4914,7 +4914,7 @@
   {
     "id": 39927,
     "name": "Sparkling Chalcedony",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_24",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4922,7 +4922,7 @@
   {
     "id": 39932,
     "name": "Stormy Chalcedony",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_24",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4930,7 +4930,7 @@
   {
     "id": 39915,
     "name": "Rigid Chalcedony",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_24",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -4938,7 +4938,7 @@
   {
     "id": 40008,
     "name": "Solid Sky Sapphire",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_27",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4946,7 +4946,7 @@
   {
     "id": 40010,
     "name": "Sparkling Sky Sapphire",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_27",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4954,7 +4954,7 @@
   {
     "id": 40011,
     "name": "Stormy Sky Sapphire",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_27",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4962,7 +4962,7 @@
   {
     "id": 40014,
     "name": "Rigid Sky Sapphire",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_27",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -4970,7 +4970,7 @@
   {
     "id": 42156,
     "name": "Rigid Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye04",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4978,7 +4978,7 @@
   {
     "id": 42145,
     "name": "Sparkling Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye04",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4986,7 +4986,7 @@
   {
     "id": 42155,
     "name": "Stormy Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye04",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -4994,7 +4994,7 @@
   {
     "id": 36767,
     "name": "Solid Dragon's Eye",
-    "icon": "",
+    "icon": "inv_jewelcrafting_dragonseye04",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5002,7 +5002,7 @@
   {
     "id": 40119,
     "name": "Solid Majestic Zircon",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_42",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5010,7 +5010,7 @@
   {
     "id": 40120,
     "name": "Sparkling Majestic Zircon",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_42",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5018,7 +5018,7 @@
   {
     "id": 40122,
     "name": "Stormy Majestic Zircon",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_42",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5026,7 +5026,7 @@
   {
     "id": 40125,
     "name": "Rigid Majestic Zircon",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_42",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5034,7 +5034,7 @@
   {
     "id": 39934,
     "name": "Sovereign Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_23",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5042,7 +5042,7 @@
   {
     "id": 36926,
     "name": "Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_11",
     "quality": 2,
     "item_level": 20,
     "requires_level": 0
@@ -5050,7 +5050,7 @@
   {
     "id": 39935,
     "name": "Shifting Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_23",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5058,7 +5058,7 @@
   {
     "id": 39942,
     "name": "Glinting Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_23",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5066,7 +5066,7 @@
   {
     "id": 39945,
     "name": "Mysterious Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_23",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5074,7 +5074,7 @@
   {
     "id": 39939,
     "name": "Defender's Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_23",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5082,7 +5082,7 @@
   {
     "id": 39940,
     "name": "Guardian's Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_23",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5090,7 +5090,7 @@
   {
     "id": 39948,
     "name": "Etched Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_23",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5098,7 +5098,7 @@
   {
     "id": 39957,
     "name": "Veiled Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_23",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5106,7 +5106,7 @@
   {
     "id": 39966,
     "name": "Accurate Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_23",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5114,7 +5114,7 @@
   {
     "id": 39968,
     "name": "Timeless Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_23",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5122,7 +5122,7 @@
   {
     "id": 39979,
     "name": "Purified Shadow Crystal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_23",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5130,7 +5130,7 @@
   {
     "id": 40022,
     "name": "Sovereign Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_29",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5138,7 +5138,7 @@
   {
     "id": 40023,
     "name": "Shifting Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_29",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5146,7 +5146,7 @@
   {
     "id": 40025,
     "name": "Timeless Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_29",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5154,7 +5154,7 @@
   {
     "id": 40026,
     "name": "Purified Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_29",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5162,7 +5162,7 @@
   {
     "id": 40028,
     "name": "Mysterious Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_29",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5170,7 +5170,7 @@
   {
     "id": 40032,
     "name": "Defender's Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_29",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5178,7 +5178,7 @@
   {
     "id": 40034,
     "name": "Guardian's Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_29",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5186,7 +5186,7 @@
   {
     "id": 40038,
     "name": "Etched Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_29",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5194,7 +5194,7 @@
   {
     "id": 40044,
     "name": "Glinting Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_29",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5202,7 +5202,7 @@
   {
     "id": 40049,
     "name": "Veiled Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_29",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5210,7 +5210,7 @@
   {
     "id": 40058,
     "name": "Accurate Twilight Opal",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_29",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5218,7 +5218,7 @@
   {
     "id": 40164,
     "name": "Timeless Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_40",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5226,7 +5226,7 @@
   {
     "id": 40129,
     "name": "Sovereign Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_40",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5234,7 +5234,7 @@
   {
     "id": 40133,
     "name": "Purified Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_40",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5242,7 +5242,7 @@
   {
     "id": 40130,
     "name": "Shifting Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_40",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5250,7 +5250,7 @@
   {
     "id": 40139,
     "name": "Defender's Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_40",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5258,7 +5258,7 @@
   {
     "id": 40141,
     "name": "Guardian's Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_40",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5266,7 +5266,7 @@
   {
     "id": 40135,
     "name": "Mysterious Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_40",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5274,7 +5274,7 @@
   {
     "id": 40153,
     "name": "Veiled Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_40",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5282,7 +5282,7 @@
   {
     "id": 40143,
     "name": "Etched Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_40",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5290,7 +5290,7 @@
   {
     "id": 40157,
     "name": "Glinting Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_40",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5298,7 +5298,7 @@
   {
     "id": 40162,
     "name": "Accurate Dreadstone",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_40",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5306,7 +5306,7 @@
   {
     "id": 39933,
     "name": "Jagged Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_19",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5314,7 +5314,7 @@
   {
     "id": 39975,
     "name": "Nimble Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_19",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5322,7 +5322,7 @@
   {
     "id": 39976,
     "name": "Regal Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_19",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5330,7 +5330,7 @@
   {
     "id": 39977,
     "name": "Steady Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_19",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5338,7 +5338,7 @@
   {
     "id": 39978,
     "name": "Forceful Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_19",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5346,7 +5346,7 @@
   {
     "id": 39980,
     "name": "Misty Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_19",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5354,7 +5354,7 @@
   {
     "id": 39981,
     "name": "Lightning Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_19",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5362,7 +5362,7 @@
   {
     "id": 39982,
     "name": "Turbid Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_19",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5370,7 +5370,7 @@
   {
     "id": 39983,
     "name": "Energized Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_19",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5378,7 +5378,7 @@
   {
     "id": 39991,
     "name": "Radiant Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_19",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5386,7 +5386,7 @@
   {
     "id": 39992,
     "name": "Shattered Dark Jade",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_19",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5394,7 +5394,7 @@
   {
     "id": 40105,
     "name": "Energized Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_25",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5402,7 +5402,7 @@
   {
     "id": 40098,
     "name": "Radiant Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_25",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5410,7 +5410,7 @@
   {
     "id": 40106,
     "name": "Shattered Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_25",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5418,7 +5418,7 @@
   {
     "id": 40086,
     "name": "Jagged Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_25",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5426,7 +5426,7 @@
   {
     "id": 40088,
     "name": "Nimble Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_25",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5434,7 +5434,7 @@
   {
     "id": 40089,
     "name": "Regal Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_25",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5442,7 +5442,7 @@
   {
     "id": 40090,
     "name": "Steady Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_25",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5450,7 +5450,7 @@
   {
     "id": 40091,
     "name": "Forceful Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_25",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5458,7 +5458,7 @@
   {
     "id": 40095,
     "name": "Misty Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_25",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5466,7 +5466,7 @@
   {
     "id": 40102,
     "name": "Turbid Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_25",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5474,7 +5474,7 @@
   {
     "id": 40100,
     "name": "Lightning Forest Emerald",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_25",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5482,7 +5482,7 @@
   {
     "id": 40168,
     "name": "Steady Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_41",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5490,7 +5490,7 @@
   {
     "id": 40166,
     "name": "Nimble Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_41",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5498,7 +5498,7 @@
   {
     "id": 40165,
     "name": "Jagged Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_41",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5506,7 +5506,7 @@
   {
     "id": 40169,
     "name": "Forceful Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_41",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5514,7 +5514,7 @@
   {
     "id": 40171,
     "name": "Misty Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_41",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5522,7 +5522,7 @@
   {
     "id": 40177,
     "name": "Lightning Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_41",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5530,7 +5530,7 @@
   {
     "id": 40180,
     "name": "Radiant Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_41",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5538,7 +5538,7 @@
   {
     "id": 40179,
     "name": "Energized Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_41",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5546,7 +5546,7 @@
   {
     "id": 40182,
     "name": "Shattered Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_41",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5554,7 +5554,7 @@
   {
     "id": 40173,
     "name": "Turbid Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_41",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5562,7 +5562,7 @@
   {
     "id": 40167,
     "name": "Regal Eye of Zul",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_41",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5570,7 +5570,7 @@
   {
     "id": 39947,
     "name": "Inscribed Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5578,7 +5578,7 @@
   {
     "id": 39949,
     "name": "Champion's Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5586,7 +5586,7 @@
   {
     "id": 39950,
     "name": "Resplendent Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5594,7 +5594,7 @@
   {
     "id": 39951,
     "name": "Fierce Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5602,7 +5602,7 @@
   {
     "id": 39952,
     "name": "Deadly Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5610,7 +5610,7 @@
   {
     "id": 39954,
     "name": "Lucent Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5618,7 +5618,7 @@
   {
     "id": 39955,
     "name": "Deft Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5626,7 +5626,7 @@
   {
     "id": 39956,
     "name": "Potent Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5634,7 +5634,7 @@
   {
     "id": 39958,
     "name": "Willful Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5642,7 +5642,7 @@
   {
     "id": 39959,
     "name": "Reckless Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5650,7 +5650,7 @@
   {
     "id": 39965,
     "name": "Stalwart Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5658,7 +5658,7 @@
   {
     "id": 39967,
     "name": "Resolute Huge Citrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_20",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -5666,7 +5666,7 @@
   {
     "id": 40037,
     "name": "Inscribed Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5674,7 +5674,7 @@
   {
     "id": 40039,
     "name": "Champion's Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5682,7 +5682,7 @@
   {
     "id": 40040,
     "name": "Resplendent Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5690,7 +5690,7 @@
   {
     "id": 40045,
     "name": "Lucent Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5698,7 +5698,7 @@
   {
     "id": 40048,
     "name": "Potent Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5706,7 +5706,7 @@
   {
     "id": 40050,
     "name": "Willful Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5714,7 +5714,7 @@
   {
     "id": 40051,
     "name": "Reckless Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5722,7 +5722,7 @@
   {
     "id": 40052,
     "name": "Deadly Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5730,7 +5730,7 @@
   {
     "id": 40055,
     "name": "Deft Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5738,7 +5738,7 @@
   {
     "id": 40057,
     "name": "Stalwart Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5746,7 +5746,7 @@
   {
     "id": 40041,
     "name": "Fierce Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5754,7 +5754,7 @@
   {
     "id": 40059,
     "name": "Resolute Monarch Topaz",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_30",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5762,7 +5762,7 @@
   {
     "id": 40142,
     "name": "Inscribed Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5770,7 +5770,7 @@
   {
     "id": 40147,
     "name": "Deadly Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5778,7 +5778,7 @@
   {
     "id": 40152,
     "name": "Potent Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5786,7 +5786,7 @@
   {
     "id": 40154,
     "name": "Willful Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5794,7 +5794,7 @@
   {
     "id": 40155,
     "name": "Reckless Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5802,7 +5802,7 @@
   {
     "id": 40144,
     "name": "Champion's Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5810,7 +5810,7 @@
   {
     "id": 40160,
     "name": "Stalwart Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5818,7 +5818,7 @@
   {
     "id": 40145,
     "name": "Resplendent Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5826,7 +5826,7 @@
   {
     "id": 40146,
     "name": "Fierce Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5834,7 +5834,7 @@
   {
     "id": 40150,
     "name": "Deft Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5842,7 +5842,7 @@
   {
     "id": 40149,
     "name": "Lucent Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5850,7 +5850,7 @@
   {
     "id": 40163,
     "name": "Resolute Ametrine",
-    "icon": "",
+    "icon": "inv_jewelcrafting_gem_39",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
@@ -5858,7 +5858,7 @@
   {
     "id": 41377,
     "name": "Shielded Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5866,7 +5866,7 @@
   {
     "id": 41375,
     "name": "Tireless Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5874,7 +5874,7 @@
   {
     "id": 41378,
     "name": "Forlorn Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5882,7 +5882,7 @@
   {
     "id": 41379,
     "name": "Impassive Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5890,7 +5890,7 @@
   {
     "id": 41307,
     "name": "Destructive Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5898,7 +5898,7 @@
   {
     "id": 41333,
     "name": "Ember Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5906,7 +5906,7 @@
   {
     "id": 41335,
     "name": "Enigmatic Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5914,7 +5914,7 @@
   {
     "id": 41339,
     "name": "Swift Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5922,7 +5922,7 @@
   {
     "id": 41400,
     "name": "Thundering Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5930,7 +5930,7 @@
   {
     "id": 41376,
     "name": "Revitalizing Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5938,7 +5938,7 @@
   {
     "id": 41401,
     "name": "Insightful Earthsiege Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_shadowspirit_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5946,7 +5946,7 @@
   {
     "id": 41395,
     "name": "Bracing Earthsiege Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_shadowspirit_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5954,7 +5954,7 @@
   {
     "id": 41396,
     "name": "Eternal Earthsiege Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_shadowspirit_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5962,7 +5962,7 @@
   {
     "id": 41397,
     "name": "Powerful Earthsiege Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_shadowspirit_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5970,7 +5970,7 @@
   {
     "id": 41398,
     "name": "Relentless Earthsiege Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_shadowspirit_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5978,7 +5978,7 @@
   {
     "id": 41380,
     "name": "Austere Earthsiege Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_shadowspirit_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5986,7 +5986,7 @@
   {
     "id": 41381,
     "name": "Persistent Earthsiege Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_shadowspirit_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -5994,7 +5994,7 @@
   {
     "id": 41382,
     "name": "Trenchant Earthsiege Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_shadowspirit_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -6002,7 +6002,7 @@
   {
     "id": 41385,
     "name": "Invigorating Earthsiege Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_shadowspirit_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -6010,7 +6010,7 @@
   {
     "id": 41389,
     "name": "Beaming Earthsiege Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_shadowspirit_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -6018,7 +6018,7 @@
   {
     "id": 41285,
     "name": "Chaotic Skyflare Diamond",
-    "icon": "",
+    "icon": "inv_jewelcrafting_icediamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -6026,7 +6026,7 @@
   {
     "id": 42336,
     "name": "Bloodstone Band",
-    "icon": "",
+    "icon": "inv_jewelry_ring_25",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -6034,7 +6034,7 @@
   {
     "id": 42337,
     "name": "Sun Rock Ring",
-    "icon": "",
+    "icon": "inv_jewelry_ring_21",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -6042,7 +6042,7 @@
   {
     "id": 42340,
     "name": "Dream Signet",
-    "icon": "",
+    "icon": "inv_jewelry_ring_49naxxramas",
     "quality": 3,
     "item_level": 34,
     "requires_level": 29
@@ -6050,7 +6050,7 @@
   {
     "id": 42642,
     "name": "Titanium Impact Band",
-    "icon": "",
+    "icon": "inv_jewelry_ring_55",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -6058,7 +6058,7 @@
   {
     "id": 42643,
     "name": "Titanium Earthguard Ring",
-    "icon": "",
+    "icon": "inv_jewelry_ring_59",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -6066,7 +6066,7 @@
   {
     "id": 42644,
     "name": "Titanium Spellshock Ring",
-    "icon": "",
+    "icon": "inv_jewelry_ring_63",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -6074,7 +6074,7 @@
   {
     "id": 43246,
     "name": "Earthshadow Ring",
-    "icon": "",
+    "icon": "inv_jewelry_ring_35",
     "quality": 3,
     "item_level": 33,
     "requires_level": 28
@@ -6082,7 +6082,7 @@
   {
     "id": 43247,
     "name": "Jade Ring of Slaying",
-    "icon": "",
+    "icon": "inv_jewelry_ring_34",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -6090,7 +6090,7 @@
   {
     "id": 43248,
     "name": "Stoneguard Band",
-    "icon": "",
+    "icon": "inv_jewelry_ring_02",
     "quality": 2,
     "item_level": 34,
     "requires_level": 29
@@ -6098,7 +6098,7 @@
   {
     "id": 43249,
     "name": "Shadowmight Ring",
-    "icon": "",
+    "icon": "inv_jewelry_ring_14",
     "quality": 2,
     "item_level": 34,
     "requires_level": 29
@@ -6106,7 +6106,7 @@
   {
     "id": 43250,
     "name": "Ring of Earthen Might",
-    "icon": "",
+    "icon": "inv_jewelry_ring_75",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -6114,7 +6114,7 @@
   {
     "id": 43251,
     "name": "Ring of Scarlet Shadows",
-    "icon": "",
+    "icon": "inv_jewelry_ring_ahnqiraj_06",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -6122,7 +6122,7 @@
   {
     "id": 43252,
     "name": "Windfire Band",
-    "icon": "",
+    "icon": "inv_jewelry_ring_61",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -6130,7 +6130,7 @@
   {
     "id": 43253,
     "name": "Ring of Northern Tears",
-    "icon": "",
+    "icon": "inv_jewelry_ring_38",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -6138,7 +6138,7 @@
   {
     "id": 43498,
     "name": "Savage Titanium Band",
-    "icon": "",
+    "icon": "inv_jewelry_ring_38",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -6146,7 +6146,7 @@
   {
     "id": 43482,
     "name": "Savage Titanium Ring",
-    "icon": "",
+    "icon": "inv_jewelry_ring_38",
     "quality": 3,
     "item_level": 35,
     "requires_level": 29
@@ -6154,7 +6154,7 @@
   {
     "id": 43582,
     "name": "Titanium Frostguard Ring",
-    "icon": "",
+    "icon": "inv_jewelry_ring_57",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -6162,7 +6162,7 @@
   {
     "id": 45808,
     "name": "Runed Mana Band",
-    "icon": "",
+    "icon": "inv_jewelry_ring_34",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -6170,7 +6170,7 @@
   {
     "id": 45809,
     "name": "Scarlet Signet",
-    "icon": "",
+    "icon": "inv_jewelry_ring_72",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -6178,7 +6178,7 @@
   {
     "id": 42338,
     "name": "Jade Dagger Pendant",
-    "icon": "",
+    "icon": "inv_weapon_shortblade_22",
     "quality": 3,
     "item_level": 34,
     "requires_level": 28
@@ -6186,7 +6186,7 @@
   {
     "id": 42339,
     "name": "Blood Sun Necklace",
-    "icon": "",
+    "icon": "inv_jewelry_necklace_15",
     "quality": 3,
     "item_level": 35,
     "requires_level": 28
@@ -6194,7 +6194,7 @@
   {
     "id": 42645,
     "name": "Titanium Impact Choker",
-    "icon": "",
+    "icon": "inv_jewelry_necklace_14",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -6202,7 +6202,7 @@
   {
     "id": 42646,
     "name": "Titanium Earthguard Chain",
-    "icon": "",
+    "icon": "inv_jewelry_necklace_33",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -6210,7 +6210,7 @@
   {
     "id": 42647,
     "name": "Titanium Spellshock Necklace",
-    "icon": "",
+    "icon": "inv_jewelry_necklace_35",
     "quality": 4,
     "item_level": 35,
     "requires_level": 30
@@ -6218,7 +6218,7 @@
   {
     "id": 43244,
     "name": "Crystal Citrine Necklace",
-    "icon": "",
+    "icon": "inv_jewelry_necklace_03",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -6226,7 +6226,7 @@
   {
     "id": 43245,
     "name": "Crystal Chalcedony Amulet",
-    "icon": "",
+    "icon": "inv_jewelry_necklace_16",
     "quality": 2,
     "item_level": 32,
     "requires_level": 27
@@ -6234,7 +6234,7 @@
   {
     "id": 45812,
     "name": "Emerald Choker",
-    "icon": "",
+    "icon": "inv_jewelry_necklace_24",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -6242,7 +6242,7 @@
   {
     "id": 45813,
     "name": "Sky Sapphire Amulet",
-    "icon": "",
+    "icon": "inv_jewelry_necklace_16",
     "quality": 3,
     "item_level": 35,
     "requires_level": 30
@@ -6250,7 +6250,7 @@
   {
     "id": 42341,
     "name": "Figurine - Ruby Hare",
-    "icon": "",
+    "icon": "inv_jewelcrafting_crimsonhare",
     "quality": 3,
     "item_level": 35,
     "requires_level": 28
@@ -6258,7 +6258,7 @@
   {
     "id": 42395,
     "name": "Figurine - Twilight Serpent",
-    "icon": "",
+    "icon": "inv_jewelcrafting_purpleserpent",
     "quality": 3,
     "item_level": 35,
     "requires_level": 28
@@ -6266,7 +6266,7 @@
   {
     "id": 42413,
     "name": "Figurine - Sapphire Owl",
-    "icon": "",
+    "icon": "inv_jewelcrafting_azureowl",
     "quality": 3,
     "item_level": 35,
     "requires_level": 28
@@ -6274,7 +6274,7 @@
   {
     "id": 42418,
     "name": "Figurine - Emerald Boar",
-    "icon": "",
+    "icon": "inv_jewelcrafting_emeraldboar",
     "quality": 3,
     "item_level": 35,
     "requires_level": 28
@@ -6282,7 +6282,7 @@
   {
     "id": 41367,
     "name": "Dark Jade Focusing Lens",
-    "icon": "",
+    "icon": "inv_misc_gem_03",
     "quality": 2,
     "item_level": 28,
     "requires_level": 0
@@ -6290,7 +6290,7 @@
   {
     "id": 42420,
     "name": "Shadow Crystal Focusing Lens",
-    "icon": "",
+    "icon": "inv_misc_gem_01",
     "quality": 2,
     "item_level": 28,
     "requires_level": 0
@@ -6298,7 +6298,7 @@
   {
     "id": 42421,
     "name": "Shadow Jade Focusing Lens",
-    "icon": "",
+    "icon": "inv_misc_gem_02",
     "quality": 2,
     "item_level": 28,
     "requires_level": 0
@@ -6306,7 +6306,7 @@
   {
     "id": 44063,
     "name": "Figurine - Monarch Crab",
-    "icon": "",
+    "icon": "inv_jewelcrafting_goldencrab",
     "quality": 3,
     "item_level": 35,
     "requires_level": 28
@@ -6314,7 +6314,7 @@
   {
     "id": 44943,
     "name": "Icy Prism",
-    "icon": "",
+    "icon": "inv_misc_gem_diamond_02",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -6322,7 +6322,7 @@
   {
     "id": 42701,
     "name": "Enchanted Pearl",
-    "icon": "",
+    "icon": "inv_misc_gem_pearl_10",
     "quality": 2,
     "item_level": 27,
     "requires_level": 0
@@ -6330,7 +6330,7 @@
   {
     "id": 42702,
     "name": "Enchanted Tear",
-    "icon": "",
+    "icon": "inv_misc_gem_pearl_12",
     "quality": 3,
     "item_level": 30,
     "requires_level": 0
@@ -6338,7 +6338,7 @@
   {
     "id": 49110,
     "name": "Nightmare Tear",
-    "icon": "",
+    "icon": "inv_misc_gem_pearl_12",
     "quality": 4,
     "item_level": 30,
     "requires_level": 0
