@@ -227,6 +227,26 @@
         skills: [['Poison Creeper', 'first', 'Main damage'], ['Carrion Vine', 'as you go', 'Life'], ['Solar Creeper', 'as you go', 'Mana'], ['Oak Sage', '1+', 'Life buff']],
         targets: ['Resists capped for Hell', 'S14 beta patch 1: Poison Creeper is stronger early and no longer has a cooldown'] },
 
+      { id: 'budget', name: 'Budget', tags: ['Early Hell', 'First maps', 'Suggested'],
+        goal: 'Cheap step between Leveling and Farming: runewords you can make yourself and easy uniques that trade for little. Enough to clear Hell and start low-tier maps while you save up for Farming gear. This phase is a suggestion, not from the videos, so swap anything you like.',
+        gear: [
+          ['Helm', "Jalal's Mane", 'unique', '+Druid skills, life, mana', [['Magic +3 Poison Creeper pelt', 'magic']]],
+          ['Amulet', '+2 Druid skills amulet', 'magic', 'Res or FCR is a bonus'],
+          ['Weapon', 'Spirit sword', 'runeword', 'Tal Thul Ort Amn. +2 skills, 25–35 FCR'],
+          ['Offhand', 'Spirit shield', 'runeword', 'Same runes. Res and more FCR'],
+          ['Armor', 'Skin of the Vipermagi', 'unique', '+1 skills, res, FCR', [['Smoke', 'runeword']]],
+          ['Gloves', 'Magefist', 'unique', 'FCR', [['Frostburn', 'unique']]],
+          ['Belt', 'FCR / res belt', 'rare'],
+          ['Boots', 'Tri-res boots', 'magic'],
+          ['Ring 1', 'FCR / res ring', 'rare'], ['Ring 2', 'FCR / res ring', 'rare'],
+        ],
+        charms: [['Grand', 'Cheap Summoning grand charms', 'magic', 'Any you find'], ['Small', 'Life / res small charms', 'magic']],
+        swap: [['Swap', 'Call to Arms', 'runeword', 'Only if it\'s cheap this season; skip it otherwise']],
+        merc: { type: 'Act 2 — defensive', gear: [['Weapon', 'Insight', 'runeword', 'Mana regen aura'], ['Armor', 'Smoke', 'runeword'], ['Helm', 'Res / life helm', 'any']],
+          alt: 'Move the merc to Plague + Innocence once you reach Farming.' },
+        skills: [['Poison Creeper', '20'], ['Carrion Vine', '20'], ['Solar Creeper', 'as you go'], ['Oak Sage', '1+'], ['Cyclone Armor', '1'], ['Gust', '1', 'Mobility']],
+        targets: ['Resists capped for Hell (75%)', 'Cast rate: 37 early, push for 68', 'Next step: Farming gear (Spirit Keeper, Plague, Spirit Ward)'] },
+
       { id: 'farming', name: 'Farming', tags: ['Mapping', 'Video 1 + Video 3'],
         goal: 'Main farming setup. Both videos are mapping showcases, and V3 says this setup is weak at bosses, so don\'t take it as proof that it can boss.',
         gear: [
@@ -352,6 +372,9 @@
     '+Summoning amulet': 'amulet_3.png', '+Summoning / res amulet': 'amulet_3.png', "Mara's Kaleidoscope": 'amulet_1.png', '+3 Shapeshifting amulet': 'amulet_2.png', '+Shapeshifting FCR amulet': 'amulet_2.png',
     'Plague': 'club.png', 'Heart of the Oak': 'flail.png', 'Crafted +5/+6 Poison Creeper club': 'spiked_club.png', 'Crafted +Poison Creeper club': 'spiked_club.png',
     'Memory': 'battle_staff.png', 'Insight staff': 'long_staff.png', 'Death Cleaver': 'death_cleaver.gif', 'Headstriker': 'headstriker.gif',
+    "Jalal's Mane": 'spirit_mask.png', 'Magic +3 Poison Creeper pelt': 'wolf_head.png', '+2 Druid skills amulet': 'amulet_2.png', 'Spirit sword': 'crystal_sword.png', 'Spirit shield': 'large_shield.png',
+    'Skin of the Vipermagi': 'skin_of_the_vipermagi.png', 'Magefist': 'magefist.png', 'Frostburn': 'leather_gloves.png', 'FCR / res belt': 'light_belt.png',
+    'Cheap Summoning grand charms': 'grand_charm_1.png', 'Insight': 'halberd_d2.png', 'Res / life helm': 'wolf_head.png',
     'Spirit Ward': 'spirit_ward.gif', 'Lance Guard': 'lance_guard.png', 'None (staff is two-handed)': null,
     'Steel Carapace': 'steel_carapace.png', "Arkaine's Valor": 'arkaines_valor.png', 'Res / PDR armor': 'light_plate.png', 'Smoke': 'hard_leather_armor.png', 'Wraithskin': 'wraithskin.png', 'Innocence': 'breast_plate.png',
     'Occultist': 'occultist.png', 'Res / cast rate gloves': 'heavy_gloves.png', '+2/+3 Shapeshifting, 10–20 FCR': 'leather_gloves.png', '+Shapeshifting FCR gloves': 'leather_gloves.png',
@@ -412,7 +435,7 @@
     document.getElementById('crest').innerHTML = crest;
     document.getElementById('crest2').innerHTML = crest;
     document.getElementById('who-name').textContent = build.name;
-    document.getElementById('builds').innerHTML = BUILDS.map((b) => `<a href="#${b.id}/${b.phases[b.id === 'poison' ? 1 : 0].id}" class="${b === build ? 'on' : ''}"${b === build ? ' aria-current="page"' : ''}>${esc(b.name)}</a>`).join('');
+    document.getElementById('builds').innerHTML = BUILDS.map((b) => `<a href="#${b.id}/${(b.phases.find((p) => p.id === 'farming') || b.phases[0]).id}" class="${b === build ? 'on' : ''}"${b === build ? ' aria-current="page"' : ''}>${esc(b.name)}</a>`).join('');
     document.getElementById('crumbs').innerHTML = `PD2 › Season 14 › Druid › <b>${esc(build.name)}</b> › ${esc(ph.name)}`;
     document.getElementById('toc').innerHTML = SECTIONS.map(([id, t]) => `<li><button type="button" data-go="${id}">${esc(t)}</button></li>`).join('');
 
