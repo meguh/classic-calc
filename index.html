@@ -428,7 +428,7 @@
       align-items: center;
       gap: 4px;
       width: 100%;
-      padding: 3px 6px 3px 6px;
+      padding: 3px 6px 3px 22px;
       background: none;
       border: none;
       color: var(--text);
@@ -454,19 +454,6 @@
     }
 
     .recipe-row.unlearned { color: var(--red); opacity: 0.75; }
-
-    .chev {
-      flex: 0 0 13px;
-      height: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .chev svg { width: 11px; height: 12px; display: block; }
-    .chev.orange { color: var(--orange); }
-    .chev.yellow { color: var(--yellow); }
-    .chev.green  { color: var(--green); }
 
     .recipe-row .rname {
       flex: 1;
@@ -1172,8 +1159,6 @@ function getItemIcon(id) {
   return itemsById[id]?.icon || '';
 }
 
-const CHEVRON = '<svg viewBox="0 0 11 12" fill="currentColor"><path d="M5.5 0 11 5H8L5.5 2.7 3 5H0z"/><path d="M5.5 6 11 11H8L5.5 8.7 3 11H0z"/></svg>';
-const CHEVRON_ONE = '<svg viewBox="0 0 11 12" fill="currentColor"><path d="M5.5 3 11 8H8L5.5 5.7 3 8H0z"/></svg>';
 const STAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.3L12 17.3l-5.7 3 1.1-6.3-4.6-4.5 6.4-.9z"/></svg>';
 
 // ── Skill + difficulty ───────────────────────────────────────────────────────
@@ -1336,11 +1321,9 @@ function renderList() {
     const isCollapsed = collapsed.has(name);
     const rows = isCollapsed ? '' : g.recipes.map(r => {
       const d = difficulty(r, skill);
-      const chev = d === 'orange' || d === 'yellow' ? CHEVRON : d === 'green' ? CHEVRON_ONE : '';
       const makes = r.creates?.item_count > 1 ? `<span class="rmeta">[${r.creates.item_count}]</span>` : '';
       return `<button class="recipe-row${r === currentRecipe ? ' selected' : ''}${d === 'unlearned' ? ' unlearned' : ''}" data-idx="${allRecipes.indexOf(r)}">
-        <span class="chev ${d}">${chev}</span>
-        <span class="rname">${esc(r.name)}</span>        ${makes}
+        <span class="rname">${esc(r.name)}</span>${makes}
       </button>`;
     }).join('');
     return `<button class="cat-header" data-cat="${esc(name)}"><span>${esc(name)}</span><span class="cat-toggle">${isCollapsed ? '+' : '−'}</span></button>${rows}`;
