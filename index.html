@@ -6,32 +6,44 @@
   <title>WoW Crafting Calculator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Palette and type follow worldofwarcraft.blizzard.com/forever (its "wow-color" and Forever
+       theme tokens). Headings there use Friz Quadrata, a licensed font we can't redistribute:
+       it's used when installed locally, otherwise Marcellus stands in. */
     :root {
-      --bg:          #0a0a0e;
-      --card:        rgba(17, 16, 22, 0.84);
-      --card-solid:  #121117;
-      --surface:     rgba(255, 255, 255, 0.035);
-      --surface-2:   rgba(255, 255, 255, 0.06);
-      --surface-3:   rgba(255, 255, 255, 0.09);
-      --border:      rgba(255, 255, 255, 0.07);
-      --border-md:   rgba(255, 255, 255, 0.12);
-      --gold:        #e8b84b;
-      --gold-strong: #ffd36a;
-      --gold-tint:   rgba(232, 184, 75, 0.12);
-      --gold-line:   rgba(232, 184, 75, 0.35);
-      --ember:       #c2552a;
-      --text:        #ece7df;
-      --text-soft:   #bdb6ab;
-      --text-muted:  #857f75;
-      --blue:        #7cb8f7;
-      --q0: #9d9d9d; --q1: #ece7df; --q2: #3ddc4b; --q3: #4a9bff; --q4: #b45cff; --q5: #ff9a2e;
+      --bg:          #011c2b;   /* Forever teal-800, page background */
+      --bg-2:        #07324a;   /* teal-700 */
+      --card:        rgba(4, 15, 26, 0.86);    /* blue-700 */
+      --card-solid:  #061826;
+      --surface:     rgba(255, 255, 255, 0.04);
+      --surface-2:   rgba(255, 255, 255, 0.07);
+      --surface-3:   rgba(255, 255, 255, 0.1);
+      --border:      rgba(255, 255, 255, 0.08);
+      --border-md:   rgba(255, 255, 255, 0.15);
+      --accent:      #0093b2;   /* teal-300 */
+      --accent-hi:   #00afd7;   /* teal-200 */
+      --accent-tint: rgba(0, 147, 178, 0.14);
+      --accent-line: rgba(0, 175, 215, 0.45);
+      --green:       #116569;   /* Forever green-300, primary action */
+      --green-hi:    #146f73;
+      --green-lo:    #0f6064;
+      --navy-btn:    #114f72;   /* teal-600, secondary action */
+      --gold:        #ffd254;   /* wow gold-400, links */
+      --camel:       #c6af8d;   /* camel-400 */
+      --heading:     #f3eee2;   /* beige-200 */
+      --text:        #ffffff;
+      --text-soft:   rgba(255, 255, 255, 0.78);
+      --text-muted:  rgba(255, 255, 255, 0.5);
+      --blue:        #7fd3ec;
+      --q0: #9d9d9d; --q1: #f3eee2; --q2: #3ddc4b; --q3: #4a9bff; --q4: #b45cff; --q5: #ff9a2e;
       --d1: #ff8040; --d2: #ffe14a; --d3: #4fd15c; --d4: #8a8a8a;
-      --radius-lg:   16px;
-      --radius:      10px;
-      --radius-sm:   7px;
+      --radius-lg:   6px;
+      --radius:      4px;
+      --radius-sm:   3px;
       --shadow:      0 24px 60px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);
+      --font-heading: 'Friz Quadrata TT', 'Friz Quadrata', 'Marcellus', Georgia, serif;
+      --font-body:    'Open Sans', Arial, Helvetica, sans-serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,7 +51,7 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-family: var(--font-body);
       font-size: 14px;
       line-height: 1.45;
       min-height: 100vh;
@@ -47,14 +59,19 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    body {
+      background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 55%);
+      background-attachment: fixed;
+    }
+
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse at 50% 30%, transparent 0%, var(--bg) 85%),
+        linear-gradient(180deg, rgba(1, 28, 43, 0.2) 0%, rgba(1, 28, 43, 0.92) 70%),
         var(--exp-bg, none) center top / cover no-repeat;
-      opacity: 0.55;
+      opacity: 0.7;
       pointer-events: none;
       z-index: 0;
     }
@@ -66,10 +83,16 @@
     /* ── Header ─────────────────────────────────────────────────────────── */
     header {
       max-width: 1240px;
-      margin: 0 auto 22px;
+      margin: 0 auto 18px;
       display: flex;
       align-items: center;
       gap: 20px;
+      padding: 8px 10px 8px 14px;
+      background: rgba(10, 38, 44, 0.88);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(10px);
     }
 
     .brand {
@@ -83,48 +106,48 @@
       width: 30px;
       height: 30px;
       border-radius: 9px;
-      background: linear-gradient(135deg, var(--gold-strong), var(--ember));
+      background: radial-gradient(circle at 35% 30%, var(--accent-hi), var(--navy-btn) 70%);
+      border: 2px solid var(--camel);
       display: grid;
       place-items: center;
-      color: #1a1206;
-      box-shadow: 0 4px 14px rgba(232, 184, 75, 0.25);
+      color: var(--heading);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
 
     .brand-mark svg { width: 17px; height: 17px; }
 
     .brand h1 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--heading);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
     }
 
-    .brand h1 span { color: var(--text-muted); font-weight: 500; }
+    .brand h1 span { color: var(--camel); }
 
     .segmented {
       display: flex;
-      padding: 4px;
-      gap: 2px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      backdrop-filter: blur(12px);
+      gap: 4px;
     }
 
     .exp-btn {
-      padding: 6px 16px;
+      padding: 7px 14px 6px;
       border: none;
-      border-radius: 999px;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
       background: transparent;
-      color: var(--text-muted);
-      font-size: 0.84rem;
-      font-weight: 500;
+      color: var(--text-soft);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 400;
       cursor: pointer;
       white-space: nowrap;
       transition: color 0.15s, background 0.15s;
     }
 
     .exp-btn:hover:not(.disabled) { color: var(--text); }
-    .exp-btn.active { background: var(--gold-tint); color: var(--gold-strong); box-shadow: inset 0 0 0 1px var(--gold-line); }
+    .exp-btn.active { color: var(--heading); border-bottom-color: var(--accent); text-shadow: 0 0 12px rgba(0, 175, 215, 0.35); }
     .exp-btn.disabled { opacity: 0.35; cursor: default; }
 
     .cart-btn {
@@ -134,18 +157,18 @@
       gap: 8px;
       height: 38px;
       padding: 0 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      backdrop-filter: blur(12px);
-      font-size: 0.84rem;
-      font-weight: 500;
+      background: linear-gradient(180deg, #4b9a8a, #3a8475);
+      border: none;
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 0.86rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: border-color 0.15s;
+      transition: filter 0.15s;
     }
 
-    .cart-btn:hover { border-color: var(--gold-line); }
-    .cart-btn svg { width: 16px; height: 16px; color: var(--gold); }
+    .cart-btn:hover { filter: brightness(1.12); }
+    .cart-btn svg { width: 16px; height: 16px; color: var(--text); }
 
     .cart-count {
       min-width: 20px;
@@ -195,11 +218,11 @@
 
     .rail-label {
       padding: 6px 10px 8px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      font-family: var(--font-heading);
+      font-size: 0.86rem;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--camel);
     }
 
     .prof-tab {
@@ -222,7 +245,7 @@
     .prof-tab img {
       width: 32px;
       height: 32px;
-      border-radius: 8px;
+      border-radius: var(--radius);
       flex-shrink: 0;
       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 0 2px var(--border);
     }
@@ -235,8 +258,8 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .prof-tab.active { background: var(--gold-tint); color: var(--gold-strong); }
-    .prof-tab.active img { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 0 2px var(--gold-line); }
+    .prof-tab.active { background: var(--accent-tint); color: var(--heading); }
+    .prof-tab.active img { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 0 2px var(--accent-line); }
     .prof-tab.active::before {
       content: '';
       position: absolute;
@@ -245,7 +268,7 @@
       bottom: 9px;
       width: 3px;
       border-radius: 0 3px 3px 0;
-      background: var(--gold);
+      background: var(--accent);
     }
 
     /* ── Main card ──────────────────────────────────────────────────────── */
@@ -284,7 +307,7 @@
       margin-bottom: 12px;
     }
 
-    .list-title h2 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em; }
+    .list-title h2 { font-family: var(--font-heading); font-size: 1.45rem; font-weight: 400; color: var(--heading); }
     .list-title span { font-size: 0.78rem; color: var(--text-muted); }
 
     .search-wrap { position: relative; }
@@ -315,7 +338,7 @@
     }
 
     .search-input::placeholder { color: var(--text-muted); }
-    .search-input:focus { border-color: var(--gold-line); background: var(--surface-2); }
+    .search-input:focus { border-color: var(--accent-line); background: var(--surface-2); }
 
     .recipe-list {
       flex: 1;
@@ -336,10 +359,11 @@
       padding: 9px 8px 6px;
       background: var(--card-solid);
       border: none;
-      color: var(--gold);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      color: var(--camel);
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       text-align: left;
       cursor: pointer;
@@ -356,7 +380,7 @@
     }
 
     .cat-header.collapsed svg { transform: rotate(-90deg); }
-    .cat-header:hover .cat-name { color: var(--gold-strong); }
+    .cat-header:hover .cat-name { color: var(--heading); }
 
     .recipe-row {
       display: flex;
@@ -377,15 +401,15 @@
     .recipe-row:hover { background: var(--surface-2); color: var(--text); }
 
     .recipe-row.selected {
-      background: var(--gold-tint);
+      background: var(--accent-tint);
       color: var(--text);
-      box-shadow: inset 0 0 0 1px var(--gold-line);
+      box-shadow: inset 0 0 0 1px var(--accent-line);
     }
 
     .recipe-row img {
       width: 22px;
       height: 22px;
-      border-radius: 5px;
+      border-radius: var(--radius-sm);
       flex-shrink: 0;
       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.55);
     }
@@ -414,7 +438,7 @@
     }
 
     .list-empty a { color: var(--gold); cursor: pointer; }
-    .list-empty a:hover { color: var(--gold-strong); }
+    .list-empty a:hover { color: var(--heading); }
 
     /* scrollbars */
     .recipe-list, .detail-scroll, .cart-scroll { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.14) transparent; }
@@ -451,8 +475,8 @@
       width: 60px;
       height: 60px;
       flex-shrink: 0;
-      border-radius: 14px;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 0 3px var(--border-md), 0 8px 20px rgba(0, 0, 0, 0.4);
+      border-radius: var(--radius);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7), 0 0 0 3px var(--camel), 0 8px 20px rgba(0, 0, 0, 0.45);
       overflow: hidden;
     }
 
@@ -461,10 +485,11 @@
     .detail-titles { flex: 1; min-width: 0; }
 
     .detail-name {
-      font-size: 1.35rem;
-      font-weight: 600;
-      letter-spacing: -0.015em;
-      line-height: 1.2;
+      font-family: var(--font-heading);
+      font-size: 1.7rem;
+      font-weight: 400;
+      line-height: 1.15;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
     }
 
     .detail-meta {
@@ -481,7 +506,7 @@
       gap: 5px;
       height: 22px;
       padding: 0 9px;
-      border-radius: 999px;
+      border-radius: var(--radius-sm);
       background: var(--surface-2);
       color: var(--text-soft);
       font-size: 0.74rem;
@@ -504,7 +529,7 @@
       place-items: center;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 50%;
+      border-radius: var(--radius);
       color: var(--text-muted);
       cursor: pointer;
       transition: color 0.15s, border-color 0.15s;
@@ -512,7 +537,7 @@
 
     .fav-btn svg { width: 17px; height: 17px; }
     .fav-btn:hover { color: var(--text); border-color: var(--border-md); }
-    .fav-btn.on { color: var(--gold); border-color: var(--gold-line); }
+    .fav-btn.on { color: var(--gold); border-color: var(--accent-line); }
     .fav-btn.on svg { fill: currentColor; }
 
     .section {
@@ -529,14 +554,15 @@
       justify-content: space-between;
       gap: 10px;
       margin-bottom: 10px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      font-family: var(--font-heading);
+      font-size: 0.86rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--camel);
     }
 
-    .section-title .hint { font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 0.74rem; }
+    .section-title .hint { font-family: var(--font-body); color: var(--text-muted); letter-spacing: 0; text-transform: none; font-size: 0.74rem; }
 
     .reagent {
       display: flex;
@@ -554,12 +580,12 @@
     .reagent img {
       width: 34px;
       height: 34px;
-      border-radius: 8px;
+      border-radius: var(--radius);
       flex-shrink: 0;
       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 0 2px var(--border);
     }
 
-    .reagent.child img { width: 26px; height: 26px; border-radius: 6px; }
+    .reagent.child img { width: 26px; height: 26px; border-radius: var(--radius-sm); }
 
     .reagent-name { flex: 1; min-width: 0; font-size: 0.88rem; color: var(--text-soft); }
     .reagent-name .qty { color: var(--text); font-weight: 600; margin-right: 6px; font-variant-numeric: tabular-nums; }
@@ -569,8 +595,8 @@
       font-size: 0.72rem;
       font-weight: 500;
       color: var(--blue);
-      background: rgba(124, 184, 247, 0.1);
-      border-radius: 999px;
+      background: rgba(0, 147, 178, 0.14);
+      border-radius: var(--radius-sm);
       padding: 2px 9px;
     }
 
@@ -612,7 +638,7 @@
       width: 24px;
       height: 24px;
       flex-shrink: 0;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6);
     }
 
@@ -639,9 +665,9 @@
       display: flex;
       align-items: center;
       height: 38px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
     }
 
     .step-btn {
@@ -654,7 +680,7 @@
       cursor: pointer;
     }
 
-    .step-btn:hover { color: var(--gold-strong); }
+    .step-btn:hover { color: var(--accent-hi); }
 
     .qty-input {
       width: 46px;
@@ -676,35 +702,38 @@
     .btn-primary {
       height: 38px;
       padding: 0 22px;
-      border: none;
-      border-radius: 999px;
-      background: linear-gradient(180deg, var(--gold-strong), var(--gold));
-      color: #1a1206;
-      font-size: 0.86rem;
-      font-weight: 600;
+      border: 1px solid var(--green-hi);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%),
+        linear-gradient(180deg, var(--green-hi), var(--green-lo));
+      color: var(--text);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 400;
       cursor: pointer;
-      box-shadow: 0 6px 18px rgba(232, 184, 75, 0.22);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
       transition: filter 0.15s, transform 0.1s;
       white-space: nowrap;
     }
 
-    .btn-primary:hover:not(:disabled) { filter: brightness(1.07); }
+    .btn-primary:hover:not(:disabled) { filter: brightness(1.15); }
     .btn-primary:active:not(:disabled) { transform: translateY(1px); }
     .btn-primary:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
 
     .btn-ghost {
       height: 34px;
       padding: 0 16px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      color: var(--text-soft);
-      font-size: 0.82rem;
-      font-weight: 500;
+      background: linear-gradient(180deg, #145a80, var(--navy-btn));
+      border: 1px solid rgba(0, 175, 215, 0.3);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 0.84rem;
+      font-weight: 600;
       cursor: pointer;
     }
 
-    .btn-ghost:hover { color: var(--text); border-color: var(--border-md); }
+    .btn-ghost:hover { filter: brightness(1.15); }
 
     /* ── Cart drawer ────────────────────────────────────────────────────── */
     .cart-overlay {
@@ -745,7 +774,7 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .cart-head h2 { font-size: 1.05rem; font-weight: 600; }
+    .cart-head h2 { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 400; color: var(--heading); }
 
     .close-btn {
       width: 32px;
@@ -754,7 +783,7 @@
       place-items: center;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 50%;
+      border-radius: var(--radius);
       color: var(--text-soft);
       cursor: pointer;
     }
@@ -777,7 +806,7 @@
     .cart-item img {
       width: 34px;
       height: 34px;
-      border-radius: 8px;
+      border-radius: var(--radius);
       flex-shrink: 0;
       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 0 2px var(--border);
     }
@@ -818,10 +847,12 @@
     @media (max-width: 900px) {
       body { padding: 16px 16px 32px; }
 
-      header { flex-wrap: wrap; gap: 12px; }
+      header { flex-wrap: wrap; gap: 8px 12px; }
       .brand h1 span { display: none; }
+      .brand h1 { font-size: 1.08rem; }
+      .cart-btn { height: 34px; padding: 0 12px; }
       .segmented { order: 3; width: 100%; }
-      .exp-btn { flex: 1; padding: 6px 4px; }
+      .exp-btn { flex: 1; padding: 6px 4px 5px; font-size: 0.95rem; }
       .exp-notice { text-align: center; }
 
       .layout { flex-direction: column; gap: 12px; }
