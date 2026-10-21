@@ -4,456 +4,391 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WoW Crafting Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --page:        #07070a;
-      --frame-out:   #000;
-      --frame-mid:   #3b3a36;
-      --frame-in:    #121210;
-      --title-top:   #2b2b29;
-      --title-bot:   #111110;
-      --pane:        #141311;
-      --pane-2:      #1b1a17;
-      --pane-line:   #2c2a25;
-      --gold:        #ffd100;
-      --gold-soft:   #e8c25a;
-      --gold-dim:    #8a6d1c;
-      --btn-border:  #5c4a1a;
-      --text:        #e6e2da;
-      --text-soft:   #b9b3a8;
-      --text-muted:  #7d776c;
-      --white:       #ffffff;
-      --orange:      #ff8040;
-      --yellow:      #ffff00;
-      --green:       #40bf40;
-      --grey:        #808080;
-      --red:         #ff4040;
-      --blue:        #6ab0f5;
-      --header-top:  #4a2412;
-      --header-bot:  #24110a;
-      --font-ui:     Arial, 'Helvetica Neue', Helvetica, sans-serif;
-      --font-wow:    'Friz Quadrata TT', 'Friz Quadrata', Georgia, 'Times New Roman', serif;
-      --bar-a:       #6a1d05;
-      --bar-b:       #ff7a1a;
-      --bar-c:       #ffd36a;
+      --bg:          #0a0a0e;
+      --card:        rgba(17, 16, 22, 0.84);
+      --card-solid:  #121117;
+      --surface:     rgba(255, 255, 255, 0.035);
+      --surface-2:   rgba(255, 255, 255, 0.06);
+      --surface-3:   rgba(255, 255, 255, 0.09);
+      --border:      rgba(255, 255, 255, 0.07);
+      --border-md:   rgba(255, 255, 255, 0.12);
+      --gold:        #e8b84b;
+      --gold-strong: #ffd36a;
+      --gold-tint:   rgba(232, 184, 75, 0.12);
+      --gold-line:   rgba(232, 184, 75, 0.35);
+      --ember:       #c2552a;
+      --text:        #ece7df;
+      --text-soft:   #bdb6ab;
+      --text-muted:  #857f75;
+      --blue:        #7cb8f7;
+      --q0: #9d9d9d; --q1: #ece7df; --q2: #3ddc4b; --q3: #4a9bff; --q4: #b45cff; --q5: #ff9a2e;
+      --d1: #ff8040; --d2: #ffe14a; --d3: #4fd15c; --d4: #8a8a8a;
+      --radius-lg:   16px;
+      --radius:      10px;
+      --radius-sm:   7px;
+      --shadow:      0 24px 60px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: var(--page);
+      background: var(--bg);
       color: var(--text);
-      font-family: var(--font-ui);
-      font-size: 13px;
-      line-height: 1.35;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      line-height: 1.45;
       min-height: 100vh;
-      padding: 24px 16px 48px;
+      padding: 28px 24px 48px;
+      -webkit-font-smoothing: antialiased;
     }
 
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: var(--exp-bg, none);
-      background-size: cover;
-      background-position: center top;
-      opacity: 0.22;
+      background:
+        radial-gradient(ellipse at 50% 30%, transparent 0%, var(--bg) 85%),
+        var(--exp-bg, none) center top / cover no-repeat;
+      opacity: 0.55;
       pointer-events: none;
       z-index: 0;
-      transition: background-image 0.4s ease;
     }
 
     body > * { position: relative; z-index: 1; }
 
-    button { font-family: inherit; }
+    button { font-family: inherit; color: inherit; }
 
-    /* ── Header + expansion selector ────────────────────────────────────── */
+    /* ── Header ─────────────────────────────────────────────────────────── */
     header {
-      max-width: 1120px;
-      margin: 0 auto 16px;
+      max-width: 1240px;
+      margin: 0 auto 22px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
+      gap: 20px;
     }
 
-    header h1 {
-      font-family: var(--font-wow);
-      font-size: 1.5rem;
-      font-weight: normal;
-      color: var(--gold);
-      text-shadow: 0 1px 0 #000, 0 0 18px rgba(255,209,0,0.18);
-      letter-spacing: 0.01em;
-    }
-
-    .expansion-bar {
+    .brand {
       display: flex;
-      background: linear-gradient(var(--title-top), var(--title-bot));
-      border: 1px solid var(--frame-mid);
-      box-shadow: 0 0 0 1px var(--frame-out), inset 0 1px 0 rgba(255,255,255,0.06);
-      border-radius: 4px;
-      padding: 3px;
+      align-items: center;
+      gap: 10px;
+      margin-right: auto;
+    }
+
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--gold-strong), var(--ember));
+      display: grid;
+      place-items: center;
+      color: #1a1206;
+      box-shadow: 0 4px 14px rgba(232, 184, 75, 0.25);
+    }
+
+    .brand-mark svg { width: 17px; height: 17px; }
+
+    .brand h1 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .brand h1 span { color: var(--text-muted); font-weight: 500; }
+
+    .segmented {
+      display: flex;
+      padding: 4px;
       gap: 2px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
     }
 
     .exp-btn {
-      padding: 5px 14px;
-      border: 1px solid transparent;
-      border-radius: 3px;
+      padding: 6px 16px;
+      border: none;
+      border-radius: 999px;
       background: transparent;
       color: var(--text-muted);
-      font-family: var(--font-wow);
-      font-size: 0.9rem;
+      font-size: 0.84rem;
+      font-weight: 500;
       cursor: pointer;
       white-space: nowrap;
+      transition: color 0.15s, background 0.15s;
     }
 
     .exp-btn:hover:not(.disabled) { color: var(--text); }
-
-    .exp-btn.active {
-      color: var(--gold);
-      background: linear-gradient(var(--header-top), var(--header-bot));
-      border-color: var(--btn-border);
-    }
-
+    .exp-btn.active { background: var(--gold-tint); color: var(--gold-strong); box-shadow: inset 0 0 0 1px var(--gold-line); }
     .exp-btn.disabled { opacity: 0.35; cursor: default; }
 
+    .cart-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 38px;
+      padding: 0 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .cart-btn:hover { border-color: var(--gold-line); }
+    .cart-btn svg { width: 16px; height: 16px; color: var(--gold); }
+
+    .cart-count {
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 999px;
+      background: var(--gold);
+      color: #1a1206;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+    }
+
+    .cart-count.hidden { display: none; }
+
     .exp-notice {
-      max-width: 1120px;
-      margin: -6px auto 12px;
+      max-width: 1240px;
+      margin: -10px auto 14px;
       text-align: right;
       color: var(--text-muted);
       font-size: 0.8rem;
     }
 
-    #status {
-      text-align: center;
-      color: var(--text-muted);
-      padding: 60px 0;
-    }
+    #status { text-align: center; color: var(--text-muted); padding: 80px 0; }
 
-    /* ── Layout: profession rail + window ───────────────────────────────── */
+    /* ── Layout ─────────────────────────────────────────────────────────── */
     .layout {
-      max-width: 1120px;
+      max-width: 1240px;
       margin: 0 auto;
       display: flex;
       align-items: flex-start;
-      gap: 14px;
+      gap: 18px;
     }
 
     .prof-rail {
-      flex: 0 0 168px;
+      flex: 0 0 210px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      padding-top: 52px;
+      gap: 2px;
+      padding: 8px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(14px);
+    }
+
+    .rail-label {
+      padding: 6px 10px 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
     }
 
     .prof-tab {
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 0;
+      gap: 11px;
+      padding: 7px 10px;
       background: none;
       border: none;
+      border-radius: var(--radius-sm);
       color: var(--text-soft);
-      font-family: var(--font-wow);
-      font-size: 0.95rem;
       text-align: left;
       cursor: pointer;
+      transition: background 0.15s, color 0.15s;
     }
 
-    .prof-tab-icon {
-      position: relative;
-      width: 46px;
-      height: 46px;
+    .prof-tab:hover { background: var(--surface-2); color: var(--text); }
+
+    .prof-tab img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
       flex-shrink: 0;
-      border-radius: 6px;
-      padding: 3px;
-      background: linear-gradient(145deg, #6a5524, #2a210b 45%, #5a4719);
-      box-shadow: 0 0 0 1px #000, 0 2px 6px rgba(0,0,0,0.7);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 0 2px var(--border);
     }
 
-    .prof-tab-icon img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: 4px;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.8);
-    }
-
-    .prof-tab:hover { color: var(--text); }
-    .prof-tab:hover .prof-tab-icon { filter: brightness(1.15); }
-
-    .prof-tab.active { color: var(--gold); }
-    .prof-tab.active .prof-tab-icon {
-      background: linear-gradient(145deg, #ffe27a, #b8860b 45%, #fff1a8);
-      box-shadow: 0 0 0 1px #000, 0 0 12px rgba(255,209,0,0.55);
-    }
+    .prof-tab-name { font-size: 0.88rem; font-weight: 500; flex: 1; }
 
     .prof-tab-count {
-      display: block;
-      font-family: var(--font-ui);
       font-size: 0.72rem;
       color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
     }
 
-    /* ── Window frame ───────────────────────────────────────────────────── */
+    .prof-tab.active { background: var(--gold-tint); color: var(--gold-strong); }
+    .prof-tab.active img { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 0 2px var(--gold-line); }
+    .prof-tab.active::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 9px;
+      bottom: 9px;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background: var(--gold);
+    }
+
+    /* ── Main card ──────────────────────────────────────────────────────── */
     .window {
       flex: 1;
       min-width: 0;
-      background: var(--frame-in);
-      border: 2px solid var(--frame-mid);
-      box-shadow: 0 0 0 2px var(--frame-out), 0 12px 40px rgba(0,0,0,0.75);
-      border-radius: 3px;
+      display: flex;
+      height: min(760px, calc(100vh - 110px));
+      min-height: 540px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    /* list column */
+    .list-pane {
+      flex: 0 0 330px;
       display: flex;
       flex-direction: column;
-      height: min(720px, calc(100vh - 110px));
-      min-height: 520px;
+      min-height: 0;
+      border-right: 1px solid var(--border);
     }
 
-    .window-title {
-      position: relative;
-      height: 26px;
+    .list-head {
+      padding: 16px 16px 10px;
       flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(var(--title-top), var(--title-bot));
-      border-bottom: 1px solid #000;
-      color: var(--white);
-      font-weight: bold;
-      font-size: 12.5px;
-      letter-spacing: 0.02em;
     }
 
-    .title-cart {
+    .list-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .list-title h2 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em; }
+    .list-title span { font-size: 0.78rem; color: var(--text-muted); }
+
+    .search-wrap { position: relative; }
+
+    .search-wrap svg {
       position: absolute;
-      right: 6px;
-      top: 3px;
-      height: 19px;
-      display: flex;
-      align-items: center;
-      padding: 0 8px;
-      background: linear-gradient(#2c2a26, #151412);
-      border: 1px solid var(--btn-border);
-      border-radius: 3px;
-      color: var(--gold);
-      font-size: 11px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .title-cart:hover { filter: brightness(1.25); }
-
-    /* skill bar strip */
-    .skill-strip {
-      flex-shrink: 0;
-      padding: 9px 12px 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      background:
-        radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.05), transparent 70%),
-        linear-gradient(#1e1d1a, #121110);
-      border-bottom: 1px solid #000;
-      box-shadow: inset 0 -1px 0 rgba(255,255,255,0.04);
-    }
-
-    .skill-bar {
-      position: relative;
-      width: min(460px, 100%);
-      height: 19px;
-      background: #050505;
-      border: 1px solid #4a4741;
-      box-shadow: 0 0 0 1px #000;
-      cursor: ew-resize;
-      touch-action: none;
-      user-select: none;
-    }
-
-    .skill-fill {
-      position: absolute;
-      inset: 0 auto 0 0;
-      background:
-        linear-gradient(rgba(255,255,255,0.25), transparent 45%, rgba(0,0,0,0.25)),
-        linear-gradient(90deg, var(--bar-a), var(--bar-b) 80%, var(--bar-c));
-      box-shadow: 2px 0 6px -1px var(--bar-c);
-    }
-
-    .skill-text {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-size: 11.5px;
-      text-shadow: 0 0 2px #000, 1px 1px 0 #000;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      color: var(--text-muted);
       pointer-events: none;
     }
 
-    .skill-hint {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      white-space: nowrap;
-    }
-
-    /* panes */
-    .window-body {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-    }
-
-    .list-pane {
-      flex: 0 0 300px;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      background: var(--pane);
-      border-right: 1px solid #000;
-      box-shadow: 1px 0 0 var(--pane-line);
-    }
-
-    .list-tools {
-      display: flex;
-      gap: 6px;
-      padding: 9px 10px 8px;
-      flex-shrink: 0;
-    }
-
     .search-input {
-      flex: 1;
-      min-width: 0;
-      height: 21px;
-      padding: 0 7px;
-      background: #070707;
-      border: 1px solid #3c3a35;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.9);
-      color: var(--white);
+      width: 100%;
+      height: 36px;
+      padding: 0 12px 0 34px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
       font-family: inherit;
-      font-size: 12px;
+      font-size: 0.86rem;
       outline: none;
+      transition: border-color 0.15s, background 0.15s;
     }
 
-    .search-input::placeholder { color: #5c5850; }
-    .search-input:focus { border-color: var(--gold-dim); }
-
-    .filter-wrap { position: relative; flex-shrink: 0; }
-
-    .filter-btn {
-      height: 21px;
-      width: 88px;
-      padding: 0 8px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: linear-gradient(#2a2825, #121110);
-      border: 1px solid #4a4640;
-      color: var(--text);
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .filter-btn .caret { color: var(--gold); font-size: 10px; }
-
-    .filter-menu {
-      position: absolute;
-      top: 24px;
-      right: 0;
-      z-index: 20;
-      width: 190px;
-      padding: 6px;
-      background: #0d0d0c;
-      border: 1px solid #55514a;
-      box-shadow: 0 0 0 1px #000, 0 6px 18px rgba(0,0,0,0.8);
-    }
-
-    .filter-menu.hidden { display: none; }
-
-    .filter-menu label {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 4px 4px;
-      font-size: 12px;
-      color: var(--text);
-      cursor: pointer;
-    }
-
-    .filter-menu label:hover { background: rgba(255,209,0,0.08); }
-    .filter-menu input { accent-color: #c9a227; }
+    .search-input::placeholder { color: var(--text-muted); }
+    .search-input:focus { border-color: var(--gold-line); background: var(--surface-2); }
 
     .recipe-list {
       flex: 1;
       min-height: 0;
       overflow-y: auto;
-      padding: 0 6px 10px 10px;
+      padding: 0 8px 12px;
     }
 
     .cat-header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 8px;
       width: 100%;
-      margin-top: 7px;
-      padding: 2px 8px 2px 7px;
-      background: linear-gradient(var(--header-top), var(--header-bot));
-      border: 1px solid #000;
-      box-shadow: inset 0 1px 0 rgba(255,190,120,0.18), inset 0 0 0 1px rgba(120,60,20,0.35);
+      margin-top: 6px;
+      padding: 9px 8px 6px;
+      background: var(--card-solid);
+      border: none;
       color: var(--gold);
-      font-family: var(--font-wow);
-      font-size: 15px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       text-align: left;
       cursor: pointer;
     }
 
-    .cat-header:hover { filter: brightness(1.15); }
+    .cat-header .cat-name { flex: 1; }
+    .cat-header .cat-count { color: var(--text-muted); font-weight: 500; letter-spacing: 0; }
 
-    .cat-toggle {
-      font-family: var(--font-ui);
-      font-weight: bold;
-      font-size: 15px;
-      line-height: 1;
+    .cat-header svg {
       width: 12px;
-      text-align: center;
+      height: 12px;
+      color: var(--text-muted);
+      transition: transform 0.15s;
     }
+
+    .cat-header.collapsed svg { transform: rotate(-90deg); }
+    .cat-header:hover .cat-name { color: var(--gold-strong); }
 
     .recipe-row {
-      position: relative;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 10px;
       width: 100%;
-      padding: 3px 6px 3px 22px;
+      padding: 6px 8px;
       background: none;
       border: none;
-      color: var(--text);
-      font-size: 12.5px;
-      letter-spacing: 0.01em;
+      border-radius: var(--radius-sm);
+      color: var(--text-soft);
+      font-size: 0.85rem;
       text-align: left;
       cursor: pointer;
+      transition: background 0.1s, color 0.1s;
     }
 
-    .recipe-row:hover { background: rgba(255,255,255,0.05); }
+    .recipe-row:hover { background: var(--surface-2); color: var(--text); }
 
     .recipe-row.selected {
-      color: var(--white);
-      background: linear-gradient(90deg, rgba(255,209,0,0.03), rgba(255,209,0,0.13) 30%, rgba(255,209,0,0.03));
+      background: var(--gold-tint);
+      color: var(--text);
+      box-shadow: inset 0 0 0 1px var(--gold-line);
     }
 
-    .recipe-row.selected::after {
-      content: '';
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #ffd100 25%, #ffd100 60%, transparent);
+    .recipe-row img {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.55);
     }
-
-    .recipe-row.unlearned { color: var(--red); opacity: 0.75; }
 
     .recipe-row .rname {
       flex: 1;
@@ -465,286 +400,272 @@
 
     .recipe-row .rmeta {
       flex-shrink: 0;
+      font-size: 0.72rem;
       color: var(--text-muted);
-      font-size: 11px;
+      font-variant-numeric: tabular-nums;
     }
 
     .list-empty {
-      padding: 18px 8px;
+      padding: 32px 12px;
       color: var(--text-muted);
-      font-size: 12px;
+      font-size: 0.85rem;
       text-align: center;
+      line-height: 1.7;
     }
 
-    .list-empty a {
-      color: var(--gold-soft);
-      cursor: pointer;
-      text-decoration: underline;
-    }
+    .list-empty a { color: var(--gold); cursor: pointer; }
+    .list-empty a:hover { color: var(--gold-strong); }
 
     /* scrollbars */
-    .recipe-list, .detail-scroll, .cart-scroll { scrollbar-width: thin; scrollbar-color: #6b5a2a #0a0a09; }
-    .recipe-list::-webkit-scrollbar, .detail-scroll::-webkit-scrollbar, .cart-scroll::-webkit-scrollbar { width: 9px; }
-    .recipe-list::-webkit-scrollbar-track, .detail-scroll::-webkit-scrollbar-track, .cart-scroll::-webkit-scrollbar-track { background: #0a0a09; }
+    .recipe-list, .detail-scroll, .cart-scroll { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.14) transparent; }
+    .recipe-list::-webkit-scrollbar, .detail-scroll::-webkit-scrollbar, .cart-scroll::-webkit-scrollbar { width: 8px; }
     .recipe-list::-webkit-scrollbar-thumb, .detail-scroll::-webkit-scrollbar-thumb, .cart-scroll::-webkit-scrollbar-thumb {
-      background: linear-gradient(90deg, #8a7330, #4f401a);
-      border: 1px solid #000;
-      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
     }
 
-    /* detail pane */
+    /* detail column */
     .detail-pane {
       flex: 1;
       min-width: 0;
       display: flex;
       flex-direction: column;
       min-height: 0;
-      background:
-        radial-gradient(ellipse at 30% 0%, rgba(255,255,255,0.035), transparent 60%),
-        radial-gradient(ellipse at 80% 90%, rgba(0,0,0,0.5), transparent 60%),
-        var(--pane-2);
     }
 
     .detail-scroll {
       flex: 1;
       min-height: 0;
       overflow-y: auto;
-      padding: 16px 20px 16px 22px;
+      padding: 24px 26px;
     }
 
     .detail-head {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
+      gap: 16px;
+      margin-bottom: 20px;
     }
 
     .detail-icon {
-      width: 56px;
-      height: 56px;
+      width: 60px;
+      height: 60px;
       flex-shrink: 0;
-      border-radius: 50%;
-      padding: 3px;
-      background: radial-gradient(circle at 35% 30%, #8d8a82, #3b3934 60%, #1b1a17);
-      box-shadow: 0 0 0 1px #000, 0 2px 6px rgba(0,0,0,0.7);
+      border-radius: 14px;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 0 3px var(--border-md), 0 8px 20px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
     }
 
-    .detail-icon img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      display: block;
-    }
+    .detail-icon img { display: block; width: 100%; height: 100%; }
+
+    .detail-titles { flex: 1; min-width: 0; }
 
     .detail-name {
-      flex: 1;
-      min-width: 0;
-      font-family: var(--font-wow);
-      font-size: 17px;
-      color: var(--white);
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
     }
 
-    .detail-prof {
-      font-family: var(--font-ui);
-      font-size: 11.5px;
-      color: var(--text-muted);
-      margin-top: 2px;
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-top: 7px;
     }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 22px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--text-soft);
+      font-size: 0.74rem;
+      font-weight: 500;
+    }
+
+    .chip.skill { gap: 7px; font-variant-numeric: tabular-nums; }
+    .chip.skill i { font-style: normal; }
+    .chip.skill .d1 { color: var(--d1); }
+    .chip.skill .d2 { color: var(--d2); }
+    .chip.skill .d3 { color: var(--d3); }
+    .chip.skill .d4 { color: var(--d4); }
 
     .fav-btn {
       align-self: flex-start;
-      width: 24px;
-      height: 24px;
+      width: 36px;
+      height: 36px;
       flex-shrink: 0;
-      background: none;
-      border: none;
-      color: #77736b;
-      cursor: pointer;
-    }
-
-    .fav-btn svg { width: 20px; height: 20px; }
-    .fav-btn:hover { color: var(--text); }
-    .fav-btn.on { color: var(--gold); }
-
-    .detail-desc {
-      color: var(--white);
-      font-size: 12.5px;
-      margin-bottom: 4px;
-    }
-
-    .detail-diff {
-      font-size: 11.5px;
+      display: grid;
+      place-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 50%;
       color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .fav-btn svg { width: 17px; height: 17px; }
+    .fav-btn:hover { color: var(--text); border-color: var(--border-md); }
+    .fav-btn.on { color: var(--gold); border-color: var(--gold-line); }
+    .fav-btn.on svg { fill: currentColor; }
+
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
       margin-bottom: 14px;
     }
 
-    .detail-diff b { font-weight: normal; margin-right: 6px; }
-    .detail-diff .d1 { color: var(--orange); }
-    .detail-diff .d2 { color: var(--yellow); }
-    .detail-diff .d3 { color: var(--green); }
-    .detail-diff .d4 { color: var(--grey); }
-
-    .section-label {
-      color: var(--gold);
-      font-size: 11.5px;
-      margin: 12px 0 6px;
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
     }
 
-    .section-label .hint { color: var(--text-muted); }
+    .section-title .hint { font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 0.74rem; }
 
     .reagent {
       display: flex;
       align-items: center;
-      gap: 9px;
-      padding: 3px 0;
+      gap: 11px;
+      padding: 6px 8px;
+      margin: 0 -8px;
+      border-radius: var(--radius-sm);
       user-select: none;
     }
 
     .reagent.craftable { cursor: pointer; }
-    .reagent.craftable:hover .reagent-name { color: var(--white); }
+    .reagent.craftable:hover { background: var(--surface-2); }
 
-    .item-frame {
+    .reagent img {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
       flex-shrink: 0;
-      width: 38px;
-      height: 38px;
-      padding: 2px;
-      border-radius: 4px;
-      background: linear-gradient(145deg, #77746d, #2d2b27 50%, #5c5952);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 0 2px var(--border);
     }
 
-    .item-frame img { display: block; width: 100%; height: 100%; border-radius: 2px; }
+    .reagent.child img { width: 26px; height: 26px; border-radius: 6px; }
 
-    .reagent.child .item-frame { width: 30px; height: 30px; }
-
-    .reagent-name {
-      flex: 1;
-      min-width: 0;
-      color: var(--text-soft);
-      font-size: 12.5px;
-      letter-spacing: 0.02em;
-    }
-
-    .reagent-name .qty { color: var(--white); margin-right: 4px; }
+    .reagent-name { flex: 1; min-width: 0; font-size: 0.88rem; color: var(--text-soft); }
+    .reagent-name .qty { color: var(--text); font-weight: 600; margin-right: 6px; font-variant-numeric: tabular-nums; }
 
     .craft-badge {
       flex-shrink: 0;
-      font-size: 10.5px;
+      font-size: 0.72rem;
+      font-weight: 500;
       color: var(--blue);
-      border: 1px solid rgba(106,176,245,0.3);
-      border-radius: 2px;
-      padding: 0 5px;
+      background: rgba(124, 184, 247, 0.1);
+      border-radius: 999px;
+      padding: 2px 9px;
     }
 
     .reagent .caret {
-      flex: 0 0 10px;
-      color: var(--gold-dim);
-      font-size: 9px;
+      width: 14px;
+      height: 14px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: transform 0.15s;
     }
 
+    .reagent.open .caret { transform: rotate(90deg); }
+
     .reagent-children {
-      margin-left: 18px;
-      padding-left: 10px;
-      border-left: 1px solid var(--pane-line);
+      margin-left: 16px;
+      padding-left: 14px;
+      border-left: 1px solid var(--border-md);
     }
 
     .reagent-children.hidden { display: none; }
 
     .raw-mats {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(190px, 250px));
-      gap: 2px 28px;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 4px 22px;
     }
 
     .raw-row {
       display: flex;
       align-items: center;
-      gap: 7px;
-      padding: 2px 0;
-      font-size: 12px;
+      gap: 9px;
+      padding: 4px 0;
+      font-size: 0.85rem;
       color: var(--text-soft);
       min-width: 0;
     }
 
     .raw-row img {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       flex-shrink: 0;
-      border-radius: 2px;
-      box-shadow: 0 0 0 1px #000, 0 0 0 2px #4a4741;
+      border-radius: 6px;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6);
     }
 
     .raw-row .rn { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .raw-row .rq { color: var(--white); flex-shrink: 0; }
+    .raw-row .rq { color: var(--text); font-weight: 600; flex-shrink: 0; font-variant-numeric: tabular-nums; }
 
-    .detail-empty {
-      padding: 40px 10px;
-      text-align: center;
-      color: var(--text-muted);
-    }
+    .detail-empty { padding: 60px 10px; text-align: center; color: var(--text-muted); }
 
-    /* bottom bar */
+    /* action bar */
     .detail-bar {
       flex-shrink: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 8px 10px 9px;
-      border-top: 1px solid #000;
-      box-shadow: inset 0 1px 0 var(--pane-line);
-      background: linear-gradient(#171614, #0f0e0d);
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 14px 26px;
+      border-top: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.18);
     }
 
-    .wow-btn {
-      height: 28px;
-      min-width: 110px;
-      padding: 0 14px;
-      background: linear-gradient(#2e2b26, #151412 60%, #0e0d0c);
-      border: 1px solid var(--btn-border);
-      box-shadow: 0 0 0 1px #000, inset 0 1px 0 rgba(255,255,255,0.06);
-      color: var(--gold);
-      font-size: 12.5px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .wow-btn:hover:not(:disabled) { filter: brightness(1.3); }
-    .wow-btn:disabled { color: #6d685f; border-color: #3a3833; cursor: default; }
-    .wow-btn.flash { color: var(--white); border-color: var(--gold); }
+    .bar-note { margin-right: auto; font-size: 0.8rem; color: var(--text-muted); }
 
     .stepper {
       display: flex;
       align-items: center;
-      gap: 4px;
+      height: 38px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
     }
 
     .step-btn {
-      width: 17px;
-      height: 17px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(#3a3629, #1a1810);
-      border: 1px solid #6b5a2a;
-      border-radius: 2px;
-      color: var(--gold);
-      font-size: 8px;
+      width: 36px;
+      height: 100%;
+      background: none;
+      border: none;
+      color: var(--text-soft);
+      font-size: 1.05rem;
       cursor: pointer;
     }
 
-    .step-btn:hover { filter: brightness(1.3); }
+    .step-btn:hover { color: var(--gold-strong); }
 
     .qty-input {
-      width: 44px;
-      height: 20px;
+      width: 46px;
+      height: 100%;
       text-align: center;
-      background: #050505;
-      border: 1px solid #55514a;
-      border-radius: 9px;
-      color: var(--white);
+      background: none;
+      border: none;
+      color: var(--text);
       font-family: inherit;
-      font-size: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
       outline: none;
       -moz-appearance: textfield;
     }
@@ -752,157 +673,204 @@
     .qty-input::-webkit-outer-spin-button,
     .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
-    /* ── Cart window ─────────────────────────────────────────────────────── */
+    .btn-primary {
+      height: 38px;
+      padding: 0 22px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--gold-strong), var(--gold));
+      color: #1a1206;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(232, 184, 75, 0.22);
+      transition: filter 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover:not(:disabled) { filter: brightness(1.07); }
+    .btn-primary:active:not(:disabled) { transform: translateY(1px); }
+    .btn-primary:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+
+    .btn-ghost {
+      height: 34px;
+      padding: 0 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-soft);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-ghost:hover { color: var(--text); border-color: var(--border-md); }
+
+    /* ── Cart drawer ────────────────────────────────────────────────────── */
     .cart-overlay {
       position: fixed;
       inset: 0;
       z-index: 40;
-      background: rgba(0,0,0,0.55);
-      display: none;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
     }
 
-    .cart-overlay.open { display: block; }
+    .cart-overlay.open { opacity: 1; pointer-events: auto; }
 
-    .cart-window {
+    .cart-drawer {
       position: fixed;
       z-index: 41;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: min(460px, calc(100vw - 32px));
-      max-height: min(640px, calc(100vh - 40px));
-      display: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(420px, 100vw);
+      display: flex;
       flex-direction: column;
-      background: var(--frame-in);
-      border: 2px solid var(--frame-mid);
-      box-shadow: 0 0 0 2px var(--frame-out), 0 16px 50px rgba(0,0,0,0.85);
-      border-radius: 3px;
+      background: var(--card-solid);
+      border-left: 1px solid var(--border);
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
     }
 
-    .cart-window.open { display: flex; }
+    .cart-drawer.open { transform: translateX(0); }
+
+    .cart-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 22px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cart-head h2 { font-size: 1.05rem; font-weight: 600; }
 
     .close-btn {
-      position: absolute;
-      right: 6px;
-      top: 4px;
-      width: 18px;
-      height: 18px;
-      background: none;
-      border: none;
-      color: #cfcac0;
-      font-size: 14px;
-      line-height: 1;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--text-soft);
       cursor: pointer;
     }
 
-    .close-btn:hover { color: var(--white); }
+    .close-btn:hover { color: var(--text); }
+    .close-btn svg { width: 14px; height: 14px; }
 
-    .cart-scroll {
-      flex: 1;
-      min-height: 0;
-      overflow-y: auto;
-      padding: 8px 14px 14px;
-      background: var(--pane-2);
-    }
+    .cart-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 14px 22px 20px; }
 
     .cart-item {
       display: flex;
       align-items: center;
-      gap: 9px;
-      padding: 5px 0;
-      border-bottom: 1px solid var(--pane-line);
+      gap: 11px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
     }
 
     .cart-item:last-child { border-bottom: none; }
-    .cart-item .item-frame { width: 32px; height: 32px; }
-    .cart-item-info { flex: 1; min-width: 0; }
 
-    .cart-item-name {
-      color: var(--white);
-      font-size: 12.5px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .cart-item img {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 0 2px var(--border);
     }
 
-    .cart-item-prof { color: var(--text-muted); font-size: 11px; }
-    .cart-item-qty { color: var(--gold); font-size: 12px; }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name { font-size: 0.88rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cart-item-prof { font-size: 0.76rem; color: var(--text-muted); }
+    .cart-item-qty { font-size: 0.84rem; font-weight: 600; color: var(--gold); font-variant-numeric: tabular-nums; }
 
     .cart-remove {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
       background: none;
       border: none;
-      color: #8c867b;
-      font-size: 13px;
+      border-radius: 50%;
+      color: var(--text-muted);
       cursor: pointer;
-      padding: 0 3px;
     }
 
-    .cart-remove:hover { color: var(--red); }
+    .cart-remove:hover { color: #ff6b6b; background: rgba(255, 107, 107, 0.1); }
+    .cart-remove svg { width: 12px; height: 12px; }
 
-    .cart-empty { padding: 24px 0; text-align: center; color: var(--text-muted); }
+    .cart-empty { padding: 50px 0; text-align: center; color: var(--text-muted); }
 
-    .cart-bar {
+    .cart-mats { margin-top: 18px; }
+    .cart-mats .raw-mats { grid-template-columns: 1fr; }
+
+    .cart-foot {
       display: flex;
       justify-content: flex-end;
-      padding: 8px 10px 9px;
-      border-top: 1px solid #000;
-      background: linear-gradient(#171614, #0f0e0d);
+      padding: 14px 22px;
+      border-top: 1px solid var(--border);
     }
 
-    /* ── Phone layout ────────────────────────────────────────────────────── */
-    @media (max-width: 860px) {
-      body { padding: 14px 16px 32px; }
-      header { flex-direction: column; align-items: stretch; gap: 10px; }
-      header h1 { text-align: center; font-size: 1.3rem; }
-      .expansion-bar { justify-content: stretch; }
-      .exp-btn { flex: 1; padding: 5px 4px; }
+    /* ── Phone layout ───────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      body { padding: 16px 16px 32px; }
+
+      header { flex-wrap: wrap; gap: 12px; }
+      .brand h1 span { display: none; }
+      .segmented { order: 3; width: 100%; }
+      .exp-btn { flex: 1; padding: 6px 4px; }
       .exp-notice { text-align: center; }
 
-      .layout { flex-direction: column; gap: 10px; }
+      .layout { flex-direction: column; gap: 12px; }
 
       .prof-rail {
         flex: none;
         width: 100%;
         flex-direction: row;
         overflow-x: auto;
-        padding: 2px 2px 6px;
-        gap: 10px;
+        padding: 6px;
         scrollbar-width: none;
       }
 
       .prof-rail::-webkit-scrollbar { display: none; }
+      .rail-label { display: none; }
 
-      .prof-tab {
-        flex-direction: column;
-        gap: 3px;
-        width: 62px;
-        flex-shrink: 0;
-        font-size: 0.72rem;
-        text-align: center;
-      }
-
+      .prof-tab { flex-shrink: 0; gap: 8px; padding: 6px 10px; }
+      .prof-tab img { width: 26px; height: 26px; border-radius: 7px; }
       .prof-tab-count { display: none; }
-      .prof-tab-icon { width: 42px; height: 42px; }
+      .prof-tab.active::before { display: none; }
 
-      .window { width: 100%; height: auto; min-height: 0; }
-      .window-body { flex-direction: column; }
-      .list-pane { flex: none; height: 46vh; border-right: none; border-bottom: 1px solid #000; box-shadow: 0 1px 0 var(--pane-line); }
-      .detail-scroll { max-height: none; padding: 14px; }
-      .skill-hint { display: none; }
-      .wow-btn { min-width: 0; padding: 0 10px; }
+      .window { flex-direction: column; height: auto; min-height: 0; }
+      .list-pane { flex: none; height: 48vh; border-right: none; border-bottom: 1px solid var(--border); }
+      .detail-scroll { padding: 18px 16px; }
+      .detail-bar { padding: 12px 16px; }
+      .bar-note { display: none; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>WoW Crafting Calculator</h1>
-  <div class="expansion-bar" id="expansion-bar" style="display:none">
+  <div class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg>
+    </div>
+    <h1>Crafting Calculator <span>for WoW</span></h1>
+  </div>
+  <div class="segmented" id="expansion-bar" style="display:none">
     <button class="exp-btn" data-exp="classic">Classic</button>
     <button class="exp-btn active" data-exp="tbc">TBC</button>
     <button class="exp-btn" data-exp="wotlk">WotLK</button>
     <button class="exp-btn" data-exp="forever">Forever</button>
   </div>
+  <button class="cart-btn" id="cart-btn" title="Shopping cart">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    Cart
+    <span class="cart-count hidden" id="cart-count">0</span>
+  </button>
 </header>
 
 <div id="status">Loading data...</div>
@@ -910,66 +878,52 @@
 <div class="layout" id="layout" style="display:none">
   <nav class="prof-rail" id="prof-rail" aria-label="Professions"></nav>
 
-  <section class="window" aria-label="Profession window">
-    <div class="window-title">
-      <span id="window-title">Professions</span>
-      <button class="title-cart" id="cart-btn" title="Shopping Cart">Cart (<span id="cart-count">0</span>)</button>
-
+  <section class="window" aria-label="Recipes">
+    <div class="list-pane">
+      <div class="list-head">
+        <div class="list-title"><h2 id="window-title">Professions</h2><span id="list-count"></span></div>
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="search" class="search-input" type="text" placeholder="Search recipes" autocomplete="off" spellcheck="false">
+        </div>
+      </div>
+      <div class="recipe-list" id="recipe-list"></div>
     </div>
 
-    <div class="skill-strip">
-      <div class="skill-bar" id="skill-bar" title="Click or drag to set your skill level">
-        <div class="skill-fill" id="skill-fill"></div>
-        <div class="skill-text" id="skill-text"></div>
-      </div>
-      <span class="skill-hint">drag to set your skill</span>
-    </div>
-
-    <div class="window-body">
-      <div class="list-pane">
-        <div class="list-tools">
-          <input id="search" class="search-input" type="text" placeholder="Search" autocomplete="off" spellcheck="false">
-          <div class="filter-wrap">
-            <button class="filter-btn" id="filter-btn">Filter <span class="caret">▼</span></button>
-            <div class="filter-menu hidden" id="filter-menu">
-              <label><input type="checkbox" data-filter="hideTrivial"> Hide trivial (grey)</label>
-              <label><input type="checkbox" data-filter="hideUnlearned"> Hide above my skill</label>            </div>
-          </div>
+    <div class="detail-pane">
+      <div class="detail-scroll" id="detail"></div>
+      <div class="detail-bar">
+        <span class="bar-note" id="bar-note"></span>
+        <div class="stepper">
+          <button class="step-btn" id="qty-minus" aria-label="Fewer">−</button>
+          <input type="number" id="qty" class="qty-input" value="1" min="1" max="9999" aria-label="Crafts">
+          <button class="step-btn" id="qty-plus" aria-label="More">+</button>
         </div>
-        <div class="recipe-list" id="recipe-list"></div>
-      </div>
-
-      <div class="detail-pane">
-        <div class="detail-scroll" id="detail"></div>
-        <div class="detail-bar">
-          <button class="wow-btn" id="view-cart-btn">View Cart</button>
-          <div class="stepper">
-            <button class="step-btn" id="qty-minus" aria-label="Fewer">◀</button>
-            <input type="number" id="qty" class="qty-input" value="1" min="1" max="9999" aria-label="Crafts">
-            <button class="step-btn" id="qty-plus" aria-label="More">▶</button>
-          </div>
-          <button class="wow-btn" id="add-to-cart-btn">Add to Cart</button>
-        </div>
+        <button class="btn-primary" id="add-to-cart-btn">Add to cart</button>
       </div>
     </div>
   </section>
 </div>
 
 <div class="cart-overlay" id="cart-overlay"></div>
-<div class="cart-window" id="cart-window" role="dialog" aria-label="Shopping Cart">
-  <div class="window-title">
-    <span>Shopping Cart</span>
-    <button class="close-btn" id="cart-close" aria-label="Close">✕</button>
+<aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart">
+  <div class="cart-head">
+    <h2>Shopping cart</h2>
+    <button class="close-btn" id="cart-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
   </div>
   <div class="cart-scroll">
     <div id="cart-items"></div>
-    <div class="section-label" id="cart-mats-label">Total Raw Materials:</div>
-    <div class="raw-mats" id="cart-raw-mats"></div>
+    <div class="section cart-mats" id="cart-mats">
+      <div class="section-title">Total raw materials</div>
+      <div class="raw-mats" id="cart-raw-mats"></div>
+    </div>
   </div>
-  <div class="cart-bar">
-    <button class="wow-btn" id="cart-clear-btn">Clear Cart</button>
+  <div class="cart-foot">
+    <button class="btn-ghost" id="cart-clear-btn">Clear cart</button>
   </div>
-</div>
+</aside>
 
 <script>
 const PROFESSIONS = {
@@ -988,18 +942,17 @@ const PROFESSIONS = {
   755: 'Jewelcrafting',
 };
 
-// Rail icon + skill bar colours (dark → bright → highlight) per profession
-const PROF_STYLE = {
-  171: { icon: 'trade_alchemy',              bar: ['#0d3b2a', '#2fbf7a', '#b8ffd8'] },
-  164: { icon: 'trade_blacksmithing',        bar: ['#6a1d05', '#ff7a1a', '#ffd36a'] },
-  185: { icon: 'inv_misc_food_15',           bar: ['#3a3f46', '#a9b3bd', '#ffffff'] },
-  333: { icon: 'trade_engraving',            bar: ['#2a0b4a', '#9a4dff', '#e2c4ff'] },
-  202: { icon: 'trade_engineering',          bar: ['#3b2409', '#c07a2a', '#ffd08a'] },
-  129: { icon: 'spell_holy_sealofsacrifice', bar: ['#0f4a0a', '#3fd12a', '#c9ff9a'] },
-  755: { icon: 'inv_misc_gem_01',            bar: ['#06394a', '#2ab8e0', '#bff1ff'] },
-  165: { icon: 'inv_misc_armorkit_17',       bar: ['#3b230e', '#a8713a', '#f0c890'] },
-  186: { icon: 'trade_mining',               bar: ['#2b2f3a', '#8f97a8', '#ffe27a'] },
-  197: { icon: 'trade_tailoring',            bar: ['#0d1f4a', '#3f6fe0', '#c4d6ff'] },
+const PROF_ICONS = {
+  171: 'trade_alchemy',
+  164: 'trade_blacksmithing',
+  185: 'inv_misc_food_15',
+  333: 'trade_engraving',
+  202: 'trade_engineering',
+  129: 'spell_holy_sealofsacrifice',
+  755: 'inv_misc_gem_01',
+  165: 'inv_misc_armorkit_17',
+  186: 'trade_mining',
+  197: 'trade_tailoring',
 };
 
 const CRAFT_TYPES = new Set([164,165,171,185,186,197,202,333,755,129]);
@@ -1022,7 +975,7 @@ let currentExpansion = 'tbc';
 let currentDataset = null;
 let currentProf = null;
 
-const prefs = loadPrefs();   // { skill: {"exp:type": n}, favorites: {dataset: [keys]}, collapsed: {...}, filters: {...} }
+const prefs = loadPrefs();   // { favorites: {dataset: [keys]}, collapsed: {"dataset:type": [names]} }
 
 function getMaxSkill() { return EXPANSIONS[currentExpansion].maxSkill; }
 
@@ -1109,7 +1062,7 @@ async function init() {
 function loadPrefs() {
   let p = {};
   try { p = JSON.parse(localStorage.getItem('craftcalc-prefs')) || {}; } catch {}
-  return { skill: {}, favorites: {}, collapsed: {}, filters: {}, ...p };
+  return { favorites: {}, collapsed: {}, ...p };
 }
 
 function savePrefs() {
@@ -1159,43 +1112,15 @@ function getItemIcon(id) {
   return itemsById[id]?.icon || '';
 }
 
-const STAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.3L12 17.3l-5.7 3 1.1-6.3-4.6-4.5 6.4-.9z"/></svg>';
-
-// ── Skill + difficulty ───────────────────────────────────────────────────────
-function skillKey() { return `${currentExpansion}:${currentProf}`; }
-
-function getSkill() {
-  const s = prefs.skill[skillKey()];
-  return Math.min(s ?? getMaxSkill(), getMaxSkill());
+function qualityColor(r) {
+  const q = r.creates?.item_id ? itemsById[r.creates.item_id]?.quality : null;
+  return q != null && q >= 0 && q <= 5 ? `var(--q${q})` : 'var(--text)';
 }
 
-function setSkill(v) {
-  prefs.skill[skillKey()] = Math.max(1, Math.min(getMaxSkill(), Math.round(v)));
-  savePrefs();
-}
-
-// orange / yellow / green / grey like the in-game list; 'unlearned' when above your skill
-function difficulty(r, skill) {
-  const learn = r.learned_at_rank ?? r.color_level_1;
-  if (learn != null && skill < Math.min(learn, getMaxSkill())) return 'unlearned';
-  const y = r.color_level_2, g = r.color_level_3, gr = r.color_level_4;
-  if (y == null || gr == null) return 'none';
-  if (skill < y)  return 'orange';
-  if (skill < g)  return 'yellow';
-  if (skill < gr) return 'green';
-  return 'grey';
-}
-
-function renderSkillBar() {
-  const max = getMaxSkill(), skill = getSkill();
-  const [a, b, c] = PROF_STYLE[currentProf]?.bar || PROF_STYLE[164].bar;
-  const root = document.documentElement.style;
-  root.setProperty('--bar-a', a);
-  root.setProperty('--bar-b', b);
-  root.setProperty('--bar-c', c);
-  document.getElementById('skill-fill').style.width = `${(skill / max) * 100}%`;
-  document.getElementById('skill-text').textContent = `${getProfName(currentProf)} ${skill}/${max}`;
-}
+const STAR    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2.8l2.8 5.8 6.4.9-4.6 4.5 1.1 6.3L12 17.3l-5.7 3 1.1-6.3-4.6-4.5 6.4-.9z"/></svg>';
+const CARET   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+const CARET_R = '<svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+const CROSS   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
 // ── View: expansion + profession ─────────────────────────────────────────────
 function professionsForView() {
@@ -1216,19 +1141,21 @@ function showView() {
   if (currentRecipe && (currentRecipe.type !== currentProf || !allRecipes.includes(currentRecipe))) currentRecipe = null;
 
   const rail = document.getElementById('prof-rail');
-  rail.innerHTML = profs.map(p => `
+  rail.innerHTML = '<div class="rail-label">Professions</div>' + profs.map(p => `
     <button class="prof-tab${p.type === currentProf ? ' active' : ''}" data-type="${p.type}">
-      <span class="prof-tab-icon">${iconHtml(PROF_STYLE[p.type]?.icon, 'large')}</span>
-      <span>${esc(getProfName(p.type))}<span class="prof-tab-count">${p.count} recipes</span></span>
+      ${iconHtml(PROF_ICONS[p.type], 'large')}
+      <span class="prof-tab-name">${esc(getProfName(p.type))}</span>
+      <span class="prof-tab-count">${p.count}</span>
     </button>
   `).join('');
   rail.querySelectorAll('.prof-tab').forEach(btn => {
     btn.addEventListener('click', () => selectProfession(Number(btn.dataset.type)));
   });
 
-  document.getElementById('window-title').textContent = currentProf ? getProfName(currentProf) : 'Professions';  renderSkillBar();
+  document.getElementById('window-title').textContent = currentProf ? getProfName(currentProf) : 'Professions';
   renderList();
   if (!currentRecipe) currentRecipe = firstVisibleRecipe();
+  renderList();
   renderDetail();
   writeHash();
 }
@@ -1239,22 +1166,15 @@ function selectProfession(type) {
   currentRecipe = null;
   document.getElementById('search').value = '';
   showView();
-  const active = document.querySelector('.prof-tab.active');
-  active?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  document.querySelector('.prof-tab.active')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 
 // ── Recipe list ──────────────────────────────────────────────────────────────
 function visibleRecipes() {
   const q = document.getElementById('search').value.trim().toLowerCase();
-  const skill = getSkill();
-  const f = prefs.filters;
-  return allRecipes.filter(r => {
-    if (r.type !== currentProf || !r.reagents?.length || !isRecipeInExpansion(r)) return false;
-    if (q && !r.name.toLowerCase().includes(q)) return false;    const d = difficulty(r, skill);
-    if (f.hideTrivial && d === 'grey') return false;
-    if (f.hideUnlearned && d === 'unlearned') return false;
-    return true;
-  });
+  return allRecipes.filter(r =>
+    r.type === currentProf && r.reagents?.length && isRecipeInExpansion(r) &&
+    (!q || r.name.toLowerCase().includes(q)));
 }
 
 function recipeSkill(r) { return r.learned_at_rank ?? r.color_level_1 ?? r.color_level_2 ?? 0; }
@@ -1287,8 +1207,8 @@ function firstVisibleRecipe() {
 function renderList() {
   const listEl = document.getElementById('recipe-list');
   const list = visibleRecipes();
-  const skill = getSkill();
   const collapsed = new Set(prefs.collapsed[`${currentDataset}:${currentProf}`] || []);
+  document.getElementById('list-count').textContent = `${list.length} recipe${list.length === 1 ? '' : 's'}`;
 
   if (!list.length) {
     const q = document.getElementById('search').value.trim().toLowerCase();
@@ -1298,7 +1218,7 @@ function renderList() {
         ...p, n: allRecipes.filter(r => r.type === p.type && r.reagents?.length && isRecipeInExpansion(r) && r.name.toLowerCase().includes(q)).length,
       })).filter(p => p.n && p.type !== currentProf);
       if (elsewhere.length) {
-        html += '<br><br>Also in: ' + elsewhere.map(p =>
+        html += '<br>Try ' + elsewhere.map(p =>
           `<a data-type="${p.type}">${esc(getProfName(p.type))} (${p.n})</a>`).join(', ');
       }
     }
@@ -1309,7 +1229,6 @@ function renderList() {
       currentRecipe = null;
       showView();
       document.getElementById('search').value = q;
-      renderList();
       currentRecipe = firstVisibleRecipe();
       renderList();
       renderDetail();
@@ -1320,13 +1239,14 @@ function renderList() {
   listEl.innerHTML = groupRecipes(list).map(([name, g]) => {
     const isCollapsed = collapsed.has(name);
     const rows = isCollapsed ? '' : g.recipes.map(r => {
-      const d = difficulty(r, skill);
-      const makes = r.creates?.item_count > 1 ? `<span class="rmeta">[${r.creates.item_count}]</span>` : '';
-      return `<button class="recipe-row${r === currentRecipe ? ' selected' : ''}${d === 'unlearned' ? ' unlearned' : ''}" data-idx="${allRecipes.indexOf(r)}">
-        <span class="rname">${esc(r.name)}</span>${makes}
+      const makes = r.creates?.item_count > 1 ? `<span class="rmeta">×${r.creates.item_count}</span>` : '';
+      return `<button class="recipe-row${r === currentRecipe ? ' selected' : ''}" data-idx="${allRecipes.indexOf(r)}">
+        ${iconHtml(r.icon)}<span class="rname">${esc(r.name)}</span>${makes}
       </button>`;
     }).join('');
-    return `<button class="cat-header" data-cat="${esc(name)}"><span>${esc(name)}</span><span class="cat-toggle">${isCollapsed ? '+' : '−'}</span></button>${rows}`;
+    return `<button class="cat-header${isCollapsed ? ' collapsed' : ''}" data-cat="${esc(name)}">
+      ${CARET}<span class="cat-name">${esc(name)}</span><span class="cat-count">${g.recipes.length}</span>
+    </button>${rows}`;
   }).join('');
 
   listEl.querySelectorAll('.cat-header').forEach(h => h.addEventListener('click', () => {
@@ -1360,9 +1280,11 @@ function getQty() {
 function renderDetail() {
   const el = document.getElementById('detail');
   const addBtn = document.getElementById('add-to-cart-btn');
+  const note = document.getElementById('bar-note');
   if (!currentRecipe) {
     el.innerHTML = '<div class="detail-empty">Select a recipe from the list</div>';
     addBtn.disabled = true;
+    note.textContent = '';
     return;
   }
   addBtn.disabled = false;
@@ -1370,27 +1292,35 @@ function renderDetail() {
   const r = currentRecipe;
   const qty = getQty();
   const makes = r.creates?.item_count || 1;
-  const outName = r.creates?.item_id ? getItemName(r.creates.item_id) : r.name;
-  const desc = r.creates?.item_id
-    ? (makes > 1 ? `Creates ${makes} ${esc(outName)}.` : `Craft ${/^[aeiou]/i.test(outName) ? 'an' : 'a'} ${esc(outName)}.`)
-    : esc(r.name) + '.';
+  note.textContent = makes * qty > 1 ? `Makes ${makes * qty}` : '';
+
   const levels = [r.learned_at_rank ?? r.color_level_1, r.color_level_2, r.color_level_3, r.color_level_4];
-  const diff = levels.some(v => v != null)
-    ? '<div class="detail-diff">Difficulty: ' + levels.map((v, i) => v != null ? `<b class="d${i + 1}">${v}</b>` : '').join('') + '</div>'
+  const skillChip = levels.some(v => v != null)
+    ? `<span class="chip skill" title="Skill: learn · yellow · green · grey">${levels.map((v, i) => v != null ? `<i class="d${i + 1}">${v}</i>` : '').join('')}</span>`
     : '';
 
   el.innerHTML = `
     <div class="detail-head">
       <div class="detail-icon">${iconHtml(r.icon, 'large')}</div>
-      <div class="detail-name">${esc(r.name)}<div class="detail-prof">${esc(getProfName(r.type))}${makes * qty > 1 ? ` · makes ${makes * qty}` : ''}</div></div>
-      <button class="fav-btn${isFavorite(r) ? ' on' : ''}" id="fav-btn" title="Favorite">${STAR}</button>
+      <div class="detail-titles">
+        <div class="detail-name" style="color:${qualityColor(r)}">${esc(r.name)}</div>
+        <div class="detail-meta">
+          <span class="chip">${esc(getProfName(r.type))}</span>
+          ${r.category ? `<span class="chip">${esc(r.category)}</span>` : ''}
+          ${makes > 1 ? `<span class="chip">Makes ${makes}</span>` : ''}
+          ${skillChip}
+        </div>
+      </div>
+      <button class="fav-btn${isFavorite(r) ? ' on' : ''}" id="fav-btn" title="${isFavorite(r) ? 'Remove from favorites' : 'Add to favorites'}">${STAR}</button>
     </div>
-    <div class="detail-desc">${desc}</div>
-    ${diff}
-    <div class="section-label">Reagents: <span class="hint">${qty > 1 ? `for ${qty} crafts — ` : ''}click a sub-craft to expand</span></div>
-    <div id="reagents"></div>
-    <div class="section-label">Raw Materials:</div>
-    <div class="raw-mats" id="raw-mats"></div>
+    <div class="section">
+      <div class="section-title">Reagents<span class="hint">${qty > 1 ? `for ${qty} crafts · ` : ''}click a sub-craft to expand</span></div>
+      <div id="reagents"></div>
+    </div>
+    <div class="section">
+      <div class="section-title">Raw materials</div>
+      <div class="raw-mats" id="raw-mats"></div>
+    </div>
   `;
 
   document.getElementById('fav-btn').addEventListener('click', () => {
@@ -1416,9 +1346,9 @@ function buildReagent(itemId, qty, visited, isChild) {
   const row = document.createElement('div');
   row.className = 'reagent' + (craftable ? ' craftable' : '') + (isChild ? ' child' : '');
   row.innerHTML = `
-    <span class="item-frame">${iconHtml(getItemIcon(itemId))}</span>
+    ${iconHtml(getItemIcon(itemId))}
     <span class="reagent-name"><span class="qty">${qty}</span>${esc(getItemName(itemId))}</span>
-    ${craftable ? `<span class="craft-badge">${esc(getProfName(recipe.type))}</span><span class="caret">▶</span>` : ''}
+    ${craftable ? `<span class="craft-badge">${esc(getProfName(recipe.type))}</span>${CARET_R}` : ''}
   `;
   wrap.appendChild(row);
 
@@ -1428,7 +1358,7 @@ function buildReagent(itemId, qty, visited, isChild) {
     let built = false;
     row.addEventListener('click', () => {
       const open = children.classList.toggle('hidden') === false;
-      row.querySelector('.caret').textContent = open ? '▼' : '▶';
+      row.classList.toggle('open', open);
       if (open && !built) {
         built = true;
         const batches = Math.ceil(qty / (recipe.creates?.item_count || 1));
@@ -1491,43 +1421,6 @@ function setupWindow() {
     if (e.key === 'Escape') { search.value = ''; renderList(); }
   });
 
-  // filter dropdown
-  const menu = document.getElementById('filter-menu');
-  document.getElementById('filter-btn').addEventListener('click', e => {
-    e.stopPropagation();
-    menu.classList.toggle('hidden');
-  });
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.filter-wrap')) menu.classList.add('hidden');
-  });
-  menu.querySelectorAll('input[data-filter]').forEach(cb => {
-    cb.checked = !!prefs.filters[cb.dataset.filter];
-    cb.addEventListener('change', () => {
-      prefs.filters[cb.dataset.filter] = cb.checked;
-      savePrefs();
-      renderList();
-    });
-  });
-
-  // skill bar: click or drag to set skill
-  const bar = document.getElementById('skill-bar');
-  const setFromEvent = e => {
-    const rect = bar.getBoundingClientRect();
-    const frac = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-    setSkill(Math.max(1, Math.round(frac * getMaxSkill() / 5) * 5));
-    renderSkillBar();
-    renderList();
-  };
-  bar.addEventListener('pointerdown', e => {
-    bar.setPointerCapture(e.pointerId);
-    setFromEvent(e);
-    const move = ev => setFromEvent(ev);
-    const up = () => { bar.removeEventListener('pointermove', move); bar.removeEventListener('pointerup', up); };
-    bar.addEventListener('pointermove', move);
-    bar.addEventListener('pointerup', up);
-  });
-
-  // quantity
   const qty = document.getElementById('qty');
   qty.addEventListener('input', renderDetail);
   document.getElementById('qty-minus').addEventListener('click', () => { qty.value = Math.max(1, getQty() - 1); renderDetail(); });
@@ -1636,19 +1529,20 @@ function cartRecipe(item) {
 }
 
 function updateCartBtn() {
-  document.getElementById('cart-count').textContent = cart.length;
-  document.getElementById('view-cart-btn').textContent = cart.length ? `View Cart (${cart.length})` : 'View Cart';
+  const el = document.getElementById('cart-count');
+  el.textContent = cart.length;
+  el.classList.toggle('hidden', cart.length === 0);
 }
 
 function openCart() {
   renderCart();
   document.getElementById('cart-overlay').classList.add('open');
-  document.getElementById('cart-window').classList.add('open');
+  document.getElementById('cart-drawer').classList.add('open');
 }
 
 function closeCart() {
   document.getElementById('cart-overlay').classList.remove('open');
-  document.getElementById('cart-window').classList.remove('open');
+  document.getElementById('cart-drawer').classList.remove('open');
 }
 
 function addToCart() {
@@ -1670,33 +1564,32 @@ function addToCart() {
   updateCartBtn();
 
   const btn = document.getElementById('add-to-cart-btn');
-  btn.textContent = 'Added!';
-  btn.classList.add('flash');
-  setTimeout(() => { btn.textContent = 'Add to Cart'; btn.classList.remove('flash'); }, 1100);
+  btn.textContent = 'Added ✓';
+  setTimeout(() => { btn.textContent = 'Add to cart'; }, 1100);
 }
 
 function renderCart() {
   const itemsEl = document.getElementById('cart-items');
   const matsEl  = document.getElementById('cart-raw-mats');
-  const label   = document.getElementById('cart-mats-label');
+  const matsBox = document.getElementById('cart-mats');
 
   if (cart.length === 0) {
     itemsEl.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
     matsEl.innerHTML  = '';
-    label.style.display = 'none';
+    matsBox.style.display = 'none';
     return;
   }
-  label.style.display = '';
+  matsBox.style.display = '';
 
   itemsEl.innerHTML = cart.map((item, i) => `
     <div class="cart-item">
-      <span class="item-frame">${iconHtml(cartRecipe(item)?.icon)}</span>
+      ${iconHtml(cartRecipe(item)?.icon)}
       <div class="cart-item-info">
         <div class="cart-item-name" title="${esc(item.name)}">${esc(item.name)}</div>
         <div class="cart-item-prof">${esc(item.profName)}</div>
       </div>
       <span class="cart-item-qty">×${item.qty}</span>
-      <button class="cart-remove" data-idx="${i}" title="Remove">✕</button>
+      <button class="cart-remove" data-idx="${i}" title="Remove">${CROSS}</button>
     </div>
   `).join('');
 
@@ -1717,7 +1610,6 @@ function setupCart() {
   loadCart();
   updateCartBtn();
   document.getElementById('cart-btn').addEventListener('click', openCart);
-  document.getElementById('view-cart-btn').addEventListener('click', openCart);
   document.getElementById('cart-close').addEventListener('click', closeCart);
   document.getElementById('cart-overlay').addEventListener('click', closeCart);
   document.getElementById('cart-clear-btn').addEventListener('click', () => {
