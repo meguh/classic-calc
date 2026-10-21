@@ -114,7 +114,10 @@ async function main() {
   const load = t => readCsv(path.join(dir, `${t}.csv`));
   const spellNames = new Map(load('SpellName').map(r => [r.ID, r.Name_lang]));
   const spellIcons = new Map(load('SpellMisc').map(r => [r.SpellID, icons[r.SpellIconFileDataID] || '']));
-  const sodCats    = new Set(load('TradeSkillCategory')
+  const categories = load('TradeSkillCategory');
+  const catNames   = new Map(categories.map(r => [r.ID, r.Name_lang]));
+  const catOrder   = new Map(categories.map(r => [r.ID, +r.OrderIndex]));
+  const sodCats    = new Set(categories
     .filter(r => /season of discovery/i.test(r.Name_lang)).map(r => r.ID));
 
   const reagentsBySpell = new Map();
@@ -161,6 +164,11 @@ async function main() {
       is_new:        spell >= FOREVER_MIN_SPELL,
       reagents,
     };
+    const category = catNames.get(a.TradeSkillCategoryID);
+    if (category) {
+      recipe.category       = category;
+      recipe.category_order = catOrder.get(a.TradeSkillCategoryID);
+    }
     const creates = createsBySpell.get(a.Spell);
     if (creates) recipe.creates = creates;
     recipes.push(recipe);
@@ -252,6 +260,34 @@ async function main() {
     }
   }
 
+  // Learn level isn't in the client for trainer recipes. Taught-by-item recipes ("Plans: X")
+  // carry it on the item; original recipes reuse Classic's, shifted by how far Forever moved
+  // the yellow threshold. Anything else stays unknown.
+  const RECIPE_ITEM = /^(?:Plans|Pattern|Recipe|Formula|Schematic|Manual|Design): (.+)$/;
+  const itemLearn = new Map();
+  for (const s of load('ItemSparse')) {
+    const m = RECIPE_ITEM.exec(s.Display_lang || '');
+    if (m && +s.RequiredSkillRank > 0) itemLearn.set(`${s.RequiredSkill}:${m[1]}`, +s.RequiredSkillRank);
+  }
+  const classicRecipes = new Map();
+  try {
+    for (const r of JSON.parse(fs.readFileSync(path.join(GAME_DIR, 'classic-professions.json'), 'utf8'))) {
+      classicRecipes.set(r.id, r);
+    }
+  } catch {}
+  let learnFromItem = 0, learnFromClassic = 0;
+  for (const r of recipes) {
+    const fromItem = itemLearn.get(`${r.type}:${r.name}`);
+    const c = classicRecipes.get(r.id);
+    if (fromItem) {
+      r.learned_at_rank = fromItem;
+      learnFromItem++;
+    } else if (c?.learned_at_rank != null && c.color_level_2 != null) {
+      r.learned_at_rank = Math.max(1, c.learned_at_rank + (r.color_level_2 - c.color_level_2));
+      learnFromClassic++;
+    }
+  }
+
   recipes.sort((a, b) => a.type - b.type || a.id - b.id);
   const mats = [...items.values()].sort((a, b) => a.id - b.id);
   fs.writeFileSync(path.join(GAME_DIR, 'forever-professions.json'), JSON.stringify(recipes));
@@ -262,6 +298,8 @@ async function main() {
   console.log(`  Items   : ${mats.length}${stubbed ? ` (${stubbed} unnamed — not in this build's data)` : ''}`);
   console.log(`  No icon : ${mats.filter(m => !m.icon).length} items`);
   console.log(`  Raw-flagged conversion items: ${rawCount}`);
+  console.log(`  Learn level: ${learnFromItem} from recipe items, ${learnFromClassic} from Classic, ` +
+              `${recipes.length - learnFromItem - learnFromClassic} unknown`);
 }
 
 main().catch(e => { console.error(e.message); process.exit(1); });
