@@ -234,6 +234,13 @@
       border: 1px solid var(--border);
     }
 
+    .tag-new {
+      margin-right: 4px;
+      background: var(--gold-glow);
+      color: var(--gold-bright);
+      border-color: rgba(200,151,58,0.3);
+    }
+
     .dd-empty {
       padding: 18px;
       text-align: center;
@@ -710,6 +717,7 @@
     <button class="exp-btn" data-exp="classic">Classic</button>
     <button class="exp-btn active" data-exp="tbc">TBC</button>
     <button class="exp-btn" data-exp="wotlk">WotLK</button>
+    <button class="exp-btn" data-exp="forever">Forever</button>
   </div>
 
   <div class="search-wrap" id="search-wrap" style="display:none">
@@ -799,17 +807,22 @@ const PROFESSIONS = {
 
 const CRAFT_TYPES = new Set([164,165,171,185,186,197,202,333,755,129]);
 
+// Forever is its own game with its own recipe set, so it gets a separate dataset
+// instead of being filtered out of the Classic/TBC/WotLK pool by skill level.
 const EXPANSIONS = {
-  classic: { label: 'Classic',               maxSkill: 300 },
-  tbc:     { label: 'The Burning Crusade',    maxSkill: 375 },
-  wotlk:   { label: 'Wrath of the Lich King', maxSkill: 450 },
+  classic: { label: 'Classic',               maxSkill: 300, data: 'classic' },
+  tbc:     { label: 'The Burning Crusade',    maxSkill: 375, data: 'classic' },
+  wotlk:   { label: 'Wrath of the Lich King', maxSkill: 450, data: 'classic' },
+  forever: { label: 'WoW: Forever',           maxSkill: 300, data: 'forever', bg: 'classic' },
 };
 
+const datasets = {};
 let itemsById = {};
 let recipesByOutputId = {};
 let allRecipes = [];
 let currentRecipe = null;
 let currentExpansion = 'tbc';
+let currentDataset = null;
 
 function getMaxSkill() { return EXPANSIONS[currentExpansion].maxSkill; }
 
@@ -823,8 +836,26 @@ function isCraftableInExpansion(itemId) {
   if (recipe.name.startsWith('Transmute')) return false;
   const item = itemsById[itemId];
   if (item?.name?.startsWith('Mote of')) return false;
+  if (item?.raw) return false;
   if (item?.sources?.some(s => s.type === 1 || s.type === 8 || s.type === 11)) return false;
   return true;
+}
+
+function buildDataset(profs, mats) {
+  const ds = { itemsById: {}, recipesByOutputId: {}, allRecipes: profs };
+  mats.forEach(item => { ds.itemsById[item.id] = item; });
+  profs.forEach(recipe => {
+    if (recipe.creates?.item_id && !ds.recipesByOutputId[recipe.creates.item_id]) {
+      ds.recipesByOutputId[recipe.creates.item_id] = recipe;
+    }
+  });
+  return ds;
+}
+
+function useDataset(name) {
+  if (currentDataset === name) return;
+  ({ itemsById, recipesByOutputId, allRecipes } = datasets[name]);
+  currentDataset = name;
 }
 
 async function tryFetch(url) {
@@ -838,24 +869,23 @@ async function init() {
   try {
     const [classicProfs, classicMats,
            tbcProfs,     tbcMats,
-           wotlkProfs,   wotlkMats] = await Promise.all([
+           wotlkProfs,   wotlkMats,
+           foreverProfs, foreverMats] = await Promise.all([
       tryFetch('classic-professions.json'),
       tryFetch('classic-mats.json'),
       tryFetch('tbc-professions.json'),
       tryFetch('tbc-mats.json'),
       tryFetch('wotlk-professions.json'),
       tryFetch('wotlk-mats.json'),
+      tryFetch('forever-professions.json'),
+      tryFetch('forever-mats.json'),
     ]);
 
-    [...classicMats, ...tbcMats, ...wotlkMats]
-      .forEach(item => { itemsById[item.id] = item; });
-
-    allRecipes = [...classicProfs, ...tbcProfs, ...wotlkProfs];
-    allRecipes.forEach(recipe => {
-      if (recipe.creates?.item_id && !recipesByOutputId[recipe.creates.item_id]) {
-        recipesByOutputId[recipe.creates.item_id] = recipe;
-      }
-    });
+    datasets.classic = buildDataset(
+      [...classicProfs, ...tbcProfs, ...wotlkProfs],
+      [...classicMats, ...tbcMats, ...wotlkMats]);
+    datasets.forever = buildDataset(foreverProfs, foreverMats);
+    useDataset(EXPANSIONS[currentExpansion].data);
 
     document.getElementById('status').style.display = 'none';
     document.getElementById('expansion-bar').style.display = 'flex';
@@ -880,14 +910,19 @@ function getProfName(type) {
 }
 
 function setExpansionBg(exp) {
-  document.body.style.setProperty('--exp-bg', `url('bg/${exp}-light.jpg')`);
+  const bg = EXPANSIONS[exp].bg || exp;
+  document.body.style.setProperty('--exp-bg', `url('bg/${bg}-light.jpg')`);
 }
 
 function setupExpansion() {
   const buttons = document.querySelectorAll('.exp-btn');
-  const hasWotlk = allRecipes.some(r => r.learned_at_rank > 375);
+  const hasWotlk = datasets.classic.allRecipes.some(r => r.learned_at_rank > 375);
   if (!hasWotlk) {
     document.querySelector('[data-exp="wotlk"]').classList.add('disabled');
+  }
+  const hasForever = datasets.forever.allRecipes.length > 0;
+  if (!hasForever) {
+    document.querySelector('[data-exp="forever"]').classList.add('disabled');
   }
 
   setExpansionBg(currentExpansion);
@@ -899,7 +934,14 @@ function setupExpansion() {
         showExpNotice('WotLK data not loaded — add wotlk-professions.json to enable.');
         return;
       }
+      if (exp === 'forever' && !hasForever) {
+        showExpNotice('Forever data not loaded — run fetch-forever.js to enable.');
+        return;
+      }
       currentExpansion = exp;
+      useDataset(EXPANSIONS[exp].data);
+      loadCart();
+      updateCartBtn();
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       clearExpNotice();
@@ -970,6 +1012,7 @@ function setupSearch() {
         <div class="dd-item" data-id="${r.id}">
           <span class="dd-item-name">${highlight(r.name, q)}</span>
           <div class="dd-meta">
+            ${r.is_new ? '<span class="tag tag-new">New</span>' : ''}
             <span class="tag">${getProfName(r.type)}</span>
           </div>
         </div>
@@ -1150,12 +1193,17 @@ function renderRawMats(recipe, crafts) {
 // ── Cart ─────────────────────────────────────────────────────────────────────
 let cart = [];
 
+// Recipe IDs overlap between Classic and Forever, so each dataset keeps its own cart
+function cartKey() {
+  return currentDataset === 'forever' ? 'craftcalc-cart-forever' : 'craftcalc-cart';
+}
+
 function saveCart() {
-  try { localStorage.setItem('craftcalc-cart', JSON.stringify(cart)); } catch {}
+  try { localStorage.setItem(cartKey(), JSON.stringify(cart)); } catch {}
 }
 
 function loadCart() {
-  try { cart = JSON.parse(localStorage.getItem('craftcalc-cart')) || []; } catch { cart = []; }
+  try { cart = JSON.parse(localStorage.getItem(cartKey())) || []; } catch { cart = []; }
 }
 
 function updateCartBtn() {
