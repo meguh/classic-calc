@@ -382,16 +382,6 @@
       flex-shrink: 0;
     }
 
-    .list-title {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .list-title h2 { font-family: var(--font-heading); font-size: 1.45rem; font-weight: 400; color: var(--heading); }
-    .list-title span { font-size: 0.78rem; color: var(--text-muted); }
-
     .search-wrap { position: relative; }
 
     .search-wrap svg {
@@ -817,6 +807,260 @@
 
     .btn-ghost:hover { filter: brightness(1.15); }
 
+    /* ── Profession window: the in-game Forever frame ─────────────────────
+       Worn dark leather, bronze trim, red category bars and gold type. It looks the same in
+       every expansion; only the page around it follows the expansion theme. */
+    .window {
+      --wf-gold:      #ffd100;
+      --wf-tan:       #e3d4ae;
+      --wf-bronze:    #7a6036;
+      --wf-pane:      #110d0a;
+      --wf-grain:     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      --wf-mottle:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 -.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+      --surface:      rgba(255, 220, 160, 0.035);
+      --surface-2:    rgba(255, 209, 0, 0.07);
+      --border:       rgba(201, 164, 92, 0.2);
+      --border-md:    rgba(201, 164, 92, 0.36);
+      --text-soft:    var(--wf-tan);
+      --text-muted:   rgba(227, 212, 174, 0.55);
+      --camel:        var(--wf-gold);
+      --heading:      var(--wf-gold);
+      --blue:         var(--wf-gold);
+      --accent-tint:  rgba(255, 209, 0, 0.12);
+      --accent-line:  rgba(255, 209, 0, 0.5);
+      position: relative;
+      flex-direction: column;
+      padding: 0 10px 10px;
+      background: var(--wf-grain), var(--wf-mottle), linear-gradient(180deg, #30251b, #251c15);
+      border: 1px solid #070504;
+      border-radius: 7px;
+      box-shadow:
+        0 0 0 1px var(--wf-bronze), 0 0 0 3px #17110c, 0 0 0 4px rgba(201, 164, 92, 0.3),
+        var(--shadow), inset 0 0 50px rgba(0, 0, 0, 0.55);
+      backdrop-filter: none;
+      overflow: visible;
+    }
+
+    .window-bar {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      margin: 0 -10px 12px;
+      padding: 0 80px;
+      background: var(--wf-grain), linear-gradient(180deg, #1f1812, #120d09);
+      border-bottom: 1px solid var(--wf-bronze);
+      border-radius: 6px 6px 0 0;
+      box-shadow: 0 1px 0 #000, 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .window-bar h2 {
+      font-family: var(--font-heading);
+      font-size: 1.08rem;
+      font-weight: 400;
+      color: var(--wf-gold);
+      text-shadow: 0 1px 2px #000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .window-portrait {
+      position: absolute;
+      left: 8px;
+      top: -9px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 0 0 2px #0a0705, 0 0 0 4px #8d8577, 0 0 0 5px #0a0705, 0 4px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .window-portrait img { display: block; width: 100%; height: 100%; transform: scale(1.12); }
+
+    .window-count {
+      position: absolute;
+      right: 14px;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .window-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      gap: 10px;
+    }
+
+    .window .list-pane,
+    .window .detail-pane {
+      background: radial-gradient(120% 80% at 50% 0%, rgba(255, 220, 160, 0.03), transparent 70%), var(--wf-pane);
+      border: 1px solid #050302;
+      border-radius: 5px;
+      box-shadow: 0 0 0 1px var(--wf-bronze), inset 0 0 0 1px rgba(201, 164, 92, 0.1), inset 0 2px 16px rgba(0, 0, 0, 0.75);
+    }
+
+    .window .list-pane { flex-basis: 310px; }
+    .window .list-head { padding: 12px 10px 6px; }
+
+    .window .search-input {
+      height: 30px;
+      padding-left: 30px;
+      background: #050403;
+      border: 1px solid #4a4038;
+      border-radius: 2px;
+      box-shadow: inset 0 1px 3px #000;
+      font-size: 0.82rem;
+    }
+
+    .window .search-input:focus { background: #050403; border-color: rgba(255, 209, 0, 0.45); }
+    .window .search-wrap svg { left: 9px; width: 13px; height: 13px; }
+
+    .window .recipe-list { padding: 0 8px 10px; }
+
+    .window .cat-header {
+      margin-top: 8px;
+      padding: 5px 10px 4px;
+      background: linear-gradient(180deg, #5e1109 0%, #400804 55%, #2b0502 100%);
+      border: 1px solid #170301;
+      border-radius: 2px;
+      box-shadow: inset 0 1px 0 rgba(255, 140, 90, 0.18), 0 0 0 1px rgba(201, 164, 92, 0.25), 0 3px 6px rgba(0, 0, 0, 0.6);
+      color: var(--wf-gold);
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      text-shadow: 0 1px 1px #000;
+    }
+
+    .window .cat-header .cat-count { color: rgba(255, 209, 0, 0.5); font-family: var(--font-body); font-size: 0.74rem; }
+    .window .cat-header svg { color: var(--wf-gold); }
+    .window .cat-header:hover .cat-name { color: #fff3a8; }
+
+    .window .recipe-row {
+      padding: 4px 8px 4px 14px;
+      border-radius: 0;
+      color: var(--wf-tan);
+      font-size: 0.86rem;
+      text-shadow: 0 1px 1px #000;
+    }
+
+    .window .recipe-row:hover { background: linear-gradient(90deg, rgba(255, 209, 0, 0.08), transparent 90%); color: #fff6d8; }
+
+    .window .recipe-row.selected {
+      background: linear-gradient(90deg, rgba(255, 209, 0, 0.24), rgba(255, 209, 0, 0.05) 80%, transparent);
+      box-shadow: inset 0 -1px 0 rgba(255, 209, 0, 0.6);
+      color: #fff6d8;
+    }
+
+    .window .recipe-row img { border-radius: 2px; box-shadow: 0 0 0 1px #000, 0 0 0 2px #4a4038; }
+
+    .window .detail-pane { position: relative; isolation: isolate; overflow: hidden; }
+
+    /* faded profession art behind the recipe, like the game's backdrop illustration */
+    .window .detail-pane::before {
+      content: '';
+      position: absolute;
+      right: -40px;
+      bottom: 40px;
+      width: 340px;
+      height: 340px;
+      z-index: -1;
+      background: var(--prof-art, none) center / cover;
+      filter: grayscale(1) sepia(0.5) blur(2px);
+      opacity: 0.07;
+      -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent);
+      mask-image: radial-gradient(closest-side, #000 55%, transparent);
+      pointer-events: none;
+    }
+
+    .window .detail-scroll { padding: 20px 22px; }
+
+    .window .detail-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px #000, 0 0 0 4px #8d8577, 0 0 0 5px #000, 0 6px 14px rgba(0, 0, 0, 0.6);
+    }
+
+    .window .detail-icon img { transform: scale(1.12); }
+    .window .detail-head { gap: 18px; padding-left: 4px; }
+    .window .detail-name { font-size: 1.45rem; text-shadow: 0 1px 2px #000; }
+
+    .window .chip {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(201, 164, 92, 0.22);
+      border-radius: 2px;
+      color: var(--wf-tan);
+    }
+
+    .window .fav-btn { background: none; border: none; color: #8d8577; }
+    .window .fav-btn:hover { color: var(--wf-tan); }
+    .window .fav-btn.on { color: var(--wf-gold); }
+
+    .window .section {
+      background: none;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      margin-bottom: 22px;
+    }
+
+    .window .section-title {
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      text-shadow: 0 1px 1px #000;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(201, 164, 92, 0.18);
+    }
+
+    .window .reagent img,
+    .window .raw-row img {
+      border-radius: 3px;
+      box-shadow: 0 0 0 1px #000, 0 0 0 2px #6b6356, 0 2px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    .window .reagent-name { color: #f2ead6; text-shadow: 0 1px 1px #000; }
+    .window .reagent-name .qty { color: #fff; }
+    .window .craft-badge { border: 1px solid rgba(255, 209, 0, 0.3); border-radius: 2px; }
+    .window .raw-row { color: var(--wf-tan); }
+
+    .window .detail-bar {
+      padding: 10px 14px;
+      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.35));
+      border-top: 1px solid rgba(201, 164, 92, 0.22);
+    }
+
+    .window .stepper {
+      height: 30px;
+      background: #050403;
+      border: 1px solid #4a4038;
+      border-radius: 2px;
+      box-shadow: inset 0 1px 3px #000;
+    }
+
+    .window .step-btn { width: 30px; color: var(--wf-gold); }
+    .window .step-btn:hover { color: #fff3a8; }
+
+    /* the game's red button with gold trim */
+    .window .btn-primary {
+      height: 30px;
+      padding: 0 24px;
+      border: 1px solid #c9a24a;
+      border-radius: 3px;
+      background: linear-gradient(180deg, #a8230e 0%, #7c1306 50%, #560a02 100%);
+      color: var(--wf-gold);
+      font-size: 0.95rem;
+      text-shadow: 0 1px 1px #000;
+      box-shadow: 0 0 0 1px #000, inset 0 1px 0 rgba(255, 180, 120, 0.3), 0 3px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .window .recipe-list, .window .detail-scroll { scrollbar-color: #6b5534 #070504; }
+    .window .recipe-list::-webkit-scrollbar-thumb, .window .detail-scroll::-webkit-scrollbar-thumb { background: #6b5534; }
+
     /* ── Cart drawer ────────────────────────────────────────────────────── */
     .cart-overlay {
       position: fixed;
@@ -957,9 +1201,11 @@
       .prof-tab-count { display: none; }
       .prof-tab.active::before { display: none; }
 
-      .window { flex-direction: column; height: auto; min-height: 0; }
-      .list-pane { flex: none; height: 48vh; border-right: none; border-bottom: 1px solid var(--border); }
-      .detail-scroll { padding: 18px 16px; }
+      .window { height: auto; min-height: 0; padding: 0 6px 6px; }
+      .window-bar { margin: 0 -6px 10px; padding: 0 64px 0 72px; }
+      .window-body { flex-direction: column; gap: 8px; }
+      .window .list-pane { flex: none; height: 48vh; }
+      .window .detail-scroll { padding: 18px 16px; }
       .detail-bar { padding: 12px 16px; }
       .bar-note { display: none; }
     }
@@ -993,9 +1239,14 @@
   <nav class="prof-rail" id="prof-rail" aria-label="Professions"></nav>
 
   <section class="window" aria-label="Recipes">
+    <div class="window-bar">
+      <span class="window-portrait" id="window-portrait"></span>
+      <h2 id="window-title">Professions</h2>
+      <span class="window-count" id="list-count"></span>
+    </div>
+    <div class="window-body">
     <div class="list-pane">
       <div class="list-head">
-        <div class="list-title"><h2 id="window-title">Professions</h2><span id="list-count"></span></div>
         <div class="search-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
           <input id="search" class="search-input" type="text" placeholder="Search recipes" autocomplete="off" spellcheck="false">
@@ -1015,6 +1266,7 @@
         </div>
         <button class="btn-primary" id="add-to-cart-btn">Add to cart</button>
       </div>
+    </div>
     </div>
   </section>
 </div>
@@ -1267,6 +1519,9 @@ function showView() {
   });
 
   document.getElementById('window-title').textContent = currentProf ? getProfName(currentProf) : 'Professions';
+  const profIcon = currentProf ? PROF_ICONS[currentProf] : null;
+  document.getElementById('window-portrait').innerHTML = profIcon ? iconHtml(profIcon, 'large') : '';
+  document.querySelector('.window').style.setProperty('--prof-art', profIcon ? `url('${iconUrl(profIcon, 'large')}')` : 'none');
   renderList();
   if (!currentRecipe) currentRecipe = firstVisibleRecipe();
   renderList();
