@@ -172,6 +172,19 @@
     .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .78rem; margin-top: 10px; }
     .foot { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); padding-top: 14px; }
 
+    /* stat priority cards: the tooltip box laid out as a grid */
+    .scards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; align-items: start; }
+    .scard { background: rgba(3, 3, 5, .92); border: 1px solid #3d3527; box-shadow: 0 0 0 1px #000; padding: 12px 14px; text-align: center; font-size: .8rem; line-height: 1.45; }
+    .scard-h { display: flex; align-items: center; gap: 12px; text-align: left; padding-bottom: 9px; margin-bottom: 8px; border-bottom: 1px solid #24262c; }
+    .scard-h .icon { width: 52px; height: 52px; }
+    .scard-h .icon img { width: 46px; height: 48px; }
+    .scard-slot { font-size: .64rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+    .scard .tt-n { line-height: 1.25; }
+    .scard .tt-want { min-width: 0; }
+    .r-any .scard-h .icon img { filter: grayscale(.7) brightness(.75); }
+    .blurb { margin-top: 16px; }
+    .blurb .gg { color: #e8b34b; font-weight: 600; }
+
     /* hover tooltip, styled like the in-game item box */
     [data-tip] { cursor: help; }
     .tipped { border-bottom: 1px dotted color-mix(in srgb, var(--c) 50%, transparent); }
@@ -184,10 +197,11 @@
     .tt-req { color: #e3e3e3; margin-top: 2px; }
     .tt-mods { color: #7b8cff; margin-top: 6px; }
     .tt-sub { color: #e3e3e3; font-weight: 600; margin-top: 4px; font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; }
-    .tt-want { text-align: left; margin: 6px 0 0; padding-left: 1.4em; color: #7b8cff; min-width: min(260px, calc(100vw - 48px)); }
-    .tt-want li { margin: 2px 0; }
-    .tt-want li span:first-child { color: #c9cdf9; }
-    .tt-v { float: right; margin-left: 12px; color: var(--muted); white-space: nowrap; }
+    .tt-want { text-align: left; margin: 6px 0 0; padding: 0; list-style: none; counter-reset: want; min-width: min(260px, calc(100vw - 48px)); }
+    .tt-want li { display: flex; align-items: baseline; gap: 10px; margin: 2px 0; counter-increment: want; }
+    .tt-want li::before { content: counter(want) "."; color: #7b8cff; min-width: 1.1em; }
+    .tt-want li span:first-child { flex: 1; color: #c9cdf9; }
+    .tt-v { margin-left: auto; text-align: right; color: var(--muted); white-space: nowrap; }
     .tt-v b, .tt-key b { color: #e8b34b; font-weight: 600; }
     .tt-key { color: var(--muted); font-size: .7rem; text-align: right; margin-top: 2px; }
     .tt-hint { color: #a8a8ad; font-size: .74rem; margin-top: 6px; }
@@ -506,23 +520,50 @@
     return WANT[bySlot[o.slot]] || null;
   }
 
-  function tipHTML(o) {
+  // The item's stat lines (unique/set/runeword) or its ranked stats to look for; shared by the tooltip and the stat cards.
+  function tipBody(o) {
     const s = STATS[o.name];
     const fill = (t) => esc(t).replace('{main}', curFam === 'shock' ? 'Shockwave' : 'Poison Creeper').replace('{tree}', curFam === 'shock' ? 'Shape Shifting' : 'Summoning');
-    let body = '';
     if (s) {
       const [base, runes, req, mods] = s;
-      body = `${runes ? `<div class="tt-runes">'${esc(runes.replace(/ • /g, ''))}'</div>` : ''}<div class="tt-base">${esc(base)}</div>
+      return `${runes ? `<div class="tt-runes">'${esc(runes.replace(/ • /g, ''))}'</div>` : ''}<div class="tt-base">${esc(base)}</div>
         ${req ? `<div class="tt-req">Required Level: ${esc(req)}</div>` : ''}<div class="tt-mods">${mods.map((m) => `<div>${esc(m)}</div>`).join('')}</div>`;
-    } else {
-      const w = wantList(o);
-      if (!w) return '';
-      body = `<div class="tt-sub">Stats to look for</div><ol class="tt-want">${w.map(([st, g, gg]) => `<li><span>${fill(st)}</span><span class="tt-v">${fill(g)} · <b>${fill(gg)}</b></span></li>`).join('')}</ol>
-        <div class="tt-key">good · <b>GG</b></div>${HINT[o.rar] ? `<div class="tt-hint">${HINT[o.rar]}</div>` : ''}`;
     }
-    return `<div class="tt-n r-${o.rar}">${esc(o.name)}</div>${body}${o.note ? `<div class="tt-note">${esc(o.note)}</div>` : ''}
+    const w = wantList(o);
+    if (!w) return '';
+    return `<div class="tt-sub">Stats to look for</div><ol class="tt-want">${w.map(([st, g, gg]) => `<li><span>${fill(st)}</span><span class="tt-v">${g === gg ? "" : fill(g) + " · "}<b>${fill(gg)}</b></span></li>`).join('')}</ol>`;
+  }
+
+  function tipHTML(o) {
+    const body = tipBody(o);
+    if (!body) return '';
+    const s = STATS[o.name];
+    return `<div class="tt-n r-${o.rar}">${esc(o.name)}</div>${body}${s ? '' : `<div class="tt-key">good · <b>GG</b></div>${HINT[o.rar] ? `<div class="tt-hint">${HINT[o.rar]}</div>` : ''}`}
+      ${o.note ? `<div class="tt-note">${esc(o.note)}</div>` : ''}
       <div class="tt-foot">${s ? 'Stats from the PD2 wiki; Season 14 may change some values' : 'Rough targets, in order of importance'}</div>`;
   }
+
+  // Stat Priority tab: one tooltip-style card per slot, in paperdoll order, then charms and swap.
+  const CARD_ORDER = ['Helm', 'Amulet', 'Armor', 'Weapon', 'Offhand', 'Gloves', 'Belt', 'Boots', 'Ring 1', 'Ring 2'];
+  function statCards(ph) {
+    const gear = CARD_ORDER.map((s) => ph.gear.find((r) => r[0] === s)).filter(Boolean);
+    return `<div class="scards">${gear.concat(ph.charms, ph.swap).map(([slot, name, rar]) => {
+      const o = { slot, name, rar }, body = tipBody(o);
+      if (!body) return '';
+      const where = KIND[slot] || slot.replace(/ \d$/, '');
+      const file = pic(slot, name);
+      return `<div class="scard r-${rar}"><div class="scard-h"><div class="icon">${file ? imgTag(file) : esc(ABBR[slot] || slot.slice(0, 3))}</div>
+        <div><div class="scard-slot">${esc(slot)}</div><div class="tt-n">${esc(name)}</div><div class="k">${esc(rar === 'any' ? 'Any rarity · ' + where : RAR[rar] + ' ' + where)}</div></div></div>${body}</div>`;
+    }).join('')}</div>`;
+  }
+
+  // Blurb under Equipment: the phase's stat targets and how to read the stat cards.
+  const statBlurb = (ph) => `<div class="tips blurb"><h3>Stat targets</h3><ul>${ph.targets.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+    <h3>Reading the stat priority</h3><ul>
+      <li>Unique, set and runeword items show their stats from the PD2 wiki. Season 14 may change some values.</li>
+      <li>Rare, magic and crafted items list the stats to look for, most important first, as <span class="hl">good</span> · <b class="gg">GG</b> values. These follow the loot filter's star ratings.</li>
+      <li>Rares roll up to 6 mods, so the top lines matter most. Magic items only get one prefix and one suffix, so aim for the top two. Crafted items get fixed recipe mods plus up to 4 random ones.</li>
+    </ul></div>`;
 
   let TIPS = [];
   const tipAttr = (o) => ` data-tip="${TIPS.push(o) - 1}"`;
@@ -606,10 +647,10 @@
 
     const equipment = `<p>The items to go for in the <span class="hl">${esc(ph.name)}</span> phase of the ${esc(build.name)} Druid, plus charms, weapon swap and stat priority.</p>
       <div class="tabs" role="tablist"><button type="button" data-tab="gear" class="${eqTab === 'gear' ? 'on' : ''}" aria-selected="${eqTab === 'gear'}">Equipment</button><button type="button" data-tab="stats" class="${eqTab === 'stats' ? 'on' : ''}" aria-selected="${eqTab === 'stats'}">Stat Priority</button></div>
-      <div class="eq"><div>${eqTab === 'gear' ? doll(ph, pre + ':g') : `<div class="stats"><ol>${ph.targets.map((t) => `<li>${esc(t)}</li>`).join('')}</ol></div>`}</div>
+      ${eqTab === 'gear' ? `<div class="eq"><div>${doll(ph, pre + ':g')}</div>
         <div><div class="box"><div class="box-h">Charms</div><div class="box-b">${list(ph.charms, pre + ':c')}</div></div>
-          <div class="box"><div class="box-h">Weapon Swap</div><div class="box-b">${ph.swap.length ? list(ph.swap, pre + ':s') : '<div class="empty">No swap this phase.</div>'}</div></div></div></div>
-      ${tips(ph)}`;
+          <div class="box"><div class="box-h">Weapon Swap</div><div class="box-b">${ph.swap.length ? list(ph.swap, pre + ':s') : '<div class="empty">No swap this phase.</div>'}</div></div></div></div>` : statCards(ph)}
+      ${statBlurb(ph)}${tips(ph)}`;
 
     const skills = `<div class="sk">${ph.skills.map(([n, p, note]) => `<div class="sk-row">${skillImg(n) || `<div class="sk-ico" aria-hidden="true">${esc(n.split(' ').filter((w) => w !== 'of').map((w) => w[0]).join('').slice(0, 2))}</div>`}
       <div><span class="sk-n">${esc(n)}</span>${note ? `<span class="sk-note">${esc(note)}</span>` : ''}</div><span class="pts">${esc(p)}</span></div>`).join('')}</div>`;
