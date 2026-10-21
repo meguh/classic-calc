@@ -1,28 +1,280 @@
 <!DOCTYPE html>
-<html lang="en" data-family="poison">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <meta name="color-scheme" content="dark">
-  <title>Venom to Shockwave — PD2 S14 Druid Planner</title>
+  <title>Venom to Shockwave — PD2 S14 Druid</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Item names use the Diablo II rarity colours; everything else is a quiet dark panel layout. */
+    :root {
+      --bg: #0c0d10; --panel: #15171c; --panel-2: #1b1e24; --line: #2a2e36; --line-2: #3a3f49;
+      --text: #e6e1d6; --soft: #b9b3a7; --muted: #857f74; --gold: #e8b34b;
+      --venom: #8cc95a; --brass: #cfae6e; --accent: var(--venom);
+      --unique: #c7b377; --set: #3ddc4b; --runeword: #c7b377; --rare: #f2e05a; --magic: #7b8cff; --crafted: #ff9a2e; --base: #d6d1c4;
+      --radius: 6px;
+    }
+    body[data-fam="shock"] { --accent: var(--brass); }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body { background: var(--bg); color: var(--text); font: 14px/1.5 'Open Sans', Arial, sans-serif; }
+    a { color: var(--gold); }
+    h1, h2 { font-family: 'Marcellus', Georgia, serif; font-weight: 400; margin: 0; }
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+    /* top nav */
+    .top { position: sticky; top: 0; z-index: 10; background: rgba(12, 13, 16, .95); border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); }
+    .top-in { max-width: 1180px; margin: 0 auto; padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; }
+    .brand { font-family: 'Marcellus', Georgia, serif; font-size: 1.15rem; color: var(--gold); white-space: nowrap; }
+    .brand small { color: var(--muted); font-family: 'Open Sans', sans-serif; font-size: .75rem; margin-left: 6px; }
+    .groups { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+    .group { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+    .group-name { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; margin-right: 4px; font-weight: 700; }
+    .g-poison .group-name { color: var(--venom); }
+    .g-shock .group-name { color: var(--brass); }
+    .tab { color: var(--soft); text-decoration: none; padding: 5px 11px; border-radius: 999px; border: 1px solid transparent; font-weight: 600; font-size: .9rem; }
+    .tab:hover { color: var(--text); border-color: var(--line-2); }
+    .g-poison .tab.on { color: #111; background: var(--venom); }
+    .g-shock .tab.on { color: #111; background: var(--brass); }
+
+    main { max-width: 1180px; margin: 0 auto; padding: 18px 16px 48px; }
+    .head { background: var(--panel); border: 1px solid var(--line); border-top: 2px solid var(--accent); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px; }
+    .head h1 { font-size: 1.75rem; color: var(--gold); }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 10px; }
+    .tag { font-size: .75rem; font-weight: 700; padding: 1px 8px; border-radius: 4px; background: var(--panel-2); border: 1px solid var(--line-2); color: var(--soft); }
+    .tag.fam { background: var(--accent); color: #111; border-color: transparent; }
+    .tag.warn { color: #e6b94f; border-color: rgba(230, 185, 79, .5); }
+    .goal { margin: 0; color: var(--soft); max-width: 80ch; }
+
+    .grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+    .col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+    .panel h2 { font-size: 1.1rem; color: var(--gold); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .panel h2 small { font-family: 'Open Sans', sans-serif; font-size: .78rem; color: var(--muted); }
+    .sub { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 14px 0 6px; font-weight: 700; }
+
+    /* gear rows */
+    .rows { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .row { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 10px; padding: 8px 12px; background: var(--panel-2); border-top: 1px solid var(--line); align-items: start; }
+    .row:first-child { border-top: 0; }
+    .slot { color: var(--muted); font-size: .82rem; padding-top: 1px; }
+    .name { font-weight: 600; }
+    .note { color: var(--muted); font-size: .8rem; }
+    .alts { font-size: .8rem; color: var(--soft); margin-top: 2px; }
+    .alts b { color: var(--muted); font-weight: 600; }
+    .r-unique { color: var(--unique); } .r-set { color: var(--set); } .r-runeword { color: var(--runeword); }
+    .r-rare { color: var(--rare); } .r-magic { color: var(--magic); } .r-crafted { color: var(--crafted); } .r-base { color: var(--base); }
+    .r-any { color: var(--soft); font-style: italic; font-weight: 400; }
+    .got { display: inline-flex; align-items: center; cursor: pointer; padding: 2px; }
+    .got input { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; margin: 0; }
+    .row.have .name { text-decoration: line-through; text-decoration-color: var(--muted); opacity: .7; }
+
+    .merc-type { color: var(--text); font-weight: 600; margin-bottom: 8px; }
+    .skills { list-style: none; margin: 0; padding: 0; }
+    .skills li { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-top: 1px solid var(--line); }
+    .skills li:first-child { border-top: 0; }
+    .pts { color: var(--gold); font-weight: 700; white-space: nowrap; }
+    .skills .note { display: block; }
+    .targets { margin: 0; padding-left: 1.1em; }
+    .targets li { margin: 3px 0; }
+    .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .78rem; color: var(--muted); margin-top: 18px; }
+    .foot { color: var(--muted); font-size: .8rem; margin-top: 16px; }
+
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .row { grid-template-columns: 70px minmax(0, 1fr) auto; padding: 8px 10px; gap: 8px; }
+      .head h1 { font-size: 1.45rem; }
+      .tab { padding: 4px 9px; }
+    }
+  </style>
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
-  <header id="topbar" class="topbar"></header>
-  <div class="layout">
-    <nav id="nav" class="nav" aria-label="Planner sections"></nav>
-    <main id="main" class="main" tabindex="-1"></main>
-    <aside id="rail" class="rail" aria-label="Next tasks"></aside>
-  </div>
-  <div id="scrim" class="scrim" hidden></div>
-  <aside id="drawer" class="drawer" aria-label="Item details"></aside>
-  <noscript>This planner needs JavaScript.</noscript>
-  <script src="seed.js"></script>
-  <script src="app.js"></script>
+  <header class="top"><div class="top-in"><div class="brand">Venom → Shockwave<small>PD2 S14 Druid</small></div><nav class="groups" id="nav" aria-label="Builds and phases"></nav></div></header>
+  <main id="main"></main>
+
+  <script>
+  /* Gear per phase comes from the build brief's three videos (V1 = Poison AFK mapper, V2 = S14 Shockwave guide,
+     V3 = S12 Poison summoner) plus the S14 beta patch notes. Edit the BUILDS data below to change any phase.
+     Gear row: [slot, item, rarity, note, alternatives]. Rarity: unique | set | runeword | rare | magic | crafted | base | any */
+  const BUILDS = [
+    { id: 'poison', name: 'Poison Creeper', fam: 'poison', phases: [
+      { id: 'leveling', name: 'Leveling', tags: ['Ladder start', 'Normal → Hell'],
+        goal: 'Get through Normal, Nightmare and Hell. Wear whatever drops that gives +skills, resists, life or cast rate, then cap resists for Hell.',
+        gear: [
+          ['Helm', '+Skills / life / res helm', 'any'], ['Amulet', '+Skills / res amulet', 'any'],
+          ['Weapon', '+Poison Creeper or +Summoning weapon', 'any', 'Cast rate is a bonus'], ['Offhand', 'Shield with block / res', 'any'],
+          ['Armor', 'Res / life armor', 'any'], ['Gloves', 'Res / cast rate', 'any'], ['Belt', 'Life / res', 'any'], ['Boots', 'Run speed / res', 'any'],
+          ['Ring 1', 'Res / cast rate', 'any'], ['Ring 2', 'Res / cast rate', 'any'],
+        ],
+        charms: [['Charms', 'Life / res small charms as they drop', 'any']],
+        swap: [],
+        merc: { type: 'Your pick while leveling', gear: [['Weapon', 'Anything usable', 'any'], ['Helm', 'Anything usable', 'any'], ['Armor', 'Anything usable', 'any']] },
+        skills: [['Poison Creeper', 'first', 'Main damage'], ['Carrion Vine', 'as you go', 'Life'], ['Solar Creeper', 'as you go', 'Mana'], ['Oak Sage', '1+', 'Life buff']],
+        targets: ['Resists capped for Hell', 'S14 beta patch 1: Poison Creeper is stronger early and no longer has a cooldown'] },
+
+      { id: 'farming', name: 'Farming', tags: ['Mapping', 'Video 1 + Video 3'],
+        goal: 'Main farming setup. Both videos are mapping showcases, and V3 says this setup is weak at bosses, so don\'t take it as proof that it can boss.',
+        gear: [
+          ['Helm', 'Spirit Keeper', 'unique', 'Two spirits: Oak + Barbs (V1)', [["Aldur's set helm", 'set'], ['Rare +Poison Creeper pelt', 'rare']]],
+          ['Amulet', '+Summoning amulet', 'magic', 'Magic or crafted', [["Mara's Kaleidoscope", 'unique']]],
+          ['Weapon', 'Plague', 'runeword', 'In a +Poison Creeper base (V1)', [['Heart of the Oak', 'runeword'], ['Crafted +5/+6 Poison Creeper club', 'crafted']]],
+          ['Offhand', 'Spirit Ward', 'unique', 'Ideally with a +skills corruption'],
+          ['Armor', 'Steel Carapace', 'unique', '', [["Arkaine's Valor", 'unique']]],
+          ['Gloves', 'Occultist', 'unique', 'Cast rate (V3)'],
+          ['Belt', 'Arachnid Mesh', 'unique'],
+          ['Boots', 'Marrowwalk', 'unique', '', [['Tri-res boots', 'magic']]],
+          ['Ring 1', 'Stone of Jordan', 'unique'],
+          ['Ring 2', "Bul-Kathos' Wedding Band", 'unique', '', [['Raven Frost', 'unique']]],
+        ],
+        charms: [['Grand', 'Summoning grand charms', 'magic'], ['Small', 'Life / res small charms', 'magic']],
+        swap: [['Swap', 'Call to Arms', 'runeword'], ['Swap offhand', 'Lidless Wall', 'unique']],
+        merc: { type: 'Act 2 — defensive (V3)', gear: [['Weapon', 'Plague', 'runeword', 'Lower Resist procs'], ['Armor', 'Innocence', 'runeword', 'Name from transcript, needs checking']], alt: 'Alt: Act 1 with Demon Machine + Innocence (V3). S14 note: Demon Machine\'s Multiple Shot procs no longer trigger other procs.' },
+        skills: [['Poison Creeper', '20'], ['Carrion Vine', '20'], ['Solar Creeper', '20'], ['Rabies', '1+', 'Synergy, with Werewolf / Feral Rage prereqs'],
+          ['Arctic Blast', '1'], ['Cyclone Armor', '1'], ['Gust', '1', 'Mobility'], ['Heart of Wolverine', '1'], ['Spirit of Barbs', '1'], ['Oak Sage', 'rest', 'Leftover points']],
+        targets: ['Dex for 75% block with Spirit Ward (V1)', 'Str for gear, rest into Vitality', 'Cast rate: V3 aims for 68 or 99'] },
+
+      { id: 'bossing', name: 'Bossing', tags: ['Uber Tristram', 'T0 Diablo Clone', 'Experimental'], warn: true,
+        goal: 'Separate setup for farming your own Hellfire Torch and Annihilus. The Oct 21 beta patch hit Poison Creeper\'s single-target damage hard, so test it on map/Hell bosses before relying on it.',
+        gear: [
+          ['Helm', 'Rare +Poison Creeper pelt', 'rare', 'S14: +3 Summoning can roll on rare pelts', [['Spirit Keeper', 'unique']]],
+          ['Amulet', '+Summoning / res amulet', 'magic'],
+          ['Weapon', 'Crafted +Poison Creeper club', 'crafted', 'S14: +3 Summoning can roll on rare clubs'],
+          ['Offhand', 'Spirit Ward', 'unique', 'Max block option'],
+          ['Armor', 'Res / PDR armor', 'rare', 'S14: PDR affixes now roll on rare chests'],
+          ['Gloves', 'Res / cast rate gloves', 'rare'],
+          ['Belt', 'Max-res belt', 'rare', 'S14: +2–3% max res rolls on belts'],
+          ['Boots', 'Tri-res boots', 'magic'],
+          ['Ring 1', 'Res ring', 'rare'], ['Ring 2', 'Res ring', 'rare'],
+        ],
+        charms: [['Small', 'Life / res small charms', 'magic'], ['Grand', 'Summoning grand charms', 'magic'], ['Goal', 'Hellfire Torch — self-farmed', 'unique'], ['Goal', 'Annihilus — self-farmed', 'unique']],
+        swap: [['Swap', 'Call to Arms', 'runeword'], ['Swap offhand', 'Lidless Wall', 'unique']],
+        merc: { type: 'To be tested', gear: [], alt: 'S14: Act 3 Static Field no longer does % life damage, so older boss-merc advice may not hold.' },
+        skills: [['Same as Farming', '—', 'Adjust after boss testing']],
+        targets: ['T0 Clone: 90% fire res, 25% PDR (Hiim S14 reference)', 'T0 mats: Pure Demonic Essence (map bosses), Black Soulstone (Uber Trist bosses), Prime Evil Soul (Hell Meph/Diablo/Baal)', 'Uber Tristram S14 entry recipe: not confirmed yet'] },
+    ] },
+
+    { id: 'shock', name: 'Shockwave', fam: 'shock', phases: [
+      { id: 'budget', name: 'Budget', tags: ['Respec', 'Video 2 ~4:34'],
+        goal: 'Cheap starting Shockwave Werebear. S14 patch notes confirm Shockwave, Twister and Tornado still get Deadly Strike and Critical Strike.',
+        gear: [
+          ['Helm', '+3 Shapeshifting circlet', 'magic', 'S14: Deadly Strike no longer rolls on circlets'],
+          ['Amulet', '+3 Shapeshifting amulet', 'magic'],
+          ['Weapon', 'Memory', 'runeword', '4os staff: Lum Io Sol Eth', [['Insight staff', 'runeword']]],
+          ['Offhand', '—', 'any', 'Staff is two-handed'],
+          ['Armor', 'Smoke', 'runeword', 'Nef Lum'],
+          ['Gloves', '+2/+3 Shapeshifting, 10–20 FCR', 'magic', 'Some can be bought from Anya (V2)'],
+          ['Belt', 'FCR belt', 'rare', 'Rare or crafted'],
+          ['Boots', 'Tri-res boots', 'magic'],
+          ['Ring 1', 'Half Freeze Duration ring', 'crafted', '+ any life / mana / res'], ['Ring 2', 'Half Freeze Duration ring', 'crafted'],
+        ],
+        charms: [['Small', 'Res / life / FHR small charms', 'magic']],
+        swap: [['Swap', 'Teleport-charge staff', 'magic', 'Travel while unshifted']],
+        merc: { type: 'Act 1', gear: [['Weapon', 'Witchwild String', 'unique', 'Amplify Damage procs'], ['Armor', 'Smoke', 'runeword'], ['Other', 'Cheap leech / survival pieces', 'any']] },
+        skills: [['Shockwave', '20'], ['Werebear', '20'], ['Twister', '20', 'Synergy'], ['Spirit of Barbs', '20', 'S14: max Deadly Strike now only counts hard points'],
+          ['Hunger', '1', 'Run speed'], ['Carrion Vine', '1', 'Sustain'], ['Solar Creeper', '1', 'Sustain'], ['Gust', '1', 'Optional, travel'], ['Lycanthropy', 'rest']],
+        targets: ['99 FCR (V2)', '37 or 54 FHR early (V2)', 'Str/Dex for gear only, rest Vitality'] },
+
+      { id: 'mid', name: 'Mid', tags: ["Cerebus' Bite", 'Video 2 ~12:09'],
+        goal: "First Deadly Strike upgrade: Cerebus' Bite, then FCR gear so you can drop the budget pieces.",
+        gear: [
+          ['Helm', "Cerebus' Bite", 'unique', 'DS chance (~33% per V2). S14: +2 Hunger, +2 Feral Rage'],
+          ['Amulet', '+Shapeshifting FCR amulet', 'rare', 'S14: 20% FCR can roll on rare amulets'],
+          ['Weapon', 'Memory', 'runeword', 'Keep until Death Cleaver'],
+          ['Offhand', '—', 'any'],
+          ['Armor', 'Smoke', 'runeword'],
+          ['Gloves', '+Shapeshifting FCR gloves', 'rare', 'S14: 10–20% DS can roll on rare gloves'],
+          ['Belt', '~20 FCR belt', 'rare'],
+          ['Boots', 'Tri-res boots', 'magic'],
+          ['Ring 1', 'FCR / res ring', 'rare'], ['Ring 2', 'FCR / res ring', 'rare'],
+        ],
+        charms: [['Small', 'Res / life / FHR small charms', 'magic'], ['Grand', 'Shapeshifting skillers as you find them', 'magic']],
+        swap: [['Swap', 'Call to Arms', 'runeword', 'Or keep the teleport staff'], ['Swap offhand', 'Lidless Wall', 'unique']],
+        merc: { type: 'Act 1', gear: [['Weapon', 'Witchwild String', 'unique'], ['Armor', 'Smoke', 'runeword']] },
+        skills: [['Same as Budget', '—']],
+        targets: ['99 FCR', '54 FHR'] },
+
+      { id: 'endgame', name: 'Endgame', tags: ['Deadly Strike package', 'Video 2 ~14:18'],
+        goal: 'Deadly Strike multiplier stack: Death Cleaver +50%, Lance Guard +25%, Wraithskin +25%. That means 250% damage when Deadly Strike procs, not 2.5× average DPS.',
+        gear: [
+          ['Helm', 'Fenris', 'unique', 'S14: phys pierce now −5 to −8%', [["Cerebus' Bite", 'unique'], ['Denmother (FCR)', 'unique'], ['Rare/crafted +Shockwave pelt', 'rare']]],
+          ['Amulet', '+Shapeshifting FCR amulet', 'rare'],
+          ['Weapon', 'Death Cleaver', 'unique', '+50% DS multiplier (V2)', [['Headstriker', 'unique']]],
+          ['Offhand', 'Lance Guard', 'unique', '+25% DS multiplier (V2)'],
+          ['Armor', 'Wraithskin', 'unique', '+25% DS multiplier (V2)'],
+          ['Gloves', '+Shapeshifting FCR gloves', 'rare'],
+          ['Belt', '~20 FCR belt', 'rare'],
+          ['Boots', 'Tri-res boots', 'magic'],
+          ['Ring 1', 'FCR ring', 'rare'], ['Ring 2', 'Constricting Ring', 'unique'],
+        ],
+        charms: [['Grand', '~9 Shapeshifting skillers', 'magic', 'With FRW or FHR if possible'], ['Unique', 'Hellfire Torch', 'unique'], ['Unique', 'Annihilus', 'unique']],
+        swap: [['Swap', 'Call to Arms', 'runeword'], ['Swap offhand', 'Lidless Wall', 'unique']],
+        merc: { type: 'Act 1', gear: [['Weapon', 'Witchwild String', 'unique'], ['Armor', 'Smoke', 'runeword']] },
+        skills: [['Same as Budget', '—']],
+        targets: ['99 FCR (163 is a costly stretch, V2)', '54 or 86 FHR', 'S14 corruption: +20% FCR on chest (tier 3)'] },
+    ] },
+  ];
+
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const KEY = 'pd2-druid-got';
+  let got = {};
+  try { got = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { got = {}; }
+  const saveGot = () => { try { localStorage.setItem(KEY, JSON.stringify(got)); } catch (e) {} };
+
+  function gearRows(rows, prefix) {
+    if (!rows.length) return '<div class="note">Nothing set yet.</div>';
+    return '<div class="rows">' + rows.map(([slot, item, rar, note, alts], i) => {
+      const k = prefix + ':' + i + ':' + item;
+      const checkable = rar !== 'any';
+      return `<div class="row ${got[k] ? 'have' : ''}"><div class="slot">${esc(slot)}</div>
+        <div><div class="name r-${rar}">${esc(item)}</div>${note ? `<div class="note">${esc(note)}</div>` : ''}
+        ${alts && alts.length ? `<div class="alts"><b>or</b> ${alts.map(([n, r]) => `<span class="r-${r}">${esc(n)}</span>`).join(' · ')}</div>` : ''}</div>
+        <div>${checkable ? `<label class="got" title="Got it"><input type="checkbox" data-k="${esc(k)}" ${got[k] ? 'checked' : ''} aria-label="Got ${esc(item)}"></label>` : ''}</div></div>`;
+    }).join('') + '</div>';
+  }
+
+  function render() {
+    const [bid, pid] = (location.hash.slice(1) || 'poison/farming').split('/');
+    const build = BUILDS.find((b) => b.id === bid) || BUILDS[0];
+    const ph = build.phases.find((p) => p.id === pid) || build.phases[0];
+    document.body.dataset.fam = build.fam;
+    document.getElementById('nav').innerHTML = BUILDS.map((b) => `<div class="group g-${b.fam}"><span class="group-name">${esc(b.name)}</span>${b.phases.map((p) =>
+      `<a class="tab ${b === build && p === ph ? 'on' : ''}" href="#${b.id}/${p.id}"${b === build && p === ph ? ' aria-current="page"' : ''}>${esc(p.name)}</a>`).join('')}</div>`).join('');
+    const pre = build.id + '/' + ph.id;
+    document.title = build.name + ' — ' + ph.name + ' | PD2 S14 Druid';
+    document.getElementById('main').innerHTML = `
+      <section class="head"><h1>${esc(build.name)} — ${esc(ph.name)}</h1>
+        <div class="tags"><span class="tag fam">Druid</span><span class="tag">Season 14</span>${ph.tags.map((t) => `<span class="tag ${ph.warn && t === 'Experimental' ? 'warn' : ''}">${esc(t)}</span>`).join('')}</div>
+        <p class="goal">${esc(ph.goal)}</p></section>
+      <div class="grid">
+        <div class="col">
+          <section class="panel"><h2>Gear <small>tick what you've got</small></h2>${gearRows(ph.gear, pre + ':g')}
+            <div class="sub">Charms</div>${gearRows(ph.charms, pre + ':c')}
+            ${ph.swap.length ? `<div class="sub">Weapon swap</div>${gearRows(ph.swap, pre + ':s')}` : ''}</section>
+          <section class="panel"><h2>Mercenary</h2><div class="merc-type">${esc(ph.merc.type)}</div>${gearRows(ph.merc.gear, pre + ':m')}
+            ${ph.merc.alt ? `<p class="note" style="margin:8px 0 0">${esc(ph.merc.alt)}</p>` : ''}</section>
+        </div>
+        <div class="col">
+          <section class="panel"><h2>Skills</h2><ul class="skills">${ph.skills.map(([n, p, note]) => `<li><span>${esc(n)}${note ? `<span class="note">${esc(note)}</span>` : ''}</span><span class="pts">${esc(p)}</span></li>`).join('')}</ul></section>
+          <section class="panel"><h2>Targets</h2><ul class="targets">${ph.targets.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></section>
+        </div>
+      </div>
+      <div class="legend"><span class="r-unique">Unique</span><span class="r-set">Set</span><span class="r-runeword">Runeword</span><span class="r-rare">Rare</span><span class="r-crafted">Crafted</span><span class="r-magic">Magic</span><span class="r-any">Any / stat priority</span></div>
+      <p class="foot">V1 / V2 / V3 = the three build videos. S14 notes = Season 14 open beta patch notes. Your ticks are saved in this browser only.</p>`;
+  }
+
+  document.addEventListener('change', (e) => {
+    const k = e.target.dataset.k; if (!k) return;
+    if (e.target.checked) got[k] = 1; else delete got[k];
+    saveGot(); e.target.closest('.row').classList.toggle('have', e.target.checked);
+  });
+  window.addEventListener('hashchange', () => { render(); window.scrollTo(0, 0); });
+  render();
+  </script>
 </body>
 </html>
