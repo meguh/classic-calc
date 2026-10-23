@@ -209,14 +209,24 @@
     .tt-foot { color: #6b6c72; font-size: .68rem; margin-top: 6px; }
 
     /* runewords tab: full width, search + type chips over the card grid */
-    .rw-view .layout { grid-template-columns: minmax(0, 1fr); }
-    .rw-view .side { display: none; }
+    .wide .layout { grid-template-columns: minmax(0, 1fr); }
+    .wide .side { display: none; }
     .rw-bar { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 10px 0 12px; margin-bottom: 4px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
     #rw-q { flex: 1 1 280px; min-width: 0; background: var(--panel); border: 1px solid var(--line-2); color: var(--text); border-radius: 3px; padding: 8px 12px; font: inherit; }
     #rw-q:focus { border-color: var(--blue); outline: none; }
     .rw-count { width: 100%; font-size: .75rem; color: var(--muted); }
     .rwcard[hidden] { display: none; }
     .rwcard .tt-n { font-size: 1.05rem; }
+
+    /* leveling guide tab */
+    .lvl { list-style: none; margin: 0 0 18px; padding: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 4px; max-width: 720px; }
+    .lvl li { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 14px; align-items: center; padding: 10px 14px; border-top: 1px solid var(--line); }
+    .lvl li:first-child { border-top: 0; }
+    .lvl b { font-weight: 500; }
+    .lvl-alt { max-width: 720px; background: rgba(240, 192, 90, .08); border: 1px solid rgba(240, 192, 90, .45); border-radius: 4px; padding: 12px 16px; }
+    .lvl-alt-h { color: #f0c05a; font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+    .lvl-alt p { margin: 0; color: var(--soft); }
+    .lvl-alt b { color: var(--text); font-weight: 600; }
 
     @media (max-width: 1000px) {
       .eq { grid-template-columns: minmax(0, 1fr); }
@@ -746,7 +756,34 @@
   const section = (id, title, body) => `<section class="sec" id="s-${id}"><div class="sec-h"><h2>${esc(title)}</h2><button class="collapse" type="button" data-col="${id}">Collapse</button></div><div class="sec-b">${body}</div></section>`;
 
   const navHTML = (cur) => BUILDS.map((b) => `<a href="#${b.id}/${(b.phases.find((p) => p.id === 'farming') || b.phases[0]).id}" class="${b === cur ? 'on' : ''}"${b === cur ? ' aria-current="page"' : ''}>${esc(b.name)}</a>`).join('')
-    + `<a href="#runewords" class="${cur === 'rw' ? 'on' : ''}"${cur === 'rw' ? ' aria-current="page"' : ''}>Runewords</a>`;
+    + [['rw', 'runewords', 'Runewords'], ['lvl', 'leveling-guide', 'Leveling Guide']].map(([k, h, t]) => `<a href="#${h}" class="${cur === k ? 'on' : ''}"${cur === k ? ' aria-current="page"' : ''}>${t}</a>`).join('');
+
+  // Leveling Guide tab: where to level, by character level.
+  const LEVELING = [
+    ['1–15', 'Tristram'],
+    ['15–24', 'Tombs', 'Runner-up (20–24): Cow Level, if a friend can open it'],
+    ['24–25', 'Ancients'],
+    ['25–39', 'Baal runs'],
+    ['39–40', 'Nightmare Ancients'],
+    ['40–59', 'Nightmare Baal'],
+    ['59–60', 'Hell Ancients'],
+    ['60–80', 'Hell Baal'],
+    ['80+', 'Mapping'],
+  ];
+  function renderLeveling() {
+    hideTip();
+    document.body.dataset.fam = 'poison';
+    document.body.classList.add('wide');
+    document.title = 'Leveling Guide | PD2 S14';
+    document.getElementById('builds').innerHTML = navHTML('lvl');
+    document.getElementById('crumbs').innerHTML = 'PD2 › Season 14 › <b>Leveling Guide</b>';
+    document.getElementById('main').innerHTML = `
+      <div class="title"><h1>Project Diablo 2 Leveling Guide</h1>
+        <div class="meta">Project Diablo 2 · <b>Season 14</b> · where to level, by character level</div></div>
+      <ol class="lvl">${LEVELING.map(([lv, where, note]) => `<li><span class="pts">${lv}</span><div><b>${esc(where)}</b>${note ? `<span class="sk-note">${esc(note)}</span>` : ''}</div></li>`).join('')}</ol>
+      <div class="lvl-alt"><div class="lvl-alt-h">Special notice</div>
+        <p><b>1–59: Hell Chaos Sanctuary</b> — pay for a Glitch Rush (GRush), then continue from level 59 as above (Hell Ancients → Hell Baal → mapping).</p></div>`;
+  }
 
   // Runewords tab: every PD2 runeword as a tooltip-style card, filtered in place by name/runes and item type.
   let rwCat = 'All', rwQuery = '';
@@ -764,7 +801,7 @@
   function renderRunewords() {
     hideTip();
     document.body.dataset.fam = 'shock';
-    document.body.classList.add('rw-view');
+    document.body.classList.add('wide');
     document.title = 'Runewords | PD2 S14';
     document.getElementById('builds').innerHTML = navHTML('rw');
     document.getElementById('crumbs').innerHTML = 'PD2 › Season 14 › <b>Runewords</b>';
@@ -783,7 +820,8 @@
 
   function render() {
     if (location.hash === '#runewords') return renderRunewords();
-    document.body.classList.remove('rw-view');
+    if (location.hash === '#leveling-guide') return renderLeveling();
+    document.body.classList.remove('wide');
     const [bid, pid] = (location.hash.slice(1) || 'poison/farming').split('/');
     const build = BUILDS.find((b) => b.id === bid) || BUILDS[0];
     const ph = build.phases.find((p) => p.id === pid) || build.phases[0];
