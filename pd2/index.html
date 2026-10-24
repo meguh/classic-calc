@@ -756,7 +756,7 @@
   const section = (id, title, body) => `<section class="sec" id="s-${id}"><div class="sec-h"><h2>${esc(title)}</h2><button class="collapse" type="button" data-col="${id}">Collapse</button></div><div class="sec-b">${body}</div></section>`;
 
   const navHTML = (cur) => BUILDS.map((b) => `<a href="#${b.id}/${(b.phases.find((p) => p.id === 'farming') || b.phases[0]).id}" class="${b === cur ? 'on' : ''}"${b === cur ? ' aria-current="page"' : ''}>${esc(b.name)}</a>`).join('')
-    + [['rw', 'runewords', 'Runewords'], ['lvl', 'leveling-guide', 'Leveling Guide']].map(([k, h, t]) => `<a href="#${h}" class="${cur === k ? 'on' : ''}"${cur === k ? ' aria-current="page"' : ''}>${t}</a>`).join('');
+    + [['rw', 'runewords', 'Runewords'], ['lvl', 'leveling-guide', 'Leveling Guide'], ['shop', 'shopping', 'Shopping']].map(([k, h, t]) => `<a href="#${h}" class="${cur === k ? 'on' : ''}"${cur === k ? ' aria-current="page"' : ''}>${t}</a>`).join('');
 
   // Leveling Guide tab: where to level, by character level.
   const LEVELING = [
@@ -783,6 +783,64 @@
       <ol class="lvl">${LEVELING.map(([lv, where, note]) => `<li><span class="pts">${lv}</span><div><b>${esc(where)}</b>${note ? `<span class="sk-note">${esc(note)}</span>` : ''}</div></li>`).join('')}</ol>
       <div class="lvl-alt"><div class="lvl-alt-h">Special notice</div>
         <p><b>1–59: Hell Chaos Sanctuary</b> — pay for a Glitch Rush (GRush), then continue from level 59 as above (Hell Ancients → Hell Baal → mapping).</p></div>`;
+  }
+
+  // Shopping tab: what a Druid can buy from vendors, and at what character level.
+  // Mechanics from Hastmannen's PD2 shopping guide (S2, 2021) and his 3/20 gloves guide; affix levels from the PD2 wiki; S14 patch notes.
+  const SHOP_WHEN = [
+    ['1–19', 'White clubs in Act 1–2 Normal', 'Charsi, Gheed, Fara. Druid staffmods (+Poison Creeper, +Shockwave) roll on clubs in PD2. Until clvl 20 vendors sell white and socketed items.'],
+    ['19+', 'Teleport-charge staff', 'Ormus (Act 3 Normal) onward. Item level 24 is the minimum for the charges. A higher level gives more charges, best at clvl 92+ in Nightmare or Hell.'],
+    ['~40+', '+2 skill clubs and gloves', 'Caretaker\'s (+2 Summoning) or Feral (+2 Shape Shifting) on clubs, and Feral gloves. A cheap filler until the +3 versions.'],
+    ['56–75', '+3 skill clubs in Nightmare', 'Gheed and Charsi Nightmare. +3 needs affix level 60. The guide suggests clvl 71, but these are rare in the window, so check whenever you\'re in town instead of farming them.'],
+    ['68–74', '+3 Shape Shifting gloves', 'Charsi Hell, the best spot: she only stocks normal-tier gauntlets, so every pair can roll +3. clvl 68 is ideal.'],
+    ['75+', '+3 gloves, part 2', 'Anya Nightmare or Hell. Fewer gloves per window, but she can sell exceptional or elite versions with more defense.'],
+    ['Any', 'Map orbs and gold sinks', 'Anya sells the orbs for rerolling maps. Spend leftover gold here once your gear is set.'],
+  ];
+  const SHOP_BUY = [
+    { slot: 'Weapon', name: "Keeper's Club of the Magus", build: 'Poison Creeper', where: 'Gheed / Charsi Nightmare', lvl: 'clvl 56+ (71 suggested)',
+      mods: ['+3 to Summoning Skills (Druid Only)', '+20% Faster Cast Rate'], note: 'PD2 lets "of the Magus" roll on clubs. Look out for a +Poison Creeper staffmod on top.' },
+    { slot: 'Weapon', name: 'Communal Club of the Magus', build: 'Shockwave', where: 'Gheed / Charsi Nightmare', lvl: 'clvl 56+ (71 suggested)',
+      mods: ['+3 to Shape Shifting Skills (Druid Only)', '+20% Faster Cast Rate'], note: 'For a one-hand Shockwave setup while you save up for Memory or Death Cleaver.' },
+    { slot: 'Gloves', name: 'Communal Gloves of the Apprentice', build: 'Shockwave', where: 'Charsi Hell (clvl 68–74) · Anya NM/Hell (75+)', lvl: 'clvl 56+ for the prefix',
+      mods: ['+3 to Shape Shifting Skills (Druid Only)', '+10% Faster Cast Rate'], note: 'The Budget-phase gloves. Magic gloves only get one prefix and one suffix, so 10 FCR is the most you can buy. 20 FCR gloves are dropped rares only.' },
+    { slot: 'Gloves', name: 'Feral Gloves of the Apprentice', build: 'Shockwave', where: 'Glove vendors in Nightmare', lvl: '~clvl 40+',
+      mods: ['+2 to Shape Shifting Skills (Druid Only)', '+10% Faster Cast Rate'], note: 'Much easier to find than the +3 pair. Good enough for the respec.' },
+    { slot: 'Swap', name: 'Staff of Teleportation', build: 'Both builds', where: 'Ormus (A3 Normal) · Drognan Hell', lvl: 'clvl 19+ (92+ for most charges)',
+      mods: ['Level X Teleport (charges)'], note: 'The Shockwave Budget swap. Exceptional staves (Nightmare and up) also add more FCR.' },
+    { slot: 'Base', name: '+3 Poison Creeper white club', build: 'Poison Creeper', where: 'Charsi / Gheed / Fara Normal', lvl: 'Until clvl 20',
+      mods: ['+1 to +3 to Poison Creeper (staffmod)', '0–2 sockets'], note: 'A leveling weapon, or a base for Plague later. White items stop showing up at clvl 20.' },
+  ];
+  const SHOP_HOW = [
+    ['Refresh the window', 'Leave town and come back to reroll a vendor. In Act 1, open the Cow Level portal next to Charsi or Gheed and step in and out. In Act 5, open a map portal next to Anya; maps are easier to spare than keys.'],
+    ['Shop alone', 'The window won\'t refresh while another player is in town.'],
+    ['Item level = your level + ~5', 'So your level decides which affixes can show up. Normal has caps: Act 1 = 12, Act 2 = 20, Act 3 = 25, Act 4 = 36, Act 5 = 45. That\'s why +3 items (affix level 60) only appear from Nightmare on.'],
+    ['Exceptional bases cut in', 'From Nightmare, vendors sometimes sell exceptional versions, which need a higher item level for the same affix. A bigger share of each window is then useless. Charsi Hell never sells exceptional or elite, which is why she\'s the glove spot.'],
+    ['Let the filter flag hits', 'Your loot filter already marks good vendor items: magic items with +3 to any skill tree get a gold name, and +3 Poison Creeper / +3 Shockwave items get the rainbow label.'],
+    ['Cheaper orbs', "Gheed's Fortune (10–15%) and an Edge bow on swap (15%) cut vendor prices by up to 30%."],
+    ['S14 gold', 'Season 14 removed personal gold. All gold now sits in the shared stash, up to 25 million.'],
+  ];
+  const SHOP_NO = ['Druid pelts (vendors never stock them, and they can\'t be gambled)', 'Circlets, amulets and rings (gamble them instead)', 'Grand charms (skillers have to drop)', 'Ethereal items', 'Elite bases in Act 1–2 Hell'];
+  function renderShopping() {
+    hideTip();
+    document.body.dataset.fam = 'poison';
+    document.body.classList.add('wide');
+    document.title = 'Shopping | PD2 S14';
+    document.getElementById('builds').innerHTML = navHTML('shop');
+    document.getElementById('crumbs').innerHTML = 'PD2 › Season 14 › Druid › <b>Shopping</b>';
+    const cards = SHOP_BUY.map((o) => `<div class="scard r-magic">
+      <div class="scard-slot">${esc(o.slot)} · ${esc(o.build)}</div><div class="tt-n">${esc(o.name)}</div>
+      <div class="tt-base">${esc(o.where)}</div><div class="tt-req">${esc(o.lvl)}</div>
+      <div class="tt-mods">${o.mods.map((m) => `<div>${esc(m)}</div>`).join('')}</div><div class="tt-note">${esc(o.note)}</div></div>`).join('');
+    document.getElementById('main').innerHTML = `
+      <div class="title"><h1>Druid Shopping Guide</h1>
+        <div class="meta">Project Diablo 2 · <b>Season 14</b> · what to buy from vendors and when</div></div>
+      ${section('when', 'When to shop', `<ol class="lvl">${SHOP_WHEN.map(([lv, what, note]) => `<li><span class="pts">${lv}</span><div><b>${esc(what)}</b><span class="sk-note">${esc(note)}</span></div></li>`).join('')}</ol>`)}
+      ${section('buy', 'What to buy', `<div class="scards">${cards}</div>`)}
+      ${section('how', 'How to shop', `<ol class="lvl">${SHOP_HOW.map(([t, d], i) => `<li><span class="pts">${i + 1}</span><div><b>${esc(t)}</b><span class="sk-note">${esc(d)}</span></div></li>`).join('')}</ol>`)}
+      ${section('no', "Can't be bought", `<div class="lvl-alt"><div class="lvl-alt-h">Farm or gamble these instead</div><p>${SHOP_NO.map(esc).join(' · ')}</p></div>`)}
+      <p class="note-p">Based on <a href="https://www.reddit.com/r/ProjectDiablo2/comments/myxrc0/hastmannens_guide_to_shopping_in_project_diablo_2/">Hastmannen's shopping guide</a> (written for Season 2, 2021) and his
+        <a href="https://www.reddit.com/r/pathofdiablo/comments/b6wypy/a_guide_to_shop_320_gloves_in_diablo_2_or_pod/">3/20 gloves guide</a>, checked against the
+        <a href="https://wiki.projectdiablo2.com/wiki/Item_Affixes">PD2 wiki affix tables</a> and the Season 14 patch notes. Vendor stock may have changed since 2021, so treat the levels as starting points.</p>`;
   }
 
   // Runewords tab: every PD2 runeword as a tooltip-style card, filtered in place by name/runes and item type.
@@ -821,6 +879,7 @@
   function render() {
     if (location.hash === '#runewords') return renderRunewords();
     if (location.hash === '#leveling-guide') return renderLeveling();
+    if (location.hash === '#shopping') return renderShopping();
     document.body.classList.remove('wide');
     const [bid, pid] = (location.hash.slice(1) || 'poison/farming').split('/');
     const build = BUILDS.find((b) => b.id === bid) || BUILDS[0];
