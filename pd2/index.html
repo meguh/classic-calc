@@ -19,6 +19,8 @@
       --unique: #c7b377; --set: #3ddc4b; --runeword: #c7b377; --rare: #f2e05a; --magic: #7b8cff; --crafted: #ff9a2e; --base: #d6d1c4; --any: #9a9aa0;
     }
     body[data-fam="shock"] { --accent: var(--brass); }
+    body[data-fam="barb"] { --accent: var(--unique); }
+    .logo b { font-weight: inherit; }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
     html { scroll-behavior: smooth; }
@@ -251,13 +253,13 @@
   </style>
 </head>
 <body>
-  <header class="bar"><div class="bar-in"><div class="logo">PD2 <span>S14</span> Druid</div><nav class="builds" id="builds" aria-label="Builds"></nav></div></header>
-  <div class="banner"><img class="banner-art" src="img/druid.jpg" alt=""><div class="banner-in"><div class="crest" id="crest">D</div><div class="banner-title">Venom → Shockwave</div></div></div>
+  <header class="bar"><div class="bar-in"><div class="logo">PD2 <span>S14</span> <b id="logo-cls">Druid</b></div><nav class="builds" id="builds" aria-label="Builds"></nav></div></header>
+  <div class="banner"><img class="banner-art" id="banner-art" src="img/druid.jpg" alt=""><div class="banner-in"><div class="crest" id="crest">D</div><div class="banner-title" id="banner-title">Venom → Shockwave</div></div></div>
   <div class="wrap">
     <div class="crumbs" id="crumbs"></div>
     <div class="layout">
       <aside class="side">
-        <div class="card"><div class="card-h">Build</div><div class="who"><div class="crest" id="crest2">D</div><b id="who-name"></b><small>Season 14 Druid</small></div></div>
+        <div class="card"><div class="card-h">Build</div><div class="who"><div class="crest" id="crest2">D</div><b id="who-name"></b><small id="who-cls">Season 14 Druid</small></div></div>
         <div class="card"><div class="card-h">Table of contents</div><ol class="toc" id="toc"></ol></div>
       </aside>
       <main id="main"></main>
@@ -405,6 +407,85 @@
         skills: [['Same as Budget', '—']],
         targets: ['99 FCR (163 is a costly stretch, V2)', '54 or 86 FHR', 'S14 corruption: +20% FCR on chest (tier 3)'] },
     ] },
+
+    /* Gold find Travincal Barbarian, from two PD2 guides linked on the PD2 wiki: L = Lilithian (S9–S12, marked S14 compatible),
+       C = CrankyGnome (S8, budget). "Corruption" = an Orb of Corruption outcome (the guides call it a slam). */
+    { id: 'gfbarb', name: 'Gold Find Barb', fam: 'barb', cls: 'Barbarian', art: 'barbarian.jpg', banner: 'Gold Find Barbarian',
+      key: 'L = <a href="https://docs.google.com/document/d/1Mzg7lJosGBD5fjKv4zIWbMNxwd-MDPju5d1H8N663SA/edit" target="_blank" rel="noopener">Lilithian\'s GF Trav Barb guide</a> (S9–S12, marked S14 compatible). C = <a href="https://docs.google.com/document/d/1S3-ALaZH_Doa_pCbJ9WCnPWETDy0rccVf3wLorYyHzQ/edit" target="_blank" rel="noopener">CrankyGnome\'s GF/MF Trav guide</a> (S8, budget). Both are linked from the PD2 wiki. Corruption = an Orb of Corruption outcome (the guides call it a "slam"). Your ticks are saved in this browser only. Item, skill and Barbarian art © Blizzard Entertainment (Diablo II), via the PD2 wiki and classic.battle.net.',
+      phases: [
+      { id: 'leveling', name: 'Leveling', tags: ['Normal → Hell', 'Suggested'],
+        goal: 'Both guides say this is not a season starter: level as a normal melee Barbarian (C: "leech and Chaos your way to at least level 70"), then respec and start Travincal. L starts the farm at clvl 80 and keeps leveling on the runs. This phase is a suggestion, not from the guides, so swap anything you like.',
+        gear: [
+          ['Helm', 'Lore', 'runeword', 'Ort Sol. +1 skills'], ['Amulet', 'Life / res amulet', 'any'],
+          ['Weapon', 'Steel', 'runeword', 'Tir El in a 2-socket sword or axe', [['Malice', 'runeword'], ['Strength', 'runeword']]],
+          ['Offhand', 'Strength', 'runeword', 'Amn Tir. Dual wield: life leech + crushing blow'],
+          ['Armor', 'Stealth', 'runeword', 'Tal Eth', [['Smoke', 'runeword']]],
+          ['Gloves', 'Life / res gloves', 'any'], ['Belt', 'Life / res belt', 'any'], ['Boots', 'Run speed / res boots', 'any'],
+          ['Ring 1', 'Life leech / res ring', 'any'], ['Ring 2', 'Life leech / res ring', 'any'],
+        ],
+        charms: [['Charms', 'Life / res small charms as they drop', 'any']],
+        swap: [],
+        merc: { type: 'Act 2 — your pick while leveling', gear: [['Weapon', 'Insight', 'runeword', 'Mana regen aura'], ['Helm', 'Anything usable', 'any'], ['Armor', 'Anything usable', 'any']],
+          alt: 'The Travincal merc needs his own gold find gear later, because he does the killing (see Budget).' },
+        skills: [['Your melee leveling skill', 'main', 'Respec at 70–80 with a Token of Absolution'], ['Battle Orders', '1+'], ['Shout', '1+'], ['Battle Cry', '1+', 'Stuns and lowers defense'],
+          ['Find Item', '1+', 'Extra drops from corpses'], ['Leap', '1', 'Escape and stun']],
+        targets: ['Respec at clvl 70 (C) to 80 (L)', 'Strength for gear, rest into Vitality', 'Resists capped for Hell', 'Where to level: see the Leveling Guide tab'] },
+
+      { id: 'budget', name: 'Budget', tags: ['Travincal', 'Guide C', 'clvl 70+'],
+        goal: 'Cheap Travincal council farm. The Act 5 merc does all the killing, and his gold and magic find add to yours on his kills (L), so you both wear gold find. You stun, debuff and pick over (hork) every corpse with Find Item.',
+        gear: [
+          ['Helm', "Immortal King's Will", 'set', 'With a Cannot Be Frozen corruption, so rings and boots can take gold find corruptions (C)', [['Crown of Thieves', 'unique']]],
+          ['Amulet', 'Bountiful crafted amulet', 'crafted', 'Magic amulet + any jewel + Perfect Topaz + Ko: adds 30–50% gold, 20–30% MF, 10–20 Vit (PD2 wiki). Look for FCR, skills and res on top (C)'],
+          ['Weapon', 'Blade of Ali Baba', 'unique', 'FCR corruption if you can: Find Item uses cast frames (C)'],
+          ['Offhand', 'Blade of Ali Baba', 'unique', 'Dual wield. Fill sockets with Lem (gold) or Ist (MF)'],
+          ['Armor', 'Wealth', 'runeword', 'Lem Ko Tir: 300% gold, 100% MF', [['Enigma', 'runeword']]],
+          ['Gloves', 'Chance Guards', 'unique', 'Gold/MF corruption (C)'],
+          ['Belt', 'Goldwrap', 'unique', 'Gold/MF corruption (C)'],
+          ['Boots', 'Infernostride', 'unique', 'Fire res + gold. Upgrade: rare/crafted with 30 FRW, fire res and gold (C)'],
+          ['Ring 1', 'Dwarf Star', 'unique', 'FRW, FCR or gold/MF corruption (C)'], ['Ring 2', 'Dwarf Star', 'unique'],
+        ],
+        charms: [['Grand', '40% gold find grand charms', 'magic'], ['Large', '22% gold find large charm', 'magic', 'Only one fits; beats two small ones (C)'], ['Small', '10% gold find small charms', 'magic', 'Or 7% MF small charms (C)']],
+        swap: [['Swap', "Naj's Puzzler", 'set', 'Teleport charges, with Wealth (C)']],
+        merc: { type: 'Act 5 — Might (C)', gear: [
+          ['Weapon', 'Death Cleaver', 'unique', 'Or any fast weapon without cold damage. The most important slot (C)'],
+          ['Helm', 'Steel Shade', 'unique', 'Fire absorb + gold (C)'], ['Armor', 'Black Hades', 'unique', '4× Lem, Cannot Be Frozen corruption, eth if you can (C)'],
+          ['Gloves', 'Laying of Hands', 'set', 'Gold find corruption (C)'], ['Belt', "Nosferatu's Coil", 'unique', 'Gold find corruption; IAS for Death Cleaver (C)'],
+          ['Boots', 'Gore Rider', 'unique', 'Or War Traveler / Infernostride, gold find corruption (C)']],
+          alt: 'Why Act 5: the most life regen, no hit-recovery stun, and Concentrate\'s magic damage hits physical immunes (C). The council are all demons, so damage to demons works well. Max fire res on him for the Hydras.' },
+        skills: [['Find Item', '20'], ['Battle Command', '20'], ['Battle Cry', '20', 'Stun + lower defense'], ['Increased Speed', '20'],
+          ['Natural Resistance', '1+', 'More if explosions or Hydras kill you'], ['Battle Orders', '1+', 'More if the merc dies'], ['Shout', '1+'], ['Taunt', '1', 'Pull the council to the merc']],
+        targets: ['Str for the Wealth/Enigma base, Dex for Ali Baba, rest Vitality (C)', 'Run: Travincal waypoint → prebuff → teleport onto any council member with Conviction or Holy Freeze → Battle Cry, step away from death explosions → Find Item every corpse → save & exit (C)',
+          'Spend gold with an Edge bow, Kadala\'s Heirloom rings and Gheed\'s Fortune for vendor discounts (C)'] },
+
+      { id: 'endgame', name: 'Endgame', tags: ['Travincal', 'Guide L', '4,700–4,900 GF'],
+        goal: 'Lilithian\'s max gold setup: about 4,700–4,900 gold find and 650–750 MF counting the merc. Her estimate is 0.3–0.4 HR per 15 minutes from gold alone, mostly by buying and reselling map orbs.',
+        gear: [
+          ['Helm', 'Crown of Thieves', 'unique', '3-socket corruption, 3× Lem (L)'],
+          ['Amulet', '+3 Warcries amulet with 80% gold', 'magic', 'Plus a gold find corruption (L)', [['Bountiful crafted gold find amulet', 'crafted']]],
+          ['Weapon', 'Blade of Ali Baba', 'unique', '3-socket + 1 all skills corruption, 3× Lem (L)'],
+          ['Offhand', 'Blade of Ali Baba', 'unique', 'Same as the main hand'],
+          ['Armor', 'Goldskin', 'unique', '3-socket corruption, 3× Lem. More gold than Wealth and 35 all res, but 100 less MF (L)', [['Wealth', 'runeword']]],
+          ['Gloves', 'Chance Guards', 'unique', 'Gold find corruption (L)'],
+          ['Belt', 'Goldwrap', 'unique', 'Gold find corruption (L)'],
+          ['Boots', 'Infernostride', 'unique', 'Gold find corruption. Fire absorb vs the Hydras; its Blaze proc covers Cannot Be Frozen (L)', [['Bountiful crafted boots', 'crafted']]],
+          ['Ring 1', 'Dwarf Star', 'unique', 'Gold find corruption (L)'], ['Ring 2', 'Dwarf Star', 'unique'],
+        ],
+        charms: [['Grand', '9× 40% gold find grand charms', 'magic', '+1 Warcries gold find grand charms if you can afford them (L)'], ['Small', '10× 10% gold find small charms', 'magic'],
+          ['Unique', "Gheed's Fortune", 'unique', 'Aim for 160% gold and 15% vendor prices (L)']],
+        swap: [['Swap', 'Spellsteel', 'unique', 'Blink and Amplify Damage charges. Swap back to the Ali Babas before anything dies (L)']],
+        merc: { type: 'Act 2 — Offensive, Blessed Aim (L)', gear: [
+          ['Weapon', 'Steel Pillar', 'unique', '6-socket corruption, 6× Lem (L)'], ['Helm', 'Crown of Thieves', 'unique', '3-socket, 3× Lem'],
+          ['Armor', 'Goldskin', 'unique', 'Or Wealth. 3-socket, 3× Lem'], ['Gloves', 'Chance Guards', 'unique', 'Gold find corruption'],
+          ['Belt', 'Goldwrap', 'unique', 'Gold find corruption'], ['Boots', 'Infernostride', 'unique', 'Gold find corruption']],
+          alt: 'Max gold: an Act 5 Might merc with an upgraded 6-socket The Patriarch and 6× Lem (100% gold on its own; you need it to pass 5,000). L prefers Act 2 for clear speed. If he keeps dying, use Goldskin until you know the runs.' },
+        skills: [['Find Item', '20'], ['Battle Command', '20'], ['Battle Cry', '20'], ['Increased Speed', '20'], ['Battle Orders', '1+'], ['Taunt', '1'], ['Leap', '1', 'Stunlock mobs against walls (L)'],
+          ['Grim Ward', '1', 'Optional, helps on Baal runs (L)'], ['Natural Resistance', '1+'], ['Shout', 'rest', 'Leftover points for defense (L)']],
+        targets: ['Str 103 for the Grand Crown, no Dex or Energy, rest Vitality (L)',
+          'Run: TP to Travincal → BC > BO > Shout → swap to Spellsteel and Blink into the right side of the council house → Amplify Damage → swap back → Battle Cry + Taunt → Find Item every council, champion and unique corpse → leave game (L)',
+          'Only chase Toorc Icefist when he has Conviction or Holy Freeze (L)',
+          'S14: the shared stash holds 25 million gold and the personal gold stash is gone. Shops can\'t take shared-stash gold (L)',
+          'Spend gold on map orbs with 2× Kadala\'s Heirloom for the vendor discount, or gamble amulets, circlets and gloves (L)'] },
+    ] },
   ];
 
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -414,8 +495,8 @@
   const saveGot = () => { try { localStorage.setItem(KEY, JSON.stringify(got)); } catch (e) {} };
 
   const ABBR = { Helm: 'Helm', Amulet: 'Amu', Weapon: 'Wpn', Offhand: 'Off', Armor: 'Arm', Gloves: 'Glv', Belt: 'Belt', Boots: 'Boot', 'Ring 1': 'Ring', 'Ring 2': 'Ring',
-    Grand: 'GC', Small: 'SC', Swap: 'Swap', 'Swap offhand': 'Off', Charms: 'Chm', Unique: 'Uni', Goal: 'Goal', Other: '…' };
-  const KIND = { Grand: 'Grand Charm', Small: 'Small Charm', Charms: 'Charm', Unique: 'Charm', Goal: 'Charm', Swap: 'Weapon (swap)', 'Swap offhand': 'Offhand (swap)', Other: 'Gear' };
+    Grand: 'GC', Large: 'LC', Small: 'SC', Swap: 'Swap', 'Swap offhand': 'Off', Charms: 'Chm', Unique: 'Uni', Goal: 'Goal', Other: '…' };
+  const KIND = { Grand: 'Grand Charm', Large: 'Large Charm', Small: 'Small Charm', Charms: 'Charm', Unique: 'Charm', Goal: 'Charm', Swap: 'Weapon (swap)', 'Swap offhand': 'Offhand (swap)', Other: 'Gear' };
   const RAR = { unique: 'Unique', set: 'Set', runeword: 'Runeword', rare: 'Rare', magic: 'Magic', crafted: 'Crafted', base: 'Base' };
   const LEFT = ['Helm', 'Armor', 'Gloves', 'Belt', 'Weapon'], RIGHT = ['Amulet', 'Ring 1', 'Ring 2', 'Boots', 'Offhand'];
   const SECTIONS = [['intro', 'Introduction'], ['equipment', 'Equipment'], ['skills', 'Skills'], ['merc', 'Mercenary'], ['key', 'Rarity Key']];
@@ -442,12 +523,20 @@
     'FCR / res ring': 'ring_5.png', 'FCR ring': 'ring_2.png', 'Constricting Loop': 'ring_5.png',
     'Summoning grand charms': 'grand_charm_1.png', 'Shapeshifting skillers as you find them': 'grand_charm_2.png', '~9 Shapeshifting skillers': 'grand_charm_2.png',
     'Hellfire Torch': 'hellfire_torch.png', 'Hellfire Torch — self-farmed': 'hellfire_torch.png', 'Annihilus': 'annihilus.png', 'Annihilus — self-farmed': 'annihilus.png',
+    'Crown of Thieves': 'crown_of_thieves.png', "Immortal King's Will": 'great_helm.png', 'Steel Shade': 'steel_shade.png', 'Lore': 'full_helm.png',
+    'Bountiful crafted amulet': 'amulet_1.png', 'Bountiful crafted gold find amulet': 'amulet_1.png', '+3 Warcries amulet with 80% gold': 'amulet_2.png', 'Life / res amulet': 'amulet_3.png',
+    'Blade of Ali Baba': 'blade_of_ali_baba.png', 'Steel': 'scimitar.png', 'Strength': 'scimitar.png', 'Malice': 'scimitar.png', 'Spellsteel': 'spellsteel.png', "Naj's Puzzler": 'long_staff.png',
+    'Steel Pillar': 'pike.png', 'Wealth': 'light_plate.png', 'Enigma': 'light_plate.png', 'Goldskin': 'goldskin.png', 'Black Hades': 'full_plate_mail.png', 'Stealth': 'hard_leather_armor.png',
+    'Chance Guards': 'chance_guards.png', 'Laying of Hands': 'heavy_gloves.png', 'Goldwrap': 'goldwrap.png', "Nosferatu's Coil": 'light_belt.png', 'Life / res belt': 'heavy_belt.png',
+    'Infernostride': 'boots.png', 'Bountiful crafted boots': 'boots.png', 'Gore Rider': 'chain_boots.png', 'Dwarf Star': 'ring_4.png', 'Life leech / res ring': 'ring_1.png',
+    '40% gold find grand charms': 'grand_charm_1.png', '9× 40% gold find grand charms': 'grand_charm_1.png', "Gheed's Fortune": 'grand_charm_2.png',
     'Call to Arms': 'crystal_sword.png', 'Lidless Wall': 'lidless_wall.png', 'Teleport-charge staff': 'gnarled_staff.png', 'Witchwild String': 'witchwild_string.png', 'Cheap leech / survival pieces': null,
   };
   const SLOT_IMG = { Helm: 'wolf_head.png', Amulet: 'amulet_3.png', Weapon: 'club.png', Offhand: 'small_shield.png', Armor: 'hard_leather_armor.png', Gloves: 'leather_gloves.png',
     Belt: 'light_belt.png', Boots: 'boots.png', 'Ring 1': 'ring_2.png', 'Ring 2': 'ring_2.png', Grand: 'grand_charm_1.png', Small: 'small_charm_1.png', Charms: 'small_charm_1.png' };
   const SKILL_IMG = { 'Poison Creeper': 1, 'Carrion Vine': 1, 'Solar Creeper': 1, 'Rabies': 1, 'Arctic Blast': 1, 'Cyclone Armor': 1, 'Gust': 1, 'Heart of Wolverine': 1,
-    'Spirit of Barbs': 1, 'Oak Sage': 1, 'Shockwave': 'shock_wave', 'Werebear': 1, 'Twister': 1, 'Hunger': 1, 'Lycanthropy': 1 };
+    'Spirit of Barbs': 1, 'Oak Sage': 1, 'Shockwave': 'shock_wave', 'Werebear': 1, 'Twister': 1, 'Hunger': 1, 'Lycanthropy': 1,
+    'Find Item': 1, 'Battle Command': 1, 'Battle Cry': 1, 'Battle Orders': 1, 'Shout': 1, 'Taunt': 1, 'Leap': 1, 'Grim Ward': 1, 'Increased Speed': 1, 'Natural Resistance': 1 };
   const pic = (slot, name) => (name in IMG ? IMG[name] : SLOT_IMG[slot] || null);
   const imgTag = (file, cls) => file ? `<img src="img/${file}" alt="" loading="lazy" class="${cls || ''}${file.endsWith('.gif') ? ' gif' : ''}">` : '';
   const skillImg = (n) => SKILL_IMG[n] ? `<img class="sk-img" src="img/${SKILL_IMG[n] === 1 ? n.toLowerCase().replace(/ /g, '_') : SKILL_IMG[n]}.png" alt="" loading="lazy">` : '';
@@ -494,6 +583,20 @@
     "Spirit shield": ["4-Socket Shields","Tal • Thul • Ort • Amn","25",["+1 to All Skills","+[25-35]% Faster Cast Rate","+25% Faster Hit Recovery","+[11-22] to Vitality","+[59-82] to Mana","Cold Resist +35%","Lightning Resist +35%","Poison Resist +35%","+[3-8] Magic Absorb","Attacker Takes Damage of 24","Requirements -15%"]],
     "Skin of the Vipermagi": ["Serpentskin Armor","","29",["+1 to All Skills","+30% Faster Cast Rate","+120% Enhanced Defense","All Resistances +[20-30]","Magic Damaged Taken Reduced by [5-8]"]],
     "Magefist": ["Light Gauntlets","","23",["+1 to Fire Skills","+20% Faster Cast Rate","Adds 6-36 Fire Damage","+[20-30]% Enhanced Defense","+10 Defense","Regenerate Mana [15-25]%"]],
+    "Spellsteel": ["Bearded Axe","","39",["+50% Faster Cast Rate","+[185-245]% Enhanced Damage","+100 to Mana","Regenerate Mana 25%","Magic Damage Taken Reduced by [12-15]","Level 18 Amplify Damage (60 Charges)","Level 1 Blink (60 Charges)","30% Chance to Cast Level 25 Firestorm on Striking","30% Chance to Cast Level 25 Holy Bolt on Striking","Requirements -60%"]],
+    "Goldwrap": ["Heavy Belt","","27",["+20% Increased Attack Speed","+[40-60]% Enhanced Defense","+25 Defense","[50-80]% Extra Gold from Monsters","[20-40]% Better Chance of Getting Magic Items","+2 to Light Radius"]],
+    "Nosferatu's Coil": ["Vampirefang Belt","","51",["+20% Increased Attack Speed","[3-6]% Life Stolen per Hit","+10% Deadly Strike","Slows Target by 10%","+[10-15] to Strength","+2 to Mana after each Kill"]],
+    "Infernostride": ["Demonhide Boots","","29",["18% Chance to Cast Level 16 Blaze when Struck","+30% Faster Run/Walk","Adds 24-66 Fire Damage","+[120-150]% Enhanced Defense","+15 Defense","+5% to Maximum Fire Resist","Fire Resist +30%","[40-70]% Extra Gold from Monsters","+2 to Light Radius"]],
+    "Gore Rider": ["War Boots","","47",["+30% Faster Run/Walk","+15% Chance of Crushing Blow","+[15-20]% Deadly Strike","+10% Chance of Open Wounds","+[140-200] Open Wounds Damage per Second","+[160-200]% Enhanced Defense","Requirements -25%","+10 Durability"]],
+    "Gheed's Fortune": ["Grand Charm","","62",["[80-160]% Extra Gold from Monsters","[20-40]% Better Chance of Getting Magic Items","Reduces All Vendor Prices [10-15]%"]],
+    "Goldskin": ["Full Plate Mail","","28",["+[120-150]% Enhanced Defense","All Resistances +35","Attacker Takes Damage of 40","[100-200]% Extra Gold from Monsters","+2 to Light Radius"]],
+    "Black Hades": ["Chaos Armor","","53",["+[185-225]% Damage to Demons","+[400-450] to Attack Rating against Demons","+[140-200]% Enhanced Defense","Half Freeze Duration","-2 to Light Radius","Socketed [3-4]"]],
+    "Chance Guards": ["Chain Gloves","","15",["+25 to Attack Rating","+[20-30]% Enhanced Defense","+15 Defense","+[1-2] to Mana after each Kill","200% Extra Gold from Monsters","[25-40]% Better Chance of Getting Magic Items","+2 to Light Radius"]],
+    "Crown of Thieves": ["Grand Crown","","49",["[9-12]% Life Stolen per Hit","+[160-200]% Enhanced Defense","+25 to Dexterity","+50 to Life","Fire Resist +33%","[80-100]% Extra Gold from Monsters","[40-65]% Better Chance of Getting Magic Items"]],
+    "Steel Shade": ["Armet","","62",["+2 to All Skills","+20% Faster Block Rate","20% Increased Chance of Blocking","[4-8]% Mana Stolen per Hit","+[100-130]% Enhanced Defense","Replenish Life +[30-48]","+[4-6] Fire Absorb","[60-80]% Extra Gold from Monsters"]],
+    "Dwarf Star": ["Ring","","45",["5% Increased Chance of Blocking","+[35-50] to Life","+[35-50] Maximum Stamina","Fire Absorb +[4-6]%","Magic Damage Taken Reduced by [12-15]","100% Extra Gold from Monsters"]],
+    "Steel Pillar": ["War Pike","","69",["-[5-10]% to Enemy Physical Resistance","+25% Increased Attack Speed","+[210-260]% Enhanced Damage","-20% Target Defense","+40% Chance of Crushing Blow","+[100-150]% Enhanced Defense"]],
+    "Blade of Ali Baba": ["Tulwar","","35",["+[60-120]% Enhanced Damage","+[5-15] to Dexterity","+15 to Mana","[2-247]% Extra Gold from Monsters (2.5% per Character Level)","[1-99]% Better Chance of Getting Magic Items (1% per Character Level)","Socketed (2-3)"]],
     "Frostburn": ["Gauntlets","","29",["Adds 14-28 Fire Damage","Adds 6-22 Cold Damage","-[5-10]% to Enemy Fire Resistance","-[5-10]% to Enemy Cold Resistance","+[20-40]% Enhanced Defense","+[20-40] Defense","Increase Maximum Mana [15-25]%"]],
   };
 
@@ -519,6 +622,14 @@
     small: [['Life', '15', '20'], ['Resist', '5+ one', '11 one / 5 all'], ['Faster Hit Recovery', '—', '5% + life']],
     swap: [['Teleport charges', 'must have', 'must have'], ['+skills', '+1', '+2']],
     merc: [RES, LIFE, ['Life leech', '3%', '6%'], ['Faster Hit Recovery', '10%', '20%']],
+  };
+  // Gold find barb rows (guides L and C): gold first, then what keeps the runs safe and fast.
+  const GOLD = (g, gg) => ['Extra gold from monsters', g, gg];
+  const WANT_BARB = {
+    amulet: [GOLD('80%', '120%'), ['+Warcries skills', '+2', '+3'], ['Magic find', '15%', '25%+'], ['Faster Cast Rate', '—', '10%'], RES],
+    boots: [GOLD('40%', '80%'), ['Faster Run/Walk', '30%', '40%'], ['Fire resist', '20%', '40%'], ['Magic find', '—', '25%']],
+    grand: [GOLD('35%', '40%'), ['+1 Warcries', '—', '+1']], large: [GOLD('—', '22%')], small: [GOLD('8%', '10%'), ['Magic find', '5%', '7%']],
+    leveling: [LIFE, RES, ['Life leech (weapons, rings, amulet)', '3%', '6%'], STRDEX],
   };
   /* Every PD2 runeword from the PD2 wiki (RWHelms/RWChests/RWShields/RWQuivers/RWWeapons), pulled 2026-10-22:
      [name, category, bases, runes, required level, mods]. Sorted by level. */
@@ -633,12 +744,26 @@
   ];
   const HINT = { rare: 'Rare: up to 6 mods, so look for the top lines first.', magic: 'Magic: one prefix + one suffix, so you only get two of these.',
     crafted: 'Crafted: the recipe gives fixed mods, plus up to 4 random ones.', any: 'Any rarity: wear the best thing that drops.' };
-  let curFam = 'poison';
+  let curFam = 'poison', curArt = 'druid.jpg';
+  // Header, banner and sidebar text for the build on screen (the Druid tabs use the first build).
+  function chrome(b) {
+    const cls = b.cls || 'Druid';
+    curArt = b.art || 'druid.jpg';
+    document.getElementById('logo-cls').textContent = cls;
+    document.getElementById('banner-art').src = 'img/' + curArt;
+    document.getElementById('banner-title').textContent = b.banner || 'Venom → Shockwave';
+    document.getElementById('who-cls').textContent = 'Season 14 ' + cls;
+    return cls;
+  }
 
   function wantList(o) {
     const n = o.name;
     if (/^None/.test(n)) return null;
     if (o.merc) return WANT.merc;
+    if (curFam === 'barb') {
+      if (o.rar === 'any') return WANT_BARB.leveling;
+      return WANT_BARB[{ Amulet: 'amulet', Boots: 'boots', Grand: 'grand', Large: 'large', Small: 'small' }[o.slot]] || null;
+    }
     if (/Half Freeze/.test(n)) return WANT.hfdRing;
     if (/Tri-res/.test(n)) return WANT.triRes;
     if (/Teleport/.test(n)) return WANT.swap;
@@ -651,9 +776,11 @@
     return WANT[bySlot[o.slot]] || null;
   }
 
+  const itemStats = (n) => { if (STATS[n]) return STATS[n]; const rw = RUNEWORDS.find((r) => r[0] === n); return rw ? [rw[2], rw[3], rw[4], rw[5]] : null; };
+
   // The item's stat lines (unique/set/runeword) or its ranked stats to look for; shared by the tooltip and the stat cards.
   function tipBody(o) {
-    const s = STATS[o.name];
+    const s = itemStats(o.name);
     const fill = (t) => esc(t).replace('{main}', curFam === 'shock' ? 'Shockwave' : 'Poison Creeper').replace('{tree}', curFam === 'shock' ? 'Shape Shifting' : 'Summoning');
     if (s) {
       const [base, runes, req, mods] = s;
@@ -668,7 +795,7 @@
   function tipHTML(o) {
     const body = tipBody(o);
     if (!body) return '';
-    const s = STATS[o.name];
+    const s = itemStats(o.name);
     return `<div class="tt-n r-${o.rar}">${esc(o.name)}</div>${body}${s ? '' : `<div class="tt-key">good · <b>GG</b></div>${HINT[o.rar] ? `<div class="tt-hint">${HINT[o.rar]}</div>` : ''}`}
       ${o.note ? `<div class="tt-note">${esc(o.note)}</div>` : ''}
       <div class="tt-foot">${s ? 'Stats from the PD2 wiki; Season 14 may change some values' : 'Rough targets, in order of importance'}</div>`;
@@ -692,7 +819,7 @@
   const statBlurb = (ph) => `<div class="tips blurb"><h3>Stat targets</h3><ul>${ph.targets.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
     <h3>Reading the stat priority</h3><ul>
       <li>Unique, set and runeword items show their stats from the PD2 wiki. Season 14 may change some values.</li>
-      <li>Rare, magic and crafted items list the stats to look for, most important first, as <span class="hl">good</span> · <b class="gg">GG</b> values. These follow the loot filter's star ratings.</li>
+      <li>Rare, magic and crafted items list the stats to look for, most important first, as <span class="hl">good</span> · <b class="gg">GG</b> values. ${curFam === 'barb' ? 'These come from the two guides.' : "These follow the loot filter's star ratings."}</li>
       <li>Rares roll up to 6 mods, so the top lines matter most. Magic items only get one prefix and one suffix, so aim for the top two. Crafted items get fixed recipe mods plus up to 4 random ones.</li>
     </ul></div>`;
 
@@ -740,7 +867,7 @@
   function doll(ph, prefix) {
     const col = (slots) => slots.map((s) => { const i = ph.gear.findIndex((r) => r[0] === s); return i < 0 ? '' : item(ph.gear[i], prefix + ':' + i + ':' + ph.gear[i][1]); }).join('');
     return `<div class="doll"><div class="doll-grid"><div class="doll-col">${col(LEFT)}</div>
-      <div class="figure" aria-hidden="true"><img src="img/druid.jpg" alt=""></div>
+      <div class="figure" aria-hidden="true"><img src="img/${curArt}" alt=""></div>
       <div class="doll-col r">${col(RIGHT)}</div></div>
       <div class="doll-cap">Click an item's icon to tick it off once you've got it</div></div>`;
   }
@@ -772,6 +899,7 @@
   ];
   function renderLeveling() {
     hideTip();
+    chrome(BUILDS[0]);
     document.body.dataset.fam = 'poison';
     document.body.classList.add('wide');
     document.title = 'Leveling Guide | PD2 S14';
@@ -822,6 +950,7 @@
   const SHOP_NO = ['Druid pelts (vendors never stock them, and they can\'t be gambled)', 'Circlets, amulets and rings (gamble them instead)', 'Grand charms (skillers have to drop)', 'Ethereal items', 'Elite bases in Act 1–2 Hell'];
   function renderShopping() {
     hideTip();
+    chrome(BUILDS[0]);
     document.body.dataset.fam = 'poison';
     document.body.classList.add('wide');
     document.title = 'Shopping | PD2 S14';
@@ -858,6 +987,7 @@
   }
   function renderRunewords() {
     hideTip();
+    chrome(BUILDS[0]);
     document.body.dataset.fam = 'shock';
     document.body.classList.add('wide');
     document.title = 'Runewords | PD2 S14';
@@ -889,19 +1019,20 @@
     curFam = build.fam;
     hideTip();
     document.body.dataset.fam = build.fam;
-    document.title = build.name + ' — ' + ph.name + ' | PD2 S14 Druid';
-    const crest = `<img src="img/${build.fam === 'poison' ? 'poison_creeper' : 'shock_wave'}.png" alt="">`;
+    const cls = chrome(build);
+    document.title = build.name + ' — ' + ph.name + ' | PD2 S14 ' + cls;
+    const crest = `<img src="img/${{ poison: 'poison_creeper', shock: 'shock_wave', barb: 'find_item' }[build.fam]}.png" alt="">`;
     document.getElementById('crest').innerHTML = crest;
     document.getElementById('crest2').innerHTML = crest;
     document.getElementById('who-name').textContent = build.name;
     document.getElementById('builds').innerHTML = navHTML(build);
-    document.getElementById('crumbs').innerHTML = `PD2 › Season 14 › Druid › <b>${esc(build.name)}</b> › ${esc(ph.name)}`;
+    document.getElementById('crumbs').innerHTML = `PD2 › Season 14 › ${cls} › <b>${esc(build.name)}</b> › ${esc(ph.name)}`;
     document.getElementById('toc').innerHTML = SECTIONS.map(([id, t]) => `<li><button type="button" data-go="${id}">${esc(t)}</button></li>`).join('');
 
     const intro = `<p>${esc(ph.goal)}</p>
       <div class="switch"><div class="switch-l">Switch currently displayed phase</div><div class="phases">${build.phases.map((p) => `<a href="#${build.id}/${p.id}" class="${p === ph ? 'on' : ''}"${p === ph ? ' aria-current="true"' : ''}>${esc(p.name)}</a>`).join('')}</div></div>`;
 
-    const equipment = `<p>The items to go for in the <span class="hl">${esc(ph.name)}</span> phase of the ${esc(build.name)} Druid, plus charms, weapon swap and stat priority.</p>
+    const equipment = `<p>The items to go for in the <span class="hl">${esc(ph.name)}</span> phase of the ${esc(build.name)}${cls === 'Druid' ? ' Druid' : ''}, plus charms, weapon swap and stat priority.</p>
       <div class="tabs" role="tablist"><button type="button" data-tab="gear" class="${eqTab === 'gear' ? 'on' : ''}" aria-selected="${eqTab === 'gear'}">Equipment</button><button type="button" data-tab="stats" class="${eqTab === 'stats' ? 'on' : ''}" aria-selected="${eqTab === 'stats'}">Stat Priority</button></div>
       ${eqTab === 'gear' ? `<div class="eq"><div>${doll(ph, pre + ':g')}</div>
         <div><div class="box"><div class="box-h">Charms</div><div class="box-b">${list(ph.charms, pre + ':c')}</div></div>
@@ -914,12 +1045,12 @@
     const merc = `<div class="merc-type">${esc(ph.merc.type)}</div>${ph.merc.gear.length ? `<div class="merc">${list(ph.merc.gear, pre + ':m', true)}</div>` : ''}${ph.merc.alt ? `<p class="note-p">${esc(ph.merc.alt)}</p>` : ''}`;
 
     const key = `<div class="legend"><span class="r-unique">Unique</span><span class="r-set">Set</span><span class="r-runeword">Runeword</span><span class="r-rare">Rare</span><span class="r-crafted">Crafted</span><span class="r-magic">Magic</span><span class="r-any"><i>Any / stat priority</i></span></div>
-      <p class="note-p">V1 / V2 / V3 = the three build videos. S14 notes = Season 14 open beta patch notes. Your ticks are saved in this browser only. Item, skill and Druid art © Blizzard Entertainment (Diablo II), via the PD2 wiki and classic.battle.net.</p>`;
+      <p class="note-p">${build.key || 'V1 / V2 / V3 = the three build videos. S14 notes = Season 14 open beta patch notes. Your ticks are saved in this browser only. Item, skill and Druid art © Blizzard Entertainment (Diablo II), via the PD2 wiki and classic.battle.net.'}</p>`;
 
     document.getElementById('main').innerHTML = `
-      <div class="title"><h1>${esc(build.name)} Druid Build Guide — ${esc(ph.name)}</h1>
-        <div class="meta">Project Diablo 2 · <b>Season 14</b> · Druid</div>
-        <div class="badges"><span class="badge fam">Druid</span>${ph.tags.map((t) => `<span class="badge ${ph.warn && t === 'Experimental' ? 'warn' : ''}">${esc(t)}</span>`).join('')}</div></div>
+      <div class="title"><h1>${esc(build.name)}${cls === 'Druid' ? ' Druid' : ''} Build Guide — ${esc(ph.name)}</h1>
+        <div class="meta">Project Diablo 2 · <b>Season 14</b> · ${cls}</div>
+        <div class="badges"><span class="badge fam">${cls}</span>${ph.tags.map((t) => `<span class="badge ${ph.warn && t === 'Experimental' ? 'warn' : ''}">${esc(t)}</span>`).join('')}</div></div>
       ${section('intro', 'Introduction', intro)}${section('equipment', 'Equipment', equipment)}${section('skills', 'Skills', skills)}${section('merc', 'Mercenary', merc)}${section('key', 'Rarity Key', key)}`;
     spy();
   }
