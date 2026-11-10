@@ -1,1 +1,4 @@
 .cache/
+
+tools/dungeons/node_modules/
+tools/dungeons/fdj.json

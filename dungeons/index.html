@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="classic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dungeon Journal — WoW Forever</title>
+  <meta name="description" content="Every WoW Forever dungeon: bosses, loot and quests with prerequisite chains, quest giver spots and Wowhead links. Built for a second monitor.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Same Classic tokens as the Forever tab of the crafting calculator (../index.html). */
+    :root {
+      --bg: #1a0b08; --bg-2: #341512;
+      --card: rgba(22, 11, 8, 0.86); --card-solid: #1c0e0a;
+      --surface: rgba(255, 255, 255, 0.04); --surface-2: rgba(255, 255, 255, 0.07); --surface-3: rgba(255, 255, 255, 0.1);
+      --border: rgba(255, 255, 255, 0.08); --border-md: rgba(255, 255, 255, 0.15);
+      --accent: #f79d1c; --accent-hi: #f8b700; --accent-tint: rgba(247, 157, 28, 0.13); --accent-line: rgba(248, 183, 0, 0.45);
+      --nav-bg: rgba(53, 32, 17, 0.9);
+      --veil: 26, 11, 8; --glow: 248, 183, 0;
+      --gold: #f8b700; --camel: #e08a36; --heading: #ebdec2;
+      --text: #ffffff; --text-soft: rgba(255, 255, 255, 0.78); --text-muted: rgba(255, 255, 255, 0.5);
+      --q0: #9d9d9d; --q1: #f3eee2; --q2: #3ddc4b; --q3: #4a9bff; --q4: #b45cff; --q5: #ff9a2e;
+      --alli: #5aa0ff; --horde: #ff5a4a; --done: #6fcf6f; --warn: #ffb347;
+      --radius-lg: 6px; --radius: 4px;
+      --font-heading: 'Friz Quadrata TT', 'Friz Quadrata', 'Marcellus', Georgia, serif;
+      --font-body: 'Open Sans', Arial, Helvetica, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--bg); }
+    body {
+      font-family: var(--font-body); font-size: 14px; line-height: 1.45; color: var(--text);
+      background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 55%); background-attachment: fixed;
+      min-height: 100vh; padding: 14px 16px 40px; -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .7;
+      background: linear-gradient(180deg, rgba(var(--veil), .2) 0%, rgba(var(--veil), .92) 70%), url('../bg/classic-light.jpg') center top / cover no-repeat;
+    }
+    body > * { position: relative; z-index: 1; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font-family: inherit; color: inherit; font-size: inherit; }
+
+    /* Header */
+    header {
+      max-width: 1500px; margin: 0 auto 12px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      padding: 8px 12px; background: var(--nav-bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      box-shadow: 0 8px 24px rgba(0,0,0,.35); backdrop-filter: blur(10px);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+    .brand-mark {
+      width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; color: var(--heading);
+      background: radial-gradient(circle at 35% 30%, var(--accent-hi), #4a2a1a 70%); border: 2px solid var(--camel);
+    }
+    .brand-mark svg { width: 17px; height: 17px; }
+    .brand h1 { font-family: var(--font-heading); font-weight: 400; font-size: 1.2rem; color: var(--heading); text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+    .brand h1 span { color: var(--camel); }
+    .navlink { color: var(--text-soft); font-family: var(--font-heading); font-size: .98rem; padding: 6px 4px; border-bottom: 2px solid transparent; }
+    .navlink:hover { color: var(--text); }
+    .navlink.active { color: var(--heading); border-bottom-color: var(--accent); }
+    .search { position: relative; flex: 1 1 260px; max-width: 420px; }
+    .search input {
+      width: 100%; height: 34px; padding: 0 12px 0 32px; border-radius: var(--radius); border: 1px solid var(--border-md);
+      background: rgba(0,0,0,.35); outline: none;
+    }
+    .search input:focus { border-color: var(--accent-line); }
+    .search svg { position: absolute; left: 10px; top: 9px; width: 16px; height: 16px; color: var(--text-muted); }
+    .seg { display: inline-flex; border: 1px solid var(--border-md); border-radius: var(--radius); overflow: hidden; }
+    .seg button { background: transparent; border: 0; padding: 6px 10px; cursor: pointer; color: var(--text-soft); }
+    .seg button + button { border-left: 1px solid var(--border-md); }
+    .seg button.on { background: var(--accent-tint); color: var(--heading); }
+    .seg button[data-f="Alliance"].on { color: var(--alli); }
+    .seg button[data-f="Horde"].on { color: var(--horde); }
+
+    /* Layout */
+    .layout { max-width: 1500px; margin: 0 auto; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 12px; align-items: start; }
+    .panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+    .side { position: sticky; top: 14px; max-height: calc(100vh - 28px); display: flex; flex-direction: column; }
+    .side-head { padding: 10px 10px 8px; border-bottom: 1px solid var(--border); display: flex; gap: 6px; align-items: center; }
+    .side-head .seg { flex: 1; }
+    .side-head .seg button { flex: 1; }
+    .dlist { overflow-y: auto; padding: 4px; }
+    .ditem {
+      display: grid; grid-template-columns: 1fr auto; gap: 0 8px; width: 100%; text-align: left; background: transparent;
+      border: 0; border-left: 2px solid transparent; padding: 6px 8px; cursor: pointer; border-radius: 3px;
+    }
+    .ditem:hover { background: var(--surface-2); }
+    .ditem.on { background: var(--accent-tint); border-left-color: var(--accent); }
+    .ditem .nm { color: var(--heading); font-weight: 600; font-size: .9rem; }
+    .ditem .lv { color: var(--text-muted); font-size: .8rem; font-variant-numeric: tabular-nums; }
+    .ditem .sub { grid-column: 1 / -1; color: var(--text-muted); font-size: .76rem; }
+    .tag { display: inline-block; font-size: .68rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 0 5px; border-radius: 3px; vertical-align: 1px; }
+    .tag.new { background: rgba(0,175,215,.18); color: #7fd3ec; }
+    .tag.alli { background: rgba(90,160,255,.15); color: var(--alli); }
+    .tag.horde { background: rgba(255,90,74,.15); color: var(--horde); }
+    .tag.cls { background: var(--surface-3); color: var(--heading); }
+    .tag.rare { background: rgba(180,92,255,.18); color: #d6a8ff; }
+    .tag.misc { background: var(--surface-3); color: var(--text-soft); }
+    .tag.tbd { background: rgba(255,179,71,.15); color: var(--warn); }
+
+    /* Main */
+    main { min-width: 0; }
+    .dhead { padding: 14px 16px 12px; }
+    .dhead h2 { font-family: var(--font-heading); font-weight: 400; font-size: 1.6rem; color: var(--heading); line-height: 1.2; }
+    .dmeta { color: var(--camel); font-size: .9rem; margin-top: 2px; }
+    .ddesc { color: var(--text-soft); margin-top: 6px; max-width: 80ch; }
+    .tabs { display: flex; gap: 2px; padding: 0 12px; border-bottom: 1px solid var(--border); align-items: end; flex-wrap: wrap; }
+    .tabs button {
+      background: transparent; border: 0; border-bottom: 2px solid transparent; padding: 8px 12px 7px; cursor: pointer;
+      font-family: var(--font-heading); font-size: 1rem; color: var(--text-soft);
+    }
+    .tabs button.on { color: var(--heading); border-bottom-color: var(--accent); }
+    .tabs .count { font-family: var(--font-body); font-size: .75rem; color: var(--text-muted); margin-left: 4px; }
+    .tabs .spacer { flex: 1; }
+    .tabs label { color: var(--text-muted); font-size: .82rem; padding: 0 4px 9px; display: flex; gap: 6px; align-items: center; cursor: pointer; }
+    .body { padding: 12px; display: grid; gap: 10px; }
+    .cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 10px; align-items: start; }
+
+    .card { background: rgba(0,0,0,.28); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; }
+    .card h3 { font-family: var(--font-heading); font-weight: 400; font-size: 1.1rem; color: var(--heading); display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+    .card h3 a:hover { text-decoration: underline; }
+    .card .lvb { font-family: var(--font-body); font-size: .78rem; color: var(--text-muted); }
+    .card .bdesc { color: var(--text-soft); font-size: .84rem; margin-top: 3px; }
+    .sect { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin: 8px 0 3px; }
+
+    .loot { list-style: none; display: grid; gap: 1px; margin-top: 6px; }
+    .it { display: grid; grid-template-columns: 26px 1fr auto; gap: 0 8px; align-items: center; padding: 2px 4px; border-radius: 3px; }
+    .it:hover { background: var(--surface-2); }
+    .ic { width: 24px; height: 24px; border-radius: 3px; border: 1px solid rgba(255,255,255,.18); background: #000 center / cover; }
+    .it .name { font-weight: 600; font-size: .88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .it .name:hover { text-decoration: underline; }
+    .it .slot { font-size: .76rem; color: var(--text-muted); white-space: nowrap; text-align: right; }
+    .it .inote { grid-column: 2 / -1; font-size: .74rem; color: var(--text-muted); margin-top: -2px; }
+    .q0 { color: var(--q0); } .q1 { color: var(--q1); } .q2 { color: var(--q2); } .q3 { color: var(--q3); } .q4 { color: var(--q4); } .q5 { color: var(--q5); }
+    details.more summary { cursor: pointer; color: var(--text-muted); font-size: .8rem; margin-top: 6px; list-style: none; }
+    details.more summary::before { content: '▸ '; }
+    details.more[open] summary::before { content: '▾ '; }
+
+    /* Quests */
+    .quest { position: relative; }
+    .quest.done { opacity: .5; }
+    .qtop { display: grid; grid-template-columns: auto 1fr; gap: 8px; align-items: start; }
+    .chk { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--done); cursor: pointer; }
+    .quest h3 a { color: var(--gold); }
+    .qline { display: grid; grid-template-columns: 74px 1fr; gap: 6px; font-size: .86rem; margin-top: 3px; }
+    .qline > b { color: var(--text-muted); font-weight: 600; font-size: .78rem; padding-top: 1px; }
+    .qline > span { color: var(--text-soft); }
+    .coord { display: inline-flex; gap: 4px; align-items: center; margin-left: 4px; padding: 0 6px; border-radius: 3px; background: var(--surface-2); color: var(--accent-hi); font-size: .78rem; cursor: pointer; border: 0; white-space: nowrap; }
+    .coord:hover { background: var(--accent-tint); }
+    .note { margin-top: 6px; font-size: .82rem; color: var(--text-soft); background: var(--surface); border-left: 2px solid var(--camel); padding: 4px 8px; border-radius: 0 3px 3px 0; }
+    .note.warn { border-left-color: var(--warn); }
+    .rew { margin-top: 6px; }
+    .rew .xp { font-size: .84rem; color: var(--text-soft); }
+    .rew .xp b { color: var(--heading); }
+    .chain { margin-top: 8px; border-top: 1px dashed var(--border-md); padding-top: 6px; }
+    .chain ol { list-style: none; counter-reset: s; display: grid; gap: 2px; }
+    .chain li { counter-increment: s; }
+    .chain li > details > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 22px auto 1fr; gap: 6px; align-items: center; font-size: .86rem; padding: 2px 0; }
+    .chain li > details > summary::before { content: counter(s); display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--surface-3); font-size: .72rem; color: var(--heading); }
+    .chain li.done > details > summary::before { content: '✓'; background: rgba(111,207,111,.25); color: var(--done); }
+    .chain .stepbody { margin: 2px 0 6px 28px; padding-left: 8px; border-left: 1px solid var(--border-md); }
+    .chain a { color: var(--gold); }
+    .chain .lvb { color: var(--text-muted); font-size: .76rem; }
+    .qlink { color: var(--gold); }
+    .qlink:hover, .chain a:hover { text-decoration: underline; }
+
+    /* Search results */
+    .results { display: grid; gap: 6px; }
+    .res { display: grid; grid-template-columns: 80px 1fr; gap: 8px; align-items: center; padding: 6px 10px; }
+    .res .kind { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+    .res .where { color: var(--text-muted); font-size: .8rem; }
+    .res button.goto { background: none; border: 0; color: var(--camel); cursor: pointer; font-size: .8rem; padding: 0; text-align: left; }
+    .res button.goto:hover { text-decoration: underline; }
+
+    .empty { color: var(--text-muted); padding: 20px; text-align: center; }
+    footer { max-width: 1500px; margin: 14px auto 0; color: var(--text-muted); font-size: .76rem; text-align: center; }
+    footer a { color: var(--camel); }
+    .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--card-solid); border: 1px solid var(--accent-line); padding: 6px 14px; border-radius: var(--radius); font-size: .84rem; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 10; }
+    .toast.show { opacity: 1; }
+    select.dsel { display: none; width: 100%; height: 36px; border-radius: var(--radius); background: var(--card-solid); border: 1px solid var(--border-md); padding: 0 8px; }
+
+    @media (max-width: 860px) {
+      body { padding: 10px 16px 30px; }
+      .layout { grid-template-columns: 1fr; }
+      .side { position: static; max-height: none; }
+      .dlist { display: none; }
+      select.dsel { display: block; }
+      .side-head { flex-wrap: wrap; }
+      .cols { grid-template-columns: 1fr; }
+      .brand h1 span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="./">
+    <div class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>
+    </div>
+    <h1>Dungeon Journal <span>for WoW Forever</span></h1>
+  </a>
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="Search dungeons, bosses, items, quests…" autocomplete="off">
+  </div>
+  <div class="seg" id="faction" title="Show quests for">
+    <button data-f="All" class="on">All</button><button data-f="Alliance">Alliance</button><button data-f="Horde">Horde</button>
+  </div>
+  <a class="navlink" href="../">Crafting</a>
+  <a class="navlink active" href="./">Dungeons</a>
+</header>
+
+<div class="layout" id="layout">
+  <aside class="panel side">
+    <div class="side-head">
+      <div class="seg" id="listmode"><button data-m="all" class="on">All dungeons</button><button data-m="new">New in Forever</button></div>
+      <select class="dsel" id="dsel" aria-label="Dungeon"></select>
+    </div>
+    <nav class="dlist" id="dlist" aria-label="Dungeons"></nav>
+  </aside>
+  <main class="panel" id="main"><div class="empty">Loading…</div></main>
+</div>
+
+<footer>
+  Dungeon, boss, loot and quest data from the <b>DungeonJournal</b> addon by Exehn (ForeverDungeonJournal 1.7.4).
+  Item and quest details from <a href="https://www.wowhead.com/forever" target="_blank" rel="noopener">Wowhead Forever</a>.
+  <span id="built"></span>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>const whTooltips = { colorLinks: false, iconizeLinks: false, renameLinks: false };</script>
+<script src="https://wow.zamimg.com/js/tooltips.js" async></script>
+<script>
+(() => {
+  const WH = 'https://www.wowhead.com/forever/';
+  const ICON = n => `https://wow.zamimg.com/images/wow/icons/medium/${n}.jpg`;
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem('dj-' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem('dj-' + k, JSON.stringify(v)); } catch {} },
+  };
+  let DATA, done = new Set(store.get('done', [])), faction = store.get('faction', 'All'), listMode = store.get('listmode', 'all');
+  let hideDone = store.get('hidedone', false);
+  let cur = null, tab = 'bosses';
+
+  function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('show'), 1600); }
+
+  // ---------- rendering helpers ----------
+  function item(ref, opts = {}) {
+    if (!ref) return '';
+    const it = ref.id ? (DATA.items[ref.id] || {}) : ref;
+    const q = ref.q ?? it.q ?? 1;
+    const icon = it.i ? `style="background-image:url('${ICON(it.i)}')"` : '';
+    const name = esc(it.n || 'Unknown item');
+    const link = ref.id ? `<a class="name q${q}" href="${WH}item=${ref.id}" target="_blank" rel="noopener">${name}</a>` : `<span class="name q${q}">${name}</span>`;
+    const right = [ref.c > 1 ? '×' + ref.c : '', ref.s || '', it.l && opts.ilvl !== false ? 'i' + it.l : ''].filter(Boolean).join(' · ');
+    const note = ref.note ? `<span class="inote">${esc(ref.note)}</span>` : '';
+    return `<li class="it"><span class="ic" ${icon}></span>${link}<span class="slot">${esc(right)}</span>${note}</li>`;
+  }
+  const itemList = refs => refs && refs.length ? `<ul class="loot">${refs.map(r => item(r)).join('')}</ul>` : '';
+  function coord(p) {
+    if (!p) return '';
+    return `<button class="coord" data-way="/way ${esc(p.z)} ${p.x} ${p.y}" title="${esc(p.d || p.t || '')} — click to copy /way">${esc(p.z)} ${p.x}, ${p.y}</button>`;
+  }
+  const factionTag = f => f === 'Alliance' ? '<span class="tag alli">Alliance</span>' : f === 'Horde' ? '<span class="tag horde">Horde</span>' : '';
+  const factionOk = f => faction === 'All' || !f || f === 'Both' || f === faction;
+
+  function questBody(q, inChain) {
+    const L = [];
+    const line = (k, v) => { if (v) L.push(`<div class="qline"><b>${k}</b><span>${v}</span></div>`); };
+    line('Start', (q.pu ? esc(q.pu) : (q.so ? esc(q.so.n) + (q.so.d ? ' — ' + esc(q.so.d) : '') : '')) + coord(q.sm));
+    if (q.si) line('Start item', `<ul class="loot" style="margin:0">${item(q.si)}</ul>`);
+    line('Turn in', (q.ti ? esc(q.ti) : '') + coord(q.tm));
+    line('Objective', esc(q.obj) + (q.where ? `<br><span style="color:var(--text-muted)">${esc(q.where)}</span>` : ''));
+    if (q.req) line('Needs', `<ul class="loot" style="margin:0">${q.req.map(r => item(r)).join('')}</ul>`);
+    if (q.pi) line('Provided', `<ul class="loot" style="margin:0">${item(q.pi)}</ul>`);
+    let h = L.join('');
+    if (q.note) h += `<div class="note">${esc(q.note)}</div>`;
+    if (q.ni) h += `<ul class="loot">${item(q.ni)}</ul>`;
+    if (q.warn) h += `<div class="note warn">${esc(q.warn)}</div>`;
+    const links = [['from', 'Starts from'], ['see', 'See also'], ['next', 'Leads to']]
+      .filter(([k]) => q[k]).map(([k, t]) => `${t}: ${qlink(q[k].id, q[k].n)}`);
+    if (links.length) h += `<div class="qline"><b>Linked</b><span>${links.join(' · ')}</span></div>`;
+    // rewards
+    const xp = [q.xp ? `<b>${q.xp.toLocaleString()}</b> XP` : '', q.rs ? esc(q.rs) : ''].filter(Boolean).join(' • ');
+    if (xp || q.ri || q.ra || q.learn) {
+      h += `<div class="rew"><div class="sect">Rewards${q.ri && q.rc ? ' — choose one' : ''}</div>`;
+      if (xp) h += `<div class="xp">${xp}</div>`;
+      h += itemList(q.ri);
+      if (q.ra) h += `<div class="sect">You also get</div>` + itemList(q.ra);
+      if (q.learn) h += `<div class="sect">Teaches</div>` + itemList([q.learn]);
+      h += `</div>`;
+    }
+    return h;
+  }
+  const qlink = (id, n) => `<a class="qlink" href="${WH}quest=${id}" target="_blank" rel="noopener">${esc(n || DATA.quests[id]?.n || 'Quest ' + id)}</a>`;
+
+  function questCard(q) {
+    const tags = [factionTag(q.f), q.cls ? `<span class="tag cls">${esc(q.cls)}</span>` : '', q.prof ? `<span class="tag cls">${esc(q.prof)}</span>` : '',
+      q.att ? `<span class="tag rare">Attunement</span>` : '', q.sid ? '<span class="tag misc">Starts inside</span>' : '',
+      q.rep ? '<span class="tag misc">Repeatable</span>' : '', q.x ? '<span class="tag tbd" title="Wowhead Forever has no page for this quest yet">Not on Wowhead</span>' : ''].join(' ');
+    let chain = '';
+    if (q.chain && q.chain.length) {
+      const steps = q.chain.map(id => {
+        const s = DATA.quests[id] || { id, n: 'Quest ' + id };
+        return `<li class="${done.has(id) ? 'done' : ''}"><details><summary><span></span><span>${qlink(id, s.n)} <span class="lvb">${s.lv ? 'L' + s.lv : ''}</span></span><span></span></summary>
+          <div class="stepbody">${questBody(s, true)}<label style="font-size:.8rem;color:var(--text-muted);display:flex;gap:6px;align-items:center;margin-top:4px"><input type="checkbox" class="chk" data-q="${id}" ${done.has(id) ? 'checked' : ''}> Done</label></div></details></li>`;
+      }).join('');
+      chain = `<div class="chain"><div class="sect">Do these first (${q.chain.length})</div><ol>${steps}</ol></div>`;
+    }
+    return `<article class="card quest ${done.has(q.id) ? 'done' : ''}" data-qid="${q.id}">
+      <div class="qtop"><input type="checkbox" class="chk" data-q="${q.id}" ${done.has(q.id) ? 'checked' : ''} title="Mark done">
+      <div><h3>${qlink(q.id, q.n)} <span class="lvb">Level ${q.lv ?? '?'}${q.rq ? ' · needs ' + q.rq : ''}</span></h3>
+      <div style="margin-top:2px">${tags}</div>${questBody(q)}${chain}</div></div></article>`;
+  }
+
+  function bossCard(b) {
+    const name = b.npc ? `<a href="${WH}npc=${b.npc}" target="_blank" rel="noopener">${esc(b.n)}</a>` : esc(b.n);
+    const tags = [b.rare ? '<span class="tag rare">Rare</span>' : '', factionTag(b.f)].join(' ');
+    let h = `<article class="card"><h3>${name} ${b.lv ? `<span class="lvb">Level ${esc(b.lv)}</span>` : ''} ${tags}</h3>`;
+    if (b.d) h += `<div class="bdesc">${esc(b.d)}</div>`;
+    if (b.sum) h += `<div class="sect">Summon with</div>${itemList([b.sum])}`;
+    if (b.ln) h += `<div class="bdesc" style="color:var(--camel)">${esc(b.ln)}</div>`;
+    h += b.loot.length ? itemList(sortLoot(b.loot)) : `<div class="bdesc">No loot recorded yet.</div>`;
+    if (b.prob) h += `<div class="sect">Probable drops (not confirmed)</div>${itemList(b.prob)}`;
+    if (b.shared) h += `<details class="more"><summary>Shared dungeon loot (${b.shared.length})</summary>${itemList(b.shared)}</details>`;
+    return h + `</article>`;
+  }
+  function sortLoot(list) {
+    const q = r => r.q ?? DATA.items[r.id]?.q ?? 1;
+    return list.slice().sort((a, b) => q(b) - q(a));
+  }
+
+  // ---------- views ----------
+  function dungeonQuests(d) {
+    return d.quests.map(id => DATA.quests[id]).filter(q => q && factionOk(q.f));
+  }
+  function renderDungeon() {
+    const d = cur;
+    const main = $('#main');
+    const qs = dungeonQuests(d);
+    const qsShown = hideDone ? qs.filter(q => !done.has(q.id)) : qs;
+    const bosses = d.bosses.filter(b => !b.trash && factionOk(b.f));
+    const trash = d.bosses.filter(b => b.trash);
+    const ent = d.ent ? `<div class="dmeta" style="color:var(--text-soft)">Entrance: ${coord(d.ent)}${d.ent.d ? ' <span style="color:var(--text-muted)">' + esc(d.ent.d) + '</span>' : ''}</div>` : '';
+    const doneCount = qs.filter(q => done.has(q.id)).length;
+    let h = `<div class="dhead"><h2>${esc(d.n)} ${d.new ? '<span class="tag new">New in Forever</span>' : ''}</h2>
+      <div class="dmeta">${d.lv ? 'Level ' + esc(d.lv) : ''}${d.loc ? ' · ' + esc(d.loc) : ''}</div>${ent}
+      ${d.d ? `<p class="ddesc">${esc(d.d)}</p>` : ''}
+      ${d.itemsTBD ? '<div style="margin-top:6px"><span class="tag tbd">Loot list still being filled in</span></div>' : ''}</div>
+      <div class="tabs">
+        ${d.bosses.length ? `<button data-t="bosses" class="${tab === 'bosses' ? 'on' : ''}">Bosses<span class="count">${bosses.length}</span></button>` : ''}
+        <button data-t="quests" class="${tab === 'quests' ? 'on' : ''}">Quests<span class="count">${doneCount}/${qs.length}</span></button>
+        <span class="spacer"></span>
+        ${tab === 'quests' ? `<label><input type="checkbox" id="hidedone" ${hideDone ? 'checked' : ''}> Hide done</label>` : ''}
+      </div><div class="body">`;
+    if (tab === 'bosses' && d.bosses.length) {
+      h += `<div class="cols">${bosses.map(bossCard).join('')}${trash.map(bossCard).join('')}</div>`;
+    } else {
+      h += qsShown.length ? `<div class="cols">${qsShown.map(questCard).join('')}</div>`
+        : `<div class="empty">${qs.length ? 'All quests here are done.' : 'No quests for this faction.'}</div>`;
+    }
+    main.innerHTML = h + `</div>`;
+    refreshTooltips();
+  }
+
+  function search(term) {
+    const t = term.trim().toLowerCase();
+    const R = [];
+    const where = new Map(); // item id -> [dungeon, boss]
+    for (const d of DATA.dungeons) {
+      if (d.n.toLowerCase().includes(t)) R.push({ k: 'Dungeon', h: `<b style="color:var(--heading)">${esc(d.n)}</b>`, d, tab: 'bosses' });
+      for (const b of d.bosses) {
+        if (!b.trash && b.n.toLowerCase().includes(t)) R.push({ k: 'Boss', h: `<b style="color:var(--heading)">${esc(b.n)}</b>`, d, tab: 'bosses' });
+        for (const l of [...b.loot, ...(b.prob || [])]) {
+          const n = (l.id ? DATA.items[l.id]?.n : l.n) || '';
+          if (n.toLowerCase().includes(t)) R.push({ k: 'Loot', h: `<ul class="loot" style="margin:0">${item(l)}</ul><span class="where">${esc(b.n)}</span>`, d, tab: 'bosses' });
+        }
+      }
+      for (const id of d.quests) {
+        const q = DATA.quests[id];
+        if (!q || !factionOk(q.f)) continue;
+        if (q.n.toLowerCase().includes(t)) R.push({ k: 'Quest', h: `${qlink(id, q.n)} <span class="lvb" style="color:var(--text-muted)">L${q.lv ?? '?'}</span> ${factionTag(q.f)}`, d, tab: 'quests' });
+        for (const r of [...(q.ri || []), ...(q.ra || [])]) {
+          const n = DATA.items[r.id]?.n || '';
+          if (n.toLowerCase().includes(t)) R.push({ k: 'Reward', h: `<ul class="loot" style="margin:0">${item(r)}</ul><span class="where">from ${esc(q.n)}</span>`, d, tab: 'quests' });
+        }
+      }
+    }
+    const main = $('#main');
+    const shown = R.slice(0, 200);
+    main.innerHTML = `<div class="dhead"><h2>Search</h2><div class="dmeta">${R.length} result${R.length === 1 ? '' : 's'} for “${esc(term)}”${R.length > 200 ? ' (first 200 shown)' : ''}</div></div>
+      <div class="body results">${shown.map((r, i) => `<div class="card res"><span class="kind">${r.k}</span><div>${r.h}<div><button class="goto" data-i="${i}">${esc(r.d.n)} →</button></div></div></div>`).join('') || '<div class="empty">Nothing found.</div>'}</div>`;
+    main.querySelectorAll('.goto').forEach(b => b.onclick = () => { const r = shown[+b.dataset.i]; $('#q').value = ''; select(r.d, r.tab); });
+    refreshTooltips();
+  }
+
+  function renderList() {
+    const list = DATA.dungeons.filter(d => !d.chainPage && (listMode === 'all' || d.new));
+    $('#dlist').innerHTML = list.map(d => {
+      const qs = dungeonQuests(d), dn = qs.filter(q => done.has(q.id)).length;
+      return `<button class="ditem ${cur === d ? 'on' : ''}" data-d="${esc(d.n)}"><span class="nm">${esc(d.n)}</span><span class="lv">${esc(d.lv || '')}</span>
+        <span class="sub">${d.new ? '<span class="tag new">New</span> ' : ''}${d.bosses.filter(b => !b.trash).length} bosses · ${dn}/${qs.length} quests</span></button>`;
+    }).join('');
+    $('#dsel').innerHTML = list.map(d => `<option value="${esc(d.n)}" ${cur === d ? 'selected' : ''}>${esc(d.n)} (${esc(d.lv || '')})</option>`).join('');
+  }
+
+  function select(d, t) {
+    cur = d;
+    if (t) tab = t;
+    if (!d.bosses.length) tab = 'quests';
+    history.replaceState(null, '', '#' + slug(d.n) + (tab === 'quests' ? '/quests' : ''));
+    renderList(); renderDungeon();
+    $('#main').scrollIntoView({ block: 'start', behavior: 'instant' in document.documentElement.style ? 'instant' : 'auto' });
+    window.scrollTo(0, 0);
+    document.querySelector('.ditem.on')?.scrollIntoView({ block: 'nearest' });
+  }
+
+  function refreshTooltips() { try { window.$WowheadPower && $WowheadPower.refreshLinks(); } catch {} }
+
+  // ---------- events ----------
+  document.addEventListener('click', e => {
+    const c = e.target.closest('.coord');
+    if (c) { e.preventDefault(); navigator.clipboard?.writeText(c.dataset.way).then(() => toast('Copied ' + c.dataset.way), () => toast(c.dataset.way)); return; }
+    const di = e.target.closest('.ditem');
+    if (di) { select(DATA.dungeons.find(d => d.n === di.dataset.d)); return; }
+    const tb = e.target.closest('.tabs button[data-t]');
+    if (tb) { tab = tb.dataset.t; select(cur); return; }
+    const f = e.target.closest('#faction button');
+    if (f) { faction = f.dataset.f; store.set('faction', faction); paintSeg(); rerender(); return; }
+    const m = e.target.closest('#listmode button');
+    if (m) { listMode = m.dataset.m; store.set('listmode', listMode); paintSeg(); renderList(); return; }
+  });
+  document.addEventListener('change', e => {
+    if (e.target.id === 'hidedone') { hideDone = e.target.checked; store.set('hidedone', hideDone); renderDungeon(); return; }
+    if (e.target.id === 'dsel') { select(DATA.dungeons.find(d => d.n === e.target.value)); return; }
+    const q = e.target.dataset?.q;
+    if (q) {
+      const id = +q;
+      e.target.checked ? done.add(id) : done.delete(id);
+      store.set('done', [...done]);
+      const scroll = window.scrollY;
+      // keep open chain steps open across the re-render
+      const open = [...document.querySelectorAll('.chain details[open] .chk')].map(x => x.dataset.q);
+      renderList(); renderDungeon();
+      open.forEach(o => document.querySelectorAll(`.chain .chk[data-q="${o}"]`).forEach(x => x.closest('details').open = true));
+      window.scrollTo(0, scroll);
+    }
+  });
+  let st;
+  $('#q').addEventListener('input', e => {
+    clearTimeout(st);
+    const v = e.target.value;
+    st = setTimeout(() => v.trim().length >= 2 ? search(v) : cur && renderDungeon(), 150);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); $('#q').focus(); }
+    if (e.key === 'Escape' && document.activeElement.id === 'q') { $('#q').value = ''; cur && renderDungeon(); $('#q').blur(); }
+  });
+  function paintSeg() {
+    document.querySelectorAll('#faction button').forEach(b => b.classList.toggle('on', b.dataset.f === faction));
+    document.querySelectorAll('#listmode button').forEach(b => b.classList.toggle('on', b.dataset.m === listMode));
+  }
+  function rerender() {
+    renderList();
+    const v = $('#q').value;
+    v.trim().length >= 2 ? search(v) : renderDungeon();
+  }
+
+  fetch('data.json').then(r => r.json()).then(data => {
+    DATA = data;
+    $('#built').textContent = '· Updated ' + data.built;
+    paintSeg();
+    const [h, t] = location.hash.slice(1).split('/');
+    const d = DATA.dungeons.find(x => slug(x.n) === h) || DATA.dungeons[0];
+    select(d, t === 'quests' ? 'quests' : 'bosses');
+  }).catch(err => { $('#main').innerHTML = `<div class="empty">Could not load the dungeon data (${esc(err.message)}).</div>`; });
+})();
+</script>
+</body>
+</html>

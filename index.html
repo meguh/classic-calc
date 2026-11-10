@@ -231,6 +231,7 @@
     .exp-btn:hover:not(.disabled) { color: var(--text); }
     .exp-btn.active { color: var(--heading); border-bottom-color: var(--accent); text-shadow: 0 0 12px rgba(var(--glow), 0.35); }
     .exp-btn.disabled { opacity: 0.35; cursor: default; }
+    a.site-link { text-decoration: none; display: inline-block; }
 
     .cart-btn {
       position: relative;
@@ -1226,6 +1227,7 @@
     <button class="exp-btn" data-exp="wotlk">WotLK</button>
     <button class="exp-btn" data-exp="forever">Forever</button>
   </div>
+  <a class="exp-btn site-link" href="dungeons/" title="Forever dungeon journal: bosses, loot and quests">Dungeons</a>
   <button class="cart-btn" id="cart-btn" title="Shopping cart">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
     Cart
@@ -1804,7 +1806,7 @@ function setExpansionBg(exp) {
 }
 
 function setupExpansion() {
-  const buttons = document.querySelectorAll('.exp-btn');
+  const buttons = document.querySelectorAll('.exp-btn[data-exp]');
   const hasWotlk = datasets.classic.allRecipes.some(r => r.learned_at_rank > 375);
   if (!hasWotlk) {
     document.querySelector('[data-exp="wotlk"]').classList.add('disabled');

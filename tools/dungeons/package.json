@@ -1,0 +1,12 @@
+{
+  "name": "dungeon-journal-data",
+  "private": true,
+  "description": "Rebuilds dungeons/data.json from the ForeverDungeonJournal addon + Wowhead Forever tooltips",
+  "scripts": {
+    "extract": "node extract.js \"D:/World of Warcraft/_forever_/Interface/AddOns/ForeverDungeonJournal\" fdj.json",
+    "wowhead": "node fetch-wowhead.js fdj.json wowhead.json",
+    "build": "node build-dungeons.js fdj.json wowhead.json ../../dungeons/data.json",
+    "all": "npm run extract && npm run wowhead && npm run build"
+  },
+  "dependencies": { "fengari": "0.1.4" }
+}
