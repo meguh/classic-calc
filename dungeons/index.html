@@ -84,6 +84,18 @@
       display: grid; grid-template-columns: 1fr auto; gap: 0 8px; width: 100%; text-align: left; background: transparent;
       border: 0; border-left: 2px solid transparent; padding: 6px 8px; cursor: pointer; border-radius: 3px;
     }
+    .side-head { flex-wrap: wrap; }
+    .dfilter { position: relative; width: 100%; }
+    .dfilter input {
+      width: 100%; height: 30px; padding: 0 26px 0 9px; border-radius: var(--radius); border: 1px solid var(--border-md);
+      background: rgba(0,0,0,.35); outline: none; font-size: .86rem;
+    }
+    .dfilter input:focus { border-color: var(--accent-line); }
+    .dfilter button { position: absolute; right: 4px; top: 5px; width: 20px; height: 20px; border: 0; background: none; color: var(--text-muted); cursor: pointer; display: none; }
+    .dfilter.has button { display: block; }
+    .dfilter button:hover { color: var(--text); }
+    .ditem .ab { color: var(--camel); font-weight: 700; font-size: .7rem; letter-spacing: .04em; }
+    .dnone { color: var(--text-muted); font-size: .84rem; padding: 10px 8px; }
     .ditem:hover { background: var(--surface-2); }
     .ditem.on { background: var(--accent-tint); border-left-color: var(--accent); }
     .ditem .nm { color: var(--heading); font-weight: 600; font-size: .9rem; }
@@ -215,6 +227,10 @@
   <aside class="panel side">
     <div class="side-head">
       <div class="seg" id="listmode"><button data-m="all" class="on">All dungeons</button><button data-m="new">New in Forever</button></div>
+      <div class="dfilter" id="dfilter">
+        <input id="df" type="text" placeholder="Filter: name or BRD, SFK, ZF…" autocomplete="off" spellcheck="false" aria-label="Filter dungeons">
+        <button type="button" id="dfclear" title="Clear filter" aria-label="Clear filter">✕</button>
+      </div>
       <select class="dsel" id="dsel" aria-label="Dungeon"></select>
     </div>
     <nav class="dlist" id="dlist" aria-label="Dungeons"></nav>
@@ -399,14 +415,83 @@
     refreshTooltips();
   }
 
+  // Common abbreviations players use. The first one is shown in the list.
+  // "DM" is both Deadmines and Dire Maul, as in game chat; "SM" matches all four wings.
+  const ABBR = {
+    'Hall of Thanes': ['HoT', 'Thanes'],
+    'Ragefire Chasm': ['RFC'],
+    'Ruins of Lordaeron': ['RoL', 'Ruins'],
+    'The Deadmines': ['DM', 'VC', 'Deadmines'],
+    'Wailing Caverns': ['WC'],
+    'Shadowfang Keep': ['SFK'],
+    'Blackfathom Deeps': ['BFD'],
+    'Excavation Site: Wetlands': ['Excav', 'Dig', 'ESW'],
+    'The Stockade': ['Stocks', 'Stockades'],
+    'City of Dalaran': ['Dal', 'Dalaran', 'CoD'],
+    'Gnomeregan': ['Gnomer', 'Gnome'],
+    'Razorfen Kraul': ['RFK'],
+    'Scarlet Monastery: Graveyard': ['GY', 'SM', 'SMGY', 'SM GY'],
+    'Scarlet Monastery: Library': ['Lib', 'SM', 'SMLib', 'SM Lib'],
+    'Scarlet Monastery: Armory': ['Arm', 'SM', 'SMArm', 'SM Arm'],
+    'Scarlet Monastery: Cathedral': ['Cath', 'SM', 'SMCath', 'SM Cath'],
+    'The Drowned City': ['TDC', 'DC', 'Drowned'],
+    'Razorfen Downs': ['RFD'],
+    'Uldaman': ['Ulda', 'Uld'],
+    "Krol'dok Stronghold": ['Krol', 'KS', 'Kroldok'],
+    "Zul'Farrak": ['ZF'],
+    'Maraudon': ['Mara'],
+    'Alcaz Prison': ['Alcaz', 'AP'],
+    'Sunken Temple': ['ST', 'Temple', 'ToAH'],
+    'Blackrock Depths': ['BRD'],
+    'Lower Blackrock Spire': ['LBRS', 'BRS'],
+    'Upper Blackrock Spire': ['UBRS', 'BRS'],
+    'Dire Maul: East': ['DME', 'DM', 'DM E', 'DM East'],
+    'Dire Maul: West': ['DMW', 'DM', 'DM W', 'DM West'],
+    'Dire Maul: North': ['DMN', 'DM', 'DM N', 'DM North', 'Tribute'],
+    'Blackmaw Hold': ['BMH', 'Blackmaw'],
+    'Stratholme: Living': ['Strat Live', 'Strat', 'Live Strat', 'Strat L', 'Strath'],
+    'Stratholme: Undead': ['Strat UD', 'Strat', 'UD Strat', 'Dead Strat', 'Strat U', 'Strath'],
+    'Scholomance': ['Scholo', 'Sholo'],
+    "Shaper's Terrace": ['Shapers', 'STer', 'Terrace'],
+  };
+  const norm = s => s.toLowerCase().replace(/['’:]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const squash = s => norm(s).replace(/ /g, '');
+  const initials = s => norm(s).split(' ').filter(w => !['the', 'of'].includes(w)).map(w => w[0]).join('');
+  let dfilter = '';
+  // Score how well a dungeon matches the filter: higher is better, 0 = no match.
+  function matchScore(d, raw) {
+    const q = norm(raw), qs = squash(raw);
+    if (!qs) return 1;
+    const abbr = (ABBR[d.n] || []).map(squash);
+    const name = norm(d.n);
+    if (abbr.includes(qs)) return 5;                                  // exact abbreviation: "brd", "dm e"
+    if (initials(d.n) === qs) return 4;                               // generated initials: "rfc", "hot"
+    if (name.split(' ').some(w => w.startsWith(q)) || squash(d.n).startsWith(qs)) return 3; // word start: "black"
+    if (abbr.some(a => a.startsWith(qs)) || initials(d.n).startsWith(qs)) return 2;        // abbreviation prefix: "stra"
+    if (qs.length >= 3 && (name.includes(q) || squash(d.n).includes(qs))) return 1; // anywhere in the name (3+ letters)
+    // every typed word matches some word of the name ("dire east", "strat und")
+    const words = q.split(' ');
+    if (words.length > 1 && words.every(w => name.split(' ').some(n => n.startsWith(w)) || abbr.some(a => a.startsWith(w)))) return 1;
+    return 0;
+  }
+  function visibleDungeons() {
+    const base = DATA.dungeons.filter(d => !d.chainPage && (listMode === 'all' || d.new));
+    if (!dfilter.trim()) return base;
+    return base.map((d, i) => ({ d, s: matchScore(d, dfilter), i }))
+      .filter(x => x.s > 0).sort((a, b) => b.s - a.s || a.i - b.i).map(x => x.d);
+  }
+
   function renderList() {
-    const list = DATA.dungeons.filter(d => !d.chainPage && (listMode === 'all' || d.new));
+    const list = visibleDungeons();
+    $('#dfilter').classList.toggle('has', !!dfilter);
     $('#dlist').innerHTML = list.map(d => {
       const qs = dungeonQuests(d), dn = qs.filter(q => done.has(q.id)).length;
+      const ab = ABBR[d.n]?.[0];
       return `<button class="ditem ${cur === d ? 'on' : ''}" data-d="${esc(d.n)}"><span class="nm">${esc(d.n)}</span><span class="lv">${esc(d.lv || '')}</span>
-        <span class="sub">${d.new ? '<span class="tag new">New</span> ' : ''}${d.bosses.filter(b => !b.trash).length} bosses · ${dn}/${qs.length} quests</span></button>`;
-    }).join('');
-    $('#dsel').innerHTML = list.map(d => `<option value="${esc(d.n)}" ${cur === d ? 'selected' : ''}>${esc(d.n)} (${esc(d.lv || '')})</option>`).join('');
+        <span class="sub">${ab ? `<span class="ab">${esc(ab)}</span> · ` : ''}${d.new ? '<span class="tag new">New</span> ' : ''}${d.bosses.filter(b => !b.trash).length} bosses · ${dn}/${qs.length} quests</span></button>`;
+    }).join('') || `<div class="dnone">No dungeon matches “${esc(dfilter)}”.</div>`;
+    const opts = list.includes(cur) ? list : [cur, ...list].filter(Boolean);
+    $('#dsel').innerHTML = opts.map(d => `<option value="${esc(d.n)}" ${cur === d ? 'selected' : ''}>${esc(d.n)} (${esc(d.lv || '')})</option>`).join('');
   }
 
   function select(d, t) {
@@ -451,6 +536,15 @@
       window.scrollTo(0, scroll);
     }
   });
+  // Dungeon list filter: Enter opens the best match, Esc clears.
+  const df = $('#df');
+  df.addEventListener('input', () => { dfilter = df.value; renderList(); });
+  df.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { const first = visibleDungeons()[0]; if (first) select(first); }
+    if (e.key === 'Escape') { df.value = dfilter = ''; renderList(); }
+  });
+  $('#dfclear').addEventListener('click', () => { df.value = dfilter = ''; renderList(); df.focus(); });
+
   let st;
   $('#q').addEventListener('input', e => {
     clearTimeout(st);
