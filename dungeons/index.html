@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="classic">
+<html lang="en" data-theme="forever">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Same Classic tokens as the Forever tab of the crafting calculator (../index.html). */
+    /* Forever tokens from the crafting calculator's :root (../index.html), over the Forever key art. */
     :root {
-      --bg: #1a0b08; --bg-2: #341512;
-      --card: rgba(22, 11, 8, 0.86); --card-solid: #1c0e0a;
+      --bg: #011c2b; --bg-2: #07324a;
+      --card: rgba(4, 15, 26, 0.86); --card-solid: #061826;
       --surface: rgba(255, 255, 255, 0.04); --surface-2: rgba(255, 255, 255, 0.07); --surface-3: rgba(255, 255, 255, 0.1);
       --border: rgba(255, 255, 255, 0.08); --border-md: rgba(255, 255, 255, 0.15);
-      --accent: #f79d1c; --accent-hi: #f8b700; --accent-tint: rgba(247, 157, 28, 0.13); --accent-line: rgba(248, 183, 0, 0.45);
-      --nav-bg: rgba(53, 32, 17, 0.9);
-      --veil: 26, 11, 8; --glow: 248, 183, 0;
-      --gold: #f8b700; --camel: #e08a36; --heading: #ebdec2;
+      --accent: #0093b2; --accent-hi: #00afd7; --accent-tint: rgba(0, 147, 178, 0.14); --accent-line: rgba(0, 175, 215, 0.45);
+      --nav-bg: rgba(10, 38, 44, 0.88);
+      --veil: 1, 28, 43; --glow: 0, 175, 215;
+      --gold: #ffd254; --camel: #c6af8d; --heading: #f3eee2;
       --text: #ffffff; --text-soft: rgba(255, 255, 255, 0.78); --text-muted: rgba(255, 255, 255, 0.5);
       --q0: #9d9d9d; --q1: #f3eee2; --q2: #3ddc4b; --q3: #4a9bff; --q4: #b45cff; --q5: #ff9a2e;
       --alli: #5aa0ff; --horde: #ff5a4a; --done: #6fcf6f; --warn: #ffb347;
@@ -35,7 +35,7 @@
     }
     body::before {
       content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .7;
-      background: linear-gradient(180deg, rgba(var(--veil), .2) 0%, rgba(var(--veil), .92) 70%), url('../bg/classic-light.jpg') center top / cover no-repeat;
+      background: linear-gradient(180deg, rgba(var(--veil), .2) 0%, rgba(var(--veil), .92) 70%), url('../bg/forever-light.jpg') center top / cover no-repeat;
     }
     body > * { position: relative; z-index: 1; }
     a { color: inherit; text-decoration: none; }
@@ -50,7 +50,7 @@
     .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
     .brand-mark {
       width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; color: var(--heading);
-      background: radial-gradient(circle at 35% 30%, var(--accent-hi), #4a2a1a 70%); border: 2px solid var(--camel);
+      background: radial-gradient(circle at 35% 30%, var(--accent-hi), #114f72 70%); border: 2px solid var(--camel);
     }
     .brand-mark svg { width: 17px; height: 17px; }
     .brand h1 { font-family: var(--font-heading); font-weight: 400; font-size: 1.2rem; color: var(--heading); text-shadow: 0 1px 2px rgba(0,0,0,.6); }
