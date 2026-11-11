@@ -104,6 +104,15 @@ function dungeonQuest(id) {
   return rec;
 }
 
+// Quests that are steps toward a dungeon quest (its prerequisite chain): kept even if they are drops.
+const dungeonPre = new Map();
+for (const dn of DJ.dungeons) for (const id of dn.quests) {
+  const dq = DJ.quests[id];
+  if (!dq || dq.f === 'Alliance') continue;
+  for (const p of dq.chain || []) if (!dungeonPre.has(p)) dungeonPre.set(p, { id, n: dq.n, dn: dn.n });
+}
+const isDrop = id => ['DROP', 'BOSS'].includes((overrides[id] && overrides[id].ty) || (C[id] ? autoType(C[id]) : ''));
+
 const used = new Set();
 const out = [];
 for (const ch of chapters) {
@@ -136,12 +145,16 @@ const zoneChapters = out.filter(c => c.kind === 'zone');
 for (const c of Object.values(C)) {
   if (used.has(c.id) || c.cls || c.skill || c.repeatable || c.minRep) continue;
   if (c.type === 'item' || c.type === 'talk' || c.type === 'unknown') continue;
-  if (c.giver && c.giver.kind === 'item' && c.giver.drop) continue;
+  if (c.giver && c.giver.kind === 'item' && c.giver.drop && !dungeonPre.has(c.id)) continue;
+  // No drop or single-head quests, unless they lead to a dungeon quest; nor quests that need one first.
+  if (isDrop(c.id) && !dungeonPre.has(c.id)) continue;
+  if (c.pre.some(p => isDrop(p) && !dungeonPre.has(p)) && !dungeonPre.has(c.id)) continue;
   const chs = zoneChapters.filter(z => z.zone === c.zone);
   if (!chs.length) continue;
   const ch = chs.find(z => c.rq <= z.lv[1]) || chs[chs.length - 1];
   if (c.rq > ch.lv[1] + 2 || c.rq < ch.lv[0] - 6) continue;
   zoneQuest(c.id);
+  if (dungeonPre.has(c.id)) quests[c.id].dg = dungeonPre.get(c.id);
   (ch.more = ch.more || []).push(c.id);
 }
 for (const ch of zoneChapters) if (ch.more) ch.more.sort((a, b) => quests[a].rq - quests[b].rq || quests[a].n.localeCompare(quests[b].n));
@@ -158,6 +171,9 @@ for (const ch of zoneChapters) {
     }
   }
 }
+
+for (const ch of zoneChapters) for (const s of ch.steps) for (const id of s.q || [])
+  if (['DROP', 'BOSS'].includes(quests[id].ty) && !dungeonPre.has(id)) console.warn('drop quest in route:', ch.id, id, quests[id].n);
 
 const data = { built: new Date().toISOString().slice(0, 10), faction: 'Horde', chapters: out, quests };
 const dest = path.join(__dirname, '../../duo/data.json');
