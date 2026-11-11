@@ -387,6 +387,7 @@
     return `<div class="intro">
       <p>A step-by-step Horde route for two players from 40 to 60. It goes for quests where you both get credit from the same kills, plus quick one-stop jobs. Quests where you loot items from mobs (including a single named mob's head) are left out, unless they lead to a dungeon quest. Dungeon stops list <b>every</b> Horde quest for that dungeon, collection quests included.</p>
       <p>Set your level at the top: chapters that fit it get a gold dot, and quests you can't pick up yet show the level they open at. Tick quests as you finish them; ticks are saved in this browser and shared with the dungeon journal.</p>
+      <p><b>In game with RestedXP:</b> download <a href="rxp/RXP_DuoGuide.zip" download style="color:var(--camel)">RXP_DuoGuide.zip</a>, unzip it into <code>World of Warcraft\\_forever_\\Interface\\AddOns</code>, and reload. The chapters appear in the RestedXP guide list under <b>Duo Leveling 40-60 (H)</b>, and each one leads into the next. It needs the RestedXP Guides addon.</p>
       <div class="legend">${Object.entries(TYPES).map(([k, [n, d]]) => `<div><span class="ty ty-${k}">${n}</span><span>${esc(d)}</span></div>`).join('')}
         <div><span class="tag long">Long</span><span>Lots of kills, PvP or travel.</span></div>
         <div><span class="tag elite">Elite</span><span>Elite or group mobs.</span></div></div>
@@ -401,6 +402,7 @@
       <div class="opts">
         <label><input type="checkbox" id="hidedone" ${store.get('duo-hidedone', false) ? 'checked' : ''}> Hide done quests</label>
         <span class="spacer"></span>
+        <a class="linkbtn" href="rxp/RXP_DuoGuide.zip" download title="This route as a RestedXP guide addon">Get it for RestedXP</a>
         <button class="linkbtn" id="howto">How this guide works</button>
         <button class="linkbtn" id="reset">Reset this chapter</button>
       </div>

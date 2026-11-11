@@ -1,0 +1,9 @@
+## Interface: 16001
+## Title: RestedXP Duo Guide |cffff5a4a(Horde 40-60)|r
+## Notes: A step-by-step Horde route for two players, levels 40-60 in WoW Forever, from classiccraft.app/duo/
+## Author: classiccraft.app
+## Version: 1.0.0
+## Dependencies: RXPGuides
+## Category: Quests
+
+DuoGuide.lua

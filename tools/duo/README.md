@@ -12,3 +12,11 @@ The route is hand-written in `route.js` (Horde, 40-60, WoW Forever). The rest is
 
 `node list-zone.js "Zone Name"` prints a zone's candidates when editing the route.
 The JSON files here are generated and git-ignored.
+
+## RestedXP guide addon
+
+`node build-rxp.js "D:/World of Warcraft/_forever_/Interface/AddOns"` turns `../../duo/data.json` into the
+`RXP_DuoGuide` addon (one RXP guide per chapter, chained with #next), writes it to `../../duo/rxp/` and installs a copy.
+Then zip it for the site: `Compress-Archive -Path RXP_DuoGuide -DestinationPath RXP_DuoGuide.zip -Force` in `duo/rxp`.
+`rxp-maps.txt` is the list of zone names RXPGuides knows on Forever (from its DB/forever/db.lua).
+RXP's in-game import box only takes RestedXP's encrypted strings, so a registering addon is the way in.
