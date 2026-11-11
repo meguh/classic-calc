@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duo Leveling Guide — WoW Forever</title>
+  <meta name="description" content="A step-by-step Horde route for two players, levels 40 to 60 in WoW Forever: shared-kill quests first, plus every dungeon quest in range.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Same Forever tokens as the dungeon journal (../dungeons/index.html). */
+    :root {
+      --bg: #011c2b; --bg-2: #07324a;
+      --card: rgba(4, 15, 26, 0.86); --card-solid: #061826;
+      --surface: rgba(255, 255, 255, 0.04); --surface-2: rgba(255, 255, 255, 0.07); --surface-3: rgba(255, 255, 255, 0.1);
+      --border: rgba(255, 255, 255, 0.08); --border-md: rgba(255, 255, 255, 0.15);
+      --accent: #0093b2; --accent-hi: #00afd7; --accent-tint: rgba(0, 147, 178, 0.14); --accent-line: rgba(0, 175, 215, 0.45);
+      --nav-bg: rgba(10, 38, 44, 0.88); --veil: 1, 28, 43;
+      --gold: #ffd254; --camel: #c6af8d; --heading: #f3eee2;
+      --text: #ffffff; --text-soft: rgba(255, 255, 255, 0.78); --text-muted: rgba(255, 255, 255, 0.5);
+      --horde: #ff5a4a; --done: #6fcf6f; --warn: #ffb347;
+      --t-kill: #5fd16a; --t-quick: #4fc9e6; --t-gather: #e8c25a; --t-drop: #ff8a5c; --t-boss: #c79bff; --t-use: #7fb0ff; --t-dungeon: #c6af8d;
+      --radius-lg: 6px; --radius: 4px;
+      --font-heading: 'Friz Quadrata TT', 'Friz Quadrata', 'Marcellus', Georgia, serif;
+      --font-body: 'Open Sans', Arial, Helvetica, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--bg); }
+    body {
+      font-family: var(--font-body); font-size: 14px; line-height: 1.45; color: var(--text);
+      background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 55%); background-attachment: fixed;
+      min-height: 100vh; padding: 14px 16px 40px; -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .7;
+      background: linear-gradient(180deg, rgba(var(--veil), .2) 0%, rgba(var(--veil), .92) 70%), url('../bg/forever-light.jpg') center top / cover no-repeat;
+    }
+    body > * { position: relative; z-index: 1; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font-family: inherit; color: inherit; font-size: inherit; }
+
+    header {
+      max-width: 1500px; margin: 0 auto 12px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      padding: 8px 12px; background: var(--nav-bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      box-shadow: 0 8px 24px rgba(0,0,0,.35); backdrop-filter: blur(10px);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+    .brand-mark {
+      width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; color: var(--heading);
+      background: radial-gradient(circle at 35% 30%, #ff7a5c, #6e1d14 70%); border: 2px solid var(--camel);
+    }
+    .brand-mark svg { width: 17px; height: 17px; }
+    .brand h1 { font-family: var(--font-heading); font-weight: 400; font-size: 1.2rem; color: var(--heading); text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+    .brand h1 span { color: var(--camel); }
+    .navlink { color: var(--text-soft); font-family: var(--font-heading); font-size: .98rem; padding: 6px 4px; border-bottom: 2px solid transparent; }
+    .navlink:hover { color: var(--text); }
+    .navlink.active { color: var(--heading); border-bottom-color: var(--accent); }
+    .lvl { display: flex; align-items: center; gap: 6px; color: var(--text-soft); font-size: .86rem; }
+    .lvl .box { display: inline-flex; border: 1px solid var(--border-md); border-radius: var(--radius); overflow: hidden; }
+    .lvl button { width: 28px; height: 30px; border: 0; background: transparent; cursor: pointer; color: var(--text-soft); font-size: 1rem; }
+    .lvl button:hover { background: var(--surface-2); color: var(--text); }
+    .lvl input { width: 40px; height: 30px; border: 0; border-left: 1px solid var(--border-md); border-right: 1px solid var(--border-md); background: rgba(0,0,0,.35); text-align: center; font-weight: 700; color: var(--heading); -moz-appearance: textfield; }
+    .lvl input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    .layout { max-width: 1500px; margin: 0 auto; display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 12px; align-items: start; }
+    .panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+    .side { position: sticky; top: 14px; max-height: calc(100vh - 28px); display: flex; flex-direction: column; }
+    .side-head { padding: 10px 10px 8px; border-bottom: 1px solid var(--border); display: grid; gap: 6px; }
+    .side-head label, .opts label { color: var(--text-muted); font-size: .82rem; display: flex; gap: 6px; align-items: center; cursor: pointer; }
+    .clist { overflow-y: auto; padding: 4px; }
+    .citem {
+      display: grid; grid-template-columns: 1fr auto; gap: 0 8px; width: 100%; text-align: left; background: transparent;
+      border: 0; border-left: 2px solid transparent; padding: 6px 8px; cursor: pointer; border-radius: 3px;
+    }
+    .citem:hover { background: var(--surface-2); }
+    .citem.on { background: var(--accent-tint); border-left-color: var(--accent); }
+    .citem .nm { color: var(--heading); font-weight: 600; font-size: .9rem; display: flex; gap: 6px; align-items: center; }
+    .citem.dg .nm { font-weight: 500; color: var(--text-soft); }
+    .citem .lv { color: var(--text-muted); font-size: .8rem; font-variant-numeric: tabular-nums; }
+    .citem .sub { grid-column: 1 / -1; color: var(--text-muted); font-size: .74rem; display: flex; gap: 6px; align-items: center; }
+    .citem .bar { flex: 1; height: 3px; background: var(--surface-3); border-radius: 2px; overflow: hidden; max-width: 90px; }
+    .citem .bar i { display: block; height: 100%; background: var(--done); }
+    .here { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 6px var(--gold); flex: none; }
+    .citem.full .nm { color: var(--done); }
+    select.csel { display: none; width: 100%; height: 36px; border-radius: var(--radius); background: var(--card-solid); border: 1px solid var(--border-md); padding: 0 8px; }
+
+    .tag { display: inline-block; font-size: .66rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 0 5px; border-radius: 3px; vertical-align: 1px; white-space: nowrap; line-height: 1.5; }
+    .tag.new { background: rgba(0,175,215,.18); color: #7fd3ec; }
+    .tag.dg { background: rgba(198,175,141,.15); color: var(--camel); }
+    .tag.opt { background: var(--surface-3); color: var(--text-muted); }
+    .tag.horde { background: rgba(255,90,74,.15); color: var(--horde); }
+    .tag.cls { background: var(--surface-3); color: var(--heading); }
+    .tag.lock { background: rgba(255,179,71,.15); color: var(--warn); }
+    .tag.long { background: rgba(255,179,71,.15); color: var(--warn); }
+    .tag.elite { background: rgba(255,210,84,.15); color: var(--gold); }
+    .ty { font-size: .64rem; font-weight: 700; letter-spacing: .05em; padding: 0 5px; border-radius: 3px; border: 1px solid currentColor; line-height: 1.45; white-space: nowrap; cursor: help; }
+    .ty-KILL { color: var(--t-kill); } .ty-QUICK { color: var(--t-quick); } .ty-GATHER { color: var(--t-gather); }
+    .ty-DROP { color: var(--t-drop); } .ty-BOSS { color: var(--t-boss); } .ty-USE { color: var(--t-use); }
+    .ty-ESCORT { color: var(--t-use); } .ty-DUNGEON, .ty-ITEM { color: var(--t-dungeon); }
+
+    main { min-width: 0; overflow-wrap: anywhere; }
+    .chead { padding: 14px 16px 12px; border-bottom: 1px solid var(--border); }
+    .chead h2 { font-family: var(--font-heading); font-weight: 400; font-size: 1.6rem; color: var(--heading); line-height: 1.2; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+    .cmeta { color: var(--camel); font-size: .9rem; margin-top: 2px; }
+    .cwhy { color: var(--text-soft); margin-top: 6px; max-width: 85ch; }
+    .boxes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px; margin-top: 10px; }
+    .box { font-size: .84rem; color: var(--text-soft); background: var(--surface); border-left: 2px solid var(--accent); padding: 6px 10px; border-radius: 0 3px 3px 0; }
+    .box b { color: var(--heading); display: block; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 2px; }
+    .box.skip { border-left-color: var(--t-drop); }
+    .box ul { margin-left: 16px; }
+    .navrow { display: flex; justify-content: space-between; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--border); }
+    .navrow button { background: var(--surface-2); border: 1px solid var(--border-md); border-radius: var(--radius); padding: 6px 12px; cursor: pointer; color: var(--text-soft); max-width: 48%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .navrow button:hover { color: var(--text); border-color: var(--accent-line); }
+
+    .steps { list-style: none; counter-reset: st; padding: 8px 12px 4px; display: grid; gap: 2px; }
+    .step { counter-increment: st; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; padding: 8px 4px; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: 0; }
+    .step::before { content: counter(st); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-3); color: var(--heading); font-size: .8rem; font-weight: 700; }
+    .step.done::before { content: '✓'; background: rgba(111,207,111,.22); color: var(--done); }
+    .step.done .stext { color: var(--text-muted); }
+    .step.locked .stext { color: var(--text-muted); }
+    .shead { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+    .kind { font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; min-width: 62px; }
+    .k-pick { color: var(--gold); } .k-do { color: var(--t-kill); } .k-turn { color: var(--t-quick); } .k-go { color: var(--camel); } .k-tip { color: var(--text-muted); }
+    .stext { color: var(--text); font-weight: 600; font-size: .92rem; }
+    .qrows { display: grid; gap: 2px; margin-top: 5px; }
+    .qr { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 6px; align-items: start; padding: 3px 6px; border-radius: 3px; }
+    .qr:hover { background: var(--surface); }
+    .qr.done { opacity: .45; }
+    .qr.locked { opacity: .6; }
+    .chk { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--done); cursor: pointer; }
+    .qn { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .qn a { color: var(--gold); font-weight: 600; font-size: .88rem; }
+    .qn a:hover { text-decoration: underline; }
+    .qn .nolink { color: var(--gold); font-weight: 600; font-size: .88rem; }
+    .qn .lvb { color: var(--text-muted); font-size: .74rem; }
+    .qd { font-size: .8rem; color: var(--text-soft); margin-top: 1px; }
+    .qd .req { color: var(--heading); }
+    .qd .muted { color: var(--text-muted); }
+    .qnote { font-size: .78rem; color: var(--text-muted); font-style: italic; margin-top: 1px; }
+    .coord { display: inline-flex; gap: 4px; align-items: center; padding: 0 6px; border-radius: 3px; background: var(--surface-2); color: var(--accent-hi); font-size: .76rem; cursor: pointer; border: 0; white-space: nowrap; vertical-align: 1px; }
+    .coord:hover { background: var(--accent-tint); }
+
+    .sect { padding: 10px 16px 4px; font-family: var(--font-heading); font-size: 1.05rem; color: var(--heading); display: flex; gap: 8px; align-items: baseline; }
+    .sect .count { font-family: var(--font-body); font-size: .76rem; color: var(--text-muted); }
+    .group { padding: 0 12px 6px; }
+    .group h4 { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin: 8px 6px 2px; }
+    details.more { border-top: 1px solid var(--border); }
+    details.more > summary { cursor: pointer; list-style: none; padding: 10px 16px; color: var(--text-soft); font-size: .88rem; }
+    details.more > summary::before { content: '▸ '; color: var(--text-muted); }
+    details.more[open] > summary::before { content: '▾ '; }
+    .intro { padding: 14px 16px; display: grid; gap: 10px; }
+    .intro p { color: var(--text-soft); max-width: 85ch; }
+    .legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 4px 14px; font-size: .8rem; color: var(--text-soft); }
+    .legend div { display: flex; gap: 8px; align-items: baseline; }
+    .opts { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; padding: 8px 16px; border-bottom: 1px solid var(--border); }
+    .opts .spacer { flex: 1; }
+    .linkbtn { background: none; border: 0; color: var(--camel); cursor: pointer; font-size: .82rem; padding: 0; }
+    .linkbtn:hover { text-decoration: underline; }
+    .empty { color: var(--text-muted); padding: 20px; text-align: center; }
+    footer { max-width: 1500px; margin: 14px auto 0; color: var(--text-muted); font-size: .76rem; text-align: center; }
+    footer a { color: var(--camel); }
+    .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--card-solid); border: 1px solid var(--accent-line); padding: 6px 14px; border-radius: var(--radius); font-size: .84rem; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 10; }
+    .toast.show { opacity: 1; }
+
+    @media (max-width: 860px) {
+      body { padding: 10px 16px 30px; }
+      .layout { grid-template-columns: minmax(0, 1fr); }
+      header { gap: 8px 12px; }
+      .brand { flex: 1 1 100%; }
+      .side { position: static; max-height: none; }
+      .clist { display: none; }
+      select.csel { display: block; }
+      .brand h1 span { display: none; }
+      .steps { padding: 6px 4px; }
+      .step { grid-template-columns: 24px minmax(0, 1fr); gap: 8px; }
+      .step::before { width: 22px; height: 22px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <a class="brand" href="./">
+    <div class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="3"/><circle cx="16.5" cy="7" r="3"/><path d="M2.5 20c0-3.3 2.5-6 5.5-6s5.5 2.7 5.5 6"/><path d="M13.5 14.6c.9-.4 1.9-.6 3-.6 3 0 5 2.7 5 6"/></svg>
+    </div>
+    <h1>Duo Leveling <span>Horde 40–60 · WoW Forever</span></h1>
+  </a>
+  <div class="lvl" title="Your level: quests you can't pick up yet are marked">
+    Level
+    <span class="box"><button id="lvdown" aria-label="Level down">−</button><input id="lv" type="number" min="40" max="60" value="40" aria-label="Your level"><button id="lvup" aria-label="Level up">+</button></span>
+  </div>
+  <a class="navlink" href="../">Crafting</a>
+  <a class="navlink" href="../dungeons/">Dungeons</a>
+  <a class="navlink active" href="./">Duo Guide</a>
+</header>
+
+<div class="layout">
+  <aside class="panel side">
+    <div class="side-head">
+      <select class="csel" id="csel" aria-label="Chapter"></select>
+      <label><input type="checkbox" id="showdg" checked> Show dungeon stops</label>
+    </div>
+    <nav class="clist" id="clist" aria-label="Route"></nav>
+  </aside>
+  <main class="panel" id="main"><div class="empty">Loading…</div></main>
+</div>
+
+<footer>
+  Route hand-picked for two players. Quest objectives, counts and quest-giver positions from
+  <a href="https://github.com/Questie/Questie" target="_blank" rel="noopener">QuestieDB</a> (GPL v3) and
+  <a href="https://www.wowhead.com/forever" target="_blank" rel="noopener">Wowhead Forever</a>.
+  Dungeon quests from the <a href="../dungeons/">dungeon journal</a> (DungeonJournal addon by Exehn).
+  Not a complete quest database: check the linked quest pages if something has changed in a patch.
+  <span id="built"></span>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>const whTooltips = { colorLinks: false, iconizeLinks: false, renameLinks: false };</script>
+<script src="https://wow.zamimg.com/js/tooltips.js" async></script>
+<script>
+(() => {
+  const WH = 'https://www.wowhead.com/forever/quest=';
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+  };
+  // Shared with the dungeon journal, so a quest ticked on either page shows as done on both.
+  const DONE_KEY = 'dj-done';
+
+  const TYPES = {
+    KILL: ['Kill', 'Both of you get credit from the same kills when you are grouped and nearby.'],
+    QUICK: ['Quick', 'Talk, explore, or click one thing. Each of you may have to click it yourself.'],
+    GATHER: ['Gather', 'Click objects in the world. Each of you needs your own count.'],
+    USE: ['Use item', 'Use a quest item on a mob or spot. Each of you uses your own.'],
+    DROP: ['Drops', 'Items drop from mobs and each of you needs your own. Slower for two.'],
+    BOSS: ['Named', 'One named mob; its quest item may only drop for one of you per kill.'],
+    ESCORT: ['Escort', 'Walk an NPC somewhere. Only the one who started it gets credit unless you share it.'],
+    DUNGEON: ['Dungeon', 'Done inside the dungeon.'],
+    ITEM: ['Hand-in', 'Bring items you already have or buy.'],
+  };
+  const KINDS = { pick: 'Pick up', do: 'Do', turn: 'Turn in', go: 'Travel', tip: 'Note' };
+
+  let DATA, level = store.get('duo-level', 40), showDg = store.get('duo-showdg', true);
+  let done = new Set(store.get(DONE_KEY, []));
+  let cur = null;
+
+  const Q = id => DATA.quests[id];
+  const locked = q => q && q.rq > level;
+  const chapterQuests = ch => ch.kind === 'dungeon' ? [...ch.unlock, ...ch.q] : [...new Set(ch.steps.flatMap(s => s.q || []))];
+  const progress = ch => { const ids = chapterQuests(ch); return [ids.filter(id => done.has(id)).length, ids.length]; };
+  const visible = () => DATA.chapters.filter(c => showDg || c.kind !== 'dungeon');
+  const fits = ch => level >= ch.lv[0] && level <= ch.lv[1];
+  const lvText = ch => ch.lv[0] === ch.lv[1] ? ch.lv[0] : `${ch.lv[0]}–${ch.lv[1]}`;
+  const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  function way(x, y, z, label) {
+    if (x == null || y == null || !z) return '';
+    const cmd = `/way ${z} ${x} ${y}`;
+    return `<button class="coord" data-way="${esc(cmd)}" title="${esc(label || '')} — click to copy /way">${esc(x)}, ${esc(y)}</button>`;
+  }
+
+  // ---------- quest row ----------
+  function qrow(id, ctx, ch) {
+    const q = Q(id);
+    if (!q) return '';
+    const isDone = done.has(id), lk = locked(q);
+    const t = TYPES[q.ty] || TYPES.QUICK;
+    const name = q.nolink || id < 0
+      ? `<span class="nolink">${esc(q.n)}</span>`
+      : `<a href="${WH}${id}" target="_blank" rel="noopener">${esc(q.n)}</a>`;
+    const tags = [
+      `<span class="ty ty-${esc(q.ty)}" title="${esc(t[1])}">${esc(t[0])}</span>`,
+      q.long ? '<span class="tag long" title="No collecting, but a lot of kills, elites, PvP or travel">Long</span>' : '',
+      q.elite ? '<span class="tag elite" title="Elite or group mobs">Elite</span>' : '',
+      q.fv ? '<span class="tag new" title="New in WoW Forever">Forever</span>' : '',
+      q.cls ? `<span class="tag cls">${esc(q.cls)}</span>` : '',
+      lk ? `<span class="tag lock" title="You can pick this up at level ${q.rq}">Lv ${q.rq}</span>` : '',
+    ].join('');
+    const lvb = q.lv ? `<span class="lvb">${q.rq ? q.rq + '→' : ''}${q.lv}</span>` : '';
+
+    const lines = [];
+    const zone = ch && ch.zone;
+    const giver = () => {
+      if (!q.g) return q.pu ? `<span class="muted">From:</span> ${esc(q.pu)}` : (q.fv ? '<span class="muted">Giver not in the databases yet — see the quest link</span>' : '');
+      const gn = String(q.g.n || '').split(' — ')[0];
+      const where = q.g.z && q.g.z !== zone ? ` (${esc(q.g.z)})` : '';
+      return `<span class="muted">From:</span> ${esc(gn)}${where} ${way(q.g.x, q.g.y, q.g.z, q.g.n)}`;
+    };
+    const reqs = () => q.req && q.req.length
+      ? q.req.map(([n, c]) => `<span class="req">${c > 1 ? c + ' ' : ''}${esc(n)}</span>`).join(' · ')
+      : esc(q.obj);
+    if (ctx === 'pick') { const g = giver(); if (g) lines.push(g); }
+    else if (ctx === 'do') { lines.push(reqs() + (q.at && ch ? ' ' + way(q.at[0], q.at[1], zone, 'Objective area') : '')); }
+    else if (ctx === 'turn') { if (q.to) lines.push(`<span class="muted">To:</span> ${esc(q.to)}`); }
+    else if (ctx === 'full' || ctx === 'tip') {
+      lines.push(esc(q.obj) + (q.at && ch ? ' ' + way(q.at[0], q.at[1], zone, 'Objective area') : ''));
+      const g = giver(); if (g) lines.push(g);
+    } else if (ctx === 'dungeon') {
+      lines.push(esc(q.obj));
+      const g = giver(); if (g) lines.push(g);
+      if (q.pre && q.pre.length) lines.push(`<span class="muted">Chain:</span> ${q.pre.map(p => linkName(p)).join(' → ')} → this`);
+    }
+    const note = [q.note, ctx === 'dungeon' ? null : null].filter(Boolean).join(' ');
+    return `<div class="qr${isDone ? ' done' : ''}${lk ? ' locked' : ''}">
+      <input type="checkbox" class="chk" data-q="${id}" ${isDone ? 'checked' : ''} aria-label="Done: ${esc(q.n)}">
+      <div><div class="qn">${name}${lvb}${tags}</div>
+      ${lines.map(l => `<div class="qd">${l}</div>`).join('')}
+      ${note && ctx !== 'turn' && ctx !== 'pick' ? `<div class="qnote">${esc(note)}</div>` : ''}</div></div>`;
+  }
+  function linkName(p) {
+    const done1 = done.has(p.id) ? ' ✓' : '';
+    return p.id > 0 ? `<a class="qlink" style="color:var(--gold)" href="${WH}${p.id}" target="_blank" rel="noopener">${esc(p.n)}</a>${done1}` : esc(p.n) + done1;
+  }
+
+  // ---------- chapter list ----------
+  function renderList() {
+    const vis = visible();
+    $('#clist').innerHTML = vis.map(ch => {
+      const [d, n] = progress(ch);
+      const dg = ch.kind === 'dungeon';
+      const tag = dg ? '<span class="tag dg">Dungeon</span>' : '';
+      const extra = [ch.fv ? '<span class="tag new">Forever</span>' : '', ch.optional ? '<span class="tag opt">Optional</span>' : ''].join('');
+      return `<button class="citem${dg ? ' dg' : ''}${cur === ch ? ' on' : ''}${n && d === n ? ' full' : ''}" data-c="${ch.id}">
+        <span class="nm">${fits(ch) ? '<span class="here" title="Fits your level"></span>' : ''}${esc(ch.title)}</span>
+        <span class="lv">${lvText(ch)}</span>
+        <span class="sub">${tag}${extra}<span class="bar"><i style="width:${n ? Math.round(d / n * 100) : 0}%"></i></span>${d}/${n}</span>
+      </button>`;
+    }).join('');
+    $('#csel').innerHTML = vis.map(ch => `<option value="${ch.id}"${cur === ch ? ' selected' : ''}>${esc(lvText(ch))} · ${esc(ch.title)}${ch.kind === 'dungeon' ? ' (dungeon)' : ''}</option>`).join('');
+  }
+
+  // ---------- chapter views ----------
+  function renderZone(ch) {
+    const boxes = [];
+    if (ch.tip) boxes.push(`<div class="box"><b>Duo tip</b>${esc(ch.tip)}</div>`);
+    if (ch.skip && ch.skip.length) boxes.push(`<div class="box skip"><b>Skip</b><ul>${ch.skip.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div>`);
+    const steps = ch.steps.map(s => {
+      const ids = s.q || [];
+      const allDone = ids.length && ids.every(id => done.has(id));
+      const allLocked = ids.length && ids.every(id => locked(Q(id)));
+      const ctx = ch.list ? 'full' : s.k;
+      const at = s.at ? ' ' + way(s.at[0], s.at[1], s.z || ch.zone, s.t) : '';
+      return `<li class="step${allDone ? ' done' : ''}${allLocked && !allDone ? ' locked' : ''}"><div>
+        <div class="shead"><span class="kind k-${s.k}">${ch.list ? '' : KINDS[s.k]}</span><span class="stext">${esc(s.t)}</span>${at}</div>
+        ${ids.length ? `<div class="qrows">${ids.map(id => qrow(id, ctx, ch)).join('')}</div>` : ''}
+      </div></li>`;
+    }).join('');
+    const more = ch.more && ch.more.length ? `<details class="more" id="more"><summary>Other quests here not in the route <span class="count">(${ch.more.length}: collections, drops and chain steps)</span></summary>
+      <div class="group">${ch.more.map(id => qrow(id, 'full', ch)).join('')}</div></details>` : '';
+    return `<div class="chead">
+        <h2>${esc(ch.title)} ${ch.fv ? '<span class="tag new">Forever</span>' : ''}</h2>
+        <div class="cmeta">Levels ${lvText(ch)} · ${esc(ch.hub)}</div>
+        <div class="cwhy">${esc(ch.why)}</div>
+        ${boxes.length ? `<div class="boxes">${boxes.join('')}</div>` : ''}
+      </div>
+      <ol class="steps">${steps}</ol>${more}`;
+  }
+
+  function renderDungeon(ch) {
+    const ent = ch.ent ? ` · entrance ${way(ch.ent.x, ch.ent.y, ch.ent.z, 'Dungeon entrance')}` : '';
+    const groups = new Map();
+    for (const id of ch.q) {
+      const q = Q(id);
+      let key = q.g && q.g.z ? q.g.z : /inside|dungeon|drops? from|corpse|book|letter/i.test(q.pu || '') ? 'Inside the dungeon' : (q.pu || 'Elsewhere').split(',').pop().trim();
+      if (/\(.*\)$/.test(key)) key = key.replace(/\s*\(.*\)$/, '');
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(id);
+    }
+    const order = [...groups.keys()].sort((a, b) => (a === 'Inside the dungeon') - (b === 'Inside the dungeon') || groups.get(b).length - groups.get(a).length);
+    const unlock = ch.unlock.length ? `<div class="sect">Unlock first</div><div class="group">${ch.unlock.map(id => qrow(id, 'full', null)).join('')}</div>` : '';
+    return `<div class="chead">
+        <h2>${esc(ch.title)} <span class="tag dg">Dungeon</span> ${ch.fv ? '<span class="tag new">Forever</span>' : ''} ${ch.optional ? '<span class="tag opt">Optional</span>' : ''}</h2>
+        <div class="cmeta">Go at ${lvText(ch)} (dungeon range ${esc(ch.range)}) · ${esc(ch.loc)}${ent}</div>
+        <div class="cwhy">${esc(ch.desc || '')}</div>
+        <div class="boxes"><div class="box"><b>Before you go</b>Pick up everything below that you can, collection quests too. Quests are grouped by where you pick them up. Full boss and loot lists are on the <a href="../dungeons/#${slug(ch.title)}/quests" style="color:var(--camel)">dungeon journal</a>.</div></div>
+      </div>${unlock}
+      <div class="sect">Quests <span class="count">${ch.q.length}</span></div>
+      ${order.map(k => `<div class="group"><h4>${esc(k)}</h4>${groups.get(k).map(id => qrow(id, 'dungeon', null)).join('')}</div>`).join('')}`;
+  }
+
+  function renderIntro() {
+    return `<div class="intro">
+      <p>A step-by-step Horde route for two players from 40 to 60. It goes for quests where you both get credit from the same kills, plus quick one-stop jobs, and skips most "loot 15 of these" quests. Dungeon stops list <b>every</b> Horde quest for that dungeon, collection quests included.</p>
+      <p>Set your level at the top: chapters that fit it get a gold dot, and quests you can't pick up yet show the level they open at. Tick quests as you finish them; ticks are saved in this browser and shared with the dungeon journal.</p>
+      <div class="legend">${Object.entries(TYPES).map(([k, [n, d]]) => `<div><span class="ty ty-${k}">${n}</span><span>${esc(d)}</span></div>`).join('')}
+        <div><span class="tag long">Long</span><span>Lots of kills, PvP or travel.</span></div>
+        <div><span class="tag elite">Elite</span><span>Elite or group mobs.</span></div></div>
+    </div>`;
+  }
+
+  function render() {
+    if (!cur) return;
+    const vis = visible(), i = vis.indexOf(cur);
+    const prev = vis[i - 1], next = vis[i + 1];
+    $('#main').innerHTML = `
+      <div class="opts">
+        <label><input type="checkbox" id="hidedone" ${store.get('duo-hidedone', false) ? 'checked' : ''}> Hide done quests</label>
+        <span class="spacer"></span>
+        <button class="linkbtn" id="howto">How this guide works</button>
+        <button class="linkbtn" id="reset">Reset this chapter</button>
+      </div>
+      <div id="howbox" ${store.get('duo-howto', true) ? '' : 'hidden'}>${renderIntro()}</div>
+      ${cur.kind === 'dungeon' ? renderDungeon(cur) : renderZone(cur)}
+      <div class="navrow">${prev ? `<button data-c="${prev.id}">← ${esc(prev.title)}</button>` : '<span></span>'}${next ? `<button data-c="${next.id}">${esc(next.title)} →</button>` : '<span></span>'}</div>`;
+    applyHideDone();
+    $('#built').textContent = `Data built ${DATA.built}.`;
+    try { window.$WowheadPower && $WowheadPower.refreshLinks(); } catch {}
+  }
+  function applyHideDone() {
+    const hide = store.get('duo-hidedone', false);
+    document.querySelectorAll('#main .qr').forEach(r => { r.hidden = hide && r.classList.contains('done'); });
+  }
+
+  function select(ch, scroll = true) {
+    cur = ch;
+    history.replaceState(null, '', '#' + ch.id);
+    renderList(); render();
+    if (scroll) window.scrollTo(0, 0);
+    document.querySelector('.citem.on')?.scrollIntoView({ block: 'nearest' });
+  }
+  function pickForLevel() {
+    const vis = visible();
+    return vis.find(c => fits(c) && c.kind === 'zone' && progress(c)[0] < progress(c)[1]) || vis.find(c => level <= c.lv[1]) || vis[0];
+  }
+
+  function setLevel(v) {
+    v = Math.max(40, Math.min(60, Math.round(+v || 40)));
+    level = v; $('#lv').value = v; store.set('duo-level', v);
+    renderList(); render();
+  }
+
+  let toastT;
+  function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 1600); }
+
+  document.addEventListener('click', e => {
+    const c = e.target.closest('.coord');
+    if (c) { e.preventDefault(); navigator.clipboard?.writeText(c.dataset.way).then(() => toast('Copied ' + c.dataset.way), () => toast(c.dataset.way)); return; }
+    const ci = e.target.closest('[data-c]');
+    if (ci) { select(DATA.chapters.find(x => x.id === ci.dataset.c)); return; }
+    if (e.target.id === 'lvup') return setLevel(level + 1);
+    if (e.target.id === 'lvdown') return setLevel(level - 1);
+    if (e.target.id === 'howto') { const b = $('#howbox'); b.hidden = !b.hidden; store.set('duo-howto', !b.hidden); return; }
+    if (e.target.id === 'reset') {
+      if (!confirm(`Untick every quest in ${cur.title}?`)) return;
+      for (const id of chapterQuests(cur).concat(cur.more || [])) done.delete(id);
+      store.set(DONE_KEY, [...done]); renderList(); render(); return;
+    }
+  });
+  document.addEventListener('change', e => {
+    if (e.target.id === 'lv') return setLevel(e.target.value);
+    if (e.target.id === 'csel') return select(DATA.chapters.find(x => x.id === e.target.value));
+    if (e.target.id === 'showdg') { showDg = e.target.checked; store.set('duo-showdg', showDg); if (!showDg && cur.kind === 'dungeon') cur = pickForLevel(); renderList(); render(); return; }
+    if (e.target.id === 'hidedone') { store.set('duo-hidedone', e.target.checked); applyHideDone(); return; }
+    const q = e.target.dataset?.q;
+    if (q) {
+      const id = +q;
+      e.target.checked ? done.add(id) : done.delete(id);
+      store.set(DONE_KEY, [...done]);
+      const y = window.scrollY;
+      renderList(); render();
+      window.scrollTo(0, y);
+    }
+  });
+  // Keep ticks in sync when the dungeon journal is open in another tab.
+  window.addEventListener('storage', e => {
+    if (e.key === DONE_KEY) { done = new Set(store.get(DONE_KEY, [])); renderList(); render(); }
+  });
+
+  fetch('data.json').then(r => r.json()).then(d => {
+    DATA = d;
+    $('#lv').value = level;
+    $('#showdg').checked = showDg;
+    const fromHash = DATA.chapters.find(c => c.id === location.hash.slice(1));
+    select(fromHash || pickForLevel(), false);
+  }).catch(() => { $('#main').innerHTML = '<div class="empty">Could not load the guide data.</div>'; });
+})();
+</script>
+</body>
+</html>
