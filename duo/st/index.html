@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunken Temple Prep — WoW Forever</title>
+  <meta name="description" content="Get ready for the Sunken Temple as a Horde duo in WoW Forever: every quest chain to unlock, what to bring, the run inside, and the turn-ins after.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Same Forever tokens as the duo guide and dungeon journal. */
+    :root {
+      --bg: #011c2b; --bg-2: #07324a;
+      --card: rgba(4, 15, 26, 0.86); --card-solid: #061826;
+      --surface: rgba(255, 255, 255, 0.04); --surface-2: rgba(255, 255, 255, 0.07); --surface-3: rgba(255, 255, 255, 0.1);
+      --border: rgba(255, 255, 255, 0.08); --border-md: rgba(255, 255, 255, 0.15);
+      --accent: #0093b2; --accent-hi: #00afd7; --accent-tint: rgba(0, 147, 178, 0.14); --accent-line: rgba(0, 175, 215, 0.45);
+      --nav-bg: rgba(10, 38, 44, 0.88); --veil: 1, 28, 43;
+      --gold: #ffd254; --camel: #c6af8d; --heading: #f3eee2;
+      --text: #ffffff; --text-soft: rgba(255, 255, 255, 0.78); --text-muted: rgba(255, 255, 255, 0.5);
+      --horde: #ff5a4a; --done: #6fcf6f; --warn: #ffb347;
+      --t-kill: #5fd16a; --t-quick: #4fc9e6; --t-gather: #e8c25a; --t-drop: #ff8a5c; --t-boss: #c79bff; --t-use: #7fb0ff; --t-dungeon: #c6af8d;
+      --radius-lg: 6px; --radius: 4px;
+      --font-heading: 'Friz Quadrata TT', 'Friz Quadrata', 'Marcellus', Georgia, serif;
+      --font-body: 'Open Sans', Arial, Helvetica, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--bg); scroll-behavior: smooth; scroll-padding-top: 14px; }
+    body {
+      font-family: var(--font-body); font-size: 14px; line-height: 1.45; color: var(--text);
+      background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 55%); background-attachment: fixed;
+      min-height: 100vh; padding: 14px 16px 40px; -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .7;
+      background: linear-gradient(180deg, rgba(var(--veil), .2) 0%, rgba(var(--veil), .92) 70%), url('../../bg/forever-light.jpg') center top / cover no-repeat;
+    }
+    body > * { position: relative; z-index: 1; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font-family: inherit; color: inherit; font-size: inherit; }
+
+    header {
+      max-width: 1300px; margin: 0 auto 12px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      padding: 8px 12px; background: var(--nav-bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      box-shadow: 0 8px 24px rgba(0,0,0,.35); backdrop-filter: blur(10px);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+    .brand-mark {
+      width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; color: var(--heading);
+      background: radial-gradient(circle at 35% 30%, #5fd18a, #0f4a2a 70%); border: 2px solid var(--camel);
+    }
+    .brand-mark svg { width: 17px; height: 17px; }
+    .brand h1 { font-family: var(--font-heading); font-weight: 400; font-size: 1.2rem; color: var(--heading); text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+    .brand h1 span { color: var(--camel); }
+    .navlink { color: var(--text-soft); font-family: var(--font-heading); font-size: .98rem; padding: 6px 4px; border-bottom: 2px solid transparent; }
+    .navlink:hover { color: var(--text); }
+    .navlink.active { color: var(--heading); border-bottom-color: var(--accent); }
+
+    .layout { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 12px; align-items: start; }
+    .panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+    .side { position: sticky; top: 14px; padding: 10px; display: grid; gap: 10px; }
+    .toc { display: grid; gap: 1px; }
+    .toc a { display: flex; justify-content: space-between; gap: 8px; padding: 6px 8px; border-left: 2px solid transparent; border-radius: 3px; color: var(--text-soft); font-size: .88rem; }
+    .toc a:hover { background: var(--surface-2); color: var(--text); }
+    .toc a.on { background: var(--accent-tint); border-left-color: var(--accent); color: var(--heading); }
+    .toc a small { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+    .toc a.full small { color: var(--done); }
+    .who { display: grid; gap: 4px; padding-top: 8px; border-top: 1px solid var(--border); }
+    .who b { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+    .seg { display: flex; border: 1px solid var(--border-md); border-radius: var(--radius); overflow: hidden; }
+    .seg button { flex: 1; border: 0; background: transparent; padding: 6px 4px; cursor: pointer; color: var(--text-soft); font-size: .82rem; }
+    .seg button + button { border-left: 1px solid var(--border-md); }
+    .seg button.on { background: var(--accent-tint); color: var(--heading); font-weight: 600; }
+    .linkbtn { background: none; border: 0; color: var(--camel); cursor: pointer; font-size: .82rem; padding: 0; text-align: left; }
+    .linkbtn:hover { text-decoration: underline; }
+
+    main { min-width: 0; display: grid; gap: 12px; overflow-wrap: anywhere; }
+    .hero { padding: 16px 18px; display: grid; gap: 10px; }
+    .hero h2 { font-family: var(--font-heading); font-weight: 400; font-size: 1.9rem; color: var(--heading); line-height: 1.15; }
+    .hero .meta { color: var(--camel); font-size: .92rem; }
+    .hero p { color: var(--text-soft); max-width: 90ch; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+    .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 10px; }
+    .stat .v { font-family: var(--font-heading); font-size: 1.45rem; color: var(--heading); line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .stat .l { font-size: .74rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
+    .pbar { height: 6px; background: var(--surface-3); border-radius: 3px; overflow: hidden; }
+    .pbar i { display: block; height: 100%; background: var(--done); transition: width .25s; }
+
+    section.panel { scroll-margin-top: 14px; }
+    .shd { padding: 12px 16px 10px; border-bottom: 1px solid var(--border); display: grid; gap: 4px; }
+    .shd h3 { font-family: var(--font-heading); font-weight: 400; font-size: 1.35rem; color: var(--heading); display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+    .shd h3 .count { font-family: var(--font-body); font-size: .78rem; color: var(--text-muted); }
+    .shd p { color: var(--text-soft); font-size: .88rem; max-width: 90ch; }
+
+    table.qt { width: 100%; border-collapse: collapse; font-size: .84rem; }
+    .qt th { text-align: left; font-size: .68rem; letter-spacing: .07em; text-transform: uppercase; color: var(--text-muted); font-weight: 700; padding: 8px 10px 6px; border-bottom: 1px solid var(--border); }
+    .qt td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-soft); }
+    .qt tr:last-child td { border-bottom: 0; }
+    .qt tr.done td { opacity: .5; }
+    .qt td.qn a { color: var(--gold); font-weight: 600; }
+    .qt td.qn a:hover { text-decoration: underline; }
+    .qt .sub { display: block; color: var(--text-muted); font-size: .76rem; }
+    .qt .xp { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+    .chains { display: grid; gap: 0; }
+    .chain { border-bottom: 1px solid var(--border); }
+    .chain:last-child { border-bottom: 0; }
+    .chain-h { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 12px 16px 4px; }
+    .chain-h h4 { font-family: var(--font-heading); font-weight: 400; font-size: 1.12rem; color: var(--heading); }
+    .chain-h .gives { color: var(--text-muted); font-size: .8rem; }
+    .chain-h .bar { width: 80px; height: 3px; background: var(--surface-3); border-radius: 2px; overflow: hidden; margin-left: auto; }
+    .chain-h .bar i { display: block; height: 100%; background: var(--done); }
+    .chain-h .n { color: var(--text-muted); font-size: .78rem; font-variant-numeric: tabular-nums; }
+    .when { margin: 2px 16px 6px; font-size: .82rem; color: var(--text-soft); background: var(--surface); border-left: 2px solid var(--accent); padding: 5px 10px; border-radius: 0 3px 3px 0; }
+    .when b { color: var(--heading); }
+
+    ol.steps { list-style: none; padding: 2px 12px 10px; display: grid; gap: 1px; }
+    .st { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; padding: 6px 6px; border-radius: 3px; }
+    .st:hover { background: var(--surface); }
+    .st.done { opacity: .45; }
+    .st.hide { display: none; }
+    .chk { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--done); cursor: pointer; }
+    .sl { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+    .kind { font-size: .64rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; min-width: 56px; }
+    .k-pick { color: var(--gold); } .k-do { color: var(--t-kill); } .k-turn { color: var(--t-quick); } .k-go { color: var(--camel); } .k-buy { color: var(--t-use); }
+    .stx { color: var(--text); font-size: .9rem; }
+    .stx a { color: var(--gold); font-weight: 600; }
+    .stx a:hover { text-decoration: underline; }
+    .sd { font-size: .8rem; color: var(--text-soft); margin-top: 1px; }
+    .tag { display: inline-block; font-size: .64rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 0 5px; border-radius: 3px; white-space: nowrap; line-height: 1.5; }
+    .tag.shared { background: rgba(95,209,106,.15); color: var(--t-kill); }
+    .tag.each { background: rgba(255,138,92,.15); color: var(--t-drop); }
+    .tag.war { background: rgba(198,155,109,.18); color: #e0b98a; }
+    .tag.lv { background: rgba(255,179,71,.15); color: var(--warn); }
+    .tag.in { background: rgba(199,155,255,.15); color: var(--t-boss); }
+    .coord { display: inline-flex; gap: 4px; align-items: center; padding: 0 6px; border-radius: 3px; background: var(--surface-2); color: var(--accent-hi); font-size: .76rem; cursor: pointer; border: 0; white-space: nowrap; }
+    .coord:hover { background: var(--accent-tint); }
+
+    .ready { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0 12px; padding: 6px 12px 10px; }
+    .ready .grp h5 { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin: 8px 6px 2px; }
+
+    .inside { padding: 4px 12px 12px; display: grid; gap: 0; }
+    .room { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; padding: 10px 4px; border-bottom: 1px solid var(--border); }
+    .room:last-child { border-bottom: 0; }
+    .room .num { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-3); color: var(--heading); font-family: var(--font-heading); font-size: 1rem; }
+    .room.done .num { background: rgba(111,207,111,.22); color: var(--done); }
+    .room h4 { font-size: .95rem; color: var(--heading); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .room h4 label { display: flex; gap: 8px; align-items: center; cursor: pointer; }
+    .room p, .room li { color: var(--text-soft); font-size: .85rem; }
+    .room ul { margin: 4px 0 0 18px; display: grid; gap: 2px; }
+    .room .q { color: var(--gold); font-weight: 600; }
+    .room .q:hover { text-decoration: underline; }
+    .feathers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 6px; max-width: 520px; }
+    .feather { border: 1px solid var(--border); border-radius: var(--radius); padding: 5px 8px; font-size: .8rem; color: var(--text-soft); background: var(--surface); }
+    .feather b { display: block; font-size: .78rem; }
+    .f-amber b { color: #ffbf5a; } .f-blue b { color: #6fb6ff; } .f-green b { color: #6fdc7a; }
+    .order { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+    .order span { background: var(--surface-2); border: 1px solid var(--border-md); border-radius: 3px; padding: 1px 8px; font-weight: 700; font-size: .82rem; color: var(--heading); }
+    .order span i { font-style: normal; color: var(--text-muted); font-weight: 400; margin-right: 4px; }
+
+    .opts { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; padding: 8px 16px; border-bottom: 1px solid var(--border); }
+    .opts label { color: var(--text-muted); font-size: .82rem; display: flex; gap: 6px; align-items: center; cursor: pointer; }
+    footer { max-width: 1300px; margin: 14px auto 0; color: var(--text-muted); font-size: .76rem; text-align: center; }
+    footer a { color: var(--camel); }
+    .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--card-solid); border: 1px solid var(--accent-line); padding: 6px 14px; border-radius: var(--radius); font-size: .84rem; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 10; }
+    .toast.show { opacity: 1; }
+    code { background: var(--surface-2); padding: 0 4px; border-radius: 3px; font-size: .85em; }
+
+    @media (max-width: 860px) {
+      body { padding: 10px 16px 30px; }
+      .layout { grid-template-columns: minmax(0, 1fr); }
+      .side { position: static; }
+      .toc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .brand { flex: 1 1 100%; }
+      .brand h1 span { display: none; }
+      .hero h2 { font-size: 1.5rem; }
+      .qt .hide-sm { display: none; }
+      .qt td, .qt th { padding: 6px 6px; }
+      .feathers { grid-template-columns: minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <a class="brand" href="./">
+    <div class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V11l7-6 7 6v10"/><path d="M9 21v-5h6v5"/><path d="M2 13c3 1.5 5 1.5 8 0s5-1.5 8 0 3 1 4 0"/></svg>
+    </div>
+    <h1>Sunken Temple Prep <span>Horde duo · WoW Forever</span></h1>
+  </a>
+  <a class="navlink" href="../../">Crafting</a>
+  <a class="navlink" href="../../dungeons/#sunken-temple/quests">Dungeons</a>
+  <a class="navlink" href="../#d-st">Duo Guide</a>
+  <a class="navlink active" href="./">Sunken Temple</a>
+</header>
+
+<div class="layout">
+  <aside class="panel side">
+    <nav class="toc" id="toc" aria-label="Sections"></nav>
+    <div class="who">
+      <b>Show steps for</b>
+      <div class="seg" id="who">
+        <button data-who="both">Both</button><button data-who="warrior">Warrior</button><button data-who="paladin">Paladin</button>
+      </div>
+      <label class="linkbtn" style="display:flex;gap:6px;align-items:center;color:var(--text-muted)"><input type="checkbox" id="hidedone"> Hide done steps</label>
+      <button class="linkbtn" id="reset">Reset all ticks on this page</button>
+    </div>
+  </aside>
+
+  <main id="main">
+    <div class="panel hero" id="top">
+      <h2>The Temple of Atal'Hakkar</h2>
+      <div class="meta">Sunken Temple · go at 50–54 (dungeon range 49–56) · Swamp of Sorrows · entrance <span id="entway"></span></div>
+      <p>Everything a Horde paladin and warrior need before they zone in: the five quest chains that unlock the temple's quests, what to carry, the order of things inside, and where to turn it all in. Most of the unlocking happens on the way through Feralas, Tanaris, Zul'Farrak, the Hinterlands and Un'Goro, so start early: the first pickups open at level 38.</p>
+      <div class="stats" id="stats"></div>
+      <div class="pbar" title="Steps ticked on this page"><i id="pbar"></i></div>
+    </div>
+
+    <section class="panel" id="quests">
+      <div class="shd"><h3>The quests <span class="count" id="qcount"></span></h3>
+        <p>What you want in your quest log when you zone in, and where each one ends. Ticks here are shared with the <a href="../" style="color:var(--camel)">duo guide</a> and the <a href="../../dungeons/" style="color:var(--camel)">dungeon journal</a>.</p></div>
+      <div style="overflow-x:auto"><table class="qt" id="qtable"></table></div>
+    </section>
+
+    <section class="panel" id="chains">
+      <div class="shd"><h3>Unlock the quests <span class="count">5 chains</span></h3>
+        <p><span class="tag shared">Shared</span> kills count for both of you when you're grouped. <span class="tag each">Each</span> means each of you has to click or loot your own. Click a coordinate to copy a <code>/way</code> command for TomTom.</p></div>
+      <div class="chains" id="chainlist"></div>
+    </section>
+
+    <section class="panel" id="ready">
+      <div class="shd"><h3>Before you zone in</h3><p>Run through this at the summoning stone. Most failed Sunken Temple runs are a missing egg or a forgotten quest.</p></div>
+      <div class="ready" id="readylist"></div>
+    </section>
+
+    <section class="panel" id="inside">
+      <div class="shd"><h3>Inside the temple</h3><p>The usual order of a full clear. Two quests finish inside (<i>Into the Depths</i> and <i>Secret of the Circle</i> end at objects, not NPCs), and one starts inside (the Essence of Eranikus drop).</p></div>
+      <div class="inside" id="insidelist"></div>
+    </section>
+
+    <section class="panel" id="after">
+      <div class="shd"><h3>After the run: turn-ins</h3><p>In travel order from the temple. Set your hearthstone in Stonard before you go: it's the first stop and right next to the temple.</p></div>
+      <ol class="steps" id="afterlist"></ol>
+    </section>
+  </main>
+</div>
+
+<footer>
+  Quest chains, objectives and positions from <a href="https://github.com/Questie/Questie" target="_blank" rel="noopener">QuestieDB</a> (GPL v3) and
+  <a href="https://www.wowhead.com/forever" target="_blank" rel="noopener">Wowhead Forever</a>. Part of the <a href="../">duo leveling guide</a>.
+  Not tested on every patch: check the linked quest pages if something has changed.
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>const whTooltips = { colorLinks: false, iconizeLinks: false, renameLinks: false };</script>
+<script src="https://wow.zamimg.com/js/tooltips.js" async></script>
+<script>
+(() => {
+  const WH = 'https://www.wowhead.com/forever/';
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+  };
+  // Quest ticks are shared with the duo guide and dungeon journal; page-only steps have their own key.
+  const DONE_KEY = 'dj-done', STEP_KEY = 'st-prep';
+  let done = new Set(store.get(DONE_KEY, []));
+  let steps = new Set(store.get(STEP_KEY, []));
+  let who = store.get('st-who', 'both');
+
+  // ---------- data ----------
+  const Q = {
+    1424: 'Pool of Tears', 1429: "The Atal'ai Exile", 1444: "Return to Fel'Zerul", 1445: "The Temple of Atal'Hakkar", 1446: "Jammal'an the Prophet",
+    3380: 'The Sunken Temple', 3444: 'The Stone Circle', 3446: 'Into the Depths', 3447: 'Secret of the Circle',
+    3520: 'Screecher Spirits', 3527: "The Prophecy of Mosh'aru", 4787: 'The Ancient Egg', 3528: 'The God Hakkar', 5065: "The Lost Tablets of Mosh'aru",
+    4145: 'Larion and Muigin', 4147: "Marvon's Workshop", 4146: 'Zapper Fuel', 4148: 'Bloodpetal Zapper',
+    8417: 'A Troubled Spirit', 8423: 'Warrior Kinship', 8424: 'War on the Shadowsworn', 8425: 'Voodoo Feathers',
+    3373: 'The Essence of Eranikus', 3374: 'The Essence of Eranikus',
+  };
+  const ql = id => `<a href="${WH}quest=${id}" target="_blank" rel="noopener">${esc(Q[id])}</a>`;
+  const il = (id, n) => `<a href="${WH}item=${id}" target="_blank" rel="noopener" style="color:var(--gold)">${esc(n)}</a>`;
+  const way = (z, x, y, label) => `<button class="coord" data-way="/way ${esc(z)} ${x} ${y}" title="${esc(label || z)}: click to copy /way">${x}, ${y}</button>`;
+  const ENT = ['Swamp of Sorrows', 69.5, 53.5];
+
+  // The dungeon's quests: id, who, how it's unlocked (chain id), where it ends, xp.
+  const MAIN = [
+    { id: 1445, chain: 'stonard', obj: '20 Fetishes of Hakkar from the temple trolls', end: "Fel'zerul, Stonard", xp: 5900, each: 1 },
+    { id: 1446, chain: 'stonard', obj: "Head of Jammal'an", end: "Atal'ai Exile, The Hinterlands", xp: 6550, each: 1 },
+    { id: 3446, chain: 'marvon', obj: 'Find the Altar of Hakkar', end: 'Inside: Altar of Hakkar', xp: 4900 },
+    { id: 3447, chain: 'marvon', obj: 'Light the statue circle, kill Atal\'alarion, click the Idol', end: 'Inside: Idol of Hakkar', xp: 6100 },
+    { id: 3528, chain: 'yeh', obj: 'Fill the Egg of Hakkar and kill the Avatar of Hakkar', end: "Yeh'kinya, Tanaris", xp: 7900 },
+    { id: 4146, chain: 'zapper', obj: '5 Atal\'ai Haze from the temple\'s worms, oozes and lurkers', end: "Larion, Un'Goro Crater", xp: 5100, each: 1 },
+    { id: 8425, chain: 'warrior', obj: '2 amber, 2 blue and 2 green Voodoo Feathers', end: 'Fallen Hero, Swamp of Sorrows', xp: 6350, war: 1 },
+    { id: 3373, chain: null, obj: 'Starts from the Essence of Eranikus (Shade of Eranikus drop); place it in the Essence Font', end: 'Inside: Essence Font', xp: 2800, inside: 1 },
+  ];
+
+  // Unlock chains. Step: [kind, text, opts]; opts.q = quest this step finishes (turn-ins tick the shared quest list).
+  const CHAINS = [
+    { id: 'stonard', name: "Fel'zerul's chain", gives: [1445, 1446], lv: 38,
+      when: "<b>When:</b> any time from 38. Easiest during the Hinterlands chapter (45–48): pick up in Stonard, gather in the Pool of Tears, then hand the bundle to the Atal'ai Exile while you're in the Hinterlands.",
+      steps: [
+        ['pick', `${ql(1424)} from Fel'zerul in Stonard`, { w: ['Swamp of Sorrows', 47.9, 54.8] }],
+        ['do', `10 Atal'ai Artifacts around the Pool of Tears. Many are underwater, so watch your breath.`, { w: ['Swamp of Sorrows', 70.6, 56.6], each: 1 }],
+        ['turn', `${ql(1424)} to Fel'zerul; pick up ${ql(1429)}`, { q: 1424, w: ['Swamp of Sorrows', 47.9, 54.8] }],
+        ['turn', `${ql(1429)} to the Atal'ai Exile; pick up ${ql(1444)} <b>and</b> ${ql(1446)}`, { q: 1429, w: ['The Hinterlands', 33.8, 75.2] }],
+        ['turn', `${ql(1444)} to Fel'zerul; pick up ${ql(1445)}`, { q: 1444, w: ['Swamp of Sorrows', 47.9, 54.8] }],
+      ] },
+    { id: 'marvon', name: "Marvon Rivetseeker's chain", gives: [3446, 3447], lv: 46,
+      when: "<b>When:</b> from 46. Pick up the Horde starter in Camp Mojache during Feralas; Marvon is in Tanaris, and his chest is in Ratchet, in the same workshop as Liv Rizzlefix (Zapper chain), so do both Ratchet steps in one trip.",
+      steps: [
+        ['pick', `${ql(3380)} from Witch Doctor Uzer'i, Camp Mojache (Feralas)`, { w: ['Feralas', 74.4, 43.4] }],
+        ['turn', `${ql(3380)} to Marvon Rivetseeker, Tanaris; pick up ${ql(3444)}`, { q: 3380, w: ['Tanaris', 52.7, 45.9] }],
+        ['do', `Open Marvon's Chest in his Ratchet workshop for the ${il(10556, 'Stone Circle')}`, { w: ['The Barrens', 62.5, 38.5], each: 1 }],
+        ['turn', `${ql(3444)} to Marvon; pick up ${ql(3446)} <b>and</b> ${ql(3447)}`, { q: 3444, w: ['Tanaris', 52.7, 45.9] }],
+      ] },
+    { id: 'yeh', name: "Yeh'kinya's chain", gives: [3528], lv: 40,
+      when: "<b>When:</b> starts at 40 in Tanaris. The duo route already covers it: Screecher Spirits in Feralas, the tablets in Zul'Farrak, the egg in the Hinterlands. It's the longest chain, so don't leave it for the end.",
+      steps: [
+        ['pick', `${ql(3520)} from Yeh'kinya, Steamwheedle Port (Tanaris)`, { w: ['Tanaris', 67.0, 22.4] }],
+        ['do', `Feralas: kill screechers and use Yeh'kinya's Bramble on the corpse to catch 3 spirits`, { w: ['Feralas', 53.2, 46.8], each: 1 }],
+        ['turn', `${ql(3520)} to Yeh'kinya; pick up ${ql(3527)}`, { q: 3520, w: ['Tanaris', 67.0, 22.4] }],
+        ['do', `Zul'Farrak: First Mosh'aru Tablet from Theka the Martyr, Second from Hydromancer Velratha`, { each: 1, inst: 1 }],
+        ['turn', `${ql(3527)} to Yeh'kinya; pick up ${ql(4787)}`, { q: 3527, w: ['Tanaris', 67.0, 22.4] }],
+        ['do', `Jintha'Alor (Hinterlands): take the ${il(12402, 'Ancient Egg')} from its nest. Lots of trolls, pull carefully.`, { w: ['The Hinterlands', 57.6, 86.8], each: 1 }],
+        ['turn', `${ql(4787)} to Yeh'kinya; pick up ${ql(3528)}. You get the <b>Egg of Hakkar</b>.`, { q: 4787, w: ['Tanaris', 67.0, 22.4] }],
+      ] },
+    { id: 'zapper', name: "Larion's chain", gives: [4146], lv: 47,
+      when: "<b>When:</b> from 47. Larion's bloodpetal kills fit the Un'Goro chapter (50–53); then a trip to Ratchet for Zapper Fuel before the temple.",
+      steps: [
+        ['pick', `${ql(4145)} from Larion, Marshal's Refuge (Un'Goro)`, { w: ["Un'Goro Crater", 45.5, 8.7] }],
+        ['do', `Kill 5 each: Bloodpetal Lasher (north-east), Thresher (east), Flayer (south), Trapper (west)`, { w: ["Un'Goro Crater", 65.3, 31.6], shared: 1 }],
+        ['turn', `${ql(4145)} to Larion; pick up ${ql(4147)}`, { q: 4145, w: ["Un'Goro Crater", 45.5, 8.7] }],
+        ['turn', `${ql(4147)} to Liv Rizzlefix in Ratchet; pick up ${ql(4146)}. You get the <b>Unloaded Zapper</b>.`, { q: 4147, w: ['The Barrens', 62.4, 38.7] }],
+      ] },
+    { id: 'warrior', name: 'Warrior class chain', gives: [8425], lv: 50, war: 1,
+      when: "<b>When:</b> at 50, before the temple. Only the warrior gets these quests, but the paladin's kills count while you're grouped, so do the Blasted Lands part together. The Fallen Hero stands at the Swamp of Sorrows end of the road to the Blasted Lands.",
+      steps: [
+        ['pick', `${ql(8417)} from any Horde warrior trainer (Orgrimmar, Thunder Bluff, Undercity)`, { war: 1 }],
+        ['turn', `${ql(8417)} to the Fallen Hero of the Horde; pick up ${ql(8423)}`, { q: 8417, w: ['Swamp of Sorrows', 34.3, 66.1], war: 1 }],
+        ['do', `Kill 7 Helboar in the Blasted Lands`, { w: ['Blasted Lands', 45.0, 35.0], shared: 1, war: 1 }],
+        ['turn', `${ql(8423)} to the Fallen Hero; pick up ${ql(8424)}`, { q: 8423, w: ['Swamp of Sorrows', 34.3, 66.1], war: 1 }],
+        ['do', `Kill 20 Shadowsworn Adepts, 10 Cultists and 20 Thugs in the Blasted Lands`, { w: ['Blasted Lands', 64.6, 40.8], shared: 1, war: 1 }],
+        ['turn', `${ql(8424)} to the Fallen Hero; pick up ${ql(8425)}`, { q: 8424, w: ['Swamp of Sorrows', 34.3, 66.1], war: 1 }],
+      ] },
+  ];
+
+  const READY = [
+    { h: 'Quest log (both)', items: [
+      ['ql-1445', `${ql(1445)}`], ['ql-1446', `${ql(1446)}`], ['ql-3446', `${ql(3446)}`], ['ql-3447', `${ql(3447)}`],
+      ['ql-3528', `${ql(3528)}`], ['ql-4146', `${ql(4146)}`],
+      ['ql-8425', `${ql(8425)}`, { war: 1 }],
+      ['ql-room', 'One free quest log slot each, for the Essence of Eranikus that drops at the end'],
+    ] },
+    { h: 'In your bags', items: [
+      ['bag-egg', `<b>Egg of Hakkar</b> (from The God Hakkar). Only one of you needs it to start the event, but each of you fills your own.`],
+      ['bag-zap', `<b>Unloaded Zapper</b> (from Zapper Fuel)`],
+      ['bag-space', 'Free bag slots: 20 fetishes, haze, feathers, plus loot'],
+      ['bag-water', 'Water breathing or a breath plan for the Pool of Tears entrance (it\'s a swim)'],
+    ] },
+    { h: 'Group and travel', items: [
+      ['grp-hs', 'Hearthstone set to Stonard: first turn-in, two minutes from the temple'],
+      ['grp-5', 'Three more players: warrior tanks, paladin heals, three damage dealers'],
+      ['grp-share', 'Share quests at the stone: Into the Depths, Secret of the Circle and Jammal\'an can be shared to anyone who has done their chain'],
+    ] },
+  ];
+
+  const INSIDE = [
+    { id: 'in-enter', t: 'Get in', html: `Swim to the middle of the Pool of Tears ${way(...ENT, 'Sunken Temple entrance')} and take the stairs down to the temple door. Trolls on the way in drop ${il(6181, 'Fetishes of Hakkar')} too, so loot everything for <i>The Temple of Atal'Hakkar</i> (20 each).` },
+    { id: 'in-circle', t: 'Upper ring: the statue circle', q: [3447], html: `Click the six statues around the circle in this order. A wrong one resets the puzzle and spawns adds. <b>Atal'alarion</b> appears in the middle: kill him, then click the <b>Idol of Hakkar</b> to finish <i>Secret of the Circle</i>.
+      <div class="order"><span><i>1</i>South</span><span><i>2</i>North</span><span><i>3</i>South-west</span><span><i>4</i>South-east</span><span><i>5</i>North-west</span><span><i>6</i>North-east</span></div>` },
+    { id: 'in-altar', t: 'Bottom floor: Altar of Hakkar and the Avatar', q: [3446, 3528], html: `Click the <b>Altar of Hakkar</b> in the central chamber for <i>Into the Depths</i>. Then start <i>The God Hakkar</i> there:
+      <ul><li>Use the Egg of Hakkar at the altar. <b>Hakkari Bloodkeepers</b> come in waves with other Hakkari.</li>
+      <li>Loot <b>Hakkari Blood</b> from the Bloodkeepers and use it on the four <b>Eternal Flames</b> around the room to put them out.</li>
+      <li>With all four out, the <b>Avatar of Hakkar</b> spawns. Kill him for the Essence of Hakkar; the egg is now filled.</li></ul>
+      Clear the room first. Adds keep coming until the flames are out, so the paladin should be ready to heal through a long fight.` },
+    { id: 'in-balcony', t: 'Middle level: the six troll guardians', q: [8425], html: `Six trolls on the balconies around the central pit. Killing all six drops the barrier to Jammal'an. Each drops a Voodoo Feather for the warrior's quest (2 of each colour needed):
+      <div class="feathers"><div class="feather f-amber"><b>Amber</b>Gasher, Zul'Lor</div><div class="feather f-blue"><b>Blue</b>Hukku, Mijan</div><div class="feather f-green"><b>Green</b>Zolo, Loro</div></div>` },
+    { id: 'in-jam', t: "Jammal'an the Prophet and Ogom the Wretched", q: [1446], html: `They fight together. Jammal'an mind-controls and heals, so kill him first, or interrupt his heals. Each of you loots the <b>Head of Jammal'an</b>.` },
+    { id: 'in-drag', t: 'Lower halls: the green dragons', html: `Dreamscythe and Weaver (upper balcony), then Morphaz and Hazzas guard the way to Eranikus. They breathe acid and fear: the warrior tanks them facing away from the group. On the way, kill Murk Worms, Saturated Oozes and Deep Lurkers in the water for 5 ${il(11318, "Atal'ai Haze")} each.` },
+    { id: 'in-eran', t: 'Shade of Eranikus', q: [3373], html: `Final boss. Each of you loots the <b>Essence of Eranikus</b>, which starts <i>The Essence of Eranikus</i>. Place it in the <b>Essence Font</b> in his lair right away: that finishes it and gives the Chained Essence of Eranikus.` },
+  ];
+
+  const AFTER = [
+    ['turn', `${ql(1445)} to Fel'zerul, Stonard (hearth here)`, { q: 1445, w: ['Swamp of Sorrows', 47.9, 54.8] }],
+    ['turn', `${ql(8425)} to the Fallen Hero of the Horde`, { q: 8425, w: ['Swamp of Sorrows', 34.3, 66.1], war: 1 }],
+    ['turn', `Optional: Itharius, in the far west of the swamp, for the Eranikus follow-up (${ql(3374)})`, { opt: 'after-ith', w: ['Swamp of Sorrows', 13.7, 71.7] }],
+    ['turn', `${ql(1446)} to the Atal'ai Exile, The Hinterlands`, { q: 1446, w: ['The Hinterlands', 33.8, 75.2] }],
+    ['turn', `${ql(3528)} to Yeh'kinya, Steamwheedle Port. Next in the chain is ${ql(5065)} (level 58).`, { q: 3528, w: ['Tanaris', 67.0, 22.4] }],
+    ['turn', `${ql(4146)} to Larion, Marshal's Refuge. He then gives ${ql(4148)}.`, { q: 4146, w: ["Un'Goro Crater", 45.5, 8.7] }],
+  ];
+
+  // ---------- state ----------
+  const stepKey = (chain, i) => `${chain}-${i}`;
+  const isDone = (key, o = {}) => (o.q ? done.has(o.q) : steps.has(key));
+  const shown = o => !(o.war && who === 'paladin');
+  function toggle(key, q, on) {
+    if (q) { on ? done.add(q) : done.delete(q); store.set(DONE_KEY, [...done]); }
+    else { on ? steps.add(key) : steps.delete(key); store.set(STEP_KEY, [...steps]); }
+    renderAll(true);
+  }
+
+  // ---------- render ----------
+  function stepRow(key, [kind, text, o = {}]) {
+    if (!shown(o)) return '';
+    const d = isDone(key, o);
+    const tags = [
+      o.shared ? '<span class="tag shared" title="Grouped kills count for both of you">Shared</span>' : '',
+      o.each ? '<span class="tag each" title="Each of you clicks or loots your own">Each</span>' : '',
+      o.war && who === 'both' ? '<span class="tag war">Warrior</span>' : '',
+      o.inst ? '<span class="tag in">Dungeon</span>' : '',
+    ].join('');
+    const K = { pick: 'Pick up', do: 'Do', turn: 'Turn in', go: 'Travel' }[kind];
+    return `<li class="st${d ? ' done' : ''}" data-done="${d ? 1 : 0}">
+      <input type="checkbox" class="chk" data-key="${esc(key)}" ${o.q ? `data-q="${o.q}"` : ''} ${d ? 'checked' : ''} aria-label="Done">
+      <div><div class="sl"><span class="kind k-${kind}">${K}</span><span class="stx">${text}</span>${o.w ? way(...o.w) : ''}${tags}</div></div></li>`;
+  }
+
+  function renderQuests() {
+    const rows = MAIN.filter(m => shown(m));
+    $('#qcount').textContent = `${rows.length} quests`;
+    $('#qtable').innerHTML = `<thead><tr><th style="width:24px"></th><th>Quest</th><th class="hide-sm">Objective</th><th>Unlock</th><th>Ends at</th><th class="hide-sm">XP</th></tr></thead><tbody>` +
+      rows.map(m => {
+        const ch = CHAINS.find(c => c.id === m.chain);
+        const unlocked = ch ? ch.steps.filter(s => s[2] && s[2].q).every(s => done.has(s[2].q)) : true;
+        const d = done.has(m.id);
+        return `<tr class="${d ? 'done' : ''}"><td><input type="checkbox" class="chk" data-q="${m.id}" ${d ? 'checked' : ''} aria-label="Done: ${esc(Q[m.id])}"></td>
+          <td class="qn">${ql(m.id)}${m.war && who === 'both' ? ' <span class="tag war">Warrior</span>' : ''}${m.each ? ' <span class="tag each" title="Each of you loots your own">Each</span>' : ''}<span class="sub hide-sm"></span></td>
+          <td class="hide-sm">${esc(m.obj)}</td>
+          <td>${ch ? `<a href="#c-${ch.id}" style="color:${unlocked ? 'var(--done)' : 'var(--camel)'}">${unlocked ? '✓ ' : ''}${esc(ch.name)}</a>` : '<span class="tag in">Drops inside</span>'}</td>
+          <td>${esc(m.end)}</td><td class="xp hide-sm">${m.xp.toLocaleString()}</td></tr>`;
+      }).join('') + '</tbody>';
+  }
+
+  function renderChains() {
+    $('#chainlist').innerHTML = CHAINS.filter(c => shown(c)).map(c => {
+      const list = c.steps.map((s, i) => [stepKey(c.id, i), s]).filter(([, s]) => shown(s[2] || {}));
+      const n = list.filter(([k, s]) => isDone(k, s[2])).length;
+      return `<div class="chain" id="c-${c.id}">
+        <div class="chain-h"><h4>${esc(c.name)}</h4>${c.war && who === 'both' ? '<span class="tag war">Warrior</span>' : ''}<span class="tag lv">From ${c.lv}</span>
+          <span class="gives">Unlocks ${c.gives.map(ql).join(', ')}</span>
+          <span class="bar"><i style="width:${Math.round(n / list.length * 100)}%"></i></span><span class="n">${n}/${list.length}</span></div>
+        <div class="when">${c.when}</div>
+        <ol class="steps">${list.map(([k, s]) => stepRow(k, s)).join('')}</ol></div>`;
+    }).join('');
+  }
+
+  function renderReady() {
+    $('#readylist').innerHTML = READY.map(g => `<div class="grp"><h5>${esc(g.h)}</h5><ol class="steps" style="padding:0">${
+      g.items.map(([k, t, o = {}]) => stepRow('r-' + k, ['go', t, o]).replace('<span class="kind k-go">Travel</span>', '')).join('')}</ol></div>`).join('');
+  }
+
+  function renderInside() {
+    $('#insidelist').innerHTML = INSIDE.map((r, i) => {
+      const d = steps.has(r.id);
+      return `<div class="room${d ? ' done' : ''}" data-done="${d ? 1 : 0}"><div class="num">${d ? '✓' : i + 1}</div><div>
+        <h4><label><input type="checkbox" class="chk" data-key="${r.id}" ${d ? 'checked' : ''}> ${esc(r.t)}</label>${(r.q || []).map(id => `<a class="q" href="${WH}quest=${id}" target="_blank" rel="noopener" style="font-size:.78rem">${esc(Q[id])}</a>`).join(' ')}</h4>
+        <p>${r.html}</p></div></div>`;
+    }).join('');
+  }
+
+  function renderAfter() {
+    $('#afterlist').innerHTML = AFTER.map((s, i) => stepRow((s[2] && s[2].opt) || 'after-' + i, s)).join('');
+  }
+
+  function allKeys() {
+    const out = [];
+    CHAINS.filter(shown).forEach(c => c.steps.forEach((s, i) => shown(s[2] || {}) && out.push([stepKey(c.id, i), s[2] || {}])));
+    READY.forEach(g => g.items.forEach(([k, , o = {}]) => shown(o) && out.push(['r-' + k, {}])));
+    INSIDE.forEach(r => out.push([r.id, {}]));
+    AFTER.forEach((s, i) => shown(s[2] || {}) && out.push([(s[2] && s[2].opt) || 'after-' + i, s[2] || {}]));
+    return out;
+  }
+
+  function renderStats() {
+    const keys = allKeys();
+    const n = keys.filter(([k, o]) => isDone(k, o)).length;
+    const qs = MAIN.filter(shown);
+    const xp = qs.reduce((s, m) => s + m.xp, 0);
+    const chainsDone = CHAINS.filter(shown).filter(c => c.steps.filter(s => s[2] && s[2].q).every(s => done.has(s[2].q))).length;
+    $('#stats').innerHTML = [
+      [qs.length, 'quests'], [xp.toLocaleString(), 'quest XP'], [`${chainsDone}/${CHAINS.filter(shown).length}`, 'chains unlocked'],
+      [`${qs.filter(m => done.has(m.id)).length}/${qs.length}`, 'turned in'],
+    ].map(([v, l]) => `<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+    $('#pbar').style.width = `${Math.round(n / keys.length * 100)}%`;
+    const sec = (id, name, cnt) => `<a href="#${id}" data-sec="${id}" class="${cnt && cnt[0] === cnt[1] ? 'full' : ''}"><span>${name}</span><small>${cnt ? cnt.join('/') : ''}</small></a>`;
+    const count = pre => { const ks = keys.filter(([k, o]) => pre(k, o)); return [ks.filter(([k, o]) => isDone(k, o)).length, ks.length]; };
+    $('#toc').innerHTML = [
+      sec('top', 'Overview'),
+      sec('quests', 'The quests', [qs.filter(m => done.has(m.id)).length, qs.length]),
+      sec('chains', 'Unlock chains', count(k => CHAINS.some(c => k.startsWith(c.id + '-')))),
+      sec('ready', 'Before you zone in', count(k => k.startsWith('r-'))),
+      sec('inside', 'Inside the temple', count(k => k.startsWith('in-'))),
+      sec('after', 'Turn-ins', count(k => k.startsWith('after-'))),
+    ].join('');
+    spy();
+  }
+
+  function applyHide() {
+    const hide = store.get('st-hidedone', false);
+    $('#hidedone').checked = hide;
+    document.querySelectorAll('.st').forEach(r => r.classList.toggle('hide', hide && r.dataset.done === '1'));
+  }
+
+  function renderAll(keepScroll) {
+    const y = window.scrollY;
+    document.querySelectorAll('#who button').forEach(b => b.classList.toggle('on', b.dataset.who === who));
+    renderQuests(); renderChains(); renderReady(); renderInside(); renderAfter(); renderStats(); applyHide();
+    if (keepScroll) window.scrollTo(0, y);
+    try { window.$WowheadPower && $WowheadPower.refreshLinks(); } catch {}
+  }
+
+  // Highlight the section in view.
+  function spy() {
+    const secs = ['top', 'quests', 'chains', 'ready', 'inside', 'after'];
+    let on = secs[0];
+    for (const id of secs) { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 120) on = id; }
+    document.querySelectorAll('#toc a').forEach(a => a.classList.toggle('on', a.dataset.sec === on));
+  }
+  window.addEventListener('scroll', () => requestAnimationFrame(spy), { passive: true });
+
+  let toastT;
+  function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 1600); }
+
+  document.addEventListener('click', e => {
+    const c = e.target.closest('.coord');
+    if (c) { e.preventDefault(); navigator.clipboard?.writeText(c.dataset.way).then(() => toast('Copied ' + c.dataset.way), () => toast(c.dataset.way)); return; }
+    const w = e.target.closest('[data-who]');
+    if (w) { who = w.dataset.who; store.set('st-who', who); renderAll(true); return; }
+    if (e.target.id === 'reset') {
+      if (!confirm('Untick every step on this page? Quest ticks shared with the duo guide are cleared too.')) return;
+      steps.clear(); store.set(STEP_KEY, []);
+      const ids = new Set([...MAIN.map(m => m.id), ...CHAINS.flatMap(c => c.steps.map(s => s[2] && s[2].q).filter(Boolean))]);
+      ids.forEach(id => done.delete(id)); store.set(DONE_KEY, [...done]);
+      renderAll(true);
+    }
+  });
+  document.addEventListener('change', e => {
+    if (e.target.id === 'hidedone') { store.set('st-hidedone', e.target.checked); applyHide(); return; }
+    const t = e.target;
+    if (t.classList.contains('chk')) toggle(t.dataset.key, t.dataset.q ? +t.dataset.q : null, t.checked);
+  });
+  window.addEventListener('storage', e => {
+    if (e.key === DONE_KEY) { done = new Set(store.get(DONE_KEY, [])); renderAll(true); }
+    if (e.key === STEP_KEY) { steps = new Set(store.get(STEP_KEY, [])); renderAll(true); }
+  });
+
+  $('#entway').innerHTML = way(...ENT, 'Sunken Temple entrance');
+  renderAll(false);
+})();
+</script>
+</body>
+</html>
