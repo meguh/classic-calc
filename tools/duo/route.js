@@ -8,6 +8,10 @@
 // Per-quest corrections to the automatic duo rating and giver lookup.
 //   ty: KILL | QUICK | GATHER | DROP | BOSS | USE | ESCORT   long / elite: flags   giver: NPC name
 const overrides = {
+  // Warrior Sunken Temple chain
+  8417: { ty: 'QUICK', giverText: 'Any Horde warrior trainer', note: 'Then talk to the Fallen Hero of the Horde at the Blasted Lands entrance (Swamp of Sorrows side).' },
+  8423: { note: 'Only the warrior has this quest; the paladin\'s kills count while you are grouped.' },
+  8424: { long: true, note: '50 Shadowsworn in the Blasted Lands. Only the warrior has it; the paladin\'s kills count while you are grouped.' },
   // Tanaris
   3520: { ty: 'USE', note: 'Done in Feralas: kill Screechers, then use the bramble on the corpse. Each of you needs your own 3.' },
   992: { ty: 'QUICK', note: 'Use the Dowsing Widget at the pool at the Lost Rigger Cove-side oasis; each of you uses your own.' },
@@ -281,7 +285,16 @@ const chapters = [
       { k: 'turn', t: 'Turn in at Marshal\'s Refuge and to Krakle/Torwa', q: [4501, 4145, 3881, 3883, 4491, 974, 4290] },
     ],
   },
-  { id: 'd-st', kind: 'dungeon', dn: 'Sunken Temple', lv: [50, 54] },
+  {
+    id: 'd-st', kind: 'dungeon', dn: 'Sunken Temple', lv: [50, 54],
+    unlock: [8417, 8423, 8424],
+    tips: [
+      'Warrior: do the warrior chain before you go. Any Horde warrior trainer gives A Troubled Spirit, which sends you to the Fallen Hero of the Horde at the Blasted Lands entrance. His two kill quests (Helboar, then Shadowsworn) count the paladin\'s kills too, so do them together. Voodoo Feathers is then done inside: the six troll guardians on the balconies drop the feathers.',
+      'Paladin: Forever has no Horde paladin quest here. The paladin\'s Sunken Temple quest, Forging the Mightstone, is Alliance only.',
+      'Both of you: Jammal\'an the Prophet and The God Hakkar are the big ones. The troll guardians you kill for Jammal\'an are the same ones that drop the warrior\'s feathers.',
+      'Sunken Temple is a five-player dungeon. A warrior tank and a paladin healer make a good core; fill three damage dealers.',
+    ],
+  },
   {
     id: 'steppes', title: 'Burning Steppes', zone: 'Burning Steppes', lv: [52, 54],
     hub: 'Flame Crest (65, 24)',
@@ -399,4 +412,10 @@ const chapters = [
   { id: 'd-shaper', kind: 'dungeon', dn: 'Shaper\'s Terrace', lv: [58, 60] },
 ];
 
-module.exports = { chapters, overrides };
+// Your duo's classes: dungeon class quests for other classes are left out.
+const classes = ['Paladin', 'Warrior'];
+
+// Faction fixes where the dungeon journal's data is wrong for Forever (checked against QuestieDB Forever).
+const sideFix = { 7501: 'Both' };
+
+module.exports = { chapters, overrides, classes, sideFix };

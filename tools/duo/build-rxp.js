@@ -118,9 +118,9 @@ function dungeonSteps(ch) {
   const out = [];
   if (ch.unlock.length) for (const id of ch.unlock) {
     const q = Q(id);
-    const st = ['step'];
+    const st = [q.cls ? `step << ${q.cls.split('/')[0]}` : 'step'];
     if (q.g && q.g.x != null) { const w = goto(q.g.z, q.g.x, q.g.y); if (w) st.push(w); }
-    st.push(`    >>Unlock: ${clean(q.obj)}`, `    .accept ${id} >>Accept ${clean(q.n)}`, `    .turnin ${id} >>Turn in ${clean(q.n)}`);
+    st.push(`    >>Unlock: ${clean(q.obj)}${q.g && q.g.x == null && q.g.n ? ' (from: ' + clean(q.g.n) + ')' : ''}`, `    .accept ${id} >>Accept ${clean(q.n)}`, ...completes(id), `    .turnin ${id} >>Turn in ${clean(q.n)}`);
     out.push(st.join('\n'));
   }
   // Pickups: one step per quest so any you can't take yet (chains, class quests) can be skipped.
@@ -156,7 +156,7 @@ const guides = chapters.map((ch, i) => {
     `#subgroup ${ch.kind === 'dungeon' ? 'Dungeon stops' : 'Zones'}`,
     next ? `#next ${chapterName(next)}` : '',
   ].filter(Boolean);
-  const intro = ['step', `    >>|cRXP_WARN_${clean(ch.title)}|r (${ch.lv[0]}-${ch.lv[1]}). ${clean(ch.kind === 'dungeon' ? ch.desc : ch.why)}${ch.tip ? ' Duo tip: ' + clean(ch.tip) : ''}${ch.skip && ch.skip.length ? ' Skip: ' + ch.skip.map(clean).join('; ') + '.' : ''} (Tick this step to start.)`].join('\n');
+  const intro = ['step', `    >>|cRXP_WARN_${clean(ch.title)}|r (${ch.lv[0]}-${ch.lv[1]}). ${clean(ch.kind === 'dungeon' ? ch.desc : ch.why)}${ch.tip ? ' Duo tip: ' + clean(ch.tip) : ''}${ch.tips ? ' ' + ch.tips.map(clean).join(' ') : ''}${ch.skip && ch.skip.length ? ' Skip: ' + ch.skip.map(clean).join('; ') + '.' : ''} (Tick this step to start.)`].join('\n');
   const steps = ch.kind === 'dungeon' ? dungeonSteps(ch) : zoneSteps(ch);
   return `RXPGuides.RegisterGuide([==[\n${head.join('\n')}\n\n${[intro, ...steps].join('\n')}\n]==])\n`;
 });

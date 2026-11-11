@@ -206,10 +206,6 @@ step
     .goto Badlands,2.4,46
     >>Pick up from Jarkal Mossmeld, Kargath, Badlands. Chain: Necklace Recovery > Necklace Recovery, Take 2 > Translating the Journal > Translating the Journal
     .accept 2339 >>Accept Find the Gems and Power Source
-step << Mage
-    .goto Dustwallow Marsh,46,57
-    >>Pick up from Tabetha, Dustwallow Marsh. Chain: The Infernal Orb > The Exorcism
-    .accept 1956 >>Accept Power in Uldaman
 step
     .goto Undercity,62.4,48.4
     >>Pick up from Patrick Garrett, Undercity
@@ -226,7 +222,6 @@ step
     .turnin 709 >>Turn in Solution to Doom
     .turnin 2418 >>Turn in Power Stones
     .turnin 2339 >>Turn in Find the Gems and Power Source
-    .turnin 1956 >>Turn in Power in Uldaman
     .turnin 2342 >>Turn in Reclaimed Treasures
     .turnin 2280 >>Turn in The Platinum Discs
 ]==])
@@ -1039,6 +1034,7 @@ step
 step
     >>Unlock: Speak with Sergeant Ulka to learn more about the situation on Alcaz Isle.
     .accept 95285 >>Accept Right Place, Wrong Time
+    .complete 95285,1 --Speak with Sergeant Ulka (1)
     .turnin 95285 >>Turn in Right Place, Wrong Time
 step
     >>Run Alcaz Prison and do its quests. Also: Thrall Needs to Know, Blood Red Bandanas, A Little Payback (pick up in game)
@@ -1147,7 +1143,29 @@ RXPGuides.RegisterGuide([==[
 #next 52-54 Burning Steppes
 
 step
-    >>|cRXP_WARN_Sunken Temple|r (50-54). The Temple of Atal'Hakkar, sunk beneath the Pool of Tears in the Swamp of Sorrows. The Atal'ai trolls try to summon their blood god Hakkar here, while the green dragons of Eranikus guard the lower halls. (Tick this step to start.)
+    >>|cRXP_WARN_Sunken Temple|r (50-54). The Temple of Atal'Hakkar, sunk beneath the Pool of Tears in the Swamp of Sorrows. The Atal'ai trolls try to summon their blood god Hakkar here, while the green dragons of Eranikus guard the lower halls. Warrior: do the warrior chain before you go. Any Horde warrior trainer gives A Troubled Spirit, which sends you to the Fallen Hero of the Horde at the Blasted Lands entrance. His two kill quests (Helboar, then Shadowsworn) count the paladin's kills too, so do them together. Voodoo Feathers is then done inside: the six troll guardians on the balconies drop the feathers. Paladin: Forever has no Horde paladin quest here. The paladin's Sunken Temple quest, Forging the Mightstone, is Alliance only. Both of you: Jammal'an the Prophet and The God Hakkar are the big ones. The troll guardians you kill for Jammal'an are the same ones that drop the warrior's feathers. Sunken Temple is a five-player dungeon. A warrior tank and a paladin healer make a good core; fill three damage dealers. (Tick this step to start.)
+step << Warrior
+    >>Unlock: Speak with the Fallen Hero of the Horde at the entrance to the Blasted Lands. (from: Any Horde warrior trainer)
+    .accept 8417 >>Accept A Troubled Spirit
+    .turnin 8417 >>Turn in A Troubled Spirit
+step << Warrior
+    .goto Swamp of Sorrows,34.3,66.1
+    >>Unlock: Kill 7 Helboar in the Blasted Lands and return to the Fallen Hero of the Horde.
+    .accept 8423 >>Accept Warrior Kinship
+    .complete 8423,1 --Helboar (7)
+    .mob Helboar
+    .turnin 8423 >>Turn in Warrior Kinship
+step << Warrior
+    .goto Swamp of Sorrows,34.3,66.1
+    >>Unlock: Slaughter the Shadowsworn in the Blasted Lands and return to the Fallen Hero of the Horde.
+    .accept 8424 >>Accept War on the Shadowsworn
+    .complete 8424,1 --Shadowsworn Adept (20)
+    .complete 8424,2 --Shadowsworn Cultist (10)
+    .complete 8424,3 --Shadowsworn Thug (20)
+    .mob Shadowsworn Adept
+    .mob Shadowsworn Cultist
+    .mob Shadowsworn Thug
+    .turnin 8424 >>Turn in War on the Shadowsworn
 step
     .goto Swamp of Sorrows,48,55
     >>Pick up from Fel'Zerul, Stonard, Swamp of Sorrows. Chain: Pool of Tears > The Atal'ai Exile > Return to Fel'Zerul
@@ -1156,30 +1174,6 @@ step << Warrior
     .goto Swamp of Sorrows,34.2,66
     >>Pick up from Fallen Hero of the Horde, Swamp of Sorrows. Chain: Warrior Kinship > War on the Shadowsworn
     .accept 8425 >>Accept Voodoo Feathers
-step << Shaman
-    .goto Alterac Mountains,80.4,66.8
-    >>Pick up from Bath'rah the Windwatcher, Alterac Mountains. Chain: Elemental Mastery > Spirit Totem
-    .accept 8413 >>Accept Da Voodoo
-step << Hunter
-    .goto Azshara,42.4,42.6
-    >>Pick up from Ogtinc, Azshara. Chain: Courser Antlers > Wavethrashing
-    .accept 8232 >>Accept The Green Drake
-step << Mage
-    .goto Azshara,29.2,40.2
-    >>Pick up from Archmage Xylem, Azshara. Chain: Magic Dust > The Siren's Coral
-    .accept 8253 >>Accept Destroy Morphaz
-step << Priest
-    .goto Azshara,42.4,42.6
-    >>Pick up from Ogtinc, Azshara. Chain: Of Coursers We Know > The Ichor of Undeath
-    .accept 8257 >>Accept Blood of Morphaz
-step << Rogue
-    .goto Azshara,29.2,40.2
-    >>Pick up from Archmage Xylem, Azshara. Chain: Sealed Azure Bag > Encoded Fragments
-    .accept 8236 >>Accept The Azure Key
-step << Warlock
-    .goto Felwood,41.4,44.8
-    >>Pick up from Impsy, Bloodvenom Falls, Felwood. Chain: An Imp's Request > Hot and Itchy > The Wrong Stuff
-    .accept 8422 >>Accept Trolls of a Feather
 step
     .goto Tanaris,52.6,45.8
     >>Pick up from Marvon Rivetseeker, Tanaris. Chain: The Stone Circle
@@ -1200,10 +1194,6 @@ step
     .goto The Hinterlands,33.6,75.2
     >>Pick up from Atal'ai Exile, The Hinterlands
     .accept 1446 >>Accept Jammal'an the Prophet
-step << Druid
-    .goto Un'Goro Crater,71.6,76
-    >>Pick up from Torwa Pathfinder, Un'Goro Crater. Chain: Bloodpetal Poison > Toxic Test
-    .accept 9053 >>Accept A Better Ingredient
 step
     >>Pick up from Essence of Eranikus (drops from the Shade of Eranikus)
     .accept 3373 >>Accept The Essence of Eranikus
@@ -1214,18 +1204,11 @@ step
     >>Turn in your Sunken Temple quests
     .turnin 1445 >>Turn in The Temple of Atal'Hakkar
     .turnin 8425 >>Turn in Voodoo Feathers
-    .turnin 8413 >>Turn in Da Voodoo
-    .turnin 8232 >>Turn in The Green Drake
-    .turnin 8253 >>Turn in Destroy Morphaz
-    .turnin 8257 >>Turn in Blood of Morphaz
-    .turnin 8236 >>Turn in The Azure Key
-    .turnin 8422 >>Turn in Trolls of a Feather
     .turnin 3446 >>Turn in Into the Depths
     .turnin 3447 >>Turn in Secret of the Circle
     .turnin 3528 >>Turn in The God Hakkar
     .turnin 4146 >>Turn in Zapper Fuel
     .turnin 1446 >>Turn in Jammal'an the Prophet
-    .turnin 9053 >>Turn in A Better Ingredient
     .turnin 3373 >>Turn in The Essence of Eranikus
 ]==])
 
@@ -1929,9 +1912,6 @@ step
     .goto Moonglade,51.6,44.4
     >>Pick up from Rabine Saturna, Nighthaven, Moonglade. Chain: A Reliquary of Purity
     .accept 5526 >>Accept Shards of the Felvine
-step << Mage
-    >>Pick up from Lorekeeper Lydros, Dire Maul
-    .accept 7463 >>Accept Arcane Refreshment
 step
     .goto Feralas,59,45
     >>Run Dire Maul: East and do its quests
@@ -1940,7 +1920,6 @@ step
     .turnin 7441 >>Turn in Pusillin and the Elder Azj'Tordin
     .turnin 7489 >>Turn in Lethtendris's Web
     .turnin 5526 >>Turn in Shards of the Felvine
-    .turnin 7463 >>Turn in Arcane Refreshment
 ]==])
 
 RXPGuides.RegisterGuide([==[
@@ -1989,10 +1968,6 @@ step
     .goto Feralas,74.4,44
     >>Pick up from Sage Korolusk, Camp Mojache, Feralas
     .accept 7481 >>Accept Elven Legends
-step << Warlock
-    .goto Burning Steppes,12.6,31.4
-    >>Pick up from Mor'zul Bloodbringer, Altar of Storms, Burning Steppes. Chain: Rage of Blood > Wildeyes > Lord Banehollow > Ulathek the Traitor > Xorothian Stardust > Bell of Dethmoora > Wheel of the Black March > Doomsday Candle > Imp Delivery > Arcanite
-    .accept 7631 >>Accept Dreadsteed of Xoroth
 step
     >>Pick up from Shen'dralar Ancient, Dire Maul
     .accept 7461 >>Accept The Madness Within
@@ -2005,7 +1980,6 @@ step
 step
     >>Turn in your Dire Maul: West quests
     .turnin 7481 >>Turn in Elven Legends
-    .turnin 7631 >>Turn in Dreadsteed of Xoroth
     .turnin 7461 >>Turn in The Madness Within
     .turnin 7703 >>Turn in Unfinished Gordok Business
 ]==])
@@ -2034,27 +2008,9 @@ step
 step
     >>Pick up from Knot Thimblejack, Dire Maul
     .accept 5518 >>Accept The Gordok Ogre Suit
-step << Druid
-    >>Pick up from The Emerald Dream (book, Dire Maul drop)
-    .accept 7506 >>Accept The Emerald Dream...
-step << Hunter
-    >>Pick up from The Greatest Race of Hunters (book, Dire Maul drop)
-    .accept 7503 >>Accept The Greatest Race of Hunters
-step << Mage
-    >>Pick up from The Arcanist's Cookbook (book, Dire Maul drop)
-    .accept 7500 >>Accept The Arcanist's Cookbook
-step << Priest
-    >>Pick up from Holy Bologna: What the Light Won't Tell You (book, Dire Maul drop)
-    .accept 7504 >>Accept Holy Bologna: What the Light Won't Tell You
-step << Rogue
-    >>Pick up from Garona: A Study on Stealth and Treachery (book, Dire Maul drop)
-    .accept 7498 >>Accept Garona: A Study on Stealth and Treachery
-step << Shaman
-    >>Pick up from Frost Shock and You (book, Dire Maul drop)
-    .accept 7505 >>Accept Frost Shock and You
-step << Warlock
-    >>Pick up from Harnessing Shadows (book, Dire Maul drop)
-    .accept 7502 >>Accept Harnessing Shadows
+step << Paladin
+    >>Pick up from The Light and How To Swing It (book, Dire Maul drop)
+    .accept 7501 >>Accept The Light and How To Swing It
 step << Warrior
     >>Pick up from Codex of Defense (book, Dire Maul drop)
     .accept 7499 >>Accept Codex of Defense
@@ -2079,13 +2035,7 @@ step
     .turnin 7703 >>Turn in Unfinished Gordok Business
     .turnin 5525 >>Turn in Free Knot!
     .turnin 5518 >>Turn in The Gordok Ogre Suit
-    .turnin 7506 >>Turn in The Emerald Dream...
-    .turnin 7503 >>Turn in The Greatest Race of Hunters
-    .turnin 7500 >>Turn in The Arcanist's Cookbook
-    .turnin 7504 >>Turn in Holy Bologna: What the Light Won't Tell You
-    .turnin 7498 >>Turn in Garona: A Study on Stealth and Treachery
-    .turnin 7505 >>Turn in Frost Shock and You
-    .turnin 7502 >>Turn in Harnessing Shadows
+    .turnin 7501 >>Turn in The Light and How To Swing It
     .turnin 7499 >>Turn in Codex of Defense
     .turnin 7507 >>Turn in Nostro's Compendium
     .turnin 7483 >>Turn in Libram of Rapidity
@@ -2265,10 +2215,6 @@ step
     .goto Western Plaguelands,70.4,74
     >>Pick up from Magistrate Marduke, Caer Darrow, Western Plaguelands. Chain: Doctor Theolen Krastinov, the Butcher > Krastinov's Bag of Horrors > Kirtonos the Herald > The Human, Ras Frostwhisper > The Dying, Ras Frostwhisper > Menethil's Gift > Menethil's Gift > Soulbound Keepsake
     .accept 5466 >>Accept The Lich, Ras Frostwhisper
-step << Warlock
-    .goto Burning Steppes,12.4,31.4
-    >>Pick up from Gorzeeki Wildeyes, Altar of Storms, Burning Steppes. Chain: Rage of Blood > Wildeyes > Lord Banehollow > Ulathek the Traitor > Xorothian Stardust
-    .accept 7629 >>Accept Imp Delivery
 step
     .goto Eastern Plaguelands,73.7,50.5
     >>Pick up from Betina Bigglezink, Light's Hope Chapel, Eastern Plaguelands. Chain: Broodling Essence > Felnok Steelspring > Chillwind Horns > Return to Tinkee > Tinkee Steamboil > Egg Freezing > Egg Collection > Leonid Barthalomew > Betina Bigglezink
@@ -2277,10 +2223,6 @@ step
     .goto Eastern Plaguelands,73.7,50.5
     >>Pick up from Betina Bigglezink, Light's Hope Chapel, Eastern Plaguelands
     .accept 5529 >>Accept Plagued Hatchlings
-step << Shaman
-    .goto Orgrimmar,38.4,36
-    >>Pick up from Sagorne Creststrider, Valley of Wisdom, Orgrimmar. Chain: Material Assistance
-    .accept 7668 >>Accept The Darkreaver Menace
 step
     .goto Tirisfal Glades,83,71.4
     >>Pick up from Alexi Barov, The Bulwark, Tirisfal Glades
@@ -2291,10 +2233,8 @@ step
 step
     >>Turn in your Scholomance quests
     .turnin 5466 >>Turn in The Lich, Ras Frostwhisper
-    .turnin 7629 >>Turn in Imp Delivery
     .turnin 4771 >>Turn in Dawn's Gambit
     .turnin 5529 >>Turn in Plagued Hatchlings
-    .turnin 7668 >>Turn in The Darkreaver Menace
     .turnin 5341 >>Turn in Barov Family Fortune
 ]==])
 

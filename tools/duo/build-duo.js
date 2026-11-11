@@ -2,7 +2,11 @@
 // Usage: node build-duo.js
 const fs = require('fs');
 const path = require('path');
-const { chapters, overrides } = require('./route.js');
+const { chapters, overrides, classes = [], sideFix = {} } = require('./route.js');
+const CLASS_BITS = { 1: 'Warrior', 2: 'Paladin', 4: 'Hunter', 8: 'Rogue', 16: 'Priest', 64: 'Shaman', 128: 'Mage', 256: 'Warlock', 1024: 'Druid' };
+const classNames = mask => Object.entries(CLASS_BITS).filter(([b]) => mask & +b).map(([, n]) => n);
+// Keep a class quest only if it is for one of the duo's classes.
+const forUs = cls => !cls || !classes.length || [].concat(cls).some(c => classes.includes(c));
 const C = require('./candidates.json');
 const Q = require('./questie.json');
 const TT = require('./tooltips.json');
@@ -73,6 +77,14 @@ function zoneQuest(id) {
     }
     if (o.at) Object.assign(rec.g = rec.g || {}, { x: o.at[0], y: o.at[1] });
     if (c.at) rec.at = c.at;
+  } else if (Q.quests[id] && TT[id]) {
+    // In QuestieDB but outside the candidate list (e.g. class quests): objective text from the tooltip.
+    const q = Q.quests[id];
+    const txt = strip(TT[id].tooltip);
+    const req = [...txt.matchAll(/-\s*(.+?)\s+x\s+(\d+)/g)].map(m => [m[1].trim(), +m[2]]);
+    const obj = txt.split('\n').map(s => s.trim()).filter(s => s && s !== TT[id].name && !/^Level \d+$/.test(s) && !s.startsWith('-') && s !== 'Requirements:').join(' ');
+    rec = { id, n: q.name, rq: q.requiredLevel, lv: q.questLevel, ty: o.ty || (req.length ? 'KILL' : 'QUICK'), obj, req,
+      pre: [...(q.preQuestSingle || []), ...(q.preQuestGroup || [])].map(p => ({ id: p, n: nameOf(p) })) };
   } else if (DJ.quests[id]) {
     const d = DJ.quests[id];
     rec = { id, n: d.n, rq: d.rq, lv: d.lv, ty: o.ty || 'DUNGEON', obj: d.obj || '', req: [], pu: d.pu };
@@ -81,6 +93,9 @@ function zoneQuest(id) {
     console.warn('unknown quest', id);
     rec = { id, n: nameOf(id), ty: o.ty || 'QUICK', obj: '', req: [] };
   }
+  if (o.giverText) rec.g = { n: o.giverText };
+  const qcls = (C[id] && C[id].cls) || (Q.quests[id] && Q.quests[id].requiredClasses);
+  if (qcls && !rec.cls) rec.cls = classNames(qcls).join('/');
   if (o.long) rec.long = 1;
   if (o.elite) rec.elite = 1;
   if (o.note) rec.note = o.note;
@@ -119,13 +134,15 @@ for (const ch of chapters) {
   if (ch.kind === 'dungeon') {
     const dn = DJ.dungeons.find(d => d.n === ch.dn);
     if (!dn) { console.warn('no dungeon', ch.dn); continue; }
-    const ids = dn.quests.filter(id => DJ.quests[id] && DJ.quests[id].f !== 'Alliance');
+    const side = id => sideFix[id] || DJ.quests[id].f;
+    const ids = dn.quests.filter(id => DJ.quests[id] && side(id) !== 'Alliance' && forUs(DJ.quests[id].cls));
     ids.forEach(dungeonQuest);
+    ids.forEach(id => { if (sideFix[id]) quests[id].side = sideFix[id]; });
     const unlock = (ch.unlock || []).map(id => { zoneQuest(id); used.add(id); return id; });
     out.push({
       id: ch.id, kind: 'dungeon', title: dn.n, lv: ch.lv, range: dn.lv, loc: dn.loc, desc: dn.d,
       ent: dn.ent ? { x: dn.ent.x, y: dn.ent.y, z: dn.ent.z } : undefined,
-      optional: ch.optional ? 1 : undefined, fv: dn.new ? 1 : undefined, q: ids, unlock,
+      optional: ch.optional ? 1 : undefined, fv: dn.new ? 1 : undefined, q: ids, unlock, tips: ch.tips,
     });
     continue;
   }

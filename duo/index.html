@@ -377,7 +377,7 @@
         <h2>${esc(ch.title)} <span class="tag dg">Dungeon</span> ${ch.fv ? '<span class="tag new">Forever</span>' : ''} ${ch.optional ? '<span class="tag opt">Optional</span>' : ''}</h2>
         <div class="cmeta">Go at ${lvText(ch)} (dungeon range ${esc(ch.range)}) · ${esc(ch.loc)}${ent}</div>
         <div class="cwhy">${esc(ch.desc || '')}</div>
-        <div class="boxes"><div class="box"><b>Before you go</b>Pick up everything below that you can, collection quests too. Quests are grouped by where you pick them up. Full boss and loot lists are on the <a href="../dungeons/#${slug(ch.title)}/quests" style="color:var(--camel)">dungeon journal</a>.</div></div>
+        <div class="boxes">${(ch.tips || []).map(t => { const m = /^([^:]{3,20}): (.*)$/.exec(t); return `<div class="box"><b>${esc(m ? m[1] : 'Duo tip')}</b>${esc(m ? m[2] : t)}</div>`; }).join('')}<div class="box"><b>Before you go</b>Pick up everything below that you can, collection quests too. Quests are grouped by where you pick them up. Full boss and loot lists are on the <a href="../dungeons/#${slug(ch.title)}/quests" style="color:var(--camel)">dungeon journal</a>.</div></div>
       </div>${unlock}
       <div class="sect">Quests <span class="count">${ch.q.length}</span></div>
       ${order.map(k => `<div class="group"><h4>${esc(k)}</h4>${groups.get(k).map(id => qrow(id, 'dungeon', null)).join('')}</div>`).join('')}`;
@@ -385,7 +385,7 @@
 
   function renderIntro() {
     return `<div class="intro">
-      <p>A step-by-step Horde route for two players from 40 to 60. It goes for quests where you both get credit from the same kills, plus quick one-stop jobs. Quests where you loot items from mobs (including a single named mob's head) are left out, unless they lead to a dungeon quest. Dungeon stops list <b>every</b> Horde quest for that dungeon, collection quests included.</p>
+      <p>A step-by-step Horde route for two players from 40 to 60. It goes for quests where you both get credit from the same kills, plus quick one-stop jobs. Quests where you loot items from mobs (including a single named mob's head) are left out, unless they lead to a dungeon quest. Dungeon stops list <b>every</b> Horde quest for that dungeon, collection quests included. Class quests are only shown for your duo: <b>Paladin and Warrior</b>.</p>
       <p>Set your level at the top: chapters that fit it get a gold dot, and quests you can't pick up yet show the level they open at. Tick quests as you finish them; ticks are saved in this browser and shared with the dungeon journal.</p>
       <p><b>In game with RestedXP:</b> download <a href="rxp/RXP_DuoGuide.zip" download style="color:var(--camel)">RXP_DuoGuide.zip</a>, unzip it into <code>World of Warcraft\\_forever_\\Interface\\AddOns</code>, and reload. The chapters appear in the RestedXP guide list under <b>Duo Leveling 40-60 (H)</b>, and each one leads into the next. It needs the RestedXP Guides addon.</p>
       <div class="legend">${Object.entries(TYPES).map(([k, [n, d]]) => `<div><span class="ty ty-${k}">${n}</span><span>${esc(d)}</span></div>`).join('')}
