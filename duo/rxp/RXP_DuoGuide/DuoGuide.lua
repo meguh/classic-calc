@@ -194,6 +194,11 @@ step
     .accept 6626 >>Accept A Host of Evil
     .target Myriam Moonsinger
 step
+    .goto Mulgore,34.4,22.8
+    >>Talk to |cRXP_FRIENDLY_Sutara Plainstalker|r
+    .accept 97196 >>Accept The Coldbringer's Eye
+    .target Sutara Plainstalker
+step
     .goto Undercity,74,32.4
     >>Talk to |cRXP_FRIENDLY_Andrew Brownell|r
     .accept 3341 >>Accept Bring the End
@@ -210,8 +215,8 @@ step
     .accept 3525 >>Accept Extinguishing the Idol
 step
     #completewith run
-    >>Inside: Not known yet
-    .accept 97196 >>Accept The Coldbringer's Eye
+    >>Inside: Kog'thug the Brave, Bristleback Retreat, Shen'dralas (72.6, 31.4)
+    .accept 93604 >>Accept Agamaggan's Blood
 step
     #completewith next
     .goto The Barrens,50,92,40 >>Travel to the Razorfen Downs entrance
@@ -230,15 +235,24 @@ step
     .complete -6521,1 --Ambassador Malcin's Head
     .mob +Ambassador Malcin
     .complete -97196,1 --The Coldbringer's Eye
+    .complete -93604,1 --Agamaggan's Blood
 step
     >>Turn in
     .turnin -3525,1 >>Turn in Extinguishing the Idol
-    .turnin -97196,1 >>Turn in The Coldbringer's Eye
 step
     .goto The Barrens,49,94.8
     >>Talk to |cRXP_FRIENDLY_Myriam Moonsinger|r
     .turnin -6626,1 >>Turn in A Host of Evil
     .target Myriam Moonsinger
+step
+    >>Talk to |cRXP_FRIENDLY_Kog'thug the Brave|r
+    .turnin -93604,1 >>Turn in Agamaggan's Blood
+    .target Kog'thug the Brave
+step
+    .goto Mulgore,34.4,22.8
+    >>Talk to |cRXP_FRIENDLY_Sutara Plainstalker|r
+    .turnin -97196,1 >>Turn in The Coldbringer's Eye
+    .target Sutara Plainstalker
 step
     .goto Undercity,74,32.4
     >>Talk to |cRXP_FRIENDLY_Andrew Brownell|r
@@ -281,11 +295,11 @@ step
     .accept 2418 >>Accept Power Stones
     .target Rigglefuzz
 step
-    .goto Badlands,2.4,46
-    >>Talk to |cRXP_FRIENDLY_Jarkal Mossmeld|r. Chain: Necklace Recovery > Necklace Recovery, Take 2 > Translating the Journal > Translating the Journal
-    .accept 2339 >>Accept Find the Gems and Power Source
-    .target Jarkal Mossmeld
-    .isQuestTurnedIn 2338
+    .goto Orgrimmar,59.4,36.8
+    >>Talk to |cRXP_FRIENDLY_Dran Droffers|r. Chain: Necklace Recovery > Necklace Recovery, Take 2 > Translating the Journal > Translating the Journal > Find the Gems and Power Source > Deliver the Gems
+    .accept 2341 >>Accept Necklace Recovery, Take 3
+    .target Dran Droffers
+    .isQuestTurnedIn 2340
 step
     .goto Undercity,62.4,48.4
     >>Talk to |cRXP_FRIENDLY_Patrick Garrett|r
@@ -312,20 +326,13 @@ step
     .mob +Shadowforge Ruffian
     .mob +Shadowforge Digger
     .complete -2342,1 --Garrett Family Treasure
-    .complete -2339,1 --Shattered Necklace Ruby
-    .complete -2339,2 --Shattered Necklace Sapphire
-    .mob +Grimlok
-    .complete -2339,3 --Shattered Necklace Topaz
-    .complete -2339,4 --Shattered Necklace Power Source
-    .mob +Archaedas
-    .use 7668
+    .complete -2341,1 --Necklace Recovery, Take 3
     .complete -2280,1 --The Platinum Discs
     .use 6064
 step
     .goto Badlands,2.4,46
     >>Talk to |cRXP_FRIENDLY_Jarkal Mossmeld|r
     .turnin -2202,1 >>Turn in Uldaman Reagent Run
-    .turnin -2339,1 >>Turn in Find the Gems and Power Source
     .target Jarkal Mossmeld
 step
     .goto Badlands,51.4,76.4
@@ -337,6 +344,11 @@ step
     >>Talk to |cRXP_FRIENDLY_Rigglefuzz|r
     .turnin -2418,1 >>Turn in Power Stones
     .target Rigglefuzz
+step
+    .goto Badlands,2.42,46.06
+    >>Talk to |cRXP_FRIENDLY_Jarkal Mossmeld|r
+    .turnin -2341,1 >>Turn in Necklace Recovery, Take 3
+    .target Jarkal Mossmeld
 step
     .goto Thunder Bluff,34.4,46.87
     >>Talk to |cRXP_FRIENDLY_Sage Truthseeker|r
@@ -368,12 +380,13 @@ step
     .accept 94744 >>Accept The Wayward Warrior
     .target Krom'rosh
 step
-    .goto 2548,59.4,45.7
+    .goto 2548,59.4,45.5
     >>Talk to |cRXP_FRIENDLY_Krom'rosh|r
     .accept 94968 >>Accept Eye of Mugg
     .target Krom'rosh
+    .isQuestTurnedIn 94483,94672,95428,94744,94748,94745,95432,94768,95278
 step
-    .goto 2548,59.9,46
+    .goto 2548,59.8,46
     >>Talk to |cRXP_FRIENDLY_Kreza Darkthorn|r
     .accept 94974,2,94973 >>Accept Key Ingredients
     .target Kreza Darkthorn
@@ -470,24 +483,32 @@ step
     +|cRXP_WARN_Krol'dok Stronghold|r (42-45). Ogre outrunners have been kidnapping travelers and raiding settlements across the Riverglades. Their trail leads to a fortress of workshops, encampments and guarded inner passages, where strange chanting is heard after nightfall.
 step
     #label start
-    .goto 2548,59.4,45.7
-    >>Talk to |cRXP_FRIENDLY_Krom'rosh|r
+    .goto 2548,59.4,45.5
+    >>Talk to |cRXP_FRIENDLY_Krom'rosh|r. Chain: Show Them How It's Done > Encroaching Twilight > Clugfist's Decree > The Wayward Warrior > Break Their Chains > Carving a Path > Rise Up! > Bring Me His Head > It Is Time, Brother...
     .accept 94968 >>Accept Eye of Mugg
     .target Krom'rosh
+    .isQuestTurnedIn 94483,94672,95428,94744,94748,94745,95432,94768,95278
 step
-    .goto 2548,59.9,46
+    .goto 2548,59.4,44
+    >>Talk to |cRXP_FRIENDLY_Tran'gul|r. Chain: Show Them How It's Done > Encroaching Twilight > Clugfist's Decree > The Wayward Warrior > Break Their Chains > Carving a Path > Rise Up! > Bring Me His Head > It Is Time, Brother...
+    .accept 94972 >>Accept Tome of Twilight
+    .target Tran'gul
+    .isQuestTurnedIn 94483,94672,95428,94744,94748,94745,95432,94768,95278
+step
+    .goto 2548,33.4,38
+    >>Talk to |cRXP_FRIENDLY_Da'grosh|r. Chain: Show Them How It's Done > Encroaching Twilight > Clugfist's Decree > The Wayward Warrior > Break Their Chains > Carving a Path > Rise Up! > Bring Me His Head
+    .accept 94975 >>Accept A Token of Vengeance
+    .target Da'grosh
+    .isQuestTurnedIn 94483,94672,95428,94744,94748,94745,95432,94768
+step
+    .goto 2548,59.8,46
     >>Talk to |cRXP_FRIENDLY_Kreza Darkthorn|r. Chain: Krol'dok Moulding
     .accept 94974 >>Accept Key Ingredients
     .target Kreza Darkthorn
     .isQuestTurnedIn 94973
 step
-    #completewith run
-    >>Inside: Riverglades (giver not known yet)
-    .accept 94972 >>Accept Tome of Twilight
-step
-    #completewith run
-    >>Inside: Riverglades (giver not known yet)
-    .accept 94975 >>Accept A Token of Vengeance
+    #completewith next
+    .goto 2548,37.5,37.3,40 >>Travel to the Krol'dok Stronghold entrance
 step
     #label run
     >>Run Krol'dok Stronghold and do its quests
@@ -496,16 +517,22 @@ step
     .complete -94975,1 --A Token of Vengeance
     .complete -94974,1 --Key Ingredients
 step
-    >>Turn in
-    .turnin -94972,1 >>Turn in Tome of Twilight
-    .turnin -94975,1 >>Turn in A Token of Vengeance
-step
-    .goto 2548,59.4,45.7
+    .goto 2548,59.4,45.5
     >>Talk to |cRXP_FRIENDLY_Krom'rosh|r
     .turnin -94968,1 >>Turn in Eye of Mugg
     .target Krom'rosh
 step
-    .goto 2548,59.9,46
+    .goto 2548,59.4,44
+    >>Talk to |cRXP_FRIENDLY_Tran'gul|r
+    .turnin -94972,1 >>Turn in Tome of Twilight
+    .target Tran'gul
+step
+    .goto 2548,33.4,38
+    >>Talk to |cRXP_FRIENDLY_Da'grosh|r
+    .turnin -94975,1 >>Turn in A Token of Vengeance
+    .target Da'grosh
+step
+    .goto 2548,59.8,46
     >>Talk to |cRXP_FRIENDLY_Kreza Darkthorn|r
     .turnin -94974,1 >>Turn in Key Ingredients
     .target Kreza Darkthorn
@@ -1180,6 +1207,10 @@ step
     .accept 7064 >>Accept Corruption of Earth and Seed
     .target Selendra
 step
+    .goto Mulgore,33.8,23.7
+    >>Talk to |cRXP_FRIENDLY_Olana Brighthoof - Skywatcher Plateau, Mulgore|r
+    .accept 96776 >>Accept An'she's Radiance
+step
     .goto Orgrimmar,38.8,85.4
     >>Talk to |cRXP_FRIENDLY_Uthel'nay|r
     .accept 7068 >>Accept Shadowshard Fragments
@@ -1188,6 +1219,10 @@ step
     #completewith run
     >>Inside: Celebras the Redeemed, Maraudon
     .accept 7046 >>Accept The Scepter of Celebras
+step
+    #completewith run
+    >>Inside: Woodwyrd, Forlorn Gardens, Shen'dralas (just east of Mithera, about 53, 76)
+    .accept 93404 >>Accept Rot and Regret
 step
     #completewith run
     >>Inside: Zaetar's Spirit, Maraudon
@@ -1216,6 +1251,8 @@ step
     .complete -7046,1 --Incantation of Celebras
     .complete -7064,1 --Princess Theradras
     .mob +Princess Theradras
+    .complete -93404,1 --Rot and Regret
+    .complete -96776,1 --An'she's Radiance
     .complete -7066,1 --Seed of Life
     .use 17760
 step
@@ -1244,10 +1281,18 @@ step
     .turnin -7064,1 >>Turn in Corruption of Earth and Seed
     .target Selendra
 step
+    >>Talk to |cRXP_FRIENDLY_Woodwyrd|r
+    .turnin -93404,1 >>Turn in Rot and Regret
+    .target Woodwyrd
+step
     .goto Moonglade,36.18,41.79
     >>Talk to |cRXP_FRIENDLY_Keeper Remulos|r
     .turnin -7066,1 >>Turn in Seed of Life
     .target Keeper Remulos
+step
+    .goto Mulgore,33.8,23.7
+    >>Talk to |cRXP_FRIENDLY_Olana Brighthoof - Skywatcher Plateau, Mulgore|r
+    .turnin -96776,1 >>Turn in An'she's Radiance
 step
     .goto Orgrimmar,38.8,85.4
     >>Talk to |cRXP_FRIENDLY_Uthel'nay|r
@@ -1446,9 +1491,45 @@ step
     .complete 95285,1 --Speak with Sergeant Ulka (1)
     .turnin 95285 >>Turn in Right Place, Wrong Time
 step
+    .goto Dustwallow Marsh,70.2,18.8
+    >>Talk to |cRXP_FRIENDLY_Sergeant Ulka|r. Chain: The Missing Kor'kron > The Elite of the Elite > Right Place, Wrong Time
+    .accept 96334 >>Accept Blood Red Bandanas
+    .target Sergeant Ulka
+    .isQuestTurnedIn 95283,95284,95285
+step
+    .goto Dustwallow Marsh,70.2,18.8
+    >>Talk to |cRXP_FRIENDLY_Sergeant Ulka|r. Chain: The Missing Kor'kron > The Elite of the Elite > Right Place, Wrong Time
+    .accept 96332 >>Accept A Little Payback
+    .target Sergeant Ulka
+    .isQuestTurnedIn 95283,95284,95285
+step
+    #completewith run
+    >>Inside: Commander Folkar, inside Alcaz Prison
+    .accept 95483 >>Accept Thrall Needs to Know
+step
+    #completewith run
+    >>Inside: Mason Connery, inside Alcaz Prison, once you free him
+    .accept 96337 >>Accept More Valuable Than Gold
+step
+    #completewith next
+    .goto Dustwallow Marsh,75.3,14.1,40 >>Travel to the Alcaz Prison entrance
+step
     #label run
-    >>Run Alcaz Prison and do its quests. Also: Thrall Needs to Know, Blood Red Bandanas, A Little Payback (pick up in game)
-    +Tick this when you have finished Alcaz Prison
+    >>Run Alcaz Prison and do its quests
+    .complete -95483,1 --Thrall Needs to Know
+    .complete -96334,1 --Blood Red Bandanas
+    .complete -96332,1 --A Little Payback
+    .complete -96337,1 --More Valuable Than Gold
+step
+    >>Turn in
+    .turnin -95483,1 >>Turn in Thrall Needs to Know
+    .turnin -96337,1 >>Turn in More Valuable Than Gold
+step
+    .goto Dustwallow Marsh,70.2,18.8
+    >>Talk to |cRXP_FRIENDLY_Sergeant Ulka|r
+    .turnin -96334,1 >>Turn in Blood Red Bandanas
+    .turnin -96332,1 >>Turn in A Little Payback
+    .target Sergeant Ulka
 ]==])
 
 RXPGuides.RegisterGuide([==[
@@ -1624,13 +1705,13 @@ step << Warrior
     .isQuestTurnedIn 8424
 step
     .goto Tanaris,52.6,45.8
-    >>Talk to |cRXP_FRIENDLY_Marvon Rivetseeker|r. Chain: The Stone Circle
+    >>Talk to |cRXP_FRIENDLY_Marvon Rivetseeker|r. Chain: The Sunken Temple > The Stone Circle
     .accept 3446 >>Accept Into the Depths
     .target Marvon Rivetseeker
     .isQuestTurnedIn 3444
 step
     .goto Tanaris,52.6,45.8
-    >>Talk to |cRXP_FRIENDLY_Marvon Rivetseeker|r. Chain: The Stone Circle
+    >>Talk to |cRXP_FRIENDLY_Marvon Rivetseeker|r. Chain: The Sunken Temple > The Stone Circle
     .accept 3447 >>Accept Secret of the Circle
     .target Marvon Rivetseeker
     .isQuestTurnedIn 3444
@@ -1828,6 +1909,11 @@ step
     .target Cyrus Therepentous
     .isQuestTurnedIn 4022,4023
 step
+    .goto Mulgore,33.4,22.5
+    >>Talk to |cRXP_FRIENDLY_Alaana Stormwalker|r
+    .accept 97197 >>Accept Fragment of the Firelands
+    .target Alaana Stormwalker
+step
     .goto Orgrimmar,32,37.8
     >>Talk to |cRXP_FRIENDLY_Thrall|r. Chain: Disharmony of Flame > Commander Gor'shak > What Is Going On? > What Is Going On? > The Eastern Kingdom
     .accept 4003 >>Accept The Royal Rescue
@@ -1855,6 +1941,10 @@ step
     #completewith run
     >>Inside: Private Rocknot, Grim Guzzler, Blackrock Depths
     .accept 4295 >>Accept Rocknot's Ale
+step
+    #completewith run
+    >>Inside: Falrin Treeshaper, the Athenaeum, Dire Maul (West)
+    .accept 9015 >>Accept The Challenge
 step
     #completewith run
     >>The Love Potion also needs items from outside the dungeon
@@ -1910,6 +2000,12 @@ step
     .complete -7604,1 --Sulfuron Ingot
     .mob +Golemagg the Incinerator
     .use 18628
+    .complete -97197,1 --Fragment of the Firelands
+    .complete -9015,1 --Theldren
+    .mob +Theldren
+    .complete -9015,2 --Top Piece of Lord Valthalak's Amulet
+    .mob +Theldren
+    .use 21986
 step
     >>Turn in
     .turnin -3802,1 >>Turn in Dark Iron Legacy
@@ -1966,6 +2062,16 @@ step
     >>Talk to |cRXP_FRIENDLY_Cyrus Therepentous|r
     .turnin -4024,1 >>Turn in A Taste of Flame
     .target Cyrus Therepentous
+step
+    .goto Eastern Plaguelands,26.11,11.3
+    >>Talk to |cRXP_FRIENDLY_Anthion Harmon|r
+    .turnin -9015,1 >>Turn in The Challenge
+    .target Anthion Harmon
+step
+    .goto Mulgore,33.4,22.5
+    >>Talk to |cRXP_FRIENDLY_Alaana Stormwalker|r
+    .turnin -97197,1 >>Turn in Fragment of the Firelands
+    .target Alaana Stormwalker
 step
     .goto Searing Gorge,32.1,94.7
     >>Talk to |cRXP_FRIENDLY_Lothos Riftwaker|r
@@ -2761,6 +2867,21 @@ step
     .accept 92069 >>Accept Claws That Rend, Tusks that Gore
     .target Ogtinc
 step
+    .goto Azshara,41.8,38.8
+    >>Talk to |cRXP_FRIENDLY_Ekkal|r
+    .accept 97327 >>Accept Blackmaw Pouches
+    .target Ekkal
+step
+    .goto Azshara,38.3,32.1
+    >>Talk to |cRXP_FRIENDLY_Gatekeeper Rageroar|r
+    .accept 92065 >>Accept Blackmaw Reclamation
+    .target Gatekeeper Rageroar
+step
+    .goto Azshara,41.8,38.8
+    >>Talk to |cRXP_FRIENDLY_Ekkal|r
+    .accept 96246 >>Accept Blackmaw Pouches
+    .target Ekkal
+step
     .goto Thunder Bluff,75.6,31
     >>Talk to |cRXP_FRIENDLY_Nara Wildmane|r. Chain: Beneath Nordrassil
     .accept 92343 >>Accept Get to the Roots of It
@@ -2771,19 +2892,54 @@ step
     >>Inside: Not known yet (perhaps Alaana Stormwalker, Mulgore)
     .accept 97198 >>Accept Blackmaw Magic
 step
+    #completewith run
+    >>Inside: Item start: Feathered Charm Necklace, looted in Blackmaw Hold
+    .accept 92070 >>Accept A Lost Memento
+step
+    #completewith run
+    >>Inside: Lorekeeper Nok, Ursolan (probably; he takes the totems)
+    .accept 92066 >>Accept The Twin Bears
+step
+    #completewith run
+    >>Inside: Not known yet
+    .accept 92067 >>Accept Feeding Time!
+step
+    #completewith next
+    .goto Azshara,38.6,33.2,40 >>Travel to the Blackmaw Hold entrance
+step
     #label run
-    >>Run Blackmaw Hold and do its quests. Also: Blackmaw Pouches (pick up in game)
+    >>Run Blackmaw Hold and do its quests
     .complete -92343,1 --Get to the Roots of It
     .complete -97198,1 --Blackmaw Magic
     .complete -92069,1 --Claws That Rend, Tusks that Gore
+    .complete -92070,1 --A Lost Memento
+    .complete -97327,1 --Blackmaw Pouches
+    .complete -92066,1 --The Twin Bears
+    .complete -92065,1 --Blackmaw Reclamation
+    .complete -96246,1 --Blackmaw Pouches
+    .complete -92067,1 --Feeding Time!
 step
     >>Turn in
     .turnin -97198,1 >>Turn in Blackmaw Magic
+    .turnin -92070,1 >>Turn in A Lost Memento
+    .turnin -92066,1 >>Turn in The Twin Bears
+    .turnin -92067,1 >>Turn in Feeding Time!
 step
     .goto Azshara,42.4,42.6
     >>Talk to |cRXP_FRIENDLY_Ogtinc|r
     .turnin -92069,1 >>Turn in Claws That Rend, Tusks that Gore
     .target Ogtinc
+step
+    .goto Azshara,41.8,38.8
+    >>Talk to |cRXP_FRIENDLY_Ekkal|r
+    .turnin -97327,1 >>Turn in Blackmaw Pouches
+    .turnin -96246,1 >>Turn in Blackmaw Pouches
+    .target Ekkal
+step
+    .goto Azshara,38.3,32.1
+    >>Talk to |cRXP_FRIENDLY_Gatekeeper Rageroar|r
+    .turnin -92065,1 >>Turn in Blackmaw Reclamation
+    .target Gatekeeper Rageroar
 step
     .goto Thunder Bluff,75.6,31
     >>Talk to |cRXP_FRIENDLY_Nara Wildmane|r
@@ -3387,9 +3543,26 @@ step
     .accept 95928 >>Accept Crystalline Elements
     .target Mayena Earthseeker
 step
+    #completewith run
+    >>Inside: Not known yet
+    .accept 97049 >>Accept Essence of Seeping Slimes
+step
+    #completewith run
+    >>Inside: Not known yet
+    .accept 95926 >>Accept The Dark Crystal
+step
+    #completewith next
+    .goto Un'Goro Crater,48.1,6.1,40 >>Travel to the Shaper's Terrace entrance
+step
     #label run
-    >>Run Shaper's Terrace and do its quests. Also: Essence of Seeping Slimes, The Dark Crystal (pick up in game)
+    >>Run Shaper's Terrace and do its quests
     .complete -95928,1 --Crystalline Elements
+    .complete -97049,1 --Essence of Seeping Slimes
+    .complete -95926,1 --The Dark Crystal
+step
+    >>Turn in
+    .turnin -97049,1 >>Turn in Essence of Seeping Slimes
+    .turnin -95926,1 >>Turn in The Dark Crystal
 step
     .goto Mulgore,34.8,22.2
     >>Talk to |cRXP_FRIENDLY_Mayena Earthseeker|r
