@@ -21,6 +21,9 @@ const PROF_NAMES = {
   197: 'Tailoring',
   202: 'Engineering',
   333: 'Enchanting',
+  182: 'Herbalism',
+  356: 'Fishing',
+  393: 'Skinning',
 };
 
 function load(file) {

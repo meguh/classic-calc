@@ -22,7 +22,8 @@ const CACHE_DIR = path.join(GAME_DIR, '.cache');
 const PRODUCTS  = ['wowf', 'wow_classic_beta'];
 const LISTFILE  = 'https://github.com/wowdev/wow-listfile/releases/latest/download/community-listfile.csv';
 
-const CRAFT_TYPES = new Set([129, 164, 165, 171, 185, 186, 197, 202, 333]);
+// 182 Herbalism, 356 Fishing, 393 Skinning: Forever gave the gathering skills a few crafts (camp items)
+const CRAFT_TYPES = new Set([129, 164, 165, 171, 182, 185, 186, 197, 202, 333, 356, 393]);
 
 // Spell ID bands: original 1.12 recipes are < 100k. Season of Discovery added 400k–1.23M.
 // Forever's new recipes start at ~1.229M (first: Camping). SoD rows still ship in the client.

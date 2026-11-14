@@ -1322,9 +1322,17 @@ const PROF_ICONS = {
   165: 'inv_misc_armorkit_17',
   186: 'trade_mining',
   197: 'trade_tailoring',
+  182: 'trade_herbalism',
+  356: 'trade_fishing',
+  393: 'inv_misc_pelt_wolf_01',
 };
 
 const CRAFT_TYPES = new Set([164,165,171,185,186,197,202,333,755,129]);
+// Herbalism, Fishing and Skinning only have crafts in Forever (camp items); Classic data keeps them hidden.
+const FOREVER_CRAFT_TYPES = new Set([182, 356, 393]);
+function isCraftType(type) {
+  return CRAFT_TYPES.has(type) || (currentDataset === 'forever' && FOREVER_CRAFT_TYPES.has(type));
+}
 
 // Forever is its own game with its own recipe set, so it gets a separate dataset
 // instead of being filtered out of the Classic/TBC/WotLK pool by skill level.
@@ -1356,7 +1364,7 @@ function isRecipeInExpansion(recipe) {
 
 function isCraftableInExpansion(itemId) {
   const recipe = recipesByOutputId[itemId];
-  if (!recipe || !CRAFT_TYPES.has(recipe.type) || !isRecipeInExpansion(recipe)) return false;
+  if (!recipe || !isCraftType(recipe.type) || !isRecipeInExpansion(recipe)) return false;
   if (recipe.name.startsWith('Transmute')) return false;
   const item = itemsById[itemId];
   if (item?.name?.startsWith('Mote of')) return false;
@@ -1495,7 +1503,7 @@ const CROSS   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stro
 function professionsForView() {
   const counts = {};
   for (const r of allRecipes) {
-    if (CRAFT_TYPES.has(r.type) && r.reagents?.length && isRecipeInExpansion(r)) {
+    if (isCraftType(r.type) && r.reagents?.length && isRecipeInExpansion(r)) {
       counts[r.type] = (counts[r.type] || 0) + 1;
     }
   }
