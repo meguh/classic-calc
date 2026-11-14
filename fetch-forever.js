@@ -290,6 +290,20 @@ async function main() {
 
   recipes.sort((a, b) => a.type - b.type || a.id - b.id);
   const mats = [...items.values()].sort((a, b) => a.id - b.id);
+  // Hotfix builds sometimes swap a real icon for the placeholder "temp": keep the previous build's icon.
+  const keepIcons = (file, list) => {
+    const p = path.join(GAME_DIR, file);
+    if (!fs.existsSync(p)) return 0;
+    const prev = new Map(JSON.parse(fs.readFileSync(p, 'utf8')).map(x => [x.id, x.icon]));
+    let n = 0;
+    for (const x of list) {
+      const old = prev.get(x.id);
+      if ((!x.icon || x.icon === 'temp') && old && old !== 'temp') { x.icon = old; n++; }
+    }
+    return n;
+  };
+  const keptIcons = keepIcons('forever-professions.json', recipes) + keepIcons('forever-mats.json', mats);
+  if (keptIcons) console.log(`  Kept ${keptIcons} previous icons in place of "temp"`);
   fs.writeFileSync(path.join(GAME_DIR, 'forever-professions.json'), JSON.stringify(recipes));
   fs.writeFileSync(path.join(GAME_DIR, 'forever-mats.json'), JSON.stringify(mats));
 
