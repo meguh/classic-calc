@@ -21,7 +21,7 @@ const PROFILES = {
 const PSEUDO = { 12: [17, 10], 14: [18, 14], 20: [19, 10], 27: [21, 10] };
 const STAT_NAMES = { 0: 'Str', 1: 'Agi', 2: 'Sta', 14: 'AP', 17: 'Hit', 18: 'Crit', 19: 'Haste', 20: 'ArP', 21: 'Expertise' };
 const PROF = { 1: 'Alchemy', 2: 'Blacksmithing', 3: 'Enchanting', 4: 'Engineering', 8: 'Leatherworking', 11: 'Tailoring' };
-const REP = ['Hated', 'Hostile', 'Unfriendly', 'Neutral', 'Friendly', 'Honored', 'Revered', 'Exalted'];
+const REP = ['', 'Hated', 'Hostile', 'Unfriendly', 'Neutral', 'Friendly', 'Honored', 'Revered', 'Exalted'];
 const WEAPON = { 1: 'Axe', 2: 'Dagger', 3: 'Fist', 4: 'Mace', 6: 'Polearm', 8: 'Staff', 9: 'Sword' };
 const RANGED = { 1: 'Bow', 2: 'Crossbow', 3: 'Gun', 4: 'Thrown' };
 const ARMOR = { 1: 'Cloth', 2: 'Leather', 3: 'Mail', 4: 'Plate' };
@@ -39,7 +39,7 @@ function raidLinked(item, db) {
     (s.drop && RAID_WORDS.test(db.zoneById.get(s.drop.zoneId)?.name || '')));
 }
 // PvP gear: honor rank rewards plus battleground faction rewards (rep, vendors, AV/WSG/AB quests).
-const PVP_FACTIONS = /Warsong Outriders|Silverwing Sentinels|Frostwolf Clan|Stormpike Guard|League of Arathor|The Defilers/i;
+const PVP_FACTIONS = /Warsong Outriders|Silverwing Sentinels|Frostwolf Clan|Stormpike Guard|League of Arathor|The Defilers|Darkspear Raiders|Theramore Expeditionary Force/i;
 const PVP_NAMES = /^(Frostwolf|Stormpike|Outrider's|Sentinel's|Defiler's|Highlander's|Arathor|Warsong|Silverwing|Legionnaire's|Advisor's|Talisman of Arathor)/i;
 function isPvp(item, db) {
   return PVP_NAMES.test(item.name) || (item.sources || []).some(s => s.pvp ||
