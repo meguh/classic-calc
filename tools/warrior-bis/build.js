@@ -9,7 +9,7 @@ const https = require('https');
 const DB_URL = 'https://www.wowsims.com/forever/assets/database/db.json';
 const DB = path.join(__dirname, 'db.json');
 const OUT = path.join(__dirname, '../../warrior/data.json');
-const KEEP = 15; // per slot; the page filters (faction, PvP) and shows 5
+const KEEP = 40; // per slot; the page re-ranks against owned gear (hit/expertise caps), filters faction/PvP, shows 5
 
 // Stat indexes (proto Stat enum): 0 Str 1 Agi 2 Sta 14 AP 17 Hit 18 Crit 19 Haste 20 ArP 21 Expertise 27 Armor
 // Rating per 1%: hit 10, crit 14, haste 10, expertise 10.
@@ -164,11 +164,11 @@ function score(item, slotKind, db) {
   const lists = {};
   const add = (key, label, kind, items) => {
     const scored = items.map(i => score(i, kind, db)).filter(x => x.ep > 0).sort((a, b) => b.ep - a.ep);
-    // Keep the top KEEP overall plus the top 5 of each faction/PvP filter combination so every view still has 5.
+    // Keep the top KEEP overall plus the top 25 of each faction/PvP filter combination so every view still has 5.
     const keep = new Map();
     scored.slice(0, KEEP).forEach(x => keep.set(x.id, x));
     for (const fac of ['A', 'H']) for (const pvp of [true, false]) {
-      scored.filter(x => (!x.faction || x.faction === fac) && (pvp || !x.pvp)).slice(0, 5).forEach(x => keep.set(x.id, x));
+      scored.filter(x => (!x.faction || x.faction === fac) && (pvp || !x.pvp)).slice(0, 25).forEach(x => keep.set(x.id, x));
     }
     lists[key] = { label, kind, items: [...keep.values()].sort((a, b) => b.ep - a.ep) };
   };

@@ -88,11 +88,34 @@
     .ep { text-align: right; font-weight: 700; color: var(--heading); padding-top: 2px; }
     .ep small { display: block; font-weight: 400; font-size: .7rem; color: var(--text-muted); }
     .empty { padding: 12px; color: var(--text-muted); }
+    li { grid-template-columns: 26px 18px 36px 1fr auto; }
+    .have {
+      width: 24px; height: 24px; margin-top: 6px; border-radius: 4px; cursor: pointer; background: var(--surface-2);
+      border: 1px solid var(--border-md); color: transparent; font-weight: 700; line-height: 1;
+    }
+    .have:hover { border-color: var(--accent-hi); color: var(--text-muted); }
+    li.owned { background: rgba(61, 220, 75, .08); }
+    li.owned .have { background: #2a8a36; border-color: var(--q2); color: #fff; }
+    li.owned .rank { color: var(--q2); }
+    .delta { display: block; font-size: .74rem; font-weight: 700; }
+    .delta.up { color: var(--q2); } .delta.down { color: var(--horde); }
+    .gearbar, .intro { max-width: 1500px; margin-left: auto; margin-right: auto; }
+    .gearbar {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-bottom: 12px; padding: 10px 14px;
+      background: var(--card); border: 1px solid var(--border-md); border-radius: 6px; font-size: .88rem; color: var(--text-soft);
+    }
+    .gearbar b { color: var(--heading); }
+    .gearbar .over { color: var(--warn); }
+    .gearbar .ok { color: var(--q2); }
+    .gearbar label { display: inline-flex; align-items: center; gap: 6px; }
+    .gearbar input { width: 56px; padding: 3px 6px; background: var(--surface-2); border: 1px solid var(--border-md); border-radius: 4px; color: var(--text); font: inherit; }
+    .gearbar button { background: none; border: 1px solid var(--border-md); border-radius: 4px; padding: 3px 10px; cursor: pointer; color: var(--text-soft); }
+    .gearbar button:hover { color: var(--text); border-color: var(--accent-hi); }
     footer { margin-top: 18px; font-size: .78rem; color: var(--text-muted); }
     footer a { color: var(--accent-hi); }
     @media (max-width: 520px) {
-      li { grid-template-columns: 16px 32px 1fr; }
-      .ep { grid-column: 3; text-align: left; padding: 0; }
+      li { grid-template-columns: 26px 14px 32px 1fr; }
+      .ep { grid-column: 4; text-align: left; padding: 0; }
       .ep small { display: inline; margin-left: 6px; }
       .icon { width: 32px; height: 32px; }
     }
@@ -107,13 +130,16 @@
     <button data-v="0">Hide</button><button data-v="1">Show</button></div></div>
 </header>
 
+<section class="gearbar" id="gearbar"></section>
+
 <section class="intro">
   The top 5 items per slot for a <b>level 60 Fury (dual wield)</b> warrior, using only gear that is in WoW Forever now: dungeons, quests, crafting, reputation, vendors, world drops and PvP. No raid loot. Two-handers use the <b>Arms</b> weights.
-  Every leather, mail and plate piece, plus cloaks, jewellery, trinkets, weapons and ranged items a warrior can use, is scored
-  with the <a href="https://www.wowsims.com/forever/warrior/dps/" target="_blank" rel="noopener" style="color:var(--accent-hi)">wowsims Forever</a>
-  preset stat weights. The score (EP) is shown in attack power.
-  Stamina and armor count as zero. Set bonuses and hit cap aren't included, so stop stacking hit at 8%.
-  Procs that grant stats are averaged in. Procs that don't (extra attacks, damage, stuns) are flagged in orange and not scored, so judge those yourself.
+  Click <b>✓</b> on items you already have (two for rings and trinkets). The lists then re-rank against your gear.
+  Hit is worth full value up to 8%, about a third from 8% to 27% when dual wielding, and nothing past 8% for the two-hander.
+  Expertise is worth nothing past 6.5%. An item that takes you over a cap only shows as an upgrade if its other stats still win.
+  Scores use the <a href="https://www.wowsims.com/forever/warrior/dps/" target="_blank" rel="noopener" style="color:var(--accent-hi)">wowsims Forever</a>
+  preset stat weights and are in attack power (EP). Stamina, armor and set bonuses count as zero.
+  Procs that don't grant stats (extra attacks, damage, stuns) are flagged in orange and not scored.
   <details><summary>Weights used</summary><div id="weights"></div></details>
 </section>
 
@@ -133,8 +159,10 @@
   const ORDER = ['head', 'neck', 'shoulder', 'back', 'chest', 'wrist', 'hands', 'waist', 'legs', 'feet', 'finger', 'trinket', 'mh', 'oh', '2h', 'ranged'];
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-  const state = { faction: 'H', pvp: '0' };
+  // owned: slot key -> array of item ids the player has (two allowed for rings and trinkets)
+  const state = { faction: 'H', pvp: '0', owned: {}, xHit: 0, xExp: 0 };
   try { const saved = JSON.parse(localStorage.getItem('war-bis') || '{}'); delete saved.phase; Object.assign(state, saved); } catch {}
+  const save = () => { try { localStorage.setItem('war-bis', JSON.stringify(state)); } catch {} };
 
   const data = await (await fetch('data.json')).json();
   document.getElementById('built').textContent = data.built;
@@ -142,31 +170,86 @@
   document.getElementById('weights').innerHTML = '<table><tr><td></td><td><b>Fury</b></td><td><b>Arms (2H)</b></td></tr>' +
     Object.keys(wn).map(k => `<tr><td>${wn[k]}</td><td>${W.fury[k]}</td><td>${W.arms[k]}</td></tr>`).join('') + '</table>';
 
-  function row(x, i) {
-    const stats = Object.entries(x.stats).map(([k, v]) => `<span class="chip">+${v} ${k}</span>`);
-    x.skills.forEach(s => stats.push(`<span class="chip">${esc(s)}</span>`));
-    x.fx.forEach(f => stats.push(`<span class="chip${f.scored ? '' : ' fx'}" title="${f.scored ? 'Averaged into the score' : 'Not scored'}">${f.kind}: ${esc(f.name)}</span>`));
-    if (x.set) stats.push(`<span class="chip set">Set: ${esc(x.set)}</span>`);
-    if (x.faction) stats.push(`<span class="chip ${x.faction.toLowerCase()}">${x.faction === 'H' ? 'Horde' : 'Alliance'}</span>`);
-    const meta = [x.type, x.dps ? `${x.dps} dps · ${x.speed} speed` : '', `ilvl ${x.ilvl}`, x.req ? `req ${x.req}` : '', x.unique ? 'unique' : ''].filter(Boolean).join(' · ');
+  // Caps from the sim: melee hit 8% (dual wield keeps 0.57 EP per rating up to 27%), expertise 6.5%. Hit/expertise in %.
+  const HIT_CAP = 8, DW_CAP = 27, EXP_CAP = 6.5;
+  const PROFILE = {
+    fury: { hit: W.fury[17] * 10, post: 5.7, exp: W.fury[21] * 10, w: W.fury },
+    arms: { hit: W.arms[17] * 10, post: 0, exp: W.arms[21] * 10, w: W.arms },
+  };
+  const capHit = (p, h) => p.hit * Math.min(h, HIT_CAP) + p.post * Math.max(0, Math.min(h, DW_CAP) - HIT_CAP);
+  const capExp = (p, e) => p.exp * Math.min(e, EXP_CAP);
+  const hitOf = x => (x.stats.Hit || 0) / 10, expOf = x => (x.stats.Expertise || 0) / 10;
+  const baseOf = (x, p) => x.ep - (x.stats.Hit || 0) * p.w[17] - (x.stats.Expertise || 0) * p.w[21];
+  // Value of item x given the hit/expertise % from everything else.
+  const value = (x, p, oh, oe) => baseOf(x, p) + capHit(p, oh + hitOf(x)) - capHit(p, oh) + capExp(p, oe + expOf(x)) - capExp(p, oe);
+
+  const byId = {};
+  for (const [k, s] of Object.entries(data.slots)) { byId[k] = new Map(s.items.map(x => [x.id, x])); }
+  const ownedItems = k => (state.owned[k] || []).map(id => byId[k].get(id)).filter(Boolean);
+  const ARMOR_KEYS = ORDER.filter(k => !['mh', 'oh', '2h'].includes(k));
+  const setKeys = k => k === '2h' ? [...ARMOR_KEYS, '2h'] : [...ARMOR_KEYS, 'mh', 'oh'];
+  const totals = keys => keys.flatMap(ownedItems).reduce((t, x) => ({ h: t.h + hitOf(x), e: t.e + expOf(x) }),
+    { h: +state.xHit || 0, e: +state.xExp || 0 });
+
+  function rankSlot(k) {
+    const p = k === '2h' ? PROFILE.arms : PROFILE.fury;
+    const tot = totals(setKeys(k));
+    const mine = ownedItems(k);
+    const without = x => ({ h: tot.h - hitOf(x), e: tot.e - expOf(x) });
+    const ownedRows = mine.map(x => { const o = without(x); return { x, val: value(x, p, o.h, o.e), owned: true }; });
+    const max = k === 'finger' || k === 'trinket' ? 2 : 1;
+    // A new item fills an empty spot, or replaces the weakest item you own in this slot.
+    const replaced = mine.length >= max ? ownedRows.reduce((a, b) => (b.val < a.val ? b : a)) : null;
+    const rest = replaced ? without(replaced.x) : tot;
+    const ownedIds = new Set(mine.map(x => x.id));
+    const otherWeaponIds = new Set(k === 'mh' ? state.owned.oh || [] : k === 'oh' ? state.owned.mh || [] : []);
+    const candidates = data.slots[k].items
+      .filter(x => !ownedIds.has(x.id) && !(x.unique && otherWeaponIds.has(x.id)))
+      .filter(x => (!x.faction || x.faction === state.faction) && (state.pvp === '1' || !x.pvp))
+      .map(x => { const val = value(x, p, rest.h, rest.e); return { x, val, delta: replaced ? val - replaced.val : null }; })
+      .sort((a, b) => b.val - a.val).slice(0, 5);
+    return { ownedRows, candidates, max };
+  }
+
+  function row(r, i) {
+    const x = r.x;
+    const fx = x.fx.filter(f => !f.scored).map(f => `<span class="chip fx" title="Not scored">${f.kind}: ${esc(f.name)}</span>`).join('');
     const src = x.src.length ? x.src.map(([k, v]) => `<b>${k}:</b> ${esc(v)}`).join(' &nbsp; ') : '<b>Source:</b> world drop / unknown';
-    return `<li><span class="rank">${i + 1}</span>
+    const delta = r.delta == null ? '' : `<span class="delta ${r.delta >= 0 ? 'up' : 'down'}">${r.delta >= 0 ? '+' : '−'}${Math.abs(Math.round(r.delta))} vs yours</span>`;
+    return `<li class="${r.owned ? 'owned' : ''}">
+      <button class="have" data-id="${x.id}" title="${r.owned ? 'Remove from my gear' : 'I have this'}" aria-pressed="${!!r.owned}">✓</button>
+      <span class="rank">${r.owned ? '' : i + 1}</span>
       <a class="icon" href="${WH}${x.id}" target="_blank" rel="noopener" style="background-image:url(${ICON(x.icon)})" aria-hidden="true" tabindex="-1"></a>
       <div><a class="name q${x.q}" href="${WH}${x.id}" target="_blank" rel="noopener">${esc(x.name)}</a>
-        <div class="meta">${esc(meta)}</div><div class="stats">${stats.join('')}</div><div class="src">${src}</div></div>
-      <div class="ep">${Math.round(x.ep)}<small>EP${x.procEP ? ` (${Math.round(x.procEP)} from use/proc)` : ''}</small></div></li>`;
+        ${fx ? `<div class="stats">${fx}</div>` : ''}<div class="src">${src}</div></div>
+      <div class="ep">${Math.round(r.val)}<small>EP</small>${delta}</div></li>`;
+  }
+
+  function renderBar() {
+    const t = totals(setKeys('mh'));
+    const n = Object.values(state.owned).reduce((a, v) => a + v.length, 0);
+    const cls = (v, cap) => v > cap + 0.05 ? 'over' : v >= cap - 0.05 ? 'ok' : '';
+    document.getElementById('gearbar').innerHTML = `
+      <span><b>My gear:</b> ${n} item${n === 1 ? '' : 's'} marked</span>
+      <span>Hit <b class="${cls(t.h, HIT_CAP)}">${t.h.toFixed(1)}%</b> / ${HIT_CAP}%</span>
+      <span>Expertise <b class="${cls(t.e, EXP_CAP)}">${t.e.toFixed(1)}%</b> / ${EXP_CAP}%</span>
+      <label title="Hit from enchants, talents, buffs or anything not in these lists">Other hit % <input type="number" step="0.5" min="0" id="xHit" value="${+state.xHit || 0}"></label>
+      <label title="Expertise from enchants, talents, buffs or anything not in these lists">Other expertise % <input type="number" step="0.5" min="0" id="xExp" value="${+state.xExp || 0}"></label>
+      ${n ? '<button id="clearOwned">Clear my gear</button>' : ''}`;
   }
 
   function render() {
     document.querySelectorAll('.seg').forEach(seg => seg.querySelectorAll('button').forEach(b =>
       b.setAttribute('aria-pressed', String(state[seg.dataset.key] === b.dataset.v))));
+    renderBar();
     document.getElementById('slots').innerHTML = ORDER.map(k => {
       const s = data.slots[k];
-      const items = s.items.filter(x => (!x.faction || x.faction === state.faction) && (state.pvp === '1' || !x.pvp)).slice(0, 5);
+      const { ownedRows, candidates, max } = rankSlot(k);
       const note = k === 'finger' || k === 'trinket' ? 'wear two' : k === 'oh' ? 'off-hand weapon DPS counts less' : k === '2h' ? 'Arms weights' : '';
-      return `<section class="slot"><h2>${s.label}<small>${note}</small></h2>${items.length ? `<ol>${items.map(row).join('')}</ol>` : '<p class="empty">Nothing matches these filters.</p>'}</section>`;
+      const rows = ownedRows.map(row).join('') + candidates.map(row).join('');
+      return `<section class="slot" data-slot="${k}" data-max="${max}"><h2>${s.label}<small>${note}</small></h2>${rows ? `<ol>${rows}</ol>` : '<p class="empty">Nothing matches these filters.</p>'}</section>`;
     }).join('');
-    try { localStorage.setItem('war-bis', JSON.stringify(state)); } catch {}
+    save();
     if (window.$WowheadPower) $WowheadPower.refreshLinks();
   }
 
@@ -174,6 +257,22 @@
     const b = e.target.closest('button'); if (!b) return;
     state[seg.dataset.key] = b.dataset.v; render();
   }));
+  document.getElementById('slots').addEventListener('click', e => {
+    const b = e.target.closest('.have'); if (!b) return;
+    const sec = b.closest('.slot'), k = sec.dataset.slot, max = +sec.dataset.max, id = +b.dataset.id;
+    let list = (state.owned[k] || []).filter(v => byId[k].has(v));
+    if (list.includes(id)) list = list.filter(v => v !== id);
+    else { list.push(id); if (list.length > max) list = list.slice(-max); }
+    state.owned[k] = list;
+    render();
+  });
+  const bar = document.getElementById('gearbar');
+  bar.addEventListener('change', e => {
+    if (e.target.id === 'xHit' || e.target.id === 'xExp') { state[e.target.id] = Math.max(0, +e.target.value || 0); render(); }
+  });
+  bar.addEventListener('click', e => {
+    if (e.target.id === 'clearOwned' && confirm('Clear all items marked as yours?')) { state.owned = {}; render(); }
+  });
   render();
 })();
 </script>
