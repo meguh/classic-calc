@@ -110,6 +110,12 @@
     .gearbar label { display: inline-flex; align-items: center; gap: 6px; }
     .gearbar input { width: 56px; padding: 3px 6px; background: var(--surface-2); border: 1px solid var(--border-md); border-radius: 4px; color: var(--text); font: inherit; }
     .gearbar button { background: none; border: 1px solid var(--border-md); border-radius: 4px; padding: 3px 10px; cursor: pointer; color: var(--text-soft); }
+    .naowh { flex-basis: 100%; display: grid; gap: 6px; }
+    .naowh[hidden] { display: none; }
+    .naowh p { font-size: .82rem; color: var(--text-muted); }
+    .naowh textarea { width: 100%; resize: vertical; background: #000a; color: var(--text); border: 1px solid var(--border-md); border-radius: 4px; padding: 6px; font: .76rem/1.3 Consolas, monospace; word-break: break-all; }
+    .naowh button { justify-self: start; }
+    .naowh-btn { border-color: var(--accent) !important; color: var(--heading) !important; }
     .gearbar button:hover { color: var(--text); border-color: var(--accent-hi); }
     footer { margin-top: 18px; font-size: .78rem; color: var(--text-muted); }
     footer a { color: var(--accent-hi); }
@@ -126,14 +132,14 @@
   <h1>Warrior <span>Best in Slot</span> · Forever</h1>
   <div class="ctl"><span class="seg-label">Faction</span><div class="seg" data-key="faction">
     <button data-v="H">Horde</button><button data-v="A">Alliance</button></div></div>
-  <div class="ctl"><span class="seg-label">PvP rank gear</span><div class="seg" data-key="pvp">
+  <div class="ctl"><span class="seg-label" title="Honor rank rewards and battleground faction gear (Warsong, Frostwolf/Stormpike, Arathi Basin)">PvP gear</span><div class="seg" data-key="pvp">
     <button data-v="0">Hide</button><button data-v="1">Show</button></div></div>
 </header>
 
 <section class="gearbar" id="gearbar"></section>
 
 <section class="intro">
-  The top 5 items per slot for a <b>level 60 Fury (dual wield)</b> warrior, using only gear that is in WoW Forever now: dungeons, quests, crafting, reputation, vendors, world drops and PvP. No raid loot. Two-handers use the <b>Arms</b> weights.
+  The top 5 items per slot for a <b>level 60 Fury (dual wield)</b> warrior, using only gear that is in WoW Forever now: dungeons, quests, crafting, reputation, vendors and world drops, plus PvP gear (honor ranks and battleground factions) if you switch it on. No raid loot. Two-handers use the <b>Arms</b> weights.
   Click <b>✓</b> on items you already have (two for rings and trinkets). The lists then re-rank against your gear.
   Hit is worth full value up to 8%, about a third from 8% to 27% when dual wielding, and nothing past 8% for the two-hander.
   Expertise is worth nothing past 6.5%. An item that takes you over a cap only shows as an upgrade if its other stats still win.
@@ -191,7 +197,7 @@
   const totals = keys => keys.flatMap(ownedItems).reduce((t, x) => ({ h: t.h + hitOf(x), e: t.e + expOf(x) }),
     { h: +state.xHit || 0, e: +state.xExp || 0 });
 
-  function rankSlot(k) {
+  function rankSlot(k, limit = 5) {
     const p = k === '2h' ? PROFILE.arms : PROFILE.fury;
     const tot = totals(setKeys(k));
     const mine = ownedItems(k);
@@ -207,7 +213,7 @@
       .filter(x => !ownedIds.has(x.id) && !(x.unique && otherWeaponIds.has(x.id)))
       .filter(x => (!x.faction || x.faction === state.faction) && (state.pvp === '1' || !x.pvp))
       .map(x => { const val = value(x, p, rest.h, rest.e); return { x, val, delta: replaced ? val - replaced.val : null }; })
-      .sort((a, b) => b.val - a.val).slice(0, 5);
+      .sort((a, b) => b.val - a.val).slice(0, limit);
     return { ownedRows, candidates, max };
   }
 
@@ -225,6 +231,7 @@
       <div class="ep">${Math.round(r.val)}<small>EP</small>${delta}</div></li>`;
   }
 
+  let naowhOpen = false;
   function renderBar() {
     const t = totals(setKeys('mh'));
     const n = Object.values(state.owned).reduce((a, v) => a + v.length, 0);
@@ -235,7 +242,86 @@
       <span>Expertise <b class="${cls(t.e, EXP_CAP)}">${t.e.toFixed(1)}%</b> / ${EXP_CAP}%</span>
       <label title="Hit from enchants, talents, buffs or anything not in these lists">Other hit % <input type="number" step="0.5" min="0" id="xHit" value="${+state.xHit || 0}"></label>
       <label title="Expertise from enchants, talents, buffs or anything not in these lists">Other expertise % <input type="number" step="0.5" min="0" id="xExp" value="${+state.xExp || 0}"></label>
-      ${n ? '<button id="clearOwned">Clear my gear</button>' : ''}`;
+      ${n ? '<button id="clearOwned">Clear my gear</button>' : ''}
+      <button id="naowhBtn" class="naowh-btn">Naowh BiS import</button>
+      <div class="naowh" id="naowh" ${naowhOpen ? "" : "hidden"}>
+        <p>Top 3 per slot for Fury, from the lists below, with your gear and filters counted. Rings and trinkets alternate: ring slot 1 gets ranks 1, 3, 5 and ring slot 2 gets 2, 4, 6.
+        In game, open the Naowh <b>BiS List</b> window, click <b>Import a list</b>, and paste.</p>
+        <textarea id="naowhText" readonly rows="3">${naowhOpen ? esc(naowhString()) : ""}</textarea>
+        <button id="naowhCopy">Copy</button>
+      </div>`;
+  }
+
+  // ---- Naowh Forever BiS share string: "!NBIS1!" + EncodeForPrint(deflate(LibSerialize(table))) ----
+  // LibSerialize (zlib licence) wire format, the subset needed here: ints, short strings, bools, tables.
+  function lsSerialize(value) {
+    const out = [1]; // serialization version
+    const strRefs = new Map();
+    const utf8 = s => [...new TextEncoder().encode(s)];
+    const intBytes = (n, k) => { const b = []; for (let i = k - 1; i >= 0; i--) b.push(Math.floor(n / 256 ** i) % 256); return b; };
+    const req = n => n < 256 ? 1 : n < 65536 ? 2 : n < 16777216 ? 3 : n < 4294967296 ? 4 : 7;
+    const NUM_IDX = { 2: 1, 3: 3, 4: 5, 7: 7 };
+    function w(v) {
+      if (v === true) return out.push(12 * 8);
+      if (v === false) return out.push(13 * 8);
+      if (typeof v === 'number') {
+        if (!Number.isInteger(v)) throw new Error('integers only');
+        if (v >= 0 && v < 128) return out.push(v * 2 + 1);
+        if (v > -4096 && v < 4096) { const s = v < 0 ? 8 : 0, n = Math.abs(v) * 16 + s + 4; return out.push(n % 256, Math.floor(n / 256)); }
+        const sign = v < 0 ? 8 : 0, a = Math.abs(v), r = req(a);
+        out.push(sign + 8 * NUM_IDX[r === 1 ? 2 : r]); return out.push(...intBytes(a, r === 1 ? 2 : r));
+      }
+      if (typeof v === 'string') {
+        const ref = strRefs.get(v);
+        if (ref) { const r = req(ref); out.push(8 * (25 + r)); return out.push(...intBytes(ref, r)); }
+        const b = utf8(v);
+        if (b.length < 16) out.push(16 * b.length + 2);
+        else { const r = req(b.length); out.push(8 * (13 + r), ...intBytes(b.length, r)); }
+        out.push(...b);
+        if (b.length > 2) strRefs.set(v, strRefs.size + 1);
+        return;
+      }
+      if (Array.isArray(v)) { // pure array
+        if (v.length < 16) out.push(16 * v.length + 10); else { const r = req(v.length); out.push(8 * (19 + r), ...intBytes(v.length, r)); }
+        return v.forEach(w);
+      }
+      // map: [[key, value], ...]
+      const pairs = v instanceof Map ? [...v] : Object.entries(v);
+      if (pairs.length < 16) out.push(16 * pairs.length + 6); else { const r = req(pairs.length); out.push(8 * (16 + r), ...intBytes(pairs.length, r)); }
+      pairs.forEach(([k, x]) => { w(k); w(x); });
+    }
+    w(value);
+    return out;
+  }
+  function deflateStored(bytes) { // one uncompressed DEFLATE block
+    if (bytes.length > 65535) throw new Error('too long');
+    const n = bytes.length, c = ~n & 0xffff;
+    return [1, n & 255, n >> 8, c & 255, c >> 8, ...bytes];
+  }
+  function encodeForPrint(bytes) { // LibDeflate:EncodeForPrint
+    const A = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()';
+    let s = '', i = 0;
+    for (; i + 2 < bytes.length; i += 3) {
+      let c = bytes[i] + bytes[i + 1] * 256 + bytes[i + 2] * 65536;
+      for (let k = 0; k < 4; k++) { s += A[c % 64]; c = Math.floor(c / 64); }
+    }
+    let cache = 0, bits = 0;
+    for (; i < bytes.length; i++) { cache += bytes[i] * 2 ** bits; bits += 8; }
+    while (bits > 0) { s += A[cache % 64]; cache = Math.floor(cache / 64); bits -= 6; }
+    return s;
+  }
+  const INV = { head: 1, neck: 2, shoulder: 3, back: 15, chest: 5, wrist: 9, hands: 10, waist: 6, legs: 7, feet: 8, mh: 16, oh: 17, ranged: 18 };
+  function naowhString() {
+    const slots = new Map(), extra = new Map();
+    const put = (inv, ids) => { if (!ids.length) return; slots.set(inv, ids[0]); if (ids.length > 1) extra.set(inv, ids.slice(1)); };
+    const best = (k, n) => { const r = rankSlot(k, n); return [...r.ownedRows, ...r.candidates].sort((a, b) => b.val - a.val).slice(0, n).map(x => x.x.id); };
+    for (const [k, inv] of Object.entries(INV)) put(inv, best(k, 3));
+    for (const [k, a, b] of [['finger', 11, 12], ['trinket', 13, 14]]) {
+      const ids = best(k, 6);
+      put(a, ids.filter((_, i) => i % 2 === 0)); put(b, ids.filter((_, i) => i % 2 === 1));
+    }
+    const table = new Map([['v', 4], ['name', 'Classiccraft Fury'], ['spec', 'fury-warrior'], ['slots', slots], ['extra', extra]]);
+    return '!NBIS1!' + encodeForPrint(deflateStored(lsSerialize(table)));
   }
 
   function render() {
@@ -271,6 +357,8 @@
     if (e.target.id === 'xHit' || e.target.id === 'xExp') { state[e.target.id] = Math.max(0, +e.target.value || 0); render(); }
   });
   bar.addEventListener('click', e => {
+    if (e.target.id === 'naowhBtn') { naowhOpen = !naowhOpen; renderBar(); if (naowhOpen) document.getElementById('naowhText').select(); return; }
+    if (e.target.id === 'naowhCopy') { const t = document.getElementById('naowhText'); t.select(); (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).then(() => { e.target.textContent = 'Copied'; }, () => document.execCommand('copy')); return; }
     if (e.target.id === 'clearOwned' && confirm('Clear all items marked as yours?')) { state.owned = {}; render(); }
   });
   render();

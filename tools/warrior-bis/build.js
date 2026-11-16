@@ -38,6 +38,14 @@ function raidLinked(item, db) {
     (s.rep && RAID_WORDS.test(db.factionById.get(s.rep.repFactionId)?.name || '')) ||
     (s.drop && RAID_WORDS.test(db.zoneById.get(s.drop.zoneId)?.name || '')));
 }
+// PvP gear: honor rank rewards plus battleground faction rewards (rep, vendors, AV/WSG/AB quests).
+const PVP_FACTIONS = /Warsong Outriders|Silverwing Sentinels|Frostwolf Clan|Stormpike Guard|League of Arathor|The Defilers/i;
+const PVP_NAMES = /^(Frostwolf|Stormpike|Outrider's|Sentinel's|Defiler's|Highlander's|Arathor|Warsong|Silverwing|Legionnaire's|Advisor's|Talisman of Arathor)/i;
+function isPvp(item, db) {
+  return PVP_NAMES.test(item.name) || (item.sources || []).some(s => s.pvp ||
+    (s.rep && PVP_FACTIONS.test(db.factionById.get(s.rep.repFactionId)?.name || '')) ||
+    (s.soldBy && /Alterac Valley|Warsong Gulch|Arathi Basin/.test(db.zoneById.get(s.soldBy.zoneId)?.name || '')));
+}
 const SWINGS_PER_SEC = 2; // rough hit rate for procChance effects (dual wield + abilities)
 
 const SLOTS = [
@@ -92,7 +100,7 @@ function source(item, db) {
       out.push(['Drop', [npc, zone(s.drop.zoneId)].filter(Boolean).join(' — ') || 'Drop']);
     } else if (s.quest) out.push(['Quest', s.quest.name + (s.quest.faction === 1 ? ' (A)' : s.quest.faction === 2 ? ' (H)' : '')]);
     else if (s.crafted) out.push(['Crafted', PROF[s.crafted.profession] || 'Crafted']);
-    else if (s.rep) out.push(['Rep', (db.factionById.get(s.rep.repFactionId)?.name || 'Reputation') + ' ' + (REP[s.rep.repLevel] || '')]);
+    else if (s.rep) out.push(['Rep', (db.factionById.get(s.rep.repFactionId)?.name || 'Reputation') + (REP[s.rep.repLevel] ? ' ' + REP[s.rep.repLevel] : '')]);
     else if (s.soldBy) out.push(['Vendor', [s.soldBy.npcName, zone(s.soldBy.zoneId)].filter(Boolean).join(' — ')]);
     else if (s.pvp) out.push(['PvP', 'PvP rank reward']);
   }
@@ -139,7 +147,7 @@ function score(item, slotKind, db) {
     stats: shown, skills, fx: fx.notes, procEP: +fx.ep.toFixed(1),
     set: item.setName || undefined,
     faction: item.factionRestriction === 1 ? 'A' : item.factionRestriction === 2 ? 'H' : undefined,
-    pvp: (item.sources || []).some(s => s.pvp) || undefined,
+    pvp: isPvp(item, db) || undefined,
     unique: item.unique || undefined,
     src: source(item, db),
     ep: +best.ep.toFixed(1),
