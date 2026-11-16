@@ -81,6 +81,7 @@
     .stats { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
     .chip { font-size: .72rem; padding: 0 6px; border-radius: 3px; background: var(--surface-2); color: var(--text-soft); white-space: nowrap; }
     .chip.fx { color: var(--warn); }
+    .chip.boe { color: var(--q4); margin-left: 6px; vertical-align: 1px; }
     .chip.set { color: var(--gold); }
     .chip.h { color: var(--horde); } .chip.a { color: var(--alli); }
     .src { font-size: .76rem; color: var(--text-soft); margin-top: 3px; }
@@ -134,6 +135,8 @@
     <button data-v="H">Horde</button><button data-v="A">Alliance</button></div></div>
   <div class="ctl"><span class="seg-label" title="Honor rank rewards and battleground faction gear (Warsong, Frostwolf/Stormpike, Arathi Basin)">PvP gear</span><div class="seg" data-key="pvp">
     <button data-v="0">Hide</button><button data-v="1">Show</button></div></div>
+  <div class="ctl"><span class="seg-label" title="Bind-on-equip epics: crafted or world drops you can buy on the auction house">BoE epics</span><div class="seg" data-key="boe">
+    <button data-v="0">Hide</button><button data-v="1">Show</button></div></div>
 </header>
 
 <section class="gearbar" id="gearbar"></section>
@@ -166,7 +169,7 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   // owned: slot key -> array of item ids the player has (two allowed for rings and trinkets)
-  const state = { faction: 'H', pvp: '0', owned: {}, xHit: 0, xExp: 0 };
+  const state = { faction: 'H', pvp: '0', boe: '1', owned: {}, xHit: 0, xExp: 0 };
   try { const saved = JSON.parse(localStorage.getItem('war-bis') || '{}'); delete saved.phase; Object.assign(state, saved); } catch {}
   const save = () => { try { localStorage.setItem('war-bis', JSON.stringify(state)); } catch {} };
 
@@ -211,7 +214,7 @@
     const otherWeaponIds = new Set(k === 'mh' ? state.owned.oh || [] : k === 'oh' ? state.owned.mh || [] : []);
     const candidates = data.slots[k].items
       .filter(x => !ownedIds.has(x.id) && !(x.unique && otherWeaponIds.has(x.id)))
-      .filter(x => (!x.faction || x.faction === state.faction) && (state.pvp === '1' || !x.pvp))
+      .filter(x => (!x.faction || x.faction === state.faction) && (state.pvp === '1' || !x.pvp) && (state.boe === '1' || !x.boe))
       .map(x => { const val = value(x, p, rest.h, rest.e); return { x, val, delta: replaced ? val - replaced.val : null }; })
       .sort((a, b) => b.val - a.val).slice(0, limit);
     return { ownedRows, candidates, max };
@@ -226,7 +229,7 @@
       <button class="have" data-id="${x.id}" title="${r.owned ? 'Remove from my gear' : 'I have this'}" aria-pressed="${!!r.owned}">✓</button>
       <span class="rank">${r.owned ? '' : i + 1}</span>
       <a class="icon" href="${WH}${x.id}" target="_blank" rel="noopener" style="background-image:url(${ICON(x.icon)})" aria-hidden="true" tabindex="-1"></a>
-      <div><a class="name q${x.q}" href="${WH}${x.id}" target="_blank" rel="noopener">${esc(x.name)}</a>
+      <div><a class="name q${x.q}" href="${WH}${x.id}" target="_blank" rel="noopener">${esc(x.name)}</a>${x.boe ? '<span class="chip boe">BoE</span>' : ''}
         ${fx ? `<div class="stats">${fx}</div>` : ''}<div class="src">${src}</div></div>
       <div class="ep">${Math.round(r.val)}<small>EP</small>${delta}</div></li>`;
   }

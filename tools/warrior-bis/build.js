@@ -57,6 +57,26 @@ const SLOTS = [
   ['finger', 'Rings', 11], ['trinket', 'Trinkets', 12],
 ];
 
+// Bind type per epic, from Wowhead Forever tooltips (cached in bind.json): 'boe' | 'bop' | 'other'.
+const BIND = path.join(__dirname, 'bind.json');
+function getText(url) {
+  return new Promise((res, rej) => https.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, r => {
+    let b = ''; r.on('data', c => (b += c)).on('end', () => res([r.statusCode, b]));
+  }).on('error', rej));
+}
+async function bindTypes(ids) {
+  const cache = fs.existsSync(BIND) ? JSON.parse(fs.readFileSync(BIND, 'utf8')) : {};
+  for (const id of ids) {
+    if (cache[id]) continue;
+    const [code, body] = await getText('https://nether.wowhead.com/forever/tooltip/item/' + id);
+    const tip = code === 200 ? (JSON.parse(body).tooltip || '') : '';
+    cache[id] = /Binds when equipped/.test(tip) ? 'boe' : /Binds when picked up/.test(tip) ? 'bop' : 'other';
+    await new Promise(r => setTimeout(r, 120));
+  }
+  fs.writeFileSync(BIND, JSON.stringify(cache, null, 0));
+  return cache;
+}
+
 function get(url, file) {
   return new Promise((res, rej) => {
     https.get(url, r => {
@@ -193,6 +213,11 @@ function score(item, slotKind, db) {
   add('oh', 'Off Hand', 'oh', weapons.filter(i => i.handType === 2 || i.handType === 3));
   add('2h', 'Two-Hand (Arms)', '2h', weapons.filter(i => i.handType === 4));
   add('ranged', 'Ranged', 'armor', usable.filter(i => i.type === 14 && RANGED[i.rangedWeaponType]));
+
+  const epicIds = [...new Set(Object.values(lists).flatMap(l => l.items.filter(x => x.q >= 4).map(x => x.id)))];
+  const binds = await bindTypes(epicIds);
+  for (const l of Object.values(lists)) for (const x of l.items) if (x.q >= 4 && binds[x.id] === 'boe') x.boe = true;
+  console.log('BoE epics:', Object.values(binds).filter(v => v === 'boe').length, '/', epicIds.length, 'bop', Object.values(binds).filter(v => v === 'bop').length);
 
   const out = {
     built: new Date().toISOString().slice(0, 10),
