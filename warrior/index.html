@@ -101,8 +101,6 @@
 <body>
 <header>
   <h1>Warrior <span>Best in Slot</span> · Forever</h1>
-  <div class="ctl"><span class="seg-label">Phase</span><div class="seg" data-key="phase">
-    <button data-v="1">1</button><button data-v="2">1 + 2</button></div></div>
   <div class="ctl"><span class="seg-label">Faction</span><div class="seg" data-key="faction">
     <button data-v="H">Horde</button><button data-v="A">Alliance</button></div></div>
   <div class="ctl"><span class="seg-label">PvP rank gear</span><div class="seg" data-key="pvp">
@@ -110,7 +108,7 @@
 </header>
 
 <section class="intro">
-  The top 5 items per slot for a <b>level 60 Fury (dual wield)</b> warrior. Two-handers use the <b>Arms</b> weights.
+  The top 5 items per slot for a <b>level 60 Fury (dual wield)</b> warrior, using only gear that is in WoW Forever now: dungeons, quests, crafting, reputation, vendors, world drops and PvP. No raid loot. Two-handers use the <b>Arms</b> weights.
   Every leather, mail and plate piece, plus cloaks, jewellery, trinkets, weapons and ranged items a warrior can use, is scored
   with the <a href="https://www.wowsims.com/forever/warrior/dps/" target="_blank" rel="noopener" style="color:var(--accent-hi)">wowsims Forever</a>
   preset stat weights. The score (EP) is shown in attack power.
@@ -135,8 +133,8 @@
   const ORDER = ['head', 'neck', 'shoulder', 'back', 'chest', 'wrist', 'hands', 'waist', 'legs', 'feet', 'finger', 'trinket', 'mh', 'oh', '2h', 'ranged'];
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-  const state = { phase: '2', faction: 'H', pvp: '0' };
-  try { Object.assign(state, JSON.parse(localStorage.getItem('war-bis') || '{}')); } catch {}
+  const state = { faction: 'H', pvp: '0' };
+  try { const saved = JSON.parse(localStorage.getItem('war-bis') || '{}'); delete saved.phase; Object.assign(state, saved); } catch {}
 
   const data = await (await fetch('data.json')).json();
   document.getElementById('built').textContent = data.built;
@@ -150,7 +148,7 @@
     x.fx.forEach(f => stats.push(`<span class="chip${f.scored ? '' : ' fx'}" title="${f.scored ? 'Averaged into the score' : 'Not scored'}">${f.kind}: ${esc(f.name)}</span>`));
     if (x.set) stats.push(`<span class="chip set">Set: ${esc(x.set)}</span>`);
     if (x.faction) stats.push(`<span class="chip ${x.faction.toLowerCase()}">${x.faction === 'H' ? 'Horde' : 'Alliance'}</span>`);
-    const meta = [x.type, x.dps ? `${x.dps} dps · ${x.speed} speed` : '', `ilvl ${x.ilvl}`, x.req ? `req ${x.req}` : '', `phase ${x.phase}`, x.unique ? 'unique' : ''].filter(Boolean).join(' · ');
+    const meta = [x.type, x.dps ? `${x.dps} dps · ${x.speed} speed` : '', `ilvl ${x.ilvl}`, x.req ? `req ${x.req}` : '', x.unique ? 'unique' : ''].filter(Boolean).join(' · ');
     const src = x.src.length ? x.src.map(([k, v]) => `<b>${k}:</b> ${esc(v)}`).join(' &nbsp; ') : '<b>Source:</b> world drop / unknown';
     return `<li><span class="rank">${i + 1}</span>
       <a class="icon" href="${WH}${x.id}" target="_blank" rel="noopener" style="background-image:url(${ICON(x.icon)})" aria-hidden="true" tabindex="-1"></a>
@@ -162,10 +160,9 @@
   function render() {
     document.querySelectorAll('.seg').forEach(seg => seg.querySelectorAll('button').forEach(b =>
       b.setAttribute('aria-pressed', String(state[seg.dataset.key] === b.dataset.v))));
-    const ph = +state.phase;
     document.getElementById('slots').innerHTML = ORDER.map(k => {
       const s = data.slots[k];
-      const items = s.items.filter(x => x.phase <= ph && (!x.faction || x.faction === state.faction) && (state.pvp === '1' || !x.pvp)).slice(0, 5);
+      const items = s.items.filter(x => (!x.faction || x.faction === state.faction) && (state.pvp === '1' || !x.pvp)).slice(0, 5);
       const note = k === 'finger' || k === 'trinket' ? 'wear two' : k === 'oh' ? 'off-hand weapon DPS counts less' : k === '2h' ? 'Arms weights' : '';
       return `<section class="slot"><h2>${s.label}<small>${note}</small></h2>${items.length ? `<ol>${items.map(row).join('')}</ol>` : '<p class="empty">Nothing matches these filters.</p>'}</section>`;
     }).join('');

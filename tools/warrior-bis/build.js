@@ -9,7 +9,7 @@ const https = require('https');
 const DB_URL = 'https://www.wowsims.com/forever/assets/database/db.json';
 const DB = path.join(__dirname, 'db.json');
 const OUT = path.join(__dirname, '../../warrior/data.json');
-const KEEP = 15; // per slot; the page filters (phase, faction, PvP) and shows 5
+const KEEP = 15; // per slot; the page filters (faction, PvP) and shows 5
 
 // Stat indexes (proto Stat enum): 0 Str 1 Agi 2 Sta 14 AP 17 Hit 18 Crit 19 Haste 20 ArP 21 Expertise 27 Armor
 // Rating per 1%: hit 10, crit 14, haste 10, expertise 10.
@@ -28,6 +28,16 @@ const ARMOR = { 1: 'Cloth', 2: 'Leather', 3: 'Mail', 4: 'Plate' };
 const SKILL = { 1: 'Axes', 2: '2H Axes', 3: 'Maces', 4: '2H Maces', 5: 'Swords', 6: '2H Swords', 7: 'Polearms', 8: 'Staves', 9: 'Daggers', 10: 'Fist' };
 // In the sim DB but not obtainable by players.
 const EXCLUDE = new Set([17142 /* Shard of the Defiler */, 13262 /* Ashbringer */]);
+// Pre-raid only: phase 1 still has items that need a raid (raid-boss head quests, raid reputations, raid crafting mats).
+const RAID_WORDS = /Onyxia|Nefarian|Ragnaros|Zandalar|Zul'Gurub|Hakkar's|Molten Core|Blackwing|Hydraxian|Brood of Nozdormu|Qiraj|Naxxramas/i;
+const RAID_CRAFTS = /^(Onyxia Scale|Fiery Plate|Molten Helm|Flarecore|Corehound|Lava Belt|Black Dragonscale|Blue Dragonscale|Chromatic|Core Armor|Bloodsoul|Primal Batskin|Bloodvine|Darksoul|Dark Iron (Bracers|Gauntlets|Helm|Leggings|Boots|Plate|Destroyer|Reaver|Sunderer))/i;
+function raidLinked(item, db) {
+  if (RAID_WORDS.test(item.name) || RAID_CRAFTS.test(item.name)) return true;
+  return (item.sources || []).some(s =>
+    (s.quest && RAID_WORDS.test(s.quest.name)) ||
+    (s.rep && RAID_WORDS.test(db.factionById.get(s.rep.repFactionId)?.name || '')) ||
+    (s.drop && RAID_WORDS.test(db.zoneById.get(s.drop.zoneId)?.name || '')));
+}
 const SWINGS_PER_SEC = 2; // rough hit rate for procChance effects (dual wield + abilities)
 
 const SLOTS = [
@@ -146,16 +156,19 @@ function score(item, slotKind, db) {
     suffixById: new Map(raw.randomSuffixes.map(s => [s.id, s])),
   };
   const usable = raw.items.filter(i =>
-    (!i.classAllowlist || i.classAllowlist.includes(1)) && (i.reqLvl || 0) <= 60 && i.quality >= 2 && !i.requiredProfession && !EXCLUDE.has(i.id));
+    (!i.classAllowlist || i.classAllowlist.includes(1)) && (i.reqLvl || 0) <= 60 && i.quality >= 2 && !i.requiredProfession && !EXCLUDE.has(i.id) &&
+    (i.phase || 1) === 1 && // sim phase 1 = content live in Forever now (no raids); phase 2 = Classic raid tiers
+    !raidLinked(i, db));
+  console.log('pre-raid filter removed:', raw.items.filter(i => (i.phase || 1) === 1 && raidLinked(i, db) && (!i.classAllowlist || i.classAllowlist.includes(1))).map(i => i.name).join(', '));
 
   const lists = {};
   const add = (key, label, kind, items) => {
     const scored = items.map(i => score(i, kind, db)).filter(x => x.ep > 0).sort((a, b) => b.ep - a.ep);
-    // Keep the top KEEP overall plus the top 5 of each phase/faction filter combination so every view still has 5.
+    // Keep the top KEEP overall plus the top 5 of each faction/PvP filter combination so every view still has 5.
     const keep = new Map();
     scored.slice(0, KEEP).forEach(x => keep.set(x.id, x));
-    for (const phase of [1, 2]) for (const fac of ['A', 'H']) for (const pvp of [true, false]) {
-      scored.filter(x => x.phase <= phase && (!x.faction || x.faction === fac) && (pvp || !x.pvp)).slice(0, 5).forEach(x => keep.set(x.id, x));
+    for (const fac of ['A', 'H']) for (const pvp of [true, false]) {
+      scored.filter(x => (!x.faction || x.faction === fac) && (pvp || !x.pvp)).slice(0, 5).forEach(x => keep.set(x.id, x));
     }
     lists[key] = { label, kind, items: [...keep.values()].sort((a, b) => b.ep - a.ep) };
   };
