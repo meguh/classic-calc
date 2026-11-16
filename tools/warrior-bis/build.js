@@ -175,7 +175,7 @@ function score(item, slotKind, db) {
     speed: item.weaponSpeed || undefined, dps: dps ? +dps.toFixed(1) : undefined,
     stats: shown, skills, fx: fx.notes, procEP: +fx.ep.toFixed(1), simmed: simmed !== undefined || undefined,
     sfx: best.sfxId,
-    set: item.setName || undefined,
+    set: item.setName || undefined, setId: item.setId || undefined,
     faction: item.factionRestriction === 1 ? 'A' : item.factionRestriction === 2 ? 'H' : undefined,
     pvp: isPvp(item, db) || undefined,
     unique: item.unique || undefined,
@@ -211,6 +211,7 @@ function score(item, slotKind, db) {
     for (const fac of ['A', 'H']) for (const pvp of [true, false]) {
       scored.filter(x => (!x.faction || x.faction === fac) && (pvp || !x.pvp)).slice(0, 25).forEach(x => keep.set(x.id, x));
     }
+    scored.filter(x => x.setId && !x.pvp).forEach(x => keep.set(x.id, x)); // set pieces stay so the page can complete sets
     lists[key] = { label, kind, items: [...keep.values()].sort((a, b) => b.ep - a.ep) };
   };
 
@@ -221,8 +222,7 @@ function score(item, slotKind, db) {
   const weapons = usable.filter(i => i.type === 13 && WEAPON[i.weaponType]);
   add('mh', 'Main Hand', 'mh', weapons.filter(i => i.handType === 1 || i.handType === 2));
   add('oh', 'Off Hand', 'oh', weapons.filter(i => i.handType === 2 || i.handType === 3));
-  add('2h', 'Two-Hand (Arms)', '2h', weapons.filter(i => i.handType === 4));
-  add('ranged', 'Ranged', 'armor', usable.filter(i => i.type === 14 && RANGED[i.rangedWeaponType]));
+  add('ranged', 'Ranged (stat stick)', 'armor', usable.filter(i => i.type === 14 && RANGED[i.rangedWeaponType]));
 
   // ---- Thorns farming set: damage shields first, then survivability (prot warrior AoE farming) ----
   // Score per point: thorns damage 10 (each point hits every attacker on every swing), Stamina 1, armor 0.05,
@@ -247,16 +247,17 @@ function score(item, slotKind, db) {
       }
       if (sfxName) { x.name = i.name + ' ' + sfxName; x.sfx = sfxId; }
       const tip = thornsTip[i.id] || {};
-      let ep = tw(st) + (tip.thorns || 0) * 10;
+      // Damage on block counts as thorns at ~30% block rate.
+      let ep = tw(st) + (tip.thorns || 0) * 10 + (tip.blockDmg || 0) * 0.3 * 10;
       if (!st[22] && tip.def) ep += tip.def * 1.2;
       if (!st[24] && tip.blockValue) ep += tip.blockValue * 0.3;
       const shown = {};
       for (const k of Object.keys(TNAMES)) if (st[k]) shown[TNAMES[k]] = st[k];
-      return { ...x, ep: +ep.toFixed(1), procEP: 0, stats: shown, thorns: tip.thorns || undefined, school: tip.school || undefined, simmed: undefined };
+      return { ...x, ep: +ep.toFixed(1), procEP: 0, stats: shown, thorns: tip.thorns || undefined, school: tip.school || undefined, blockDmg: tip.blockDmg || undefined, simmed: undefined };
     }).filter(x => x.ep > 0).sort((a, b) => b.ep - a.ep);
     const keep = new Map();
     scored.slice(0, KEEP).forEach(x => keep.set(x.id, x));
-    scored.filter(x => x.thorns).forEach(x => keep.set(x.id, x)); // every thorns item stays available
+    scored.filter(x => x.thorns || x.blockDmg).forEach(x => keep.set(x.id, x)); // every thorns item stays available
     for (const fac of ['A', 'H']) for (const pvp of [true, false]) {
       scored.filter(x => (!x.faction || x.faction === fac) && (pvp || !x.pvp)).slice(0, 25).forEach(x => keep.set(x.id, x));
     }
@@ -274,7 +275,19 @@ function score(item, slotKind, db) {
   for (const l of [...Object.values(lists), ...Object.values(thornLists)]) for (const x of l.items) if (x.q >= 4 && binds[x.id] === 'boe') x.boe = true;
   console.log('BoE epics:', Object.values(binds).filter(v => v === 'boe').length, '/', epicIds.length, 'bop', Object.values(binds).filter(v => v === 'bop').length);
 
+  // Set bonuses (wowsims set table): stat EP per profile; hit kept apart so the page can apply the hit cap.
+  const allSets = require('./sets')();
+  const usedSets = new Set([...Object.values(lists), ...Object.values(thornLists)].flatMap(l => l.items.map(x => x.setId)).filter(Boolean));
+  const setOut = {};
+  const epOf = (st, w) => Object.entries(st).reduce((a, [k, v]) => a + (+k === 17 ? 0 : (w[k] || 0) * v), 0);
+  for (const id of usedSets) {
+    const st = allSets[id]; if (!st) continue;
+    setOut[id] = { name: st.name, bonuses: st.bonuses.map(b => ({ n: b.n, text: b.text, hit: b.stats[17] || 0,
+      fury: +epOf(b.stats, PROFILES.fury).toFixed(1), arms: +epOf(b.stats, PROFILES.arms).toFixed(1), thorns: +epOf(b.stats, TW).toFixed(1) })) };
+  }
+
   const out = {
+    sets: setOut,
     built: new Date().toISOString().slice(0, 10),
     weights: { fury: PROFILES.fury, arms: PROFILES.arms },
     slots: lists,

@@ -134,7 +134,7 @@
 <body>
 <header>
   <h1>Warrior <span>Best in Slot</span> · Forever</h1>
-  <div class="seg tabs" data-key="tab" hidden><button data-v="dps">Fury DPS</button><button data-v="thorns">Thorns farm</button></div>
+  <div class="seg tabs" data-key="tab"><button data-v="dps">Fury DPS</button><button data-v="thorns">Thorns farm</button></div>
   <div class="ctl"><span class="seg-label">Faction</span><div class="seg" data-key="faction">
     <button data-v="H">Horde</button><button data-v="A">Alliance</button></div></div>
   <div class="ctl"><span class="seg-label" title="Honor rank rewards and battleground faction gear (Warsong, Frostwolf/Stormpike, Arathi Basin)">PvP gear</span><div class="seg" data-key="pvp">
@@ -148,13 +148,12 @@
 <section class="gearbar" id="gearbar"></section>
 
 <section class="intro" data-tab="dps">
-  The top 10 items per slot for a <b>level 60 Fury (dual wield)</b> warrior, using only gear that is in WoW Forever now: dungeons, quests, crafting, reputation, vendors and world drops, plus PvP gear (honor ranks and battleground factions) if you switch it on. No raid loot. Two-handers use the <b>Arms</b> weights.
-  Click <b>✓</b> on items you already have (two for rings and trinkets). The lists then re-rank against your gear.
-  Hit is worth full value up to 8%, about a third from 8% to 27% when dual wielding, and nothing past 8% for the two-hander.
+  The top 10 items per slot for a <b>level 60 Fury (dual wield)</b> warrior, using only gear that is in WoW Forever now: dungeons, quests, crafting, reputation, vendors and world drops, plus PvP gear (honor ranks and battleground factions) if you switch it on. No raid loot.
+  Click <b>✓</b> on items you already have (one per ring window, two trinkets). Set bonuses count once you own the pieces; a piece that would complete a set ranks with its bonus. The lists then re-rank against your gear.
+  Hit is worth full value up to 8% and about a third from 8% to 27% (dual wield). Ranged is a stat stick: only its stats count, hit included.
   Expertise is worth nothing past 6.5%. An item that takes you over a cap only shows as an upgrade if its other stats still win.
   Scores use the <a href="https://www.wowsims.com/forever/warrior/dps/" target="_blank" rel="noopener" style="color:var(--accent-hi)">wowsims Forever</a>
-  preset stat weights and are in attack power (EP). Stamina, armor and set bonuses count as zero.
-  Procs that don't grant stats (extra attacks, damage, stuns) are flagged in orange and not scored.
+  preset stat weights, in attack power (EP), then checked in the real wowsims engine: every item was swapped into the Pre-BiS set and simmed, so procs (Hand of Justice), weapon speed and weapon skill are counted. Stamina and armor count as zero.
   <details><summary>Weights used</summary><div id="weights"></div></details>
 </section>
 
@@ -162,7 +161,7 @@
   A <b>tanky thorns set for farming dungeons</b> as Protection: pull big packs, let damage shields and Retaliation/Whirlwind kill them, and survive it.
   Each slot ranks damage-shield gear first (every point hits <i>each</i> attacker on <i>every</i> swing), then survivability.
   Score per point: thorns damage 10, Stamina 1, Defense 1.2, block rating 1.2, dodge rating 1, parry rating 0.67, block value 0.3, Agility 0.5, Strength 0.25, armor 0.05.
-  Thorns amounts are read from Wowhead Forever tooltips. Same filters and ✓ ticks as the DPS tab, kept separately.
+  Thorns amounts are read from Wowhead Forever tooltips; damage-on-block (e.g. Girdle of Extracted Answers) counts at a 30% block rate, and chance-on-hit procs don't count. Same filters and ✓ ticks as the DPS tab, kept separately.
   Also get a <b>Thorium Shield Spike</b> (Blacksmithing) on your shield, and stack the druid <b>Thorns</b> buff when you can.
 </section>
 
@@ -179,12 +178,15 @@
 (async () => {
   const WH = 'https://www.wowhead.com/forever/item=';
   const ICON = n => `https://wow.zamimg.com/images/wow/icons/medium/${n || 'inv_misc_questionmark'}.jpg`;
-  const ORDER = ['head', 'neck', 'shoulder', 'back', 'chest', 'wrist', 'hands', 'waist', 'legs', 'feet', 'finger', 'trinket', 'mh', 'oh', '2h', 'ranged'];
+  const ORDER = ['head', 'neck', 'shoulder', 'back', 'chest', 'wrist', 'hands', 'waist', 'legs', 'feet', 'finger1', 'finger2', 'trinket', 'mh', 'oh', 'ranged'];
+  const listKey = k => (k.startsWith('finger') ? 'finger' : k); // both ring windows share one list
+  const PAIR = { mh: 'oh', oh: 'mh', finger1: 'finger2', finger2: 'finger1' };
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   // owned: slot key -> array of item ids the player has (two allowed for rings and trinkets)
   const state = { tab: 'dps', faction: 'H', pvp: '0', boe: '1', boecraft: '1', owned: {}, ownedT: {}, xHit: 0, xExp: 0 };
   try { const saved = JSON.parse(localStorage.getItem('war-bis') || '{}'); delete saved.phase; Object.assign(state, saved); } catch {}
+  for (const key of ['owned', 'ownedT']) { const o = state[key]; if (o && o.finger) { o.finger1 = o.finger.slice(0, 1); o.finger2 = o.finger.slice(1, 2); delete o.finger; } if (o) delete o['2h']; }
   const save = () => { try { localStorage.setItem('war-bis', JSON.stringify(state)); } catch {} };
 
   const data = await (await fetch('data.json')).json();
@@ -204,40 +206,58 @@
   const hitOf = x => (x.stats.Hit || 0) / 10, expOf = x => (x.stats.Expertise || 0) / 10;
   const baseOf = (x, p) => x.ep - (x.stats.Hit || 0) * p.w[17] - (x.stats.Expertise || 0) * p.w[21];
   // Value of item x given the hit/expertise % from everything else.
-  const valueCapped = (x, p, oh, oe) => baseOf(x, p) + capHit(p, oh + hitOf(x)) - capHit(p, oh) + capExp(p, oe + expOf(x)) - capExp(p, oe);
+  const valueCapped = (x, p, oh, oe, g) => baseOf(x, p) + (g ? g.ep : 0) + capHit(p, oh + hitOf(x) + (g ? g.hit / 10 : 0)) - capHit(p, oh) + capExp(p, oe + expOf(x)) - capExp(p, oe);
 
   const T = () => state.tab === 'thorns';
   const LISTS = () => (T() ? data.thorns : data.slots);
   const OWNED = () => (T() ? (state.ownedT ||= {}) : state.owned);
-  const ORDER_T = ORDER.filter(k => k !== '2h' && k !== 'ranged');
+  const ORDER_T = ORDER.filter(k => k !== 'ranged');
   const index = lists => Object.fromEntries(Object.entries(lists).map(([k, s]) => [k, new Map(s.items.map(x => [x.id, x]))]));
   const byIdD = index(data.slots), byIdT = index(data.thorns || {});
   const BY = () => (T() ? byIdT : byIdD);
-  const ownedItems = k => (OWNED()[k] || []).map(id => BY()[k]?.get(id)).filter(Boolean);
+  const ownedItems = k => (OWNED()[k] || []).map(id => BY()[listKey(k)]?.get(id)).filter(Boolean);
+  // ---- set bonuses (data.sets from the wowsims set table) ----
+  const SETS = data.sets || {};
+  const ownedAll = () => (T() ? ORDER_T : ORDER).flatMap(ownedItems);
+  const setCount = (sid, skip) => new Set(ownedAll().filter(o => o.setId === sid && !skip.includes(o)).map(o => o.id)).size;
+  // Bonuses an item switches on when it joins `others` pieces of its set.
+  const setGain = (x, others) => {
+    const st = SETS[x.setId]; if (!st) return null;
+    const bs = st.bonuses.filter(b => b.n === others + 1);
+    if (!bs.length) return null;
+    return { ep: bs.reduce((a, b) => a + (T() ? b.thorns : b.fury), 0), hit: bs.reduce((a, b) => a + b.hit, 0),
+      text: bs.map(b => `${st.name} (${b.n}): ${b.text || 'bonus'}`).join('; ') };
+  };
+  const activeSetHit = () => { let h = 0; const counts = {}; for (const o of new Map(ownedAll().map(o => [o.id, o])).values()) if (o.setId) counts[o.setId] = (counts[o.setId] || 0) + 1;
+    for (const [sid, n] of Object.entries(counts)) for (const b of (SETS[sid]?.bonuses || [])) if (b.n <= n) h += b.hit; return h; };
   const ARMOR_KEYS = ORDER.filter(k => !['mh', 'oh', '2h'].includes(k));
   const setKeys = k => k === '2h' ? [...ARMOR_KEYS, '2h'] : [...ARMOR_KEYS, 'mh', 'oh'];
   const totals = keys => (T() ? [] : keys.flatMap(ownedItems)).reduce((t, x) => ({ h: t.h + hitOf(x), e: t.e + expOf(x) }),
-    { h: +state.xHit || 0, e: +state.xExp || 0 });
+    { h: (+state.xHit || 0) + (T() ? 0 : activeSetHit() / 10), e: +state.xExp || 0 });
 
   function rankSlot(k, limit = 10) {
-    const p = k === '2h' ? PROFILE.arms : PROFILE.fury;
-    const value = T() ? (x => x.ep) : valueCapped;
+    const p = PROFILE.fury;
+    const value = T() ? ((x, p, oh, oe, g) => x.ep + (g ? g.ep : 0)) : valueCapped;
     const tot = totals(setKeys(k));
     const mine = ownedItems(k);
-    const without = x => ({ h: tot.h - hitOf(x), e: tot.e - expOf(x) });
-    const ownedRows = mine.map(x => { const o = without(x); return { x, val: value(x, p, o.h, o.e), owned: true }; });
-    const max = k === 'finger' || k === 'trinket' ? 2 : 1;
+    // Hit/expertise from everything except x (x's own stats and the set bonus it switches on).
+    const without = (x, g) => ({ h: tot.h - hitOf(x) - (g ? g.hit / 10 : 0), e: tot.e - expOf(x) });
+    const ownedRows = mine.map(x => { const g = setGain(x, setCount(x.setId, [x])); const o = without(x, g); return { x, g, val: value(x, p, o.h, o.e, g), owned: true }; });
+    const max = k === 'trinket' ? 2 : 1;
     // A new item fills an empty spot, or replaces the weakest item you own in this slot.
     const replaced = mine.length >= max ? ownedRows.reduce((a, b) => (b.val < a.val ? b : a)) : null;
-    const rest = replaced ? without(replaced.x) : tot;
+    const rest = replaced ? without(replaced.x, replaced.g) : tot;
     const ownedIds = new Set(mine.map(x => x.id));
-    const otherWeaponIds = new Set(k === 'mh' ? OWNED().oh || [] : k === 'oh' ? OWNED().mh || [] : []);
-    const candidates = LISTS()[k].items
-      .filter(x => !ownedIds.has(x.id) && !(x.unique && otherWeaponIds.has(x.id)))
+    const otherIds = new Set(PAIR[k] ? OWNED()[PAIR[k]] || [] : []);
+    const candidates = LISTS()[listKey(k)].items
+      .filter(x => !ownedIds.has(x.id) && !(x.unique && otherIds.has(x.id)))
       .filter(x => (!x.faction || x.faction === state.faction) && (state.pvp === '1' || !x.pvp) && (!x.boe || (x.crafted ? state.boecraft === '1' : state.boe === '1')))
-      .map(x => { const val = value(x, p, rest.h, rest.e); return { x, val, delta: replaced ? val - replaced.val : null }; })
-      .sort((a, b) => b.val - a.val).slice(0, limit);
-    return { ownedRows, candidates, max };
+      .map(x => { const g = setGain(x, setCount(x.setId, replaced ? [replaced.x] : [])); const val = value(x, p, rest.h, rest.e, g); return { x, g, val, delta: replaced ? val - replaced.val : null }; })
+      .sort((a, b) => b.val - a.val);
+    // Top `limit`, plus any piece that would complete a set you've started, even if it ranks lower.
+    const shown = candidates.slice(0, limit);
+    if (limit >= 10) candidates.slice(limit).filter(c => c.g).forEach(c => shown.push(c));
+    return { ownedRows, candidates: shown, max };
   }
 
   function row(r, i) {
@@ -249,7 +269,7 @@
       <button class="have" data-id="${x.id}" title="${r.owned ? 'Remove from my gear' : 'I have this'}" aria-pressed="${!!r.owned}">✓</button>
       <span class="rank">${r.owned ? '' : i + 1}</span>
       <a class="icon" href="${WH}${x.id}" target="_blank" rel="noopener" style="background-image:url(${ICON(x.icon)})" aria-hidden="true" tabindex="-1"></a>
-      <div><a class="name q${x.q}" href="${WH}${x.id}" target="_blank" rel="noopener">${esc(x.name)}</a>${x.thorns ? `<span class="chip thorn">Thorns ${x.thorns}${x.school ? ' ' + esc(x.school) : ''}</span>` : ''}${x.boe ? `<span class="chip boe">${x.crafted ? 'Crafted BoE' : 'BoE'}</span>` : ''}
+      <div><a class="name q${x.q}" href="${WH}${x.id}" target="_blank" rel="noopener">${esc(x.name)}</a>${x.thorns ? `<span class="chip thorn">Thorns ${x.thorns}${x.school ? ' ' + esc(x.school) : ''}</span>` : ''}${x.blockDmg ? `<span class="chip thorn">${x.blockDmg} dmg on block</span>` : ''}${r.g ? `<span class="chip set" title="${esc(r.g.text)}">${r.owned ? 'Set bonus on' : 'Completes set'}: ${esc(r.g.text)}</span>` : ''}${x.boe ? `<span class="chip boe">${x.crafted ? 'Crafted BoE' : 'BoE'}</span>` : ''}
         ${fx ? `<div class="stats">${fx}</div>` : ''}<div class="src">${src}</div></div>
       <div class="ep">${Math.round(r.val)}<small>EP</small>${delta}</div></li>`;
   }
@@ -258,7 +278,7 @@
   function renderBar() {
     const t = totals(setKeys('mh'));
     const n = Object.values(OWNED()).reduce((a, v) => a + v.length, 0);
-    const mine = Object.keys(LISTS()).flatMap(ownedItems);
+    const mine = ownedAll();
     const thornSum = mine.reduce((a, x) => a + (x.thorns || 0), 0), staSum = mine.reduce((a, x) => a + (x.stats.Sta || 0), 0);
     const cls = (v, cap) => v > cap + 0.05 ? 'over' : v >= cap - 0.05 ? 'ok' : '';
     document.getElementById('gearbar').innerHTML = `
@@ -270,7 +290,7 @@
       ${n ? '<button id="clearOwned">Clear my gear</button>' : ''}
       <button id="naowhBtn" class="naowh-btn">Naowh BiS import</button>
       <div class="naowh" id="naowh" ${naowhOpen ? "" : "hidden"}>
-        <p>Top 3 per slot for ${T() ? 'the thorns set' : 'Fury'}, from the lists below, with your gear and filters counted. Rings and trinkets alternate: ring slot 1 gets ranks 1, 3, 5 and ring slot 2 gets 2, 4, 6.
+        <p>Top 3 per slot for ${T() ? 'the thorns set' : 'Fury'}, from the lists below, with your gear and filters counted. Each ring window fills its own ring slot; trinkets alternate (slot 1 gets ranks 1, 3, 5).
         In game, open the Naowh <b>BiS List</b> window, click <b>Import a list</b>, and paste.</p>
         <textarea id="naowhText" readonly rows="3">${naowhOpen ? esc(naowhString()) : ""}</textarea>
         <button id="naowhCopy">Copy</button>
@@ -341,10 +361,9 @@
     const put = (inv, ids) => { if (!ids.length) return; slots.set(inv, ids[0]); if (ids.length > 1) extra.set(inv, ids.slice(1)); };
     const best = (k, n) => { const r = rankSlot(k, n); return [...r.ownedRows, ...r.candidates].sort((a, b) => b.val - a.val).slice(0, n).map(x => x.x.id); };
     for (const [k, inv] of Object.entries(INV)) if (LISTS()[k]) put(inv, best(k, 3));
-    for (const [k, a, b] of [['finger', 11, 12], ['trinket', 13, 14]]) {
-      const ids = best(k, 6);
-      put(a, ids.filter((_, i) => i % 2 === 0)); put(b, ids.filter((_, i) => i % 2 === 1));
-    }
+    // Rings: each window's top 3; ring 2 skips what ring 1 already lists.
+    const r1 = best('finger1', 3); put(11, r1); put(12, best('finger2', 6).filter(id => !r1.includes(id)).slice(0, 3));
+    const tr = best('trinket', 6); put(13, tr.filter((_, i) => i % 2 === 0)); put(14, tr.filter((_, i) => i % 2 === 1));
     const table = new Map([['v', 4], ['name', T() ? 'Classiccraft Thorns' : 'Classiccraft Fury'], ['spec', T() ? 'protection-warrior' : 'fury-warrior'], ['slots', slots], ['extra', extra]]);
     return '!NBIS1!' + encodeForPrint(deflateStored(lsSerialize(table)));
   }
@@ -355,9 +374,9 @@
     renderBar();
     document.querySelectorAll('.intro[data-tab]').forEach(el => { el.hidden = el.dataset.tab !== state.tab; });
     document.getElementById('slots').innerHTML = (T() ? ORDER_T : ORDER).map(k => {
-      const s = LISTS()[k];
+      const s = { ...LISTS()[listKey(k)], label: k === 'finger1' ? 'Ring 1' : k === 'finger2' ? 'Ring 2' : LISTS()[listKey(k)].label };
       const { ownedRows, candidates, max } = rankSlot(k);
-      const note = k === 'finger' || k === 'trinket' ? 'wear two' : k === 'oh' ? (T() ? '' : 'off-hand weapon DPS counts less') : k === '2h' ? 'Arms weights' : '';
+      const note = k === 'trinket' ? 'wear two' : k === 'oh' ? (T() ? '' : 'off-hand weapon DPS counts less') : k === 'ranged' ? 'stats only, weapon damage ignored' : '';
       const rows = ownedRows.map(row).join('') + candidates.map(row).join('');
       return `<section class="slot" data-slot="${k}" data-max="${max}"><h2>${s.label}<small>${note}</small></h2>${rows ? `<ol>${rows}</ol>` : '<p class="empty">Nothing matches these filters.</p>'}</section>`;
     }).join('');
@@ -372,7 +391,7 @@
   document.getElementById('slots').addEventListener('click', e => {
     const b = e.target.closest('.have'); if (!b) return;
     const sec = b.closest('.slot'), k = sec.dataset.slot, max = +sec.dataset.max, id = +b.dataset.id;
-    let list = (OWNED()[k] || []).filter(v => BY()[k].has(v));
+    let list = (OWNED()[k] || []).filter(v => BY()[listKey(k)].has(v));
     if (list.includes(id)) list = list.filter(v => v !== id);
     else { list.push(id); if (list.length > max) list = list.slice(-max); }
     OWNED()[k] = list;
