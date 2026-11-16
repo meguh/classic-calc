@@ -41,9 +41,12 @@ function raidLinked(item, db) {
 // PvP gear: honor rank rewards plus battleground faction rewards (rep, vendors, AV/WSG/AB quests).
 const PVP_FACTIONS = /Warsong Outriders|Silverwing Sentinels|Frostwolf Clan|Stormpike Guard|League of Arathor|The Defilers|Darkspear Raiders|Theramore Expeditionary Force/i;
 const PVP_NAMES = /^(Frostwolf|Stormpike|Outrider's|Sentinel's|Defiler's|Highlander's|Arathor|Warsong|Silverwing|Legionnaire's|Advisor's|Talisman of Arathor)/i;
+// Battleground quartermasters outside the battlegrounds (WSG: Ashenvale/Barrens, AV: Alterac Mountains, AB: Arathi Highlands) and Darkspear Raiders.
+const PVP_VENDORS = /^(Illiyana Moonblaze|Kelm Hargunth|Jekyll Flandring|Thanthaldis Snowgleam|Samuel Hawke|Rutherford Twing|Creeg Bothunk)$/;
 function isPvp(item, db) {
   return PVP_NAMES.test(item.name) || (item.sources || []).some(s => s.pvp ||
     (s.rep && PVP_FACTIONS.test(db.factionById.get(s.rep.repFactionId)?.name || '')) ||
+    (s.soldBy && PVP_VENDORS.test(s.soldBy.npcName || '')) ||
     (s.soldBy && /Alterac Valley|Warsong Gulch|Arathi Basin/.test(db.zoneById.get(s.soldBy.zoneId)?.name || '')));
 }
 const SWINGS_PER_SEC = 2; // rough hit rate for procChance effects (dual wield + abilities)
