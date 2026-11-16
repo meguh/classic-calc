@@ -81,6 +81,9 @@
     .stats { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
     .chip { font-size: .72rem; padding: 0 6px; border-radius: 3px; background: var(--surface-2); color: var(--text-soft); white-space: nowrap; }
     .chip.fx { color: var(--warn); }
+    .chip.thorn { color: #7fd36b; font-weight: 600; margin-left: 6px; vertical-align: 1px; }
+    .seg.tabs button { font-family: var(--font-heading); font-size: .95rem; padding: 6px 14px; }
+    .intro[hidden] { display: none; }
     .chip.boe { color: var(--q4); margin-left: 6px; vertical-align: 1px; }
     .chip.set { color: var(--gold); }
     .chip.h { color: var(--horde); } .chip.a { color: var(--alli); }
@@ -131,18 +134,21 @@
 <body>
 <header>
   <h1>Warrior <span>Best in Slot</span> · Forever</h1>
+  <div class="seg tabs" data-key="tab" hidden><button data-v="dps">Fury DPS</button><button data-v="thorns">Thorns farm</button></div>
   <div class="ctl"><span class="seg-label">Faction</span><div class="seg" data-key="faction">
     <button data-v="H">Horde</button><button data-v="A">Alliance</button></div></div>
   <div class="ctl"><span class="seg-label" title="Honor rank rewards and battleground faction gear (Warsong, Frostwolf/Stormpike, Arathi Basin)">PvP gear</span><div class="seg" data-key="pvp">
     <button data-v="0">Hide</button><button data-v="1">Show</button></div></div>
-  <div class="ctl"><span class="seg-label" title="Bind-on-equip epics: crafted or world drops you can buy on the auction house">BoE epics</span><div class="seg" data-key="boe">
+  <div class="ctl"><span class="seg-label" title="Bind-on-equip epic world drops (auction house)">BoE drop epics</span><div class="seg" data-key="boe">
+    <button data-v="0">Hide</button><button data-v="1">Show</button></div></div>
+  <div class="ctl"><span class="seg-label" title="Bind-on-equip epics made by a profession">Crafted epics</span><div class="seg" data-key="boecraft">
     <button data-v="0">Hide</button><button data-v="1">Show</button></div></div>
 </header>
 
 <section class="gearbar" id="gearbar"></section>
 
-<section class="intro">
-  The top 5 items per slot for a <b>level 60 Fury (dual wield)</b> warrior, using only gear that is in WoW Forever now: dungeons, quests, crafting, reputation, vendors and world drops, plus PvP gear (honor ranks and battleground factions) if you switch it on. No raid loot. Two-handers use the <b>Arms</b> weights.
+<section class="intro" data-tab="dps">
+  The top 10 items per slot for a <b>level 60 Fury (dual wield)</b> warrior, using only gear that is in WoW Forever now: dungeons, quests, crafting, reputation, vendors and world drops, plus PvP gear (honor ranks and battleground factions) if you switch it on. No raid loot. Two-handers use the <b>Arms</b> weights.
   Click <b>✓</b> on items you already have (two for rings and trinkets). The lists then re-rank against your gear.
   Hit is worth full value up to 8%, about a third from 8% to 27% when dual wielding, and nothing past 8% for the two-hander.
   Expertise is worth nothing past 6.5%. An item that takes you over a cap only shows as an upgrade if its other stats still win.
@@ -150,6 +156,14 @@
   preset stat weights and are in attack power (EP). Stamina, armor and set bonuses count as zero.
   Procs that don't grant stats (extra attacks, damage, stuns) are flagged in orange and not scored.
   <details><summary>Weights used</summary><div id="weights"></div></details>
+</section>
+
+<section class="intro" data-tab="thorns" hidden>
+  A <b>tanky thorns set for farming dungeons</b> as Protection: pull big packs, let damage shields and Retaliation/Whirlwind kill them, and survive it.
+  Each slot ranks damage-shield gear first (every point hits <i>each</i> attacker on <i>every</i> swing), then survivability.
+  Score per point: thorns damage 10, Stamina 1, Defense 1.2, block rating 1.2, dodge rating 1, parry rating 0.67, block value 0.3, Agility 0.5, Strength 0.25, armor 0.05.
+  Thorns amounts are read from Wowhead Forever tooltips. Same filters and ✓ ticks as the DPS tab, kept separately.
+  Also get a <b>Thorium Shield Spike</b> (Blacksmithing) on your shield, and stack the druid <b>Thorns</b> buff when you can.
 </section>
 
 <main id="slots"></main>
@@ -169,7 +183,7 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   // owned: slot key -> array of item ids the player has (two allowed for rings and trinkets)
-  const state = { faction: 'H', pvp: '0', boe: '1', owned: {}, xHit: 0, xExp: 0 };
+  const state = { tab: 'dps', faction: 'H', pvp: '0', boe: '1', boecraft: '1', owned: {}, ownedT: {}, xHit: 0, xExp: 0 };
   try { const saved = JSON.parse(localStorage.getItem('war-bis') || '{}'); delete saved.phase; Object.assign(state, saved); } catch {}
   const save = () => { try { localStorage.setItem('war-bis', JSON.stringify(state)); } catch {} };
 
@@ -190,18 +204,24 @@
   const hitOf = x => (x.stats.Hit || 0) / 10, expOf = x => (x.stats.Expertise || 0) / 10;
   const baseOf = (x, p) => x.ep - (x.stats.Hit || 0) * p.w[17] - (x.stats.Expertise || 0) * p.w[21];
   // Value of item x given the hit/expertise % from everything else.
-  const value = (x, p, oh, oe) => baseOf(x, p) + capHit(p, oh + hitOf(x)) - capHit(p, oh) + capExp(p, oe + expOf(x)) - capExp(p, oe);
+  const valueCapped = (x, p, oh, oe) => baseOf(x, p) + capHit(p, oh + hitOf(x)) - capHit(p, oh) + capExp(p, oe + expOf(x)) - capExp(p, oe);
 
-  const byId = {};
-  for (const [k, s] of Object.entries(data.slots)) { byId[k] = new Map(s.items.map(x => [x.id, x])); }
-  const ownedItems = k => (state.owned[k] || []).map(id => byId[k].get(id)).filter(Boolean);
+  const T = () => state.tab === 'thorns';
+  const LISTS = () => (T() ? data.thorns : data.slots);
+  const OWNED = () => (T() ? (state.ownedT ||= {}) : state.owned);
+  const ORDER_T = ORDER.filter(k => k !== '2h' && k !== 'ranged');
+  const index = lists => Object.fromEntries(Object.entries(lists).map(([k, s]) => [k, new Map(s.items.map(x => [x.id, x]))]));
+  const byIdD = index(data.slots), byIdT = index(data.thorns || {});
+  const BY = () => (T() ? byIdT : byIdD);
+  const ownedItems = k => (OWNED()[k] || []).map(id => BY()[k]?.get(id)).filter(Boolean);
   const ARMOR_KEYS = ORDER.filter(k => !['mh', 'oh', '2h'].includes(k));
   const setKeys = k => k === '2h' ? [...ARMOR_KEYS, '2h'] : [...ARMOR_KEYS, 'mh', 'oh'];
-  const totals = keys => keys.flatMap(ownedItems).reduce((t, x) => ({ h: t.h + hitOf(x), e: t.e + expOf(x) }),
+  const totals = keys => (T() ? [] : keys.flatMap(ownedItems)).reduce((t, x) => ({ h: t.h + hitOf(x), e: t.e + expOf(x) }),
     { h: +state.xHit || 0, e: +state.xExp || 0 });
 
-  function rankSlot(k, limit = 5) {
+  function rankSlot(k, limit = 10) {
     const p = k === '2h' ? PROFILE.arms : PROFILE.fury;
+    const value = T() ? (x => x.ep) : valueCapped;
     const tot = totals(setKeys(k));
     const mine = ownedItems(k);
     const without = x => ({ h: tot.h - hitOf(x), e: tot.e - expOf(x) });
@@ -211,10 +231,10 @@
     const replaced = mine.length >= max ? ownedRows.reduce((a, b) => (b.val < a.val ? b : a)) : null;
     const rest = replaced ? without(replaced.x) : tot;
     const ownedIds = new Set(mine.map(x => x.id));
-    const otherWeaponIds = new Set(k === 'mh' ? state.owned.oh || [] : k === 'oh' ? state.owned.mh || [] : []);
-    const candidates = data.slots[k].items
+    const otherWeaponIds = new Set(k === 'mh' ? OWNED().oh || [] : k === 'oh' ? OWNED().mh || [] : []);
+    const candidates = LISTS()[k].items
       .filter(x => !ownedIds.has(x.id) && !(x.unique && otherWeaponIds.has(x.id)))
-      .filter(x => (!x.faction || x.faction === state.faction) && (state.pvp === '1' || !x.pvp) && (state.boe === '1' || !x.boe))
+      .filter(x => (!x.faction || x.faction === state.faction) && (state.pvp === '1' || !x.pvp) && (!x.boe || (x.crafted ? state.boecraft === '1' : state.boe === '1')))
       .map(x => { const val = value(x, p, rest.h, rest.e); return { x, val, delta: replaced ? val - replaced.val : null }; })
       .sort((a, b) => b.val - a.val).slice(0, limit);
     return { ownedRows, candidates, max };
@@ -229,7 +249,7 @@
       <button class="have" data-id="${x.id}" title="${r.owned ? 'Remove from my gear' : 'I have this'}" aria-pressed="${!!r.owned}">✓</button>
       <span class="rank">${r.owned ? '' : i + 1}</span>
       <a class="icon" href="${WH}${x.id}" target="_blank" rel="noopener" style="background-image:url(${ICON(x.icon)})" aria-hidden="true" tabindex="-1"></a>
-      <div><a class="name q${x.q}" href="${WH}${x.id}" target="_blank" rel="noopener">${esc(x.name)}</a>${x.boe ? '<span class="chip boe">BoE</span>' : ''}
+      <div><a class="name q${x.q}" href="${WH}${x.id}" target="_blank" rel="noopener">${esc(x.name)}</a>${x.thorns ? `<span class="chip thorn">Thorns ${x.thorns}${x.school ? ' ' + esc(x.school) : ''}</span>` : ''}${x.boe ? `<span class="chip boe">${x.crafted ? 'Crafted BoE' : 'BoE'}</span>` : ''}
         ${fx ? `<div class="stats">${fx}</div>` : ''}<div class="src">${src}</div></div>
       <div class="ep">${Math.round(r.val)}<small>EP</small>${delta}</div></li>`;
   }
@@ -237,18 +257,20 @@
   let naowhOpen = false;
   function renderBar() {
     const t = totals(setKeys('mh'));
-    const n = Object.values(state.owned).reduce((a, v) => a + v.length, 0);
+    const n = Object.values(OWNED()).reduce((a, v) => a + v.length, 0);
+    const mine = Object.keys(LISTS()).flatMap(ownedItems);
+    const thornSum = mine.reduce((a, x) => a + (x.thorns || 0), 0), staSum = mine.reduce((a, x) => a + (x.stats.Sta || 0), 0);
     const cls = (v, cap) => v > cap + 0.05 ? 'over' : v >= cap - 0.05 ? 'ok' : '';
     document.getElementById('gearbar').innerHTML = `
       <span><b>My gear:</b> ${n} item${n === 1 ? '' : 's'} marked</span>
-      <span>Hit <b class="${cls(t.h, HIT_CAP)}">${t.h.toFixed(1)}%</b> / ${HIT_CAP}%</span>
+      ${T() ? `<span>Thorns <b>${thornSum}</b> damage per hit taken</span><span>Stamina <b>+${staSum}</b> from marked gear</span>` : `<span>Hit <b class="${cls(t.h, HIT_CAP)}">${t.h.toFixed(1)}%</b> / ${HIT_CAP}%</span>
       <span>Expertise <b class="${cls(t.e, EXP_CAP)}">${t.e.toFixed(1)}%</b> / ${EXP_CAP}%</span>
       <label title="Hit from enchants, talents, buffs or anything not in these lists">Other hit % <input type="number" step="0.5" min="0" id="xHit" value="${+state.xHit || 0}"></label>
-      <label title="Expertise from enchants, talents, buffs or anything not in these lists">Other expertise % <input type="number" step="0.5" min="0" id="xExp" value="${+state.xExp || 0}"></label>
+      <label title="Expertise from enchants, talents, buffs or anything not in these lists">Other expertise % <input type="number" step="0.5" min="0" id="xExp" value="${+state.xExp || 0}"></label>`}
       ${n ? '<button id="clearOwned">Clear my gear</button>' : ''}
       <button id="naowhBtn" class="naowh-btn">Naowh BiS import</button>
       <div class="naowh" id="naowh" ${naowhOpen ? "" : "hidden"}>
-        <p>Top 3 per slot for Fury, from the lists below, with your gear and filters counted. Rings and trinkets alternate: ring slot 1 gets ranks 1, 3, 5 and ring slot 2 gets 2, 4, 6.
+        <p>Top 3 per slot for ${T() ? 'the thorns set' : 'Fury'}, from the lists below, with your gear and filters counted. Rings and trinkets alternate: ring slot 1 gets ranks 1, 3, 5 and ring slot 2 gets 2, 4, 6.
         In game, open the Naowh <b>BiS List</b> window, click <b>Import a list</b>, and paste.</p>
         <textarea id="naowhText" readonly rows="3">${naowhOpen ? esc(naowhString()) : ""}</textarea>
         <button id="naowhCopy">Copy</button>
@@ -318,12 +340,12 @@
     const slots = new Map(), extra = new Map();
     const put = (inv, ids) => { if (!ids.length) return; slots.set(inv, ids[0]); if (ids.length > 1) extra.set(inv, ids.slice(1)); };
     const best = (k, n) => { const r = rankSlot(k, n); return [...r.ownedRows, ...r.candidates].sort((a, b) => b.val - a.val).slice(0, n).map(x => x.x.id); };
-    for (const [k, inv] of Object.entries(INV)) put(inv, best(k, 3));
+    for (const [k, inv] of Object.entries(INV)) if (LISTS()[k]) put(inv, best(k, 3));
     for (const [k, a, b] of [['finger', 11, 12], ['trinket', 13, 14]]) {
       const ids = best(k, 6);
       put(a, ids.filter((_, i) => i % 2 === 0)); put(b, ids.filter((_, i) => i % 2 === 1));
     }
-    const table = new Map([['v', 4], ['name', 'Classiccraft Fury'], ['spec', 'fury-warrior'], ['slots', slots], ['extra', extra]]);
+    const table = new Map([['v', 4], ['name', T() ? 'Classiccraft Thorns' : 'Classiccraft Fury'], ['spec', T() ? 'protection-warrior' : 'fury-warrior'], ['slots', slots], ['extra', extra]]);
     return '!NBIS1!' + encodeForPrint(deflateStored(lsSerialize(table)));
   }
 
@@ -331,10 +353,11 @@
     document.querySelectorAll('.seg').forEach(seg => seg.querySelectorAll('button').forEach(b =>
       b.setAttribute('aria-pressed', String(state[seg.dataset.key] === b.dataset.v))));
     renderBar();
-    document.getElementById('slots').innerHTML = ORDER.map(k => {
-      const s = data.slots[k];
+    document.querySelectorAll('.intro[data-tab]').forEach(el => { el.hidden = el.dataset.tab !== state.tab; });
+    document.getElementById('slots').innerHTML = (T() ? ORDER_T : ORDER).map(k => {
+      const s = LISTS()[k];
       const { ownedRows, candidates, max } = rankSlot(k);
-      const note = k === 'finger' || k === 'trinket' ? 'wear two' : k === 'oh' ? 'off-hand weapon DPS counts less' : k === '2h' ? 'Arms weights' : '';
+      const note = k === 'finger' || k === 'trinket' ? 'wear two' : k === 'oh' ? (T() ? '' : 'off-hand weapon DPS counts less') : k === '2h' ? 'Arms weights' : '';
       const rows = ownedRows.map(row).join('') + candidates.map(row).join('');
       return `<section class="slot" data-slot="${k}" data-max="${max}"><h2>${s.label}<small>${note}</small></h2>${rows ? `<ol>${rows}</ol>` : '<p class="empty">Nothing matches these filters.</p>'}</section>`;
     }).join('');
@@ -349,10 +372,10 @@
   document.getElementById('slots').addEventListener('click', e => {
     const b = e.target.closest('.have'); if (!b) return;
     const sec = b.closest('.slot'), k = sec.dataset.slot, max = +sec.dataset.max, id = +b.dataset.id;
-    let list = (state.owned[k] || []).filter(v => byId[k].has(v));
+    let list = (OWNED()[k] || []).filter(v => BY()[k].has(v));
     if (list.includes(id)) list = list.filter(v => v !== id);
     else { list.push(id); if (list.length > max) list = list.slice(-max); }
-    state.owned[k] = list;
+    OWNED()[k] = list;
     render();
   });
   const bar = document.getElementById('gearbar');
@@ -362,7 +385,7 @@
   bar.addEventListener('click', e => {
     if (e.target.id === 'naowhBtn') { naowhOpen = !naowhOpen; renderBar(); if (naowhOpen) document.getElementById('naowhText').select(); return; }
     if (e.target.id === 'naowhCopy') { const t = document.getElementById('naowhText'); t.select(); (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).then(() => { e.target.textContent = 'Copied'; }, () => document.execCommand('copy')); return; }
-    if (e.target.id === 'clearOwned' && confirm('Clear all items marked as yours?')) { state.owned = {}; render(); }
+    if (e.target.id === 'clearOwned' && confirm('Clear all items marked as yours on this tab?')) { if (T()) state.ownedT = {}; else state.owned = {}; render(); }
   });
   render();
 })();

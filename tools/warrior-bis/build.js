@@ -29,7 +29,7 @@ const SKILL = { 1: 'Axes', 2: '2H Axes', 3: 'Maces', 4: '2H Maces', 5: 'Swords',
 // In the sim DB but not obtainable by players.
 const EXCLUDE = new Set([17142 /* Shard of the Defiler */, 13262 /* Ashbringer */]);
 // Pre-raid only: phase 1 still has items that need a raid (raid-boss head quests, raid reputations, raid crafting mats).
-const RAID_WORDS = /Onyxia|Nefarian|Ragnaros|Zandalar|Zul'Gurub|Hakkar's|Molten Core|Blackwing|Hydraxian|Brood of Nozdormu|Qiraj|Naxxramas/i;
+const RAID_WORDS = /Quel'Serrar|Onyxia|Nefarian|Ragnaros|Zandalar|Zul'Gurub|Hakkar's|Molten Core|Blackwing|Hydraxian|Brood of Nozdormu|Qiraj|Naxxramas/i;
 const RAID_CRAFTS = /^(Onyxia Scale|Fiery Plate|Molten Helm|Flarecore|Corehound|Lava Belt|Black Dragonscale|Blue Dragonscale|Chromatic|Core Armor|Bloodsoul|Primal Batskin|Bloodvine|Darksoul|Dark Iron (Bracers|Gauntlets|Helm|Leggings|Boots|Plate|Destroyer|Reaver|Sunderer))/i;
 function raidLinked(item, db) {
   if (RAID_WORDS.test(item.name) || RAID_CRAFTS.test(item.name)) return true;
@@ -56,6 +56,9 @@ const SLOTS = [
   ['wrist', 'Wrists', 6], ['hands', 'Hands', 7], ['waist', 'Waist', 8], ['legs', 'Legs', 9], ['feet', 'Feet', 10],
   ['finger', 'Rings', 11], ['trinket', 'Trinkets', 12],
 ];
+
+const SIM_PROCS_FILE = path.join(__dirname, 'sim-procs.json');
+const SIM_PROCS = fs.existsSync(SIM_PROCS_FILE) ? JSON.parse(fs.readFileSync(SIM_PROCS_FILE, 'utf8')) : {};
 
 // Bind type per epic, from Wowhead Forever tooltips (cached in bind.json): 'boe' | 'bop' | 'other'.
 const BIND = path.join(__dirname, 'bind.json');
@@ -146,11 +149,14 @@ function score(item, slotKind, db) {
       const sfx = db.suffixById.get(sid); if (!sfx) continue;
       const st = { ...baseStats };
       sfx.stats.forEach((v, k) => { if (v) st[k] = (st[k] || 0) + Math.round(v * base.randPropPoints / 10000); });
-      variants.push({ suffix: sfx.name, stats: st });
+      variants.push({ suffix: sfx.name, sfxId: sid, stats: st });
     }
   } else variants.push({ suffix: null, stats: baseStats });
 
   const fx = effectEP(item, prof);
+  // Proc / on-use value measured by the wowsims engine (tools/warrior-bis/sim), in EP, replaces the uptime estimate.
+  const simmed = SIM_PROCS[`${slotKind}:${item.id}`];
+  if (simmed !== undefined) { fx.ep = simmed; fx.notes.forEach(n => (n.scored = true)); }
   const dps = base.unroundedDps || 0;
   const wpn = slotKind === 'mh' || slotKind === '2h' ? prof.mh * dps : slotKind === 'oh' ? prof.oh * dps : 0;
   let best = null;
@@ -167,11 +173,13 @@ function score(item, slotKind, db) {
     icon: item.icon, q: item.quality, ilvl: base.ilvl, req: item.reqLvl || 0, phase: item.phase || 1,
     type: item.type === 13 ? WEAPON[item.weaponType] : item.type === 14 ? RANGED[item.rangedWeaponType] : ARMOR[item.armorType] || '',
     speed: item.weaponSpeed || undefined, dps: dps ? +dps.toFixed(1) : undefined,
-    stats: shown, skills, fx: fx.notes, procEP: +fx.ep.toFixed(1),
+    stats: shown, skills, fx: fx.notes, procEP: +fx.ep.toFixed(1), simmed: simmed !== undefined || undefined,
+    sfx: best.sfxId,
     set: item.setName || undefined,
     faction: item.factionRestriction === 1 ? 'A' : item.factionRestriction === 2 ? 'H' : undefined,
     pvp: isPvp(item, db) || undefined,
     unique: item.unique || undefined,
+    crafted: (item.sources || []).some(s => s.crafted) || undefined,
     src: source(item, db),
     ep: +best.ep.toFixed(1),
   };
@@ -189,7 +197,9 @@ function score(item, slotKind, db) {
   const usable = raw.items.filter(i =>
     (!i.classAllowlist || i.classAllowlist.includes(1)) && (i.reqLvl || 0) <= 60 && i.quality >= 2 && !i.requiredProfession && !EXCLUDE.has(i.id) &&
     (i.phase || 1) === 1 && // sim phase 1 = content live in Forever now (no raids); phase 2 = Classic raid tiers
-    !raidLinked(i, db));
+    !raidLinked(i, db) &&
+    (i.sources || []).length > 0 && // user: drop items with no known source
+    !(i.type === 11 && i.sources.every(s => s.rep))); // user: no reputation rings
   console.log('pre-raid filter removed:', raw.items.filter(i => (i.phase || 1) === 1 && raidLinked(i, db) && (!i.classAllowlist || i.classAllowlist.includes(1))).map(i => i.name).join(', '));
 
   const lists = {};
@@ -214,15 +224,61 @@ function score(item, slotKind, db) {
   add('2h', 'Two-Hand (Arms)', '2h', weapons.filter(i => i.handType === 4));
   add('ranged', 'Ranged', 'armor', usable.filter(i => i.type === 14 && RANGED[i.rangedWeaponType]));
 
-  const epicIds = [...new Set(Object.values(lists).flatMap(l => l.items.filter(x => x.q >= 4).map(x => x.id)))];
+  // ---- Thorns farming set: damage shields first, then survivability (prot warrior AoE farming) ----
+  // Score per point: thorns damage 10 (each point hits every attacker on every swing), Stamina 1, armor 0.05,
+  // defense 1.2, dodge rating 1 (12 = 1%), parry rating 0.67 (15 = 1%), block rating 1.2 (5 = 1%), block value 0.3,
+  // Agility 0.5 (dodge + armor), Strength 0.25 (block value, damage).
+  const THORNS_FILE = path.join(__dirname, 'thorns.json');
+  const thornsTip = fs.existsSync(THORNS_FILE) ? JSON.parse(fs.readFileSync(THORNS_FILE, 'utf8')) : {};
+  const TW = { 2: 1, 27: 0.05, 28: 0.05, 22: 1.2, 25: 1, 26: 0.67, 23: 1.2, 24: 0.3, 1: 0.5, 0: 0.25 };
+  const TNAMES = { 2: 'Sta', 27: 'Armor', 22: 'Defense', 23: 'Block', 24: 'Block value', 25: 'Dodge', 26: 'Parry' };
+  const thornLists = {};
+  const addThorns = (key, label, items) => {
+    const scored = items.map(i => {
+      const x = score(i, 'armor', db); // for name, source, flags
+      const base = i.scalingOptions[0];
+      const tw = s => Object.entries(s).reduce((a, [k, v]) => a + (TW[k] || 0) * v, 0);
+      let st = { ...(base.stats || {}) }, sfxName = null, sfxId;
+      for (const sid of i.randomSuffixOptions || []) { // pick the tankiest suffix
+        const sfx = db.suffixById.get(sid); if (!sfx) continue;
+        const s2 = { ...(base.stats || {}) };
+        sfx.stats.forEach((v, k) => { if (v) s2[k] = (s2[k] || 0) + Math.round(v * base.randPropPoints / 10000); });
+        if (!sfxName || tw(s2) > tw(st)) { st = s2; sfxName = sfx.name; sfxId = sid; }
+      }
+      if (sfxName) { x.name = i.name + ' ' + sfxName; x.sfx = sfxId; }
+      const tip = thornsTip[i.id] || {};
+      let ep = tw(st) + (tip.thorns || 0) * 10;
+      if (!st[22] && tip.def) ep += tip.def * 1.2;
+      if (!st[24] && tip.blockValue) ep += tip.blockValue * 0.3;
+      const shown = {};
+      for (const k of Object.keys(TNAMES)) if (st[k]) shown[TNAMES[k]] = st[k];
+      return { ...x, ep: +ep.toFixed(1), procEP: 0, stats: shown, thorns: tip.thorns || undefined, school: tip.school || undefined, simmed: undefined };
+    }).filter(x => x.ep > 0).sort((a, b) => b.ep - a.ep);
+    const keep = new Map();
+    scored.slice(0, KEEP).forEach(x => keep.set(x.id, x));
+    scored.filter(x => x.thorns).forEach(x => keep.set(x.id, x)); // every thorns item stays available
+    for (const fac of ['A', 'H']) for (const pvp of [true, false]) {
+      scored.filter(x => (!x.faction || x.faction === fac) && (pvp || !x.pvp)).slice(0, 25).forEach(x => keep.set(x.id, x));
+    }
+    thornLists[key] = { label, kind: 'armor', items: [...keep.values()].sort((a, b) => b.ep - a.ep) };
+  };
+  for (const [key, label, type] of SLOTS) {
+    addThorns(key, label, usable.filter(i => i.type === type && ([2, 11, 12, 4].includes(type) || [2, 3, 4].includes(i.armorType))));
+  }
+  addThorns('mh', 'Main Hand (one-hander)', weapons.filter(i => i.handType === 1 || i.handType === 2));
+  addThorns('oh', 'Shield', usable.filter(i => i.type === 13 && i.weaponType === 7));
+  console.log('thorns items in lists:', Object.values(thornLists).reduce((a, l) => a + l.items.filter(x => x.thorns).length, 0));
+
+  const epicIds = [...new Set([...Object.values(lists), ...Object.values(thornLists)].flatMap(l => l.items.filter(x => x.q >= 4).map(x => x.id)))];
   const binds = await bindTypes(epicIds);
-  for (const l of Object.values(lists)) for (const x of l.items) if (x.q >= 4 && binds[x.id] === 'boe') x.boe = true;
+  for (const l of [...Object.values(lists), ...Object.values(thornLists)]) for (const x of l.items) if (x.q >= 4 && binds[x.id] === 'boe') x.boe = true;
   console.log('BoE epics:', Object.values(binds).filter(v => v === 'boe').length, '/', epicIds.length, 'bop', Object.values(binds).filter(v => v === 'bop').length);
 
   const out = {
     built: new Date().toISOString().slice(0, 10),
     weights: { fury: PROFILES.fury, arms: PROFILES.arms },
     slots: lists,
+    thorns: thornLists,
   };
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, JSON.stringify(out));
