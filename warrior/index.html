@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Warrior Best in Slot — WoW Forever</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Same Forever tokens as ../dungeons/ */
+    :root {
+      --bg: #011c2b; --bg-2: #07324a;
+      --card: rgba(4, 15, 26, 0.86);
+      --surface: rgba(255, 255, 255, 0.04); --surface-2: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.08); --border-md: rgba(255, 255, 255, 0.16);
+      --accent: #0093b2; --accent-hi: #00afd7; --accent-tint: rgba(0, 147, 178, 0.16);
+      --nav-bg: rgba(10, 38, 44, 0.88); --veil: 1, 28, 43;
+      --gold: #ffd254; --camel: #c6af8d; --heading: #f3eee2;
+      --text: #ffffff; --text-soft: rgba(255, 255, 255, 0.78); --text-muted: rgba(255, 255, 255, 0.5);
+      --q2: #3ddc4b; --q3: #4a9bff; --q4: #b45cff; --q5: #ff9a2e;
+      --alli: #5aa0ff; --horde: #ff5a4a; --warn: #ffb347;
+      --font-heading: 'Friz Quadrata TT', 'Marcellus', Georgia, serif;
+      --font-body: 'Open Sans', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--bg); }
+    body {
+      font: 14px/1.45 var(--font-body); color: var(--text); min-height: 100vh; padding: 14px 16px 40px;
+      background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 55%) fixed; -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .7;
+      background: linear-gradient(180deg, rgba(var(--veil), .2) 0%, rgba(var(--veil), .92) 70%), url('../bg/forever-light.jpg') center top / cover no-repeat;
+    }
+    body > * { position: relative; z-index: 1; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; }
+
+    header, .intro, main, footer { max-width: 1500px; margin-left: auto; margin-right: auto; }
+    header {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; padding: 10px 14px;
+      background: var(--nav-bg); border: 1px solid var(--border); border-radius: 6px; backdrop-filter: blur(10px);
+    }
+    h1 { font: 400 1.3rem var(--font-heading); color: var(--heading); margin-right: auto; }
+    h1 span { color: var(--camel); }
+    .seg { display: inline-flex; border: 1px solid var(--border-md); border-radius: 4px; overflow: hidden; }
+    .seg button { background: none; border: 0; padding: 5px 11px; cursor: pointer; color: var(--text-soft); font-size: .86rem; }
+    .seg button + button { border-left: 1px solid var(--border-md); }
+    .seg button[aria-pressed="true"] { background: var(--accent-tint); color: var(--heading); box-shadow: inset 0 -2px 0 var(--accent-hi); }
+    .seg-label { font-size: .75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; margin-right: 4px; }
+    .ctl { display: flex; align-items: center; }
+
+    .intro {
+      margin-bottom: 14px; padding: 12px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text-soft); font-size: .88rem;
+    }
+    .intro b { color: var(--heading); }
+    .intro details { margin-top: 6px; }
+    .intro summary { cursor: pointer; color: var(--camel); }
+    .intro table { margin-top: 6px; border-collapse: collapse; }
+    .intro td { padding: 1px 14px 1px 0; }
+
+    main { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 12px; }
+    .slot { background: var(--card); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    .slot h2 {
+      font: 400 1.05rem var(--font-heading); color: var(--heading); padding: 8px 12px; background: var(--surface);
+      border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: baseline;
+    }
+    .slot h2 small { font: .72rem var(--font-body); color: var(--text-muted); }
+    ol { list-style: none; }
+    li { display: grid; grid-template-columns: 18px 36px 1fr auto; gap: 4px 10px; align-items: start; padding: 8px 12px; border-top: 1px solid var(--border); }
+    li:first-child { border-top: 0; }
+    .rank { color: var(--text-muted); font-weight: 700; padding-top: 8px; text-align: right; }
+    li:first-child .rank { color: var(--gold); }
+    .icon { width: 36px; height: 36px; border-radius: 4px; border: 1px solid var(--border-md); background: #000 center / cover; }
+    .name { font-weight: 600; }
+    .q2 { color: var(--q2); } .q3 { color: var(--q3); } .q4 { color: var(--q4); } .q5 { color: var(--q5); }
+    .meta { font-size: .76rem; color: var(--text-muted); }
+    .stats { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
+    .chip { font-size: .72rem; padding: 0 6px; border-radius: 3px; background: var(--surface-2); color: var(--text-soft); white-space: nowrap; }
+    .chip.fx { color: var(--warn); }
+    .chip.set { color: var(--gold); }
+    .chip.h { color: var(--horde); } .chip.a { color: var(--alli); }
+    .src { font-size: .76rem; color: var(--text-soft); margin-top: 3px; }
+    .src b { color: var(--camel); font-weight: 600; }
+    .ep { text-align: right; font-weight: 700; color: var(--heading); padding-top: 2px; }
+    .ep small { display: block; font-weight: 400; font-size: .7rem; color: var(--text-muted); }
+    .empty { padding: 12px; color: var(--text-muted); }
+    footer { margin-top: 18px; font-size: .78rem; color: var(--text-muted); }
+    footer a { color: var(--accent-hi); }
+    @media (max-width: 520px) {
+      li { grid-template-columns: 16px 32px 1fr; }
+      .ep { grid-column: 3; text-align: left; padding: 0; }
+      .ep small { display: inline; margin-left: 6px; }
+      .icon { width: 32px; height: 32px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Warrior <span>Best in Slot</span> · Forever</h1>
+  <div class="ctl"><span class="seg-label">Phase</span><div class="seg" data-key="phase">
+    <button data-v="1">1</button><button data-v="2">1 + 2</button></div></div>
+  <div class="ctl"><span class="seg-label">Faction</span><div class="seg" data-key="faction">
+    <button data-v="H">Horde</button><button data-v="A">Alliance</button></div></div>
+  <div class="ctl"><span class="seg-label">PvP rank gear</span><div class="seg" data-key="pvp">
+    <button data-v="0">Hide</button><button data-v="1">Show</button></div></div>
+</header>
+
+<section class="intro">
+  The top 5 items per slot for a <b>level 60 Fury (dual wield)</b> warrior. Two-handers use the <b>Arms</b> weights.
+  Every leather, mail and plate piece, plus cloaks, jewellery, trinkets, weapons and ranged items a warrior can use, is scored
+  with the <a href="https://www.wowsims.com/forever/warrior/dps/" target="_blank" rel="noopener" style="color:var(--accent-hi)">wowsims Forever</a>
+  preset stat weights. The score (EP) is shown in attack power.
+  Stamina and armor count as zero. Set bonuses and hit cap aren't included, so stop stacking hit at 8%.
+  Procs that grant stats are averaged in. Procs that don't (extra attacks, damage, stuns) are flagged in orange and not scored, so judge those yourself.
+  <details><summary>Weights used</summary><div id="weights"></div></details>
+</section>
+
+<main id="slots"></main>
+
+<footer>
+  Item data and weights from <a href="https://github.com/wowsims" target="_blank" rel="noopener">wowsims</a> (MIT), built <span id="built"></span>.
+  Item tooltips from <a href="https://www.wowhead.com/forever" target="_blank" rel="noopener">Wowhead Forever</a>.
+</footer>
+
+<script>const whTooltips = { colorLinks: false, iconizeLinks: false, renameLinks: false };</script>
+<script src="https://wow.zamimg.com/js/tooltips.js" async></script>
+<script>
+(async () => {
+  const WH = 'https://www.wowhead.com/forever/item=';
+  const ICON = n => `https://wow.zamimg.com/images/wow/icons/medium/${n || 'inv_misc_questionmark'}.jpg`;
+  const ORDER = ['head', 'neck', 'shoulder', 'back', 'chest', 'wrist', 'hands', 'waist', 'legs', 'feet', 'finger', 'trinket', 'mh', 'oh', '2h', 'ranged'];
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  const state = { phase: '2', faction: 'H', pvp: '0' };
+  try { Object.assign(state, JSON.parse(localStorage.getItem('war-bis') || '{}')); } catch {}
+
+  const data = await (await fetch('data.json')).json();
+  document.getElementById('built').textContent = data.built;
+  const W = data.weights, wn = { 0: 'Strength', 1: 'Agility', 14: 'Attack power', 17: 'Hit (10 = 1%)', 18: 'Crit (14 = 1%)', 19: 'Haste (10 = 1%)', 20: 'Armor pen', 21: 'Expertise (10 = 1%)', mh: 'Main-hand DPS', oh: 'Off-hand DPS' };
+  document.getElementById('weights').innerHTML = '<table><tr><td></td><td><b>Fury</b></td><td><b>Arms (2H)</b></td></tr>' +
+    Object.keys(wn).map(k => `<tr><td>${wn[k]}</td><td>${W.fury[k]}</td><td>${W.arms[k]}</td></tr>`).join('') + '</table>';
+
+  function row(x, i) {
+    const stats = Object.entries(x.stats).map(([k, v]) => `<span class="chip">+${v} ${k}</span>`);
+    x.skills.forEach(s => stats.push(`<span class="chip">${esc(s)}</span>`));
+    x.fx.forEach(f => stats.push(`<span class="chip${f.scored ? '' : ' fx'}" title="${f.scored ? 'Averaged into the score' : 'Not scored'}">${f.kind}: ${esc(f.name)}</span>`));
+    if (x.set) stats.push(`<span class="chip set">Set: ${esc(x.set)}</span>`);
+    if (x.faction) stats.push(`<span class="chip ${x.faction.toLowerCase()}">${x.faction === 'H' ? 'Horde' : 'Alliance'}</span>`);
+    const meta = [x.type, x.dps ? `${x.dps} dps · ${x.speed} speed` : '', `ilvl ${x.ilvl}`, x.req ? `req ${x.req}` : '', `phase ${x.phase}`, x.unique ? 'unique' : ''].filter(Boolean).join(' · ');
+    const src = x.src.length ? x.src.map(([k, v]) => `<b>${k}:</b> ${esc(v)}`).join(' &nbsp; ') : '<b>Source:</b> world drop / unknown';
+    return `<li><span class="rank">${i + 1}</span>
+      <a class="icon" href="${WH}${x.id}" target="_blank" rel="noopener" style="background-image:url(${ICON(x.icon)})" aria-hidden="true" tabindex="-1"></a>
+      <div><a class="name q${x.q}" href="${WH}${x.id}" target="_blank" rel="noopener">${esc(x.name)}</a>
+        <div class="meta">${esc(meta)}</div><div class="stats">${stats.join('')}</div><div class="src">${src}</div></div>
+      <div class="ep">${Math.round(x.ep)}<small>EP${x.procEP ? ` (${Math.round(x.procEP)} from use/proc)` : ''}</small></div></li>`;
+  }
+
+  function render() {
+    document.querySelectorAll('.seg').forEach(seg => seg.querySelectorAll('button').forEach(b =>
+      b.setAttribute('aria-pressed', String(state[seg.dataset.key] === b.dataset.v))));
+    const ph = +state.phase;
+    document.getElementById('slots').innerHTML = ORDER.map(k => {
+      const s = data.slots[k];
+      const items = s.items.filter(x => x.phase <= ph && (!x.faction || x.faction === state.faction) && (state.pvp === '1' || !x.pvp)).slice(0, 5);
+      const note = k === 'finger' || k === 'trinket' ? 'wear two' : k === 'oh' ? 'off-hand weapon DPS counts less' : k === '2h' ? 'Arms weights' : '';
+      return `<section class="slot"><h2>${s.label}<small>${note}</small></h2>${items.length ? `<ol>${items.map(row).join('')}</ol>` : '<p class="empty">Nothing matches these filters.</p>'}</section>`;
+    }).join('');
+    try { localStorage.setItem('war-bis', JSON.stringify(state)); } catch {}
+    if (window.$WowheadPower) $WowheadPower.refreshLinks();
+  }
+
+  document.querySelectorAll('.seg').forEach(seg => seg.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    state[seg.dataset.key] = b.dataset.v; render();
+  }));
+  render();
+})();
+</script>
+</body>
+</html>
