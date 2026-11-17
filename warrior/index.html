@@ -153,7 +153,7 @@
   Hit is worth full value up to 8% and about a third from 8% to 27% (dual wield). Ranged is a stat stick: only its stats count, hit included.
   Expertise is worth nothing past 6.5%. An item that takes you over a cap only shows as an upgrade if its other stats still win.
   Scores use the <a href="https://www.wowsims.com/forever/warrior/dps/" target="_blank" rel="noopener" style="color:var(--accent-hi)">wowsims Forever</a>
-  preset stat weights, in attack power (EP), then checked in the real wowsims engine: every item was swapped into the Pre-BiS set and simmed, so procs (Hand of Justice), weapon speed and weapon skill are counted. Stamina and armor count as zero.
+  preset stat weights, in attack power (EP), then checked in the real wowsims engine: every item was swapped into the Pre-BiS set and simmed, so procs (Hand of Justice), weapon speed and weapon skill are counted. Off hands get no bonus for swinging fast, so slower off hands rank higher. Stamina and armor count as zero.
   <details><summary>Weights used</summary><div id="weights"></div></details>
 </section>
 
@@ -376,7 +376,7 @@
     document.getElementById('slots').innerHTML = (T() ? ORDER_T : ORDER).map(k => {
       const s = { ...LISTS()[listKey(k)], label: k === 'finger1' ? 'Ring 1' : k === 'finger2' ? 'Ring 2' : LISTS()[listKey(k)].label };
       const { ownedRows, candidates, max } = rankSlot(k);
-      const note = k === 'trinket' ? 'wear two' : k === 'oh' ? (T() ? '' : 'off-hand weapon DPS counts less') : k === 'ranged' ? 'stats only, weapon damage ignored' : '';
+      const note = k === 'trinket' ? 'wear two' : k === 'oh' ? (T() ? '' : 'slower is better; off-hand DPS counts less') : k === 'ranged' ? 'stats only, weapon damage ignored' : '';
       const rows = ownedRows.map(row).join('') + candidates.map(row).join('');
       return `<section class="slot" data-slot="${k}" data-max="${max}"><h2>${s.label}<small>${note}</small></h2>${rows ? `<ol>${rows}</ol>` : '<p class="empty">Nothing matches these filters.</p>'}</section>`;
     }).join('');

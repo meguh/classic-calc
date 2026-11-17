@@ -60,6 +60,21 @@ const SLOTS = [
 const SIM_PROCS_FILE = path.join(__dirname, 'sim-procs.json');
 const SIM_PROCS = fs.existsSync(SIM_PROCS_FILE) ? JSON.parse(fs.readFileSync(SIM_PROCS_FILE, 'utf8')) : {};
 
+// Off-hand speed curve from wowsims (Pre-BiS Fury, 6000 iterations): DPS with a stat-less 40 DPS off hand at each speed.
+// The Whirlwind off-hand hit (normalized, so it scales with weapon damage = DPS x speed) is worth ~3.33 DPS per 1.0 s;
+// everything else in the curve is the fast-swing bonus, measured relative to 2.4 s.
+const OH_CURVE = [[1.3, 875.9], [1.5, 871.9], [1.8, 866.3], [2.0, 861.2], [2.3, 857.1], [2.6, 854.3], [2.8, 855.6]];
+const OH_DPS_PER_EP = 0.324;
+function ohFastBonus(speed) {
+  const at = s => {
+    const c = OH_CURVE, x = Math.min(Math.max(s, c[0][0]), c[c.length - 1][0]);
+    let i = 0; while (i < c.length - 2 && x > c[i + 1][0]) i++;
+    const [[x0, y0], [x1, y1]] = [c[i], c[i + 1]];
+    return y0 + (y1 - y0) * (x - x0) / (x1 - x0) - 3.33 * x;
+  };
+  return at(speed || 2.4) - at(2.4);
+}
+
 // Bind type per epic, from Wowhead Forever tooltips (cached in bind.json): 'boe' | 'bop' | 'other'.
 const BIND = path.join(__dirname, 'bind.json');
 function getText(url) {
@@ -157,6 +172,9 @@ function score(item, slotKind, db) {
   // Proc / on-use value measured by the wowsims engine (tools/warrior-bis/sim), in EP, replaces the uptime estimate.
   const simmed = SIM_PROCS[`${slotKind}:${item.id}`];
   if (simmed !== undefined) { fx.ep = simmed; fx.notes.forEach(n => (n.scored = true)); }
+  // Off hands: the user (Forever player) wants slow off hands. Remove the fast-swing bonus the sim gives
+  // (Deep Wounds / Overpower / Unbridled Wrath from extra swings); speed then only counts via hit size (Whirlwind).
+  if (simmed !== undefined && slotKind === 'oh') fx.ep -= ohFastBonus(item.weaponSpeed) / OH_DPS_PER_EP;
   const dps = base.unroundedDps || 0;
   const wpn = slotKind === 'mh' || slotKind === '2h' ? prof.mh * dps : slotKind === 'oh' ? prof.oh * dps : 0;
   let best = null;
