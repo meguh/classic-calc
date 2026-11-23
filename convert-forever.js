@@ -90,12 +90,25 @@ for (const r of recipes) {
 }
 out += '}\n\n';
 
-// CraftCalcForeverItems: [id] = {"Name", "icon_slug", raw, quality}
+// Vendor price in copper for reagents NPCs keep in stock (vials, thread, flux, dyes, spices...).
+// Limited-stock items (herbs, ore, cloth) sit on only a few vendors, so it takes 20+ vendors.
+// Price = the most common one; the lower ones are reputation discounts.
+const VENDOR_MIN = 20;
+function vendorPrice(item) {
+  const vs = (item.sources || []).filter(s => s.type === 3 && s.cost && s.cost.money > 0 && Object.keys(s.cost).length === 1);
+  if (vs.length < VENDOR_MIN) return 0;
+  const counts = new Map();
+  for (const s of vs) counts.set(s.cost.money, (counts.get(s.cost.money) || 0) + 1);
+  return [...counts].sort((a, b) => b[1] - a[1] || b[0] - a[0])[0][0];
+}
+
+// CraftCalcForeverItems: [id] = {"Name", "icon_slug", raw, quality, vendorPrice}
 //   raw = never expand: gathered (skinning/node), disenchanted, or a conversion pair
+//   vendorPrice = copper an NPC sells it for, 0 if no vendor keeps it in stock
 out += 'CraftCalcForeverItems = {\n';
 for (const [id, item] of Object.entries(itemsById)) {
   const raw = item.raw || (item.sources || []).some(s => s.type === 1 || s.type === 8 || s.type === 11);
-  out += `  [${id}]={"${esc(item.name || '')}","${esc(item.icon || '')}",${raw ? 'true' : 'false'},${item.quality ?? 1}},\n`;
+  out += `  [${id}]={"${esc(item.name || '')}","${esc(item.icon || '')}",${raw ? 'true' : 'false'},${item.quality ?? 1},${vendorPrice(item)}},\n`;
 }
 out += '}\n';
 
