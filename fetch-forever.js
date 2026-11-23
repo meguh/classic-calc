@@ -92,7 +92,8 @@ async function main() {
   fs.mkdirSync(dir, { recursive: true });
 
   const TABLES = ['SkillLineAbility', 'SpellReagents', 'SpellEffect', 'SpellName',
-                  'SpellMisc', 'Item', 'ItemSparse', 'TradeSkillCategory'];
+                  'SpellMisc', 'Item', 'ItemSparse', 'TradeSkillCategory',
+                  'SpellCooldowns', 'SpellCategories', 'SpellCategory'];
   for (const t of TABLES) {
     await download(`https://wago.tools/db2/${t}/csv?build=${version}`, path.join(dir, `${t}.csv`));
   }
@@ -282,12 +283,26 @@ async function main() {
     const c = classicRecipes.get(r.id);
     if (fromItem) {
       r.learned_at_rank = fromItem;
+      r.from_item = true;   // taught by a recipe item, not the trainer
       learnFromItem++;
     } else if (c?.learned_at_rank != null && c.color_level_2 != null) {
       r.learned_at_rank = Math.max(1, c.learned_at_rank + (r.color_level_2 - c.color_level_2));
       learnFromClassic++;
     }
   }
+
+  // Cooldown crafts (transmutes, Mooncloth...): a skill-up planner can't lean on them
+  const cooldowns = new Map();
+  for (const r of load('SpellCooldowns')) {
+    const ms = Math.max(+r.CategoryRecoveryTime || 0, +r.RecoveryTime || 0);
+    if (ms > 0) cooldowns.set(+r.SpellID, ms);
+  }
+  const chargeCd = new Map(load('SpellCategory').filter(c => +c.ChargeRecoveryTime > 0).map(c => [c.ID, +c.ChargeRecoveryTime]));
+  for (const r of load('SpellCategories')) {
+    const ms = chargeCd.get(r.Category) || chargeCd.get(r.ChargeCategory);
+    if (ms && !cooldowns.has(+r.SpellID)) cooldowns.set(+r.SpellID, ms);
+  }
+  for (const r of recipes) if (cooldowns.has(r.id)) r.cooldown_ms = cooldowns.get(r.id);
 
   recipes.sort((a, b) => a.type - b.type || a.id - b.id);
   const mats = [...items.values()].sort((a, b) => a.id - b.id);

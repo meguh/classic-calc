@@ -80,13 +80,15 @@ for (const c of categories) out += `  {"${esc(c.name)}",${c.order}},\n`;
 out += '}\n\n';
 
 // CraftCalcForeverRecipes: {outputItemId, makes, "ProfName", "RecipeName", {{reagId,count},...}, spellId,
-//                           categoryIndex, {learnedAt, yellow, green, grey}}
+//                           categoryIndex, {learnedAt, yellow, green, grey}, flags}
+//   flags: 1 = taught by a recipe item, 2 = has a cooldown
 out += 'CraftCalcForeverRecipes = {\n';
 for (const r of recipes) {
   const prof   = esc(PROF_NAMES[r.type] || 'Unknown');
   const reags  = r.reagents.map(rg => `{${rg.item_id},${rg.item_count}}`).join(',');
   const levels = [r.learned_at_rank, r.color_level_2, r.color_level_3, r.color_level_4].map(n => n ?? 0).join(',');
-  out += `  {${r._outputId},${r._makes},"${prof}","${esc(r.name)}",{${reags}},${r.id},${catIndex[r.category || 'Miscellaneous']},{${levels}}},\n`;
+  const flags  = (r.from_item ? 1 : 0) + (r.cooldown_ms ? 2 : 0);
+  out += `  {${r._outputId},${r._makes},"${prof}","${esc(r.name)}",{${reags}},${r.id},${catIndex[r.category || 'Miscellaneous']},{${levels}},${flags}},\n`;
 }
 out += '}\n\n';
 
@@ -102,13 +104,14 @@ function vendorPrice(item) {
   return [...counts].sort((a, b) => b[1] - a[1] || b[0] - a[0])[0][0];
 }
 
-// CraftCalcForeverItems: [id] = {"Name", "icon_slug", raw, quality, vendorPrice}
+// CraftCalcForeverItems: [id] = {"Name", "icon_slug", raw, quality, vendorPrice, sellPrice}
 //   raw = never expand: gathered (skinning/node), disenchanted, or a conversion pair
 //   vendorPrice = copper an NPC sells it for, 0 if no vendor keeps it in stock
+//   sellPrice   = copper a vendor pays for it
 out += 'CraftCalcForeverItems = {\n';
 for (const [id, item] of Object.entries(itemsById)) {
   const raw = item.raw || (item.sources || []).some(s => s.type === 1 || s.type === 8 || s.type === 11);
-  out += `  [${id}]={"${esc(item.name || '')}","${esc(item.icon || '')}",${raw ? 'true' : 'false'},${item.quality ?? 1},${vendorPrice(item)}},\n`;
+  out += `  [${id}]={"${esc(item.name || '')}","${esc(item.icon || '')}",${raw ? 'true' : 'false'},${item.quality ?? 1},${vendorPrice(item)},${item.sell_price || 0}},\n`;
 }
 out += '}\n';
 
